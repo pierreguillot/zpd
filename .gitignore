@@ -34,3 +34,6 @@
 *.pbxproj
 *.xcuserstate
 *.xcuserdatad
+
+# JUCE
+/JuceLibraryCode
