@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="hAIbbG" name="zpd" projectType="dll" version="0.0.1" bundleIdentifier="com.cicm.zpd"
+              includeBinaryInAppConfig="1" jucerVersion="4.2.0" companyName="CICM"
+              companyWebsite="https://github.com/pierreguillot/Camomile" defines="PD=1&#10;USEAPI_DUMMY=1&#10;PD_INTERNAL=1&#10;">
+  <MAINGROUP id="Fp5s3J" name="zpd">
+    <GROUP id="{C9A35B76-F32B-78DC-4308-D06A7C6C5BCB}" name="pd">
+      <GROUP id="{09958325-FF8F-2B31-7E44-D8E2F6F1BFE9}" name="extra">
+        <FILE id="HfqHIr" name="bob~.c" compile="1" resource="0" file="pd/extra/bob~/bob~.c"/>
+        <FILE id="lSuY64" name="bonk~.c" compile="1" resource="0" file="pd/extra/bonk~/bonk~.c"/>
+        <FILE id="Xiv3ho" name="choice.c" compile="1" resource="0" file="pd/extra/choice/choice.c"/>
+        <FILE id="sMdw12" name="fiddle~.c" compile="1" resource="0" file="pd/extra/fiddle~/fiddle~.c"/>
+        <FILE id="orfVnS" name="loop~.c" compile="1" resource="0" file="pd/extra/loop~/loop~.c"/>
+        <FILE id="Qr1Wix" name="lrshift~.c" compile="1" resource="0" file="pd/extra/lrshift~/lrshift~.c"/>
+        <FILE id="Awq5VV" name="pique.c" compile="1" resource="0" file="pd/extra/pique/pique.c"/>
+        <FILE id="L6g5P5" name="sigmund~.c" compile="1" resource="0" file="pd/extra/sigmund~/sigmund~.c"/>
+        <FILE id="LKINyR" name="stdout.c" compile="1" resource="0" file="pd/extra/stdout/stdout.c"/>
+      </GROUP>
+      <GROUP id="{6045327F-4848-162D-9127-4355268476B1}" name="src">
+        <FILE id="uwdlej" name="d_arithmetic.c" compile="1" resource="0" file="pd/src/d_arithmetic.c"/>
+        <FILE id="H7AhKO" name="d_array.c" compile="1" resource="0" file="pd/src/d_array.c"/>
+        <FILE id="jq7TCr" name="d_ctl.c" compile="1" resource="0" file="pd/src/d_ctl.c"/>
+        <FILE id="IwOaSA" name="d_dac.c" compile="1" resource="0" file="pd/src/d_dac.c"/>
+        <FILE id="tAMJ7n" name="d_delay.c" compile="1" resource="0" file="pd/src/d_delay.c"/>
+        <FILE id="snTHhy" name="d_fft.c" compile="1" resource="0" file="pd/src/d_fft.c"/>
+        <FILE id="QozBCe" name="d_fft_fftsg.c" compile="1" resource="0" file="pd/src/d_fft_fftsg.c"/>
+        <FILE id="FswfKh" name="d_filter.c" compile="1" resource="0" file="pd/src/d_filter.c"/>
+        <FILE id="foQVt2" name="d_global.c" compile="1" resource="0" file="pd/src/d_global.c"/>
+        <FILE id="pHKb7D" name="d_math.c" compile="1" resource="0" file="pd/src/d_math.c"/>
+        <FILE id="uuH4Hi" name="d_misc.c" compile="1" resource="0" file="pd/src/d_misc.c"/>
+        <FILE id="KzJy75" name="d_osc.c" compile="1" resource="0" file="pd/src/d_osc.c"/>
+        <FILE id="QDwlfm" name="d_resample.c" compile="1" resource="0" file="pd/src/d_resample.c"/>
+        <FILE id="F8vMzF" name="d_soundfile.c" compile="1" resource="0" file="pd/src/d_soundfile.c"/>
+        <FILE id="JhLTUc" name="d_ugen.c" compile="1" resource="0" file="pd/src/d_ugen.c"/>
+        <FILE id="b2rYqj" name="g_all_guis.c" compile="1" resource="0" file="pd/src/g_all_guis.c"/>
+        <FILE id="Xc7FrK" name="g_all_guis.h" compile="0" resource="0" file="pd/src/g_all_guis.h"/>
+        <FILE id="tN6bwm" name="g_array.c" compile="1" resource="0" file="pd/src/g_array.c"/>
+        <FILE id="eo3iLt" name="g_bang.c" compile="1" resource="0" file="pd/src/g_bang.c"/>
+        <FILE id="jViQuY" name="g_canvas.c" compile="1" resource="0" file="pd/src/g_canvas.c"/>
+        <FILE id="OuuH8o" name="g_canvas.h" compile="0" resource="0" file="pd/src/g_canvas.h"/>
+        <FILE id="BpTSKj" name="g_clone.c" compile="1" resource="0" file="pd/src/g_clone.c"/>
+        <FILE id="ripb8z" name="g_editor.c" compile="1" resource="0" file="pd/src/g_editor.c"/>
+        <FILE id="fHXAog" name="g_graph.c" compile="1" resource="0" file="pd/src/g_graph.c"/>
+        <FILE id="W7o3m8" name="g_guiconnect.c" compile="1" resource="0" file="pd/src/g_guiconnect.c"/>
+        <FILE id="tx97vY" name="g_hdial.c" compile="1" resource="0" file="pd/src/g_hdial.c"/>
+        <FILE id="BIVO1K" name="g_hslider.c" compile="1" resource="0" file="pd/src/g_hslider.c"/>
+        <FILE id="M9sjqD" name="g_io.c" compile="1" resource="0" file="pd/src/g_io.c"/>
+        <FILE id="QRDZF6" name="g_mycanvas.c" compile="1" resource="0" file="pd/src/g_mycanvas.c"/>
+        <FILE id="cIZyqV" name="g_numbox.c" compile="1" resource="0" file="pd/src/g_numbox.c"/>
+        <FILE id="F3BLNb" name="g_readwrite.c" compile="1" resource="0" file="pd/src/g_readwrite.c"/>
+        <FILE id="KV5TV1" name="g_rtext.c" compile="1" resource="0" file="pd/src/g_rtext.c"/>
+        <FILE id="lzmJs2" name="g_scalar.c" compile="1" resource="0" file="pd/src/g_scalar.c"/>
+        <FILE id="iCT1zV" name="g_template.c" compile="1" resource="0" file="pd/src/g_template.c"/>
+        <FILE id="w9Y9TX" name="g_text.c" compile="1" resource="0" file="pd/src/g_text.c"/>
+        <FILE id="PrM5m9" name="g_toggle.c" compile="1" resource="0" file="pd/src/g_toggle.c"/>
+        <FILE id="zVJoO1" name="g_traversal.c" compile="1" resource="0" file="pd/src/g_traversal.c"/>
+        <FILE id="gQGeKq" name="g_vdial.c" compile="1" resource="0" file="pd/src/g_vdial.c"/>
+        <FILE id="NmCIlv" name="g_vslider.c" compile="1" resource="0" file="pd/src/g_vslider.c"/>
+        <FILE id="p9QfUl" name="g_vumeter.c" compile="1" resource="0" file="pd/src/g_vumeter.c"/>
+        <FILE id="ioqcbv" name="m_atom.c" compile="1" resource="0" file="pd/src/m_atom.c"/>
+        <FILE id="NDyBsG" name="m_binbuf.c" compile="1" resource="0" file="pd/src/m_binbuf.c"/>
+        <FILE id="xxTfi1" name="m_class.c" compile="1" resource="0" file="pd/src/m_class.c"/>
+        <FILE id="aqjj0J" name="m_conf.c" compile="1" resource="0" file="pd/src/m_conf.c"/>
+        <FILE id="eh409H" name="m_glob.c" compile="1" resource="0" file="pd/src/m_glob.c"/>
+        <FILE id="ce2rii" name="m_imp.h" compile="0" resource="0" file="pd/src/m_imp.h"/>
+        <FILE id="tfAJfc" name="m_memory.c" compile="1" resource="0" file="pd/src/m_memory.c"/>
+        <FILE id="ys8coY" name="m_obj.c" compile="1" resource="0" file="pd/src/m_obj.c"/>
+        <FILE id="FKc3tj" name="m_pd.c" compile="1" resource="0" file="pd/src/m_pd.c"/>
+        <FILE id="mdilRb" name="m_pd.h" compile="0" resource="0" file="pd/src/m_pd.h"/>
+        <FILE id="CwtQHl" name="m_sched.c" compile="1" resource="0" file="pd/src/m_sched.c"/>
+        <FILE id="Az8rMR" name="s_audio.c" compile="1" resource="0" file="pd/src/s_audio.c"/>
+        <FILE id="krsPTK" name="s_audio_dummy.c" compile="1" resource="0" file="pd/src/s_audio_dummy.c"/>
+        <FILE id="MjpmH0" name="s_file.c" compile="1" resource="0" file="pd/src/s_file.c"/>
+        <FILE id="ea4mEN" name="s_inter.c" compile="1" resource="0" file="pd/src/s_inter.c"/>
+        <FILE id="DMtsWw" name="s_loader.c" compile="1" resource="0" file="pd/src/s_loader.c"/>
+        <FILE id="LqL483" name="s_main.c" compile="1" resource="0" file="pd/src/s_main.c"/>
+        <FILE id="khY6oe" name="s_path.c" compile="1" resource="0" file="pd/src/s_path.c"/>
+        <FILE id="DJhHRt" name="s_print.c" compile="1" resource="0" file="pd/src/s_print.c"/>
+        <FILE id="vXsuLZ" name="s_stuff.h" compile="0" resource="0" file="pd/src/s_stuff.h"/>
+        <FILE id="iTpFTT" name="s_utf8.c" compile="1" resource="0" file="pd/src/s_utf8.c"/>
+        <FILE id="Ga9iyc" name="s_utf8.h" compile="0" resource="0" file="pd/src/s_utf8.h"/>
+        <FILE id="shsQdK" name="x_acoustics.c" compile="1" resource="0" file="pd/src/x_acoustics.c"/>
+        <FILE id="zmflMZ" name="x_arithmetic.c" compile="1" resource="0" file="pd/src/x_arithmetic.c"/>
+        <FILE id="Pw6WnY" name="x_array.c" compile="1" resource="0" file="pd/src/x_array.c"/>
+        <FILE id="YvrFtf" name="x_connective.c" compile="1" resource="0" file="pd/src/x_connective.c"/>
+        <FILE id="kRBRk0" name="x_gui.c" compile="1" resource="0" file="pd/src/x_gui.c"/>
+        <FILE id="QZM5fe" name="x_interface.c" compile="1" resource="0" file="pd/src/x_interface.c"/>
+        <FILE id="OmcsTF" name="x_list.c" compile="1" resource="0" file="pd/src/x_list.c"/>
+        <FILE id="PwEUwF" name="x_midi.c" compile="1" resource="0" file="pd/src/x_midi.c"/>
+        <FILE id="D4Rspf" name="x_misc.c" compile="1" resource="0" file="pd/src/x_misc.c"/>
+        <FILE id="cSt1M4" name="x_net.c" compile="1" resource="0" file="pd/src/x_net.c"/>
+        <FILE id="Awcnp1" name="x_scalar.c" compile="1" resource="0" file="pd/src/x_scalar.c"/>
+        <FILE id="pHqcBp" name="x_text.c" compile="1" resource="0" file="pd/src/x_text.c"/>
+        <FILE id="zEfwkq" name="x_time.c" compile="1" resource="0" file="pd/src/x_time.c"/>
+        <FILE id="lDkKiM" name="x_vexp.c" compile="1" resource="0" file="pd/src/x_vexp.c"/>
+        <FILE id="NREmBI" name="x_vexp.h" compile="0" resource="0" file="pd/src/x_vexp.h"/>
+        <FILE id="O8WnZB" name="x_vexp_fun.c" compile="1" resource="0" file="pd/src/x_vexp_fun.c"/>
+        <FILE id="d9XYe1" name="x_vexp_if.c" compile="1" resource="0" file="pd/src/x_vexp_if.c"/>
+      </GROUP>
+    </GROUP>
+    <GROUP id="{F2D38857-8F16-82F7-820D-7B5BD647C110}" name="zpd">
+      <FILE id="b5PZI5" name="z_pd.c" compile="1" resource="0" file="zpd/z_pd.c"/>
+      <FILE id="JtwEZx" name="z_pd.h" compile="0" resource="0" file="zpd/z_pd.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="dynamic/MacOSX" extraDefs="HAVE_UNISTD_H=1&#10;HAVE_ALLOCA_H=1&#10;HAVE_LIBDL=1">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.7 SDK" osxArchitecture="64BitUniversal"
+                       isDebug="1" optimisation="1" targetName="libzpd" headerPath="../../pd/src"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.7 SDK" osxArchitecture="64BitUniversal"
+                       isDebug="0" optimisation="3" targetName="libzpd" headerPath="../../pd/src"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS/>
+    </XCODE_MAC>
+    <VS2015 targetFolder="dynamic/VisualStudio2015">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="zpd"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="3" targetName="zpd"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS/>
+    </VS2015>
+    <LINUX_MAKE targetFolder="dynamic/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
+                       targetName="libzpd"/>
+        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="3"
+                       targetName="libzpd"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS/>
+    </LINUX_MAKE>
+  </EXPORTFORMATS>
+  <MODULES/>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>

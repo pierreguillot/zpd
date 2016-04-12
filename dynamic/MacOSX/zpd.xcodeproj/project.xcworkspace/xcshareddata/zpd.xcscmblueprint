@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8258AC25A66CB1E8C680D6E64FA454C84C53D552",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6F7A20C0CDB7BDCD5180DBA15CA6EBFFD435B7B5" : 0,
+    "8258AC25A66CB1E8C680D6E64FA454C84C53D552" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9973DC01-A744-4FF9-B5AF-D9617C32F635",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6F7A20C0CDB7BDCD5180DBA15CA6EBFFD435B7B5" : "zPureData\/pd\/",
+    "8258AC25A66CB1E8C680D6E64FA454C84C53D552" : "zPureData\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "zpd",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "dynamic\/MacOSX\/zpd.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/pure-data\/pure-data.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6F7A20C0CDB7BDCD5180DBA15CA6EBFFD435B7B5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/pierreguillot\/zPureData.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8258AC25A66CB1E8C680D6E64FA454C84C53D552"
+    }
+  ]
+}
