@@ -14,13 +14,12 @@ os: Visual Studio 2015
 
 install:
     - git submodule update --init --recursive
-    - mkdir pthread
-    - cd pthread
     - git clone https://github.com/GerHobbelt/pthread-win32.git
 
 build_script:
-    - cd pthread
-    - msbuild pthread.2015.vcxproj
+    - cd pthread-win32
+    - setenv /x64 /2003 /Release
+    - nmake realclean VC-static
     - cd ../
     - mkdir build
     - cd build
