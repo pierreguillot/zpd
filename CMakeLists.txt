@@ -161,24 +161,26 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 )
 
 #---------------------------------------#
-#         The zPure Data Headers        #
+#         The zPure Data Library        #
 #---------------------------------------#
+
+set(LIBRARY_OUTPUT_PATH ../../lib/${CMAKE_BUILD_TYPE})
 include_directories(${PROJECT_SOURCE_DIR}/zpd)
 include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 if(${WIN32})
-  if(${CMAKE_SIZEOF_VOID_P} EQUAL 8 )
-  include_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x64)
-  else(${CMAKE_SIZEOF_VOID_P} EQUAL 8 )
   include_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x86)
+  add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES} pthread_lib)
+  add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES} pthread_lib)
+  if(${CMAKE_SIZEOF_VOID_P} EQUAL 8 )
+  link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x64)
+  else(${CMAKE_SIZEOF_VOID_P} EQUAL 8 )
+  link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x86)
   endif()
+  set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
+  set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
+else()
+  add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
+  set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
 endif()
-
-#---------------------------------------#
-#         The zPure Data Library        #
-#---------------------------------------#
-set(LIBRARY_OUTPUT_PATH ../../lib/${CMAKE_BUILD_TYPE})
-add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
-add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
-
-set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
-set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
