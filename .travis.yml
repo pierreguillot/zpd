@@ -1,0 +1,12 @@
+language: c
+
+notifications:
+  email: false
+
+git:
+  submodules: true
+  depth: 5
+
+compiler:
+  - clang
+  - gcc
