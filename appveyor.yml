@@ -12,14 +12,12 @@ environment:
 
 os: Visual Studio 2015
 
-init:
-  - Invoke-WebRequest https://github.com/pierreguillot/pthread/releases/download/0.0.1/pthread.zip -OutFile C:\projects\zpd\pthread\pthread.zip
-  - 7z x C:\projects\zpd\pthread\pthread.zip
-  - cd pthread\lib\x86
-  - dir /s /b /o:gn
-  - cd ..\..\..\
 install:
     - git submodule update --init --recursive
+    - git clone -q --branch=master https://github.com/pierreguillot/pthread.git C:\projects\zpd\pthread
+    - cd pthread\lib\x86
+    - dir /s /b /o:gn
+    - cd ..\..\..\
 
 build_script:
     - mkdir build
