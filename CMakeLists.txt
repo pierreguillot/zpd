@@ -156,7 +156,7 @@ include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 #         The zPure Data Library        #
 #---------------------------------------#
 set(CMAKE_MACOSX_RPATH On)
-set(LIBRARY_OUTPUT_PATH lib)
+set(LIBRARY_OUTPUT_PATH ../../lib/${CMAKE_BUILD_TYPE})
 add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
 add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
 set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)

@@ -33,7 +33,8 @@
 *.pbxproj
 *.xcuserstate
 *.xcuserdatad
-/zpdlib.build
+*.xcodeproj
+builds/xcode/zpdlib.build
 
 # CMake
 CMakeCache.txt
