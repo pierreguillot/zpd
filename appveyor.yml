@@ -16,7 +16,7 @@ install:
     - git submodule update --init --recursive
     - mkdir pthread
     - cd pthread
-    - git pull origin master https://github.com/GerHobbelt/pthread-win32.git
+    - git clone https://github.com/GerHobbelt/pthread-win32.git
 
 build_script:
     - cd pthread
