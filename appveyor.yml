@@ -14,7 +14,7 @@ os: Visual Studio 2015
 
 install:
     - git submodule update --init --recursive
-    - git clone https://github.com/GerHobbelt/pthread-win32.git
+    - git clone -q --branch=master https://github.com/GerHobbelt/pthread-win32.git C:\projects\zpd\pthread-win32
 
 build_script:
     - cd pthread-win32
