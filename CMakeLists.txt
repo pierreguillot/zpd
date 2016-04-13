@@ -26,7 +26,7 @@ elseif(${UNIX})
   -DHAVE_ALLOCA_H=1
   -DHAVE_LIBDL=1
   )
-elseif(${WIN32})
+elseif(${WINDOWS})
   add_definitions(
   -DHAVE_STRUCT_TIMESPEC=1
   -DTHREAD_LOCKING=0
