@@ -6,36 +6,50 @@ cmake_minimum_required(VERSION 2.6)
 project(zpdlib)
 set(CMAKE_BUILD_TYPE Release)
 
+if(${APPLE})
+  message("Apple Version")
+elseif(${UNIX})
+  message("Unix Version")
+elseif(${WIN32})
+  if(${CMAKE_SIZEOF_VOID_P} EQUAL 8 )
+    message("Windows 64-bit Version")
+  else(${CMAKE_SIZEOF_VOID_P} EQUAL 8 )
+    message("Windows 32-bit Version")
+  endif()
+endif()
+
 #---------------------------------------#
 #         The Preprocessor Defs         #
 #---------------------------------------#
-add_definitions(
--DPD=1
--DUSEAPI_DUMMY=1
--DPD_INTERNAL=1
-)
 if(${APPLE})
+  set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
   add_definitions(
-  -DHAVE_UNISTD_H=1
-  -DHAVE_ALLOCA_H=1
-  -DHAVE_LIBDL=1
+    -DPD=1
+    -DUSEAPI_DUMMY=1
+    -DPD_INTERNAL=1
+    -DHAVE_UNISTD_H=1
+    -DHAVE_ALLOCA_H=1
+    -DHAVE_LIBDL=1
   )
+  set(CMAKE_MACOSX_RPATH On)
 elseif(${UNIX})
   add_definitions(
-  -DHAVE_UNISTD_H=1
-  -DHAVE_ALLOCA_H=1
-  -DHAVE_LIBDL=1
+    -DPD=1
+    -DUSEAPI_DUMMY=1
+    -DPD_INTERNAL=1
+    -DHAVE_UNISTD_H=1
+    -DHAVE_ALLOCA_H=1
+    -DHAVE_LIBDL=1
   )
-elseif(${WINDOWS})
+elseif(${WIN32})
   add_definitions(
-  -DHAVE_STRUCT_TIMESPEC=1
-  -DTHREAD_LOCKING=0
+    -DPD=1
+    -DUSEAPI_DUMMY=1
+    -DPD_INTERNAL=1
+    -DHAVE_STRUCT_TIMESPEC=1
+    -DPTW32_STATIC_LIB=1
   )
 endif()
-
-IF(${APPLE})
-  set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
-ENDIF()
 
 #---------------------------------------#
 #         The zPure Data Sources        #
@@ -151,13 +165,20 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 #---------------------------------------#
 include_directories(${PROJECT_SOURCE_DIR}/zpd)
 include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
+if(${WIN32})
+  if(${CMAKE_SIZEOF_VOID_P} EQUAL 8 )
+  include_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x64)
+  else(${CMAKE_SIZEOF_VOID_P} EQUAL 8 )
+  include_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x86)
+  endif()
+endif()
 
 #---------------------------------------#
 #         The zPure Data Library        #
 #---------------------------------------#
-set(CMAKE_MACOSX_RPATH On)
 set(LIBRARY_OUTPUT_PATH ../../lib/${CMAKE_BUILD_TYPE})
 add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
 add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+
 set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
 set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
