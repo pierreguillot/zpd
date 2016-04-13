@@ -12,7 +12,6 @@
 *.so
 *.dylib
 *.dll
-*.pd_darwin
 
 # Fortran module files
 *.mod
@@ -34,6 +33,4 @@
 *.pbxproj
 *.xcuserstate
 *.xcuserdatad
-
-# JUCE
-/JuceLibraryCode
+/zpdlib.build
