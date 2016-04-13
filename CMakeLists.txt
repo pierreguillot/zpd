@@ -30,6 +30,7 @@ elseif(${WINDOWS})
   add_definitions(
   -DHAVE_STRUCT_TIMESPEC=1
   -DPTW32_STATIC_LIB=1
+  -DTHREAD_LOCKING=0
   )
 endif()
 
