@@ -16,7 +16,8 @@ install:
     - git submodule update --init --recursive
     - git clone -q --branch=master https://github.com/pierreguillot/pthread.git C:\projects\zpd\pthread
     - cd pthread
-    - ls
+    - dir
+    - cd ..\
 
 build_script:
     - mkdir build
