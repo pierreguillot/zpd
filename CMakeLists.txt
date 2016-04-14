@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.6)
 #         The zPure Data Project        #
 #---------------------------------------#
 project(zpdlib)
-set(CMAKE_BUILD_TYPE Release)
+#set(CMAKE_BUILD_TYPE Release)
 
 if(${APPLE})
   message("Apple Version")
@@ -31,7 +31,7 @@ if(${APPLE})
     -DHAVE_ALLOCA_H=1
     -DHAVE_LIBDL=1
   )
-  set(CMAKE_MACOSX_RPATH On)
+  set(CMAKE_MACOSX_RPATH Off)
 elseif(${UNIX})
   add_definitions(
     -DPD=1
@@ -164,7 +164,7 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 #         The zPure Data Library        #
 #---------------------------------------#
 
-set(LIBRARY_OUTPUT_PATH ../../lib/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ../lib/${CMAKE_BUILD_TYPE})
 include_directories(${PROJECT_SOURCE_DIR}/zpd)
 include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 if(${WIN32})

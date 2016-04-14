@@ -421,14 +421,18 @@ void z_pd_instance_set(z_instance* instance)
 
 static z_receiver* z_pd_instance_getreceiver(z_instance* instance, z_tie* tie)
 {
-    z_receiver* recv = instance->z_internal_ptr->z_receiver_list->z_next;
-    while(recv)
+    z_receiver* recv = NULL;
+    if(instance->z_internal_ptr->z_receiver_list)
     {
-        if(recv->z_sym == tie)
+        recv = instance->z_internal_ptr->z_receiver_list->z_next;
+        while(recv)
         {
-            return recv;
+            if(recv->z_sym == tie)
+            {
+                return recv;
+            }
+            recv = recv->z_next;
         }
-        recv = recv->z_next;
     }
     return NULL;
 }
