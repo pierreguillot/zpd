@@ -190,7 +190,7 @@ Z_PD_EXTERN void z_pd_instance_set_hook_print(z_instance* instance, z_hook_print
 Z_PD_EXTERN void z_pd_instance_set_hook_midi(z_instance* instance, z_hook_midi* midihook);
 
 //! @brief Binds an instance to a tie.
-Z_PD_EXTERN void z_pd_instance_bind(z_instance* instance, z_tie* tie, z_hook_message*¨messagehook);
+Z_PD_EXTERN void z_pd_instance_bind(z_instance* instance, z_tie* tie, z_hook_message* messagehook);
 
 //! @brief Unbinds an instance to a tie.
 Z_PD_EXTERN void z_pd_instance_unbind(z_instance* instance, z_tie* tie);
