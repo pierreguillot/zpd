@@ -337,14 +337,7 @@ static void z_pd_print(const char* s)
 
 
 z_instance* z_pd_instance_new(size_t size,
-                              z_hook_print mprint,
-                              z_hook_noteon mnoteon,
-                              z_hook_controlchange mcontrolchange,
-                              z_hook_programchange mprogramchange,
-                              z_hook_pitchbend mpitchbend,
-                              z_hook_aftertouch maftertouch,
-                              z_hook_polyaftertouch mpolyaftertouch,
-                              z_hook_byte mbyte)
+                              z_hook_print mprint)
 {
     z_instance* instance = NULL;
     z_internal* internal = (z_internal *)malloc(sizeof(z_internal));
@@ -358,13 +351,13 @@ z_instance* z_pd_instance_new(size_t size,
         
         
         internal->z_m_print = mprint;
-        internal->z_m_noteon = mnoteon;
-        internal->z_m_controlchange = mcontrolchange;
-        internal->z_m_programchange = mprogramchange;
-        internal->z_m_pitchbend = mpitchbend;
-        internal->z_m_aftertouch = maftertouch;
-        internal->z_m_polyaftertouch = mpolyaftertouch;
-        internal->z_m_byte = mbyte;
+        internal->z_m_noteon = NULL;
+        internal->z_m_controlchange = NULL;
+        internal->z_m_programchange = NULL;
+        internal->z_m_pitchbend = NULL;
+        internal->z_m_aftertouch = NULL;
+        internal->z_m_polyaftertouch = NULL;
+        internal->z_m_byte = NULL;
         
         internal->z_receiver_list = NULL;
         internal->z_intance = pdinstance_new();
@@ -419,6 +412,17 @@ void z_pd_instance_set(z_instance* instance)
     z_current_instance = instance;
 }
 
+void z_pd_instance_set_hook_midi(z_instance* instance, z_hook_midi* midihook)
+{
+    instance->z_internal_ptr->z_m_noteon = midihook->m_noteon;
+    instance->z_internal_ptr->z_m_controlchange = midihook->m_controlchange;
+    instance->z_internal_ptr->z_m_programchange = midihook->m_programchange;
+    instance->z_internal_ptr->z_m_pitchbend = midihook->m_pitchbend;
+    instance->z_internal_ptr->z_m_aftertouch = midihook->m_aftertouch;
+    instance->z_internal_ptr->z_m_polyaftertouch = midihook->m_polyaftertouch;
+    instance->z_internal_ptr->z_m_byte = midihook->m_byte;
+}
+
 static z_receiver* z_pd_instance_getreceiver(z_instance* instance, z_tie* tie)
 {
     z_receiver* recv = NULL;
@@ -437,23 +441,17 @@ static z_receiver* z_pd_instance_getreceiver(z_instance* instance, z_tie* tie)
     return NULL;
 }
 
-void z_pd_instance_bind(z_instance* instance, z_tie* tie,
-                                    z_hook_bang mbang,
-                                    z_hook_float mfloat,
-                                    z_hook_symbol msymbol,
-                                    z_hook_gpointer mgpointer,
-                                    z_hook_list mlist,
-                                    z_hook_anything manything)
+void z_pd_instance_bind(z_instance* instance, z_tie* tie, z_hook_message* messagehook)
 {
     z_receiver *x = z_pd_instance_getreceiver(instance, tie);
     if(x)
     {
-        x->z_m_bang = mbang;
-        x->z_m_float = mfloat;
-        x->z_m_symbol = msymbol;
-        x->z_m_gpointer = mgpointer;
-        x->z_m_list = mlist;
-        x->z_m_anything = manything;
+        x->z_m_bang = messagehook->m_bang;
+        x->z_m_float = messagehook->m_float;
+        x->z_m_symbol = messagehook->m_symbol;
+        x->z_m_gpointer = messagehook->m_gpointer;
+        x->z_m_list = messagehook->m_list;
+        x->z_m_anything = messagehook->m_anything;
     }
     else
     {
@@ -462,12 +460,12 @@ void z_pd_instance_bind(z_instance* instance, z_tie* tie,
         {
             x->z_sym = tie;
             x->z_owner = instance;
-            x->z_m_bang = mbang;
-            x->z_m_float = mfloat;
-            x->z_m_symbol = msymbol;
-            x->z_m_gpointer = mgpointer;
-            x->z_m_list = mlist;
-            x->z_m_anything = manything;
+            x->z_m_bang = messagehook->m_bang;
+            x->z_m_float = messagehook->m_float;
+            x->z_m_symbol = messagehook->m_symbol;
+            x->z_m_gpointer = messagehook->m_gpointer;
+            x->z_m_list = messagehook->m_list;
+            x->z_m_anything = messagehook->m_anything;
             x->z_next = instance->z_internal_ptr->z_receiver_list;
             instance->z_internal_ptr->z_receiver_list = x;
             pd_bind((t_pd *)x, x->z_sym);

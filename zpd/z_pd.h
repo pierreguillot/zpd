@@ -95,6 +95,26 @@ typedef void (*z_hook_gpointer)(struct _instance* instance, z_tie* tie, z_gpoint
 typedef void (*z_hook_list)(struct _instance* instance, z_tie* tie, z_list *list);
 typedef void (*z_hook_anything)(struct _instance* instance, z_tie* tie, z_symbol *s, z_list *list);
 
+typedef struct _hook_midi
+{
+    z_hook_noteon           m_noteon;
+    z_hook_controlchange    m_controlchange;
+    z_hook_programchange    m_programchange;
+    z_hook_pitchbend        m_pitchbend;
+    z_hook_aftertouch       m_aftertouch;
+    z_hook_polyaftertouch   m_polyaftertouch;
+    z_hook_byte             m_byte;
+}z_hook_midi;
+
+typedef struct _hook_message
+{
+    z_hook_bang     m_bang;
+    z_hook_float    m_float;
+    z_hook_symbol   m_symbol;
+    z_hook_gpointer m_gpointer;
+    z_hook_list     m_list;
+    z_hook_anything m_anything;
+}z_hook_message;
 
 //! @brief Initializes the Pure Data environment.
 //! @details The method should be called only one time at the initialization, before
@@ -154,15 +174,8 @@ Z_PD_EXTERN void z_pd_console_fatal(char const* message);
 
 
 //! @brief Creates a new instance.
-Z_PD_EXTERN z_instance* z_pd_instance_new(size_t size,
-                                          z_hook_print mprint,
-                                          z_hook_noteon mnoteon,
-                                          z_hook_controlchange mcontrolchange,
-                                          z_hook_programchange mprogramchange,
-                                          z_hook_pitchbend mpitchbend,
-                                          z_hook_aftertouch maftertouch,
-                                          z_hook_polyaftertouch mpolyaftertouch,
-                                          z_hook_byte mbyte);
+//! @param The size of memory to allocate in bytes.
+Z_PD_EXTERN z_instance* z_pd_instance_new(size_t size, z_hook_print mprint);
 
 //! @brief Deletes an instance.
 Z_PD_EXTERN void z_pd_instance_free(z_instance* instance);
@@ -170,14 +183,14 @@ Z_PD_EXTERN void z_pd_instance_free(z_instance* instance);
 //! @brief Sets the current instance.
 Z_PD_EXTERN void z_pd_instance_set(z_instance* instance);
 
+//! @brief Sets the print methods of an instance.
+Z_PD_EXTERN void z_pd_instance_set_hook_print(z_instance* instance, z_hook_print* printhook);
+
+//! @brief Sets the midi methods of an instance.
+Z_PD_EXTERN void z_pd_instance_set_hook_midi(z_instance* instance, z_hook_midi* midihook);
+
 //! @brief Binds an instance to a tie.
-Z_PD_EXTERN void z_pd_instance_bind(z_instance* instance, z_tie* tie,
-                                    z_hook_bang mbang,
-                                    z_hook_float mfloat,
-                                    z_hook_symbol msymbol,
-                                    z_hook_gpointer mgpointer,
-                                    z_hook_list mlist,
-                                    z_hook_anything manything);
+Z_PD_EXTERN void z_pd_instance_bind(z_instance* instance, z_tie* tie, z_hook_message*¨messagehook);
 
 //! @brief Unbinds an instance to a tie.
 Z_PD_EXTERN void z_pd_instance_unbind(z_instance* instance, z_tie* tie);
