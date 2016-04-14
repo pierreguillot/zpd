@@ -8,16 +8,36 @@ project(zpdlib_edit)
 #---------------------------------------#
 #         The Preprocessor Defs         #
 #---------------------------------------#
-set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
-add_definitions(
-  -DPD=1
-  -DUSEAPI_DUMMY=1
-  -DPD_INTERNAL=1
-  -DHAVE_UNISTD_H=1
-  -DHAVE_ALLOCA_H=1
-  -DHAVE_LIBDL=1
-)
-set(CMAKE_MACOSX_RPATH Off)
+
+if(${APPLE})
+  set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
+  add_definitions(
+    -DPD=1
+    -DUSEAPI_DUMMY=1
+    -DPD_INTERNAL=1
+    -DHAVE_UNISTD_H=1
+    -DHAVE_ALLOCA_H=1
+    -DHAVE_LIBDL=1
+  )
+  set(CMAKE_MACOSX_RPATH Off)
+elseif(${UNIX})
+  add_definitions(
+    -DPD=1
+    -DUSEAPI_DUMMY=1
+    -DPD_INTERNAL=1
+    -DHAVE_UNISTD_H=1
+    -DHAVE_ALLOCA_H=1
+    -DHAVE_LIBDL=1
+  )
+elseif(${WIN32})
+  add_definitions(
+    -DPD=1
+    -DUSEAPI_DUMMY=1
+    -DPD_INTERNAL=1
+    -DHAVE_STRUCT_TIMESPEC=1
+    -DPTW32_STATIC_LIB=1
+  )
+endif()
 
 #---------------------------------------#
 #         The zPure Data Sources        #
