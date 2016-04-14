@@ -13,8 +13,12 @@ compiler:
 os:
   - linux
   - osx
-  
+
 script:
   - mkdir build && cd build
   - cmake ..
   - cmake --build .
+  - cd ../edit
+  - cmake .
+  - cmake --build .
+  - Debug/zpdlib_edit

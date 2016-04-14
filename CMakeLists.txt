@@ -160,6 +160,10 @@ ${PROJECT_SOURCE_DIR}/pd/extra/sigmund~/sigmund~.c
 ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 )
 
+source_group(zpd FILES ${ZPDSOURCES})
+source_group(pd FILES ${PDSOURCES})
+source_group(pdextra FILES ${PDEXTRASOURCES})
+
 #---------------------------------------#
 #         The zPure Data Library        #
 #---------------------------------------#
