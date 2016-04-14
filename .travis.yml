@@ -15,10 +15,7 @@ os:
   - osx
 
 script:
-  - mkdir build && cd build
-  - cmake ..
-  - cmake --build .
-  - cd ../edit
+  - cd edit
   - cmake .
-  - cmake --build .
-  - Debug/zpdlib_edit
+  - make
+  - ./zpdlib_edit

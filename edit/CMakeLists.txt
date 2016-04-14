@@ -137,15 +137,15 @@ set(PDSOURCES
 #        The Pure Data Extra Sources    #
 #---------------------------------------#
 set(PDEXTRASOURCES
-${PROJECT_SOURCE_DIR}/../pd/extra/bob~/bob~.c
-${PROJECT_SOURCE_DIR}/../pd/extra/bonk~/bonk~.c
-${PROJECT_SOURCE_DIR}/../pd/extra/choice/choice.c
-${PROJECT_SOURCE_DIR}/../pd/extra/fiddle~/fiddle~.c
-${PROJECT_SOURCE_DIR}/../pd/extra/loop~/loop~.c
-${PROJECT_SOURCE_DIR}/../pd/extra/lrshift~/lrshift~.c
-${PROJECT_SOURCE_DIR}/../pd/extra/pique/pique.c
-${PROJECT_SOURCE_DIR}/../pd/extra/sigmund~/sigmund~.c
-${PROJECT_SOURCE_DIR}/../pd/extra/stdout/stdout.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/bob~/bob~.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/bonk~/bonk~.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/choice/choice.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/fiddle~/fiddle~.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/loop~/loop~.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/lrshift~/lrshift~.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/pique/pique.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/sigmund~/sigmund~.c
+  ${PROJECT_SOURCE_DIR}/../pd/extra/stdout/stdout.c
 )
 
 source_group(zpd FILES ${ZPDSOURCES})
