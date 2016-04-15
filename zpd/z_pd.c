@@ -8,7 +8,6 @@
 // directly copied. None of the authors of Pure Data and libPD is responsible for these
 // experiments but you must be aware of their unintended contribution.
 
-#include <math.h>
 #include <ctype.h>
 #include <stdarg.h>
 

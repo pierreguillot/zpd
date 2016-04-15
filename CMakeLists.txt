@@ -189,15 +189,15 @@ else()
   #             Static Library            #
   #---------------------------------------#
   add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
-  target_link_libraries(zpdshared ${MATH_LIB})
-  set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
-  set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
+  target_link_libraries(zpdstatic ${MATH_LIB})
+  set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
+  set_target_properties(zpdstatic PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
   #---------------------------------------#
   #                  Test                 #
   #---------------------------------------#
   add_executable(zpdtest test/test.c ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
-  target_link_libraries(zpdshared ${MATH_LIB})
+  target_link_libraries(zpdtest ${MATH_LIB})
   set_target_properties(zpdtest PROPERTIES OUTPUT_NAME zpdtest)
   set_target_properties(zpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test)
 endif()
