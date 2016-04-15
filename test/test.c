@@ -11,14 +11,6 @@
 #include "../zpd/z_pd.h"
 
 #include <stdio.h>
-#ifdef WINDOWS
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
-#include <unistd.h>
-#define GetCurrentDir getcwd
-#endif
-
 
 typedef struct _test_instance
 {
@@ -200,11 +192,25 @@ static void test_allocation_failed(const char* message)
     printf("Allocation failed %s \n", message);
 }
 
+static char* test_get_patch_folder(char* location)
+{
+    size_t size = strlen(location), i;
+    for(i = 0; i < size; ++i)
+    {
+        if(strncmp(location+i, "/test/", 6) == 0)
+        {
+            memset(location+i+6, '\0', size-i);
+            return location;
+        }
+    }
+    return NULL;
+}
+
 
 int main(int argc, char** argv)
 {
-    size_t i, size;
-    char location[FILENAME_MAX], bindingname[1000], valid;
+    size_t i;
+    char *location, bindingname[1000];
     z_test_instance *inst1, *inst2;
     z_tie *tie1, *tie2;
     z_patch *patch1, *patch2;
@@ -228,37 +234,18 @@ int main(int argc, char** argv)
     
     if(1)
     {
-        valid = 0;
         test_start_part("Initialization");
         z_pd_init();
         printf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
-        if(!argc && getcwd(location, sizeof(location)) != NULL)
+        if(argc && argv[0])
         {
-            i = 0;
-            
-            size = strlen(location);
-            for(i = 0; i < size; ++i)
-            {
-                if(strncmp(location+i, "/test/", 6) == 0)
-                {
-                    memset(location+i+6, '\0', size-i);
-                    printf("Add searchpath : %s\n", location);
-                    z_pd_searchpath_add(location);
-                    valid = 1;
-                    break;
-                }
-            }
-            
+            location = test_get_patch_folder(argv[0]);
+            printf("Add searchpath : %s\n", location);
+            z_pd_searchpath_add(location);
         }
-        else if(argc)
+        else
         {
-            z_pd_searchpath_add(argv[0]);
-            valid = 1;
-        }
-        if(!valid)
-        {
-            printf("Can't find current working directory\n");
-            return 0;
+            printf("Can't find patch directory\n");
         }
         
         test_end_part();
@@ -332,6 +319,10 @@ int main(int argc, char** argv)
             test_allocation_failed("List");
             return 0;
         }
+        z_pd_list_set_float(list, 0, 0.f);
+        z_pd_list_set_float(list, 1, 1.f);
+        z_pd_list_set_float(list, 2, 2.f);
+        
         z_pd_instance_bind((z_instance *)inst1, tie1, &hook_message);
         z_pd_instance_bind((z_instance *)inst2, tie2, &hook_message);
         
