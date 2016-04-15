@@ -240,8 +240,15 @@ int main(int argc, char** argv)
         if(argc && argv[0])
         {
             location = test_get_patch_folder(argv[0]);
-            printf("Add searchpath : %s\n", location);
-            z_pd_searchpath_add(location);
+            if(location)
+            {
+                printf("Add searchpath : %s\n", location);
+                z_pd_searchpath_add(location);
+            }
+            else
+            {
+                printf("%s Can't find patch directory\n", argv[0]);
+            }
         }
         else
         {

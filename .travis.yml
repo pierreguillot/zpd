@@ -18,5 +18,4 @@ script:
   - mkdir build && cd build
   - cmake ..
   - cmake --build .
-  - cd ../test
-  - ./zpdtest
+  - ./test/zpdtest pwd
