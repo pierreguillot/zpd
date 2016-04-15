@@ -175,10 +175,13 @@ if(${WIN32})
 
   #set_target_properties(zpdstatic PROPERTIES COMPILE_FLAGS /ignore:4091 \ignore:)
 else()
+
+  find_library(MATH_LIB m)
   #---------------------------------------#
   #             Shared Library            #
   #---------------------------------------#
   add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  target_link_libraries(zpdshared ${MATH_LIB})
   set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
   set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
@@ -186,13 +189,15 @@ else()
   #             Static Library            #
   #---------------------------------------#
   add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  target_link_libraries(zpdshared ${MATH_LIB})
   set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
   set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
   #---------------------------------------#
   #                  Test                 #
   #---------------------------------------#
-  add_executable(zpdtest ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES} test/test.c )
+  add_executable(zpdtest test/test.c ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  target_link_libraries(zpdshared ${MATH_LIB})
   set_target_properties(zpdtest PROPERTIES OUTPUT_NAME zpdtest)
   set_target_properties(zpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test)
 endif()
