@@ -94,11 +94,9 @@ int main(int argc, char** argv)
     printf("Test z_pd %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
     
     z_test_instance* instance1 = (z_test_instance *)z_pd_instance_new(sizeof(z_test_instance),
-                                                                      (z_hook_print)test_print_hook,
-                                                                      NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                                                                      (z_hook_print)test_print_hook);
     z_test_instance* instance2 = (z_test_instance *)z_pd_instance_new(sizeof(z_test_instance),
-                                                                      (z_hook_print)test_print_hook,
-                                                                      NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                                                                      (z_hook_print)test_print_hook);
     printf("--------------------\n\n\n");
     
     if(instance1 && instance2)
@@ -121,6 +119,7 @@ int main(int argc, char** argv)
         
         
         {
+            /*
             printf("--------------------\n");
             printf("Test Messages Hook :\n");
             printf("--------------------\n");
@@ -162,6 +161,7 @@ int main(int argc, char** argv)
             z_pd_messagesend_anything(tie2, z_pd_symbol_create("blabha"), list1);
             z_pd_list_free(list1);
             printf("--------------------\n\n\n");
+            */
         }
         
         {
@@ -190,6 +190,7 @@ int main(int argc, char** argv)
                 printf("--------------------\n");
                 sprintf(cwd, "%i-patch", z_pd_patch_get_dollarzero(patch1));
                 printf("Instance 1 : %s\n", cwd);
+                /*
                 z_pd_instance_bind((z_instance *)instance1, z_pd_tie_create(cwd),
                                    (z_hook_bang)test_hook_bang,
                                    (z_hook_float)test_hook_float,
@@ -209,7 +210,7 @@ int main(int argc, char** argv)
                                    (z_hook_list)test_hook_list,
                                    (z_hook_anything)test_hook_anything);
                 printf("--------------------\n\n");
-                
+                */
                 
                 printf("--------------------\n");
                 printf("Patch Message :\n");
