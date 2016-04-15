@@ -192,7 +192,7 @@ else()
   #---------------------------------------#
   #                  Test                 #
   #---------------------------------------#
-  add_executable(zpdtest test/test.c ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  add_executable(zpdtest ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES} test/test.c )
   set_target_properties(zpdtest PROPERTIES OUTPUT_NAME zpdtest)
   set_target_properties(zpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test)
 endif()
