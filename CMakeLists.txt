@@ -118,66 +118,43 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 source_group(zpd FILES ${ZPDSOURCES})
 source_group(pd FILES ${PDSOURCES})
 source_group(pdextra FILES ${PDEXTRASOURCES})
-
-#---------------------------------------#
-#         The Preprocessor Defs         #
-#---------------------------------------#
-if(${APPLE})
-  set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
-  add_definitions(
-    -DPD=1
-    -DUSEAPI_DUMMY=1
-    -DPD_INTERNAL=1
-    -DHAVE_UNISTD_H=1
-    -DHAVE_ALLOCA_H=1
-    -DHAVE_LIBDL=1
-  )
-  set(CMAKE_MACOSX_RPATH Off)
-elseif(${UNIX})
-  add_definitions(
-    -DPD=1
-    -DUSEAPI_DUMMY=1
-    -DPD_INTERNAL=1
-    -DHAVE_UNISTD_H=1
-    -DHAVE_ALLOCA_H=1
-    -DHAVE_LIBDL=1
-  )
-elseif(${WIN32})
-  add_definitions(
-    -DPD=1
-    -DUSEAPI_DUMMY=1
-    -DPD_INTERNAL=1
-    -DHAVE_STRUCT_TIMESPEC=1
-    -DPTW32_STATIC_LIB=1
-  )
-endif()
+include_directories(${PROJECT_SOURCE_DIR}/zpd)
+include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 
 #---------------------------------------#
 #         The zPure Data Library        #
 #---------------------------------------#
 
-include_directories(${PROJECT_SOURCE_DIR}/zpd)
-include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
-if(${WIN32})
-  include_directories(${PROJECT_SOURCE_DIR}/pthread/include)
-  #add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+
+if(${APPLE})
+  set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
+  add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
+  set(CMAKE_MACOSX_RPATH Off)
+  #---------------------------------------#
+  #             Shared Library            #
+  #---------------------------------------#
+  add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
+  set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
+
+  #---------------------------------------#
+  #             Static Library            #
+  #---------------------------------------#
   add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
-  if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-  link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x64)
-  else(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-  link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x86)
-  endif()
-  add_definitions( "/D_CRT_SECURE_NO_WARNINGS /wd4091 /wd4996" )
-  #target_link_libraries(zpdshared pthread_li‡b)
-  target_link_libraries(zpdstatic pthread_lib)
-  #set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
-  set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
+  set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
+  set_target_properties(zpdstatic PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
-  #set_target_properties(zpdstatic PROPERTIES COMPILE_FLAGS /ignore:4091 \ignore:)
-else()
-
+  #---------------------------------------#
+  #                  Test                 #
+  #---------------------------------------#
+  add_executable(zpdtest test/test.c ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  set_target_properties(zpdtest PROPERTIES OUTPUT_NAME zpdtest)
+  set_target_properties(zpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test)
+elseif(${UNIX})
+  add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
   find_library(MATH_LIB m)
   find_package(Threads REQUIRED)
+
   #---------------------------------------#
   #             Shared Library            #
   #---------------------------------------#
@@ -207,4 +184,20 @@ else()
   target_link_libraries(zpdtest ${CMAKE_DL_LIBS})
   set_target_properties(zpdtest PROPERTIES OUTPUT_NAME zpdtest)
   set_target_properties(zpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test)
+
+elseif(${WIN32})
+  add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_STRUCT_TIMESPEC=1 -DPTW32_STATIC_LIB=1)
+  include_directories(${PROJECT_SOURCE_DIR}/pthread/include)
+  #add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+  link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x64)
+  else(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+  link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x86)
+  endif()
+  add_definitions( "/D_CRT_SECURE_NO_WARNINGS /wd4091 /wd4996" )
+  #target_link_libraries(zpdshared pthread_li‡b)
+  target_link_libraries(zpdstatic pthread_lib)
+  #set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
+  set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
 endif()
