@@ -19,4 +19,4 @@ script:
   - cmake ..
   - cmake --build .
   - cd ../test
-  - ./zpdtest pierreguillot/zpd
+  - ./zpdtest pierreguillot/zpd/test/
