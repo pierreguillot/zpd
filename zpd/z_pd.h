@@ -95,6 +95,19 @@ typedef void (*z_hook_gpointer)(struct _instance* instance, z_tie* tie, z_gpoint
 typedef void (*z_hook_list)(struct _instance* instance, z_tie* tie, z_list *list);
 typedef void (*z_hook_anything)(struct _instance* instance, z_tie* tie, z_symbol *s, z_list *list);
 
+
+
+
+//! @brief The console methods.
+typedef struct _hook_console
+{
+    z_hook_print    m_post;
+    z_hook_print    m_log;
+    z_hook_print    m_error;
+    z_hook_print    m_fatal;
+}z_hook_console;
+
+//! @brief The midi methods.
 typedef struct _hook_midi
 {
     z_hook_noteon           m_noteon;
@@ -106,6 +119,7 @@ typedef struct _hook_midi
     z_hook_byte             m_byte;
 }z_hook_midi;
 
+//! @brief The messages methods.
 typedef struct _hook_message
 {
     z_hook_bang     m_bang;
@@ -115,6 +129,8 @@ typedef struct _hook_message
     z_hook_list     m_list;
     z_hook_anything m_anything;
 }z_hook_message;
+
+
 
 //! @brief Initializes the Pure Data environment.
 //! @details The method should be called only one time at the initialization, before
@@ -157,16 +173,16 @@ Z_PD_EXTERN void z_pd_searchpath_add(const char* path);
 
 
 //! @brief Sends a normal post to the Pure Data console.
-Z_PD_EXTERN void z_pd_console_post(char const* message);
+Z_PD_EXTERN void z_pd_console_post(char const* message, ...);
 
 //! @brief Sends a log post to the Pure Data console.
-Z_PD_EXTERN void z_pd_console_log(char const* message);
+Z_PD_EXTERN void z_pd_console_log(char const* message, ...);
 
 //! @brief Sends an error to the Pure Data console.
-Z_PD_EXTERN void z_pd_console_error(char const* message);
+Z_PD_EXTERN void z_pd_console_error(char const* message, ...);
 
 //! @brief Sends a fatal error to the Pure Data console.
-Z_PD_EXTERN void z_pd_console_fatal(char const* message);
+Z_PD_EXTERN void z_pd_console_fatal(char const* message, ...);
 
 
 
@@ -175,7 +191,7 @@ Z_PD_EXTERN void z_pd_console_fatal(char const* message);
 
 //! @brief Creates a new instance.
 //! @param The size of memory to allocate in bytes.
-Z_PD_EXTERN z_instance* z_pd_instance_new(size_t size, z_hook_print mprint);
+Z_PD_EXTERN z_instance* z_pd_instance_new(size_t size);
 
 //! @brief Deletes an instance.
 Z_PD_EXTERN void z_pd_instance_free(z_instance* instance);
@@ -184,7 +200,7 @@ Z_PD_EXTERN void z_pd_instance_free(z_instance* instance);
 Z_PD_EXTERN void z_pd_instance_set(z_instance* instance);
 
 //! @brief Sets the print methods of an instance.
-Z_PD_EXTERN void z_pd_instance_set_hook_print(z_instance* instance, z_hook_print* printhook);
+Z_PD_EXTERN void z_pd_instance_set_hook_console(z_instance* instance, z_hook_console* consolehook);
 
 //! @brief Sets the midi methods of an instance.
 Z_PD_EXTERN void z_pd_instance_set_hook_midi(z_instance* instance, z_hook_midi* midihook);

@@ -8,6 +8,9 @@
 // directly copied. None of the authors of Pure Data and libPD is responsible for these
 // experiments but you must be aware of their unintended contribution.
 
+#include <ctype.h>
+#include <stdarg.h>
+
 #include "z_pd.h"
 #include "../pd/src/m_pd.h"
 #include "../pd/src/g_canvas.h"
@@ -154,7 +157,10 @@ struct _internal
     int                     z_ninputs;
     int                     z_noutputs;
     int                     z_samplerate;
-    z_hook_print            z_m_print;
+    z_hook_print            z_m_post;
+    z_hook_print            z_m_log;
+    z_hook_print            z_m_error;
+    z_hook_print            z_m_fatal;
     z_hook_noteon           z_m_noteon;
     z_hook_controlchange    z_m_controlchange;
     z_hook_programchange    z_m_programchange;
@@ -297,24 +303,44 @@ void z_pd_searchpath_add(const char* path)
 
 
 
-void z_pd_console_fatal(char const* message)
+void z_pd_console_fatal(char const* message, ...)
 {
-    verbose(-3, "%s", message);
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    verbose(-3, "%s", buf);
 }
 
-void z_pd_console_error(char const* message)
+void z_pd_console_error(char const* message, ...)
 {
-    verbose(-2, "%s", message);
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    verbose(-2, "%s", buf);
 }
 
-void z_pd_console_post(char const* message)
+void z_pd_console_post(char const* message, ...)
 {
-    verbose(-1, "%s", message);
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    verbose(-1, "%s", buf);
 }
 
-void z_pd_console_log(char const* message)
+void z_pd_console_log(char const* message, ...)
 {
-    verbose(0, "%s", message);
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    verbose(0, "%s", buf);
 }
 
 
@@ -326,18 +352,49 @@ void z_pd_console_log(char const* message)
 
 static void z_pd_print(const char* s)
 {
-    if(z_current_instance && z_current_instance->z_internal_ptr->z_m_print)
-    {
-        z_current_instance->z_internal_ptr->z_m_print(z_current_instance, s);
-    }
+    int level = 2;
 #ifdef DEBUG
     printf("%s", s);
 #endif
+    if(!z_current_instance)
+    {
+        return;
+    }
+    if(strncmp(s, "error:", 6) == 0)
+    {
+        level = 0;
+        s+=5;
+    }
+    else if(strncmp(s, "verbose(", 8) == 0 && isdigit(s[8]))
+    {
+        level = atoi(s+8);
+        s+=12;
+    }
+    else if(strncmp(s, "tried", 5) == 0 || strncmp(s, "input", 5))
+    {
+        level = 3;
+    }
+    
+    if(level == 0 && z_current_instance->z_internal_ptr->z_m_fatal)
+    {
+        z_current_instance->z_internal_ptr->z_m_fatal(z_current_instance, s);
+    }
+    else if(level == 1 && z_current_instance->z_internal_ptr->z_m_error)
+    {
+        z_current_instance->z_internal_ptr->z_m_error(z_current_instance, s);
+    }
+    else if(level == 2 && z_current_instance->z_internal_ptr->z_m_post)
+    {
+        z_current_instance->z_internal_ptr->z_m_post(z_current_instance, s);
+    }
+    else if(z_current_instance->z_internal_ptr->z_m_log)
+    {
+        z_current_instance->z_internal_ptr->z_m_log(z_current_instance, s);
+    }
 }
 
 
-z_instance* z_pd_instance_new(size_t size,
-                              z_hook_print mprint)
+z_instance* z_pd_instance_new(size_t size)
 {
     z_instance* instance = NULL;
     z_internal* internal = (z_internal *)malloc(sizeof(z_internal));
@@ -350,14 +407,18 @@ z_instance* z_pd_instance_new(size_t size,
         internal->z_noutputs    = 0;
         
         
-        internal->z_m_print = mprint;
-        internal->z_m_noteon = NULL;
+        internal->z_m_post      = NULL;
+        internal->z_m_log       = NULL;
+        internal->z_m_error     = NULL;
+        internal->z_m_fatal     = NULL;
+        
+        internal->z_m_noteon        = NULL;
         internal->z_m_controlchange = NULL;
         internal->z_m_programchange = NULL;
-        internal->z_m_pitchbend = NULL;
-        internal->z_m_aftertouch = NULL;
-        internal->z_m_polyaftertouch = NULL;
-        internal->z_m_byte = NULL;
+        internal->z_m_pitchbend     = NULL;
+        internal->z_m_aftertouch    = NULL;
+        internal->z_m_polyaftertouch= NULL;
+        internal->z_m_byte          = NULL;
         
         internal->z_receiver_list = NULL;
         internal->z_intance = pdinstance_new();
@@ -410,6 +471,14 @@ void z_pd_instance_set(z_instance* instance)
     sys_outchannels = instance->z_internal_ptr->z_noutputs;
     sys_dacsr       = instance->z_internal_ptr->z_samplerate;
     z_current_instance = instance;
+}
+
+void z_pd_instance_set_hook_console(z_instance* instance, z_hook_console* consolehook)
+{
+    instance->z_internal_ptr->z_m_post  = consolehook->m_post;
+    instance->z_internal_ptr->z_m_log   = consolehook->m_log;
+    instance->z_internal_ptr->z_m_error = consolehook->m_error;
+    instance->z_internal_ptr->z_m_fatal = consolehook->m_fatal;
 }
 
 void z_pd_instance_set_hook_midi(z_instance* instance, z_hook_midi* midihook)
@@ -543,6 +612,8 @@ int z_pd_instance_get_samplerate(z_instance* instance)
 
 z_patch* z_pd_patch_new(const char* name, const char* path)
 {
+    int i;
+    char* rpath;
     t_canvas* cnv = NULL;
     if(name && path)
     {
@@ -550,17 +621,25 @@ z_patch* z_pd_patch_new(const char* name, const char* path)
         if(cnv)
         {
             cnv->gl_edit = 0;
+            return cnv;
         }
     }
     else if(name)
     {
-        cnv = (t_canvas *)glob_evalfile(NULL, gensym(name), gensym(""));
-        if(cnv)
+        
+        i = 0;
+        while((rpath = namelist_get(sys_searchpath, i)) != NULL)
         {
-            cnv->gl_edit = 0;
+            cnv = (t_canvas *)glob_evalfile(NULL, gensym(name), gensym(rpath));
+            if(cnv)
+            {
+                cnv->gl_edit = 0;
+                return cnv;
+            }
+            i++;
         }
     }
-    return cnv;
+    return NULL;
 }
 
 void z_pd_patch_free(z_patch* patch)

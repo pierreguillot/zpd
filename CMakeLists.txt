@@ -175,15 +175,24 @@ if(${WIN32})
 
   #set_target_properties(zpdstatic PROPERTIES COMPILE_FLAGS /ignore:4091 \ignore:)
 else()
+  #---------------------------------------#
+  #             Shared Library            #
+  #---------------------------------------#
   add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
   set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
   set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
+  #---------------------------------------#
+  #             Static Library            #
+  #---------------------------------------#
   add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
   set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
   set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
+  #---------------------------------------#
+  #                  Test                 #
+  #---------------------------------------#
   add_executable(zpdtest test/test.c ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
   set_target_properties(zpdtest PROPERTIES OUTPUT_NAME zpdtest)
-  set_target_properties(zpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test/${CMAKE_BUILD_TYPE})
+  set_target_properties(zpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test)
 endif()
