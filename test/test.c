@@ -444,7 +444,7 @@ int main(int argc, char** argv)
         z_pd_instance_set((z_instance *)inst1);
         z_pd_instance_dsp_prepare((z_instance *)inst1, 2, 2, 44100, 64);
         
-        for(size_t i = 0; i < 4; ++i)
+        for(i = 0; i < 4; ++i)
         {
             z_pd_messagesend_bang(tie1);
             z_pd_instance_dsp_perform((z_instance *)inst1, 64,
@@ -456,7 +456,7 @@ int main(int argc, char** argv)
         z_pd_instance_set((z_instance *)inst2);
         z_pd_instance_dsp_prepare((z_instance *)inst2, 2, 2, 44100, 64);
         
-        for(size_t i = 0; i < 4; ++i)
+        for(i = 0; i < 4; ++i)
         {
             z_pd_messagesend_bang(tie2);
             z_pd_instance_dsp_perform((z_instance *)inst2, 64,
