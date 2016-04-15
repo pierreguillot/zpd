@@ -232,7 +232,7 @@ int main(int argc, char** argv)
         test_start_part("Initialization");
         z_pd_init();
         printf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
-        if(getcwd(location, sizeof(location)) != NULL)
+        if(!argc && getcwd(location, sizeof(location)) != NULL)
         {
             i = 0;
             
@@ -249,6 +249,11 @@ int main(int argc, char** argv)
                 }
             }
             
+        }
+        else if(argc)
+        {
+            z_pd_searchpath_add(argv[0]);
+            valid = 1;
         }
         if(!valid)
         {
