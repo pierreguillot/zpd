@@ -344,7 +344,7 @@ int main(int argc, char** argv)
         }
         z_pd_list_set_float(list, 0, 0.f);
         z_pd_list_set_float(list, 1, 1.f);
-        z_pd_list_set_float(list, 2, 2.f);
+        z_pd_list_set_symbol(list, 2, z_pd_symbol_create("symbol"));
         
         z_pd_instance_bind((z_instance *)inst1, tie1, &hook_message);
         z_pd_instance_bind((z_instance *)inst2, tie2, &hook_message);
