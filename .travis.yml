@@ -11,6 +11,10 @@ matrix:
   include:
     - os: linux
       compiler: gcc
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ['python-pip', 'python-yaml']
       before_script:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
       script:
