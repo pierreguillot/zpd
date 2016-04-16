@@ -206,6 +206,12 @@ static char* test_get_patch_folder(char* location)
     size_t size = strlen(location), i;
     for(i = 0; i < size; ++i)
     {
+        if(strncmp(location+i, "/build/", 7) == 0)
+        {
+            memset(location+i+7, '\0', size-i);
+            sprintf(location+i+7, "../test/");
+            return location;
+        }
         if(strncmp(location+i, "/zpd/", 5) == 0)
         {
             memset(location+i+5, '\0', size-i);
