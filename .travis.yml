@@ -19,7 +19,7 @@ matrix:
           - cmake --build .
           - ./zpdtest pwd
       after_success:
-        - coveralls --exclude lib --exclude pd --exclude test --gcov-options -exclude build/CMakeFiles/CompilerIdC/CMakeCCompilerId.c '\-lp' --gcov 'gcov-4.9'
+        - coveralls --exclude lib --exclude pd --exclude test -exclude build/CMakeFiles/CompilerIdC/CMakeCCompilerId.c --gcov-options '\-lp' --gcov 'gcov-4.9'
 
     - os: linux
       compiler: clang
