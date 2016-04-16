@@ -259,6 +259,7 @@ int main(int argc, char** argv)
         z_pd_init();
         z_pd_init();
         zprintf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
+        z_pd_searchpath_clear();
         if(argc && argv[0])
         {
             location = test_get_patch_folder(argv[0]);
@@ -352,6 +353,7 @@ int main(int argc, char** argv)
         z_pd_list_set_float(list, 1, 1.f);
         z_pd_list_set_symbol(list, 2, z_pd_symbol_create("symbol"));
         
+        z_pd_instance_bind((z_instance *)inst1, tie1, &hook_message);
         z_pd_instance_bind((z_instance *)inst1, tie1, &hook_message);
         z_pd_instance_bind((z_instance *)inst2, tie2, &hook_message);
         
