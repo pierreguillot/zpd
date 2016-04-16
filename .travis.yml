@@ -20,7 +20,7 @@ matrix:
           - cd ../
           - ./test/zpdtest pwd
       after_success:
-        - coveralls --exclude lib --exclude test --gcov-options '\-lp'
+        - coveralls --exclude lib --exclude test --gcov-options '\-lp' --gcov 'gcov-4.9'
 
     - os: linux
       compiler: clang
