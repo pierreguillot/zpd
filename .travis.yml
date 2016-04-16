@@ -23,7 +23,7 @@ matrix:
           - mkdir build && cd build
           - cmake -DCOVERALLS=1 -DCMAKE_BUILD_TYPE=Debug ..
           - cmake --build .
-          - ./zpdtest pwd
+          - ./covertest pwd
       after_success:
         - coveralls --gcov-options '\-lp'
       env:
