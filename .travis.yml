@@ -5,14 +5,37 @@ notifications:
 
 git:
   submodules: true
-  depth: 5
+  depth: 3
 
-compiler:
-  - clang
-  - gcc
-os:
-  - linux
-  - osx
+matrix:
+  include:
+      - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ['python-pip', 'python-yaml']
+      before_script:
+        - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
+      after_success:
+        - coveralls -e pd -e build -e test/test.c --gcov-options '\-lp' --gcov 'gcov-4.9'
+      env:
+        - COVERALLS=true
+
+    - os: linux
+      compiler: clang
+      env:
+        - COVERALLS=false
+
+    - os: osx
+      compiler: gcc
+      env:
+        - COVERALLS=false
+
+    - os: osx
+      compiler: clang++
+      env:
+        - COVERALLS=false
 
 script:
   - mkdir build && cd build
