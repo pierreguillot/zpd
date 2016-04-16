@@ -162,25 +162,7 @@ elseif(${UNIX})
   find_library(MATH_LIB m)
   find_package(Threads REQUIRED)
 
-  #---------------------------------------#
-  #             Shared Library            #
-  #---------------------------------------#
-  add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
-  target_link_libraries(zpdshared ${MATH_LIB})
-  target_link_libraries(zpdshared ${CMAKE_THREAD_LIBS_INIT})
-  target_link_libraries(zpdshared ${CMAKE_DL_LIBS})
-  set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
-  set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
-
-  #---------------------------------------#
-  #             Static Library            #
-  #---------------------------------------#
-  add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
-  target_link_libraries(zpdstatic ${MATH_LIB})
-  target_link_libraries(zpdstatic ${CMAKE_THREAD_LIBS_INIT})
-  target_link_libraries(zpdstatic ${CMAKE_DL_LIBS})
-  set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
-  set_target_properties(zpdstatic PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
+  
 
   #---------------------------------------#
   #                  Test                 #
