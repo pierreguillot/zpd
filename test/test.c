@@ -454,22 +454,11 @@ int main(int argc, char** argv)
         test_start_part("Patch Informations");
         z_pd_instance_set((z_instance *)inst1);
         patch1 = z_pd_patch_new("test.pd", NULL);
-        if(!patch1)
-        {
-            test_allocation_failed("Patch 1");
-            return 0;
-        }
-        z_pd_console_log("Patch created %s from %s", z_pd_patch_get_name(patch1), z_pd_patch_get_path(patch1));
+        
         
         
         z_pd_instance_set((z_instance *)inst2);
-        patch2 = z_pd_patch_new("test.pd", NULL);
-        if(!patch1)
-        {
-            test_allocation_failed("Patch 2");
-            return 0;
-        }
-        z_pd_console_log("Patch created %s from %s", z_pd_patch_get_name(patch2), z_pd_patch_get_path(patch2));
+        
         
         test_end_part();
     }
@@ -497,7 +486,11 @@ int main(int argc, char** argv)
         
         z_pd_instance_set((z_instance *)inst1);
         z_pd_instance_dsp_prepare((z_instance *)inst1, 2, 2, 44100, 64);
-        
+        if(z_pd_instance_get_samplerate((z_instance *)inst1) != 44100)
+        {
+            z_pd_console_error("Wrong sample rate %i", z_pd_instance_get_samplerate((z_instance *)inst1));
+            return 1;
+        }
         for(i = 0; i < 4; ++i)
         {
             z_pd_messagesend_bang(tie1);
@@ -509,7 +502,11 @@ int main(int argc, char** argv)
         
         z_pd_instance_set((z_instance *)inst2);
         z_pd_instance_dsp_prepare((z_instance *)inst2, 2, 2, 44100, 64);
-        
+        if(z_pd_instance_get_samplerate((z_instance *)inst2) != 44100)
+        {
+            z_pd_console_error("Wrong sample rate %i", z_pd_instance_get_samplerate((z_instance *)inst1));
+            return 1;
+        }
         for(i = 0; i < 4; ++i)
         {
             z_pd_messagesend_bang(tie2);
