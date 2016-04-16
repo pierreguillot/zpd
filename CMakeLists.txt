@@ -203,6 +203,10 @@ if(${COVERALLS})
     message(STATUS "Build with coveralls")
     ENABLE_TESTING()
 
+    add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
+    find_library(MATH_LIB m)
+    find_package(Threads REQUIRED)
+
     add_executable(zpdtest test/test.c ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
     target_link_libraries(zpdtest ${MATH_LIB})
     target_link_libraries(zpdtest ${CMAKE_THREAD_LIBS_INIT})
