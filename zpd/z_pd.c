@@ -499,7 +499,7 @@ static z_receiver* z_pd_instance_getreceiver(z_instance* instance, z_tie* tie)
     z_receiver* recv = NULL;
     if(instance->z_internal_ptr->z_receiver_list)
     {
-        recv = instance->z_internal_ptr->z_receiver_list->z_next;
+        recv = instance->z_internal_ptr->z_receiver_list;
         while(recv)
         {
             if(recv->z_sym == tie)

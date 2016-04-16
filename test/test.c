@@ -9,7 +9,15 @@
 // experiments but you must be aware of their unintended contribution.
 
 #include "../zpd/z_pd.h"
-#include "test.h"
+
+static int test_counter = 0;
+static char const* section_name = NULL;
+#define TEST_START(message) {test_counter = 0; section_name = NULL; printf("Test Start : %s\n", message);}
+#define TEST_END() {printf("Number of Tests %i\n", test_counter);}
+
+#define TEST_SECTION(message) {section_name = message;}
+#define TEST_TRUE(message, a) if((++test_counter) && !(a)) {if(section_name){printf("Error %s in [%s]\n", message, section_name);}else{printf("Error %s\n", message);} return 1;}
+#define TEST_FALSE(message, a) if((++test_counter)&& (a)) {if(section_name){printf("Error %s in [%s]\n", message, section_name);}else{printf("Error %s\n", message);} return 1;}
 
 #include <stdio.h>
 
@@ -30,50 +38,58 @@ typedef struct _test_instance
     z_sample**      z_inputs;
     size_t          z_noutputs;
     z_sample**      z_outputs;
+    unsigned char   z_post_inc;
+    unsigned char   z_log_inc;
+    unsigned char   z_error_inc;
+    unsigned char   z_fatal_inc;
+    
+    unsigned char   z_bang_inc;
+    unsigned char   z_float_inc;
+    unsigned char   z_symbol_inc;
+    unsigned char   z_list_inc;
+    unsigned char   z_anything_inc;
 }z_test_instance;
-
-static int hook_post_increment = 0;
-static int hook_log_increment = 0;
-static int hook_error_increment = 0;
-static int hook_fatal_increment = 0;
 
 static void test_hook_post(z_test_instance* instance, const char *s)
 {
-    hook_post_increment++;
+    instance->z_post_inc++;
     zprintf("Instance %u (post) : %s", instance->z_index, s);
 }
 
 static void test_hook_log(z_test_instance* instance, const char *s)
 {
-    hook_log_increment++;
+    instance->z_log_inc++;
     zprintf("Instance %u (log) : %s", instance->z_index, s);
 }
 
 static void test_hook_error(z_test_instance* instance, const char *s)
 {
-    hook_error_increment++;
+    instance->z_error_inc++;
     zprintf("Instance %u (error) : %s", instance->z_index, s);
 }
 
 static void test_hook_fatal(z_test_instance* instance, const char *s)
 {
-    hook_fatal_increment++;
+    instance->z_fatal_inc++;
     zprintf("Instance %u (fatal) : %s", instance->z_index, s);
 }
 
 
 static void test_hook_bang(z_test_instance* instance, z_tie* tie)
 {
+    instance->z_bang_inc++;
     zprintf("Instance %u (bang) : from %s\n", instance->z_index, z_pd_tie_get_name(tie));
 }
 
 static void test_hook_float(z_test_instance* instance, z_tie* tie, z_float f)
 {
+    instance->z_float_inc++;
     zprintf("Instance %u (float) : from %s - %f\n", instance->z_index, z_pd_tie_get_name(tie), f);
 }
 
 static void test_hook_symbol(z_test_instance* instance, z_tie* tie, z_symbol* s)
 {
+    instance->z_symbol_inc++;
     zprintf("Instance %u (symbol) : from %s - %s\n", instance->z_index, z_pd_tie_get_name(tie), z_pd_symbol_get_name(s));
 }
 
@@ -81,6 +97,7 @@ static void test_hook_list(z_test_instance* instance, z_tie* tie, z_list *list)
 {
     size_t i = 0;
     size_t const size = z_pd_list_get_size(list);
+    instance->z_list_inc++;
     zprintf("Instance %u (list) : from %s -", instance->z_index, z_pd_tie_get_name(tie));
     for(i = 0; i < size; ++i)
     {
@@ -100,6 +117,7 @@ static void test_hook_anything(z_test_instance* instance, z_tie* tie, z_symbol *
 {
     size_t i = 0;
     size_t const size = z_pd_list_get_size(list);
+    instance->z_anything_inc++;
     zprintf("Instance %u (anything) : from %s - %s", instance->z_index, z_pd_tie_get_name(tie), z_pd_symbol_get_name(s));
     for(i = 0; i < size; ++i)
     {
@@ -125,6 +143,15 @@ static z_test_instance* test_new_instance(unsigned char index, size_t ninputs, s
     {
         inst->z_index   = index;
         inst->z_inputs  = (z_sample **)malloc(ninputs * sizeof(z_sample *));
+        inst->z_post_inc = 0;
+        inst->z_log_inc = 0;
+        inst->z_error_inc = 0;
+        inst->z_fatal_inc = 0;
+        inst->z_bang_inc = 0;
+        inst->z_float_inc = 0;
+        inst->z_symbol_inc = 0;
+        inst->z_list_inc = 0;
+        inst->z_anything_inc = 0;
         if(inst->z_inputs)
         {
             inst->z_ninputs = ninputs;
@@ -294,46 +321,48 @@ int main(int argc, char** argv)
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     
-    TEST_SECTION("Instance Creation")
+    TEST_SECTION("Instance")
     {
         TEST_TRUE("z_pd_instance_new", (inst1 = test_new_instance(1, 2, 2, 64)))
         TEST_TRUE("z_pd_instance_new", (inst2 = test_new_instance(1, 2, 2, 64)))
-    }
-    
-    //////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////
-    
-    TEST_SECTION("Print Hook")
-    {
-        test_start_part("Print Hook");
+        
         z_pd_instance_set_hook_console((z_instance *)inst1, &hook_console);
         z_pd_instance_set_hook_console((z_instance *)inst2, &hook_console);
-        
         z_pd_instance_set((z_instance *)inst1);
         z_pd_console_post("Print a normal post");
         z_pd_console_log("Print a log post");
         z_pd_console_error("Print an error");
         z_pd_console_fatal("Print a fatal error");
-        
         z_pd_instance_set((z_instance *)inst2);
         z_pd_console_post("Print a normal post");
         z_pd_console_log("Print a log post");
         z_pd_console_error("Print an error");
         z_pd_console_fatal("Print a fatal error");
-        test_end_part();
-    }
-    
-    //////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////
-    
-    TEST_SECTION("Message Hook")
-    {
+        
+        TEST_TRUE("z_pd_console_post", inst1->z_post_inc == 1)
+        TEST_TRUE("z_pd_console_post", inst1->z_log_inc == 1)
+        TEST_TRUE("z_pd_console_post", inst1->z_error_inc == 1)
+        TEST_TRUE("z_pd_console_post", inst1->z_fatal_inc == 1)
+        
+        TEST_TRUE("z_pd_console_post", inst2->z_post_inc == 1)
+        TEST_TRUE("z_pd_console_post", inst2->z_log_inc == 1)
+        TEST_TRUE("z_pd_console_post", inst2->z_error_inc == 1)
+        TEST_TRUE("z_pd_console_post", inst2->z_fatal_inc == 1)
+        
         TEST_TRUE("z_pd_tie_create", (tie1 = z_pd_tie_create("tie1")))
         TEST_TRUE("z_pd_tie_create", (tie2 = z_pd_tie_create("tie2")))
         TEST_TRUE("z_pd_list_create", (list = z_pd_list_create(3)))
+        
         z_pd_list_set_float(list, 0, 0.f);
         z_pd_list_set_float(list, 1, 1.f);
         z_pd_list_set_symbol(list, 2, z_pd_symbol_create("symbol"));
+        TEST_TRUE("z_pd_list_get_size", (z_pd_list_get_size(list) == 3))
+        TEST_TRUE("z_pd_list_get_type", (z_pd_list_get_type(list, 0) == Z_FLOAT))
+        TEST_TRUE("z_pd_list_get_type", (z_pd_list_get_type(list, 1) == Z_FLOAT))
+        TEST_TRUE("z_pd_list_get_type", (z_pd_list_get_type(list, 2) == Z_SYMBOL))
+        TEST_TRUE("z_pd_list_get_float", (z_pd_list_get_float(list, 0) == 0.f))
+        TEST_TRUE("z_pd_list_get_float", (z_pd_list_get_float(list, 1) == 1.f))
+        TEST_TRUE("z_pd_list_get_symbol", (z_pd_list_get_symbol(list, 2) == z_pd_symbol_create("symbol")))
         
         z_pd_instance_bind((z_instance *)inst1, tie1, &hook_message);
         z_pd_instance_bind((z_instance *)inst1, tie1, &hook_message);
@@ -352,6 +381,18 @@ int main(int argc, char** argv)
         z_pd_messagesend_symbol(tie2, z_pd_symbol_create("blabha"));
         z_pd_messagesend_list(tie2, list);
         z_pd_messagesend_anything(tie2, z_pd_symbol_create("blabha"), list);
+        
+        TEST_TRUE("z_pd_messagesend_bang", inst1->z_bang_inc == 1)
+        TEST_TRUE("z_pd_messagesend_float", inst1->z_float_inc == 1)
+        TEST_TRUE("z_pd_messagesend_symbol", inst1->z_symbol_inc == 1)
+        TEST_TRUE("z_pd_messagesend_list", inst1->z_list_inc == 1)
+        TEST_TRUE("z_pd_messagesend_anything", inst1->z_anything_inc == 1)
+        
+        TEST_TRUE("z_pd_messagesend_bang", inst2->z_bang_inc == 1)
+        TEST_TRUE("z_pd_messagesend_float", inst2->z_float_inc == 1)
+        TEST_TRUE("z_pd_messagesend_symbol", inst2->z_symbol_inc == 1)
+        TEST_TRUE("z_pd_messagesend_list", inst2->z_list_inc == 1)
+        TEST_TRUE("z_pd_messagesend_anything", inst2->z_anything_inc == 1)
         
         z_pd_list_free(list);
     }
