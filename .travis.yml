@@ -18,24 +18,16 @@ matrix:
       before_script:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
       after_success:
-        - coveralls -e pd -e build -e test/test.c --gcov-options '\-lp' --gcov 'gcov-4.9'
-      env:
-        - COVERALLS=true
+        - coveralls -e pd -e build/CMakeFiles/feature_tests.cxx -e build/CMakeFiles/3.2.2/CompilerIdCXX/CMakeCXXCompilerId.cpp -e test/test.c --gcov-options '\-lp' --gcov 'gcov-4.9'
 
     - os: linux
       compiler: clang
-      env:
-        - COVERALLS=false
 
     - os: osx
       compiler: gcc
-      env:
-        - COVERALLS=false
 
     - os: osx
-      compiler: clang++
-      env:
-        - COVERALLS=false
+      compiler: clang
 
 script:
   - mkdir build && cd build
