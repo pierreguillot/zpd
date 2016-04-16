@@ -25,7 +25,7 @@ matrix:
           - cmake --build .
           - ./zpdtest pwd
       after_success:
-        - coveralls -e build/CMakeFiles/feature_tests.cxx -e build/CMakeFiles/feature_tests.c -e build/CMakeFiles/3.2.2/CompilerIdC/CMakeCCompilerId.c -e build/CMakeFiles/3.2.2/CompilerIdCXX/CMakeCXXCompilerId.cpp -e lib -e pd -e test --gcov-options '\-lp' --gcov 'gcov-4.9'
+        - coveralls -i zpd -e lib -e pd -e test --gcov-options '\-lp' --gcov 'gcov-4.9'
 
     - os: linux
       compiler: clang
