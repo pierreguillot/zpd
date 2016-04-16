@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.6)
 #         The zPure Data Project        #
 #---------------------------------------#
 project(zpd)
+option(COVERALLS "Build with coverall" OFF)
 #set(CMAKE_BUILD_TYPE Release)
 
 #---------------------------------------#
@@ -129,6 +130,8 @@ include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 if(${COVERALLS})
     message(STATUS "Build with coverall")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage" )
+  else()
+    message(STATUS "Build without coverall")
 endif()
 
 if(${APPLE})
