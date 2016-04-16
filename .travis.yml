@@ -18,7 +18,7 @@ matrix:
           - cmake -DCOVERALLS=1 ..
           - cmake --build .
           - cd ../
-          - ./test/zpdtest pwd
+          - ./build/zpdtest pwd
       after_success:
         - coveralls --exclude lib --exclude pd --exclude test --gcov-options '\-lp' --gcov 'gcov-4.9'
 
