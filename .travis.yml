@@ -22,8 +22,9 @@ matrix:
           - mkdir build && cd build
           - cmake -DCOVERALLS=1 -DCMAKE_BUILD_TYPE=Debug ..
           - cmake --build .
-          - ./zpdtest pwd
           - cd ../
+          - ./build/zpdtest pwd
+
       after_success:
         - coveralls -e build/CMakeFiles/feature_tests.cxx -e build/CMakeFiles/feature_tests.c -e build/CMakeFiles/CompilerIdCXX/CMakeCXXCompilerId.cpp -e build/CMakeFiles/CompilerIdCXX/CMakeCXXCompilerId.c -e /build/CMakeFiles/3.2.2/CompilerIdCXX/CMakeCXXCompilerId.cpp -e /build/CMakeFiles/3.2.2/CompilerIdC/CMakeCCompilerId.c -e test -e pd --gcov-options '\-lp'
       env:
@@ -35,7 +36,10 @@ matrix:
         - mkdir build && cd build
         - cmake ..
         - cmake --build .
-        - ./zpdtest pwd
+        - cd ../
+        - ./build/zpdtest pwd
+      env:
+        - Libs and Tests
 
     - os: linux
       compiler: clang
@@ -43,7 +47,10 @@ matrix:
         - mkdir build && cd build
         - cmake ..
         - cmake --build .
-        - ./zpdtest pwd
+        - cd ../
+        - ./build/zpdtest pwd
+      env:
+        - Libs and Tests
 
     - os: osx
       compiler: gcc
@@ -51,7 +58,10 @@ matrix:
         - mkdir build && cd build
         - cmake ..
         - cmake --build .
-        - ./zpdtest pwd
+        - cd ../
+        - ./build/zpdtest pwd
+      env:
+        - Libs and Tests
 
     - os: osx
       compiler: clang
@@ -59,4 +69,7 @@ matrix:
         - mkdir build && cd build
         - cmake ..
         - cmake --build .
-        - ./zpdtest pwd
+        - cd ../
+        - ./build/zpdtest pwd
+      env:
+        - Libs and Tests

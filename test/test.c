@@ -12,6 +12,15 @@
 
 #include <stdio.h>
 
+#ifdef ZPD_TEST_VERBOSE
+#define zprintf printf
+#else
+static void zprintf(char const* message, ...)
+{
+    
+}
+#endif
+
 typedef struct _test_instance
 {
     z_instance      z_instance;
@@ -24,76 +33,76 @@ typedef struct _test_instance
 
 static void test_hook_post(z_test_instance* instance, const char *s)
 {
-    printf("Instance %u (post) : %s", instance->z_index, s);
+    zprintf("Instance %u (post) : %s", instance->z_index, s);
 }
 
 static void test_hook_log(z_test_instance* instance, const char *s)
 {
-    printf("Instance %u (log) : %s", instance->z_index, s);
+    zprintf("Instance %u (log) : %s", instance->z_index, s);
 }
 
 static void test_hook_error(z_test_instance* instance, const char *s)
 {
-    printf("Instance %u (error) : %s", instance->z_index, s);
+    zprintf("Instance %u (error) : %s", instance->z_index, s);
 }
 
 static void test_hook_fatal(z_test_instance* instance, const char *s)
 {
-    printf("Instance %u (fatal) : %s", instance->z_index, s);
+    zprintf("Instance %u (fatal) : %s", instance->z_index, s);
 }
 
 
 static void test_hook_bang(z_test_instance* instance, z_tie* tie)
 {
-    printf("Instance %u (bang) : from %s\n", instance->z_index, z_pd_tie_get_name(tie));
+    zprintf("Instance %u (bang) : from %s\n", instance->z_index, z_pd_tie_get_name(tie));
 }
 
 static void test_hook_float(z_test_instance* instance, z_tie* tie, z_float f)
 {
-    printf("Instance %u (float) : from %s - %f\n", instance->z_index, z_pd_tie_get_name(tie), f);
+    zprintf("Instance %u (float) : from %s - %f\n", instance->z_index, z_pd_tie_get_name(tie), f);
 }
 
 static void test_hook_symbol(z_test_instance* instance, z_tie* tie, z_symbol* s)
 {
-    printf("Instance %u (symbol) : from %s - %s\n", instance->z_index, z_pd_tie_get_name(tie), z_pd_symbol_get_name(s));
+    zprintf("Instance %u (symbol) : from %s - %s\n", instance->z_index, z_pd_tie_get_name(tie), z_pd_symbol_get_name(s));
 }
 
 static void test_hook_list(z_test_instance* instance, z_tie* tie, z_list *list)
 {
     size_t i = 0;
     size_t const size = z_pd_list_get_size(list);
-    printf("Instance %u (list) : from %s -", instance->z_index, z_pd_tie_get_name(tie));
+    zprintf("Instance %u (list) : from %s -", instance->z_index, z_pd_tie_get_name(tie));
     for(i = 0; i < size; ++i)
     {
         if(z_pd_list_get_type(list, i) == Z_FLOAT)
         {
-            printf(" %f", z_pd_list_get_float(list, i));
+            zprintf(" %f", z_pd_list_get_float(list, i));
         }
         else if(z_pd_list_get_type(list, i) == Z_SYMBOL)
         {
-            printf(" %s", z_pd_symbol_get_name(z_pd_list_get_symbol(list, i)));
+            zprintf(" %s", z_pd_symbol_get_name(z_pd_list_get_symbol(list, i)));
         }
     }
-    printf("\n");
+    zprintf("\n");
 }
 
 static void test_hook_anything(z_test_instance* instance, z_tie* tie, z_symbol *s, z_list *list)
 {
     size_t i = 0;
     size_t const size = z_pd_list_get_size(list);
-    printf("Instance %u (anything) : from %s - %s", instance->z_index, z_pd_tie_get_name(tie), z_pd_symbol_get_name(s));
+    zprintf("Instance %u (anything) : from %s - %s", instance->z_index, z_pd_tie_get_name(tie), z_pd_symbol_get_name(s));
     for(i = 0; i < size; ++i)
     {
         if(z_pd_list_get_type(list, i) == Z_FLOAT)
         {
-            printf(" %f", z_pd_list_get_float(list, i));
+            zprintf(" %f", z_pd_list_get_float(list, i));
         }
         else if(z_pd_list_get_type(list, i) == Z_SYMBOL)
         {
-            printf(" %s", z_pd_symbol_get_name(z_pd_list_get_symbol(list, i)));
+            zprintf(" %s", z_pd_symbol_get_name(z_pd_list_get_symbol(list, i)));
         }
     }
-    printf("\n");
+    zprintf("\n");
 }
 
 
@@ -162,7 +171,7 @@ static z_test_instance* test_new_instance(unsigned char index, size_t ninputs, s
     {
         return NULL;
     }
-    printf("Instance %u with %zu inputs, %zu outputs and %zu vectorsize\n", index, ninputs, noutputs, vectorsize);
+    zprintf("Instance %u with %zu inputs, %zu outputs and %zu vectorsize\n", index, ninputs, noutputs, vectorsize);
     return inst;
 }
 
@@ -177,19 +186,19 @@ static void test_free_instance(z_test_instance* inst)
 
 static void test_start_part(const char* message)
 {
-    printf("--------------------\n");
-    printf("%s\n", message);
-    printf("--------------------\n");
+    zprintf("--------------------\n");
+    zprintf("%s\n", message);
+    zprintf("--------------------\n");
 }
 
 static void test_end_part()
 {
-    printf("--------------------\n\n\n");
+    zprintf("--------------------\n\n\n");
 }
 
 static void test_allocation_failed(const char* message)
 {
-    printf("Allocation failed %s \n", message);
+    zprintf("Allocation failed %s \n", message);
 }
 
 static char* test_get_patch_folder(char* location)
@@ -242,23 +251,24 @@ int main(int argc, char** argv)
     {
         test_start_part("Initialization");
         z_pd_init();
-        printf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
+        z_pd_init();
+        zprintf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
         if(argc && argv[0])
         {
             location = test_get_patch_folder(argv[0]);
             if(location)
             {
-                printf("Add searchpath : %s\n", location);
+                zprintf("Add searchpath : %s\n", location);
                 z_pd_searchpath_add(location);
             }
             else
             {
-                printf("%s Can't find patch directory\n", argv[0]);
+                zprintf("%s Can't find patch directory\n", argv[0]);
             }
         }
         else
         {
-            printf("Can't find patch directory\n");
+            zprintf("Can't find patch directory\n");
         }
         
         test_end_part();
