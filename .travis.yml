@@ -15,7 +15,7 @@ matrix:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
       script:
           - mkdir build && cd build
-          - cmake -DCOVERALLS=1 ..
+          - cmake -DCOVERALLS=1 -DCMAKE_BUILD_TYPE=Debug ..
           - cmake --build .
           - cd ../
           - ./build/zpdtest pwd
