@@ -17,29 +17,38 @@ matrix:
           packages: ['python-pip', 'python-yaml']
       before_script:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
+      script:
+          - mkdir build && cd build
+          - cmake -DCOVERALLS=1 ..
+          - cmake --build .
+          - cd ../
+          - ./test/zpdtest pwd
       after_success:
         - coveralls -e pd -e build/CMakeFiles/feature_tests.cxx -e build/CMakeFiles/CompilerIdC/CMakeCCompilerId.c -e  build/CMakeFiles/CompilerIdCXX/CMakeCXXCompilerId.cpp -e test/test.c --gcov-options '\-lp' --gcov 'gcov-4.9'
-      env:
-        - COVERALLS_ENABLE=ON
 
     - os: linux
       compiler: clang
-      env:
-        - COVERALLS_ENABLE=OFF
+      script:
+        - mkdir build && cd build
+        - cmake ..
+        - cmake --build .
+        - cd ../
+        - ./test/zpdtest pwd
 
     - os: osx
       compiler: gcc
-      env:
-        - COVERALLS_ENABLE=OFF
+      script:
+        - mkdir build && cd build
+        - cmake ..
+        - cmake --build .
+        - cd ../
+        - ./test/zpdtest pwd
 
     - os: osx
       compiler: clang
-      env:
-        - COVERALLS_ENABLE=OFF
-
-script:
-  - mkdir build && cd build
-  - cmake -DCOVERALLS=$COVERALLS_ENABLE ..
-  - cmake --build .
-  - cd ../
-  - ./test/zpdtest pwd
+      script:
+        - mkdir build && cd build
+        - cmake ..
+        - cmake --build .
+        - cd ../
+        - ./test/zpdtest pwd
