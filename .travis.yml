@@ -27,6 +27,16 @@ matrix:
       after_success:
         - coveralls --gcov-options '\-lp'
 
+- os: linux
+  compiler: gcc
+  script:
+    - mkdir build && cd build
+    - cmake ..
+    - cmake --build .
+    - ./zpdtest pwd
+  env:
+    - Coveralls
+
     - os: linux
       compiler: clang
       script:
