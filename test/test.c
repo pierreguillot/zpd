@@ -9,6 +9,7 @@
 // experiments but you must be aware of their unintended contribution.
 
 #include "../zpd/z_pd.h"
+#include "test.h"
 
 #include <stdio.h>
 
@@ -253,6 +254,7 @@ int main(int argc, char** argv)
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     
+    TEST_START("zpd")
     if(1)
     {
         test_start_part("Initialization");
@@ -377,28 +379,20 @@ int main(int argc, char** argv)
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     
-    if(1)
+    TEST_SECTION_START("Patch Creation && Informations")
     {
-        test_start_part("Patch Creation");
+        test_start_part("Patch Creation && Informations");
         z_pd_instance_set((z_instance *)inst1);
-        patch1 = z_pd_patch_new("test.pd", NULL);
-        if(!patch1)
-        {
-            test_allocation_failed("Patch 1");
-            return 0;
-        }
-        z_pd_console_log("Patch created %s from %s", z_pd_patch_get_name(patch1), z_pd_patch_get_path(patch1));
-        
-        
+        TEST_FALSE("z_pd_patch_new", (patch1 = z_pd_patch_new("test.pd", "zaza")))
+        TEST_TRUE("z_pd_patch_new", (patch1 = z_pd_patch_new("test.pd", NULL)))
+        TEST_TRUE("z_pd_patch_get_name", z_pd_patch_get_name(patch1))
+        TEST_TRUE("z_pd_patch_get_path", z_pd_patch_get_path(patch1))
+        TEST_TRUE("z_pd_patch_get_x", z_pd_patch_get_x(patch1) == 100)
+        TEST_TRUE("z_pd_patch_get_x", z_pd_patch_get_y(patch1) == 100)
+        TEST_TRUE("z_pd_patch_get_width", z_pd_patch_get_width(patch1) == 85)
+        TEST_TRUE("z_pd_patch_get_height", z_pd_patch_get_height(patch1) == 60)
         z_pd_instance_set((z_instance *)inst2);
-        patch2 = z_pd_patch_new("test.pd", NULL);
-        if(!patch1)
-        {
-            test_allocation_failed("Patch 2");
-            return 0;
-        }
-        z_pd_console_log("Patch created %s from %s", z_pd_patch_get_name(patch2), z_pd_patch_get_path(patch2));
-        
+        TEST_TRUE("z_pd_patch_new", (patch2 = z_pd_patch_new("test.pd", NULL)));
         test_end_part();
     }
     
@@ -443,23 +437,6 @@ int main(int argc, char** argv)
         }
         z_pd_messagesend_float(tie2, 20.f);
        
-        test_end_part();
-    }
-    
-    //////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////
-    
-    if(1)
-    {
-        test_start_part("Patch Informations");
-        z_pd_instance_set((z_instance *)inst1);
-        patch1 = z_pd_patch_new("test.pd", NULL);
-        
-        
-        
-        z_pd_instance_set((z_instance *)inst2);
-        
-        
         test_end_part();
     }
     
@@ -536,5 +513,6 @@ int main(int argc, char** argv)
         z_pd_clear();
         test_end_part();
     }
+    TEST_END()
     return 0;
 }
