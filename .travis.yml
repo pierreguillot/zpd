@@ -34,8 +34,6 @@ matrix:
         - cmake ..
         - cmake --build .
         - ./zpdtest pwd
-        env:
-          - Coveralls
 
     - os: linux
       compiler: clang
