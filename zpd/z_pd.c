@@ -429,7 +429,7 @@ z_instance* z_pd_instance_new(size_t size)
             free(internal);
             return NULL;
         }
-        instance = malloc(size);
+        instance = (z_instance *)malloc(size);
         if(instance)
         {
             instance->z_internal_ptr = internal;

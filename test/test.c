@@ -291,9 +291,9 @@ int main(int argc, char** argv)
     //////////////////////////////////////////////////////////////////////////////////////////
     
     TEST_START("zpd")
-    if(1)
+    TEST_SECTION("Initialization")
     {
-        test_start_part("Initialization");
+        z_pd_init();
         z_pd_init();
         zprintf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
         z_pd_searchpath_clear();
@@ -314,8 +314,6 @@ int main(int argc, char** argv)
         {
             printf("Can't find patch directory\n");
         }
-        
-        test_end_part();
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -323,6 +321,7 @@ int main(int argc, char** argv)
     
     TEST_SECTION("Instance")
     {
+        TEST_FALSE("z_pd_instance_new", z_pd_instance_new(-1))
         TEST_TRUE("z_pd_instance_new", (inst1 = test_new_instance(1, 2, 2, 64)))
         TEST_TRUE("z_pd_instance_new", (inst2 = test_new_instance(1, 2, 2, 64)))
         
