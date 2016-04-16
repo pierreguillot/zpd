@@ -31,6 +31,7 @@ void pique_setup();
 void sigmund_tilde_setup();
 void stdout_setup();
 
+#define LCOV_EXCL_START
 void sys_get_midi_apis(char *buf) {}
 void sys_listmididevs(void) {}
 void sys_get_midi_params(int *pnmidiindev, int *pmidiindev,int *pnmidioutdev, int *pmidioutdev) {}
@@ -45,6 +46,7 @@ void glob_midi_properties(t_pd *dummy, t_floatarg flongform) {}
 void glob_midi_dialog(t_pd *dummy, t_symbol *s, int argc, t_atom *argv) {}
 int sys_mididevnametonumber(int output, const char *name) { return 0; }
 void sys_mididevnumbertoname(int output, int devno, char *name, int namesize) {}
+#define LCOV_EXCL_STOP
 
 static t_class *z_receiver_class;
 

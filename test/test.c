@@ -257,7 +257,6 @@ int main(int argc, char** argv)
     {
         test_start_part("Initialization");
         z_pd_init();
-        z_pd_init();
         zprintf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
         z_pd_searchpath_clear();
         if(argc && argv[0])
@@ -444,6 +443,34 @@ int main(int argc, char** argv)
         }
         z_pd_messagesend_float(tie2, 20.f);
        
+        test_end_part();
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
+    
+    if(1)
+    {
+        test_start_part("Patch Informations");
+        z_pd_instance_set((z_instance *)inst1);
+        patch1 = z_pd_patch_new("test.pd", NULL);
+        if(!patch1)
+        {
+            test_allocation_failed("Patch 1");
+            return 0;
+        }
+        z_pd_console_log("Patch created %s from %s", z_pd_patch_get_name(patch1), z_pd_patch_get_path(patch1));
+        
+        
+        z_pd_instance_set((z_instance *)inst2);
+        patch2 = z_pd_patch_new("test.pd", NULL);
+        if(!patch1)
+        {
+            test_allocation_failed("Patch 2");
+            return 0;
+        }
+        z_pd_console_log("Patch created %s from %s", z_pd_patch_get_name(patch2), z_pd_patch_get_path(patch2));
+        
         test_end_part();
     }
     
