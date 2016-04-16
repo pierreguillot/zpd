@@ -32,23 +32,32 @@ typedef struct _test_instance
     z_sample**      z_outputs;
 }z_test_instance;
 
+static int hook_post_increment = 0;
+static int hook_log_increment = 0;
+static int hook_error_increment = 0;
+static int hook_fatal_increment = 0;
+
 static void test_hook_post(z_test_instance* instance, const char *s)
 {
+    hook_post_increment++;
     zprintf("Instance %u (post) : %s", instance->z_index, s);
 }
 
 static void test_hook_log(z_test_instance* instance, const char *s)
 {
+    hook_log_increment++;
     zprintf("Instance %u (log) : %s", instance->z_index, s);
 }
 
 static void test_hook_error(z_test_instance* instance, const char *s)
 {
+    hook_error_increment++;
     zprintf("Instance %u (error) : %s", instance->z_index, s);
 }
 
 static void test_hook_fatal(z_test_instance* instance, const char *s)
 {
+    hook_fatal_increment++;
     zprintf("Instance %u (fatal) : %s", instance->z_index, s);
 }
 
@@ -231,12 +240,12 @@ static char* test_get_patch_folder(char* location)
 
 int main(int argc, char** argv)
 {
-    size_t i;
-    char *location, bindingname[1000];
-    z_test_instance *inst1, *inst2;
-    z_tie *tie1, *tie2;
-    z_patch *patch1, *patch2;
-    z_list* list;
+    size_t i = 0;
+    char *location = NULL, bindingname[1000];
+    z_test_instance *inst1 = NULL, *inst2= NULL;
+    z_tie *tie1 = NULL, *tie2 = NULL;
+    z_patch *patch1 = NULL, *patch2 = NULL;
+    z_list* list = NULL;
     
     z_hook_console hook_console;
     hook_console.m_post     = (z_hook_print)test_hook_post;
@@ -285,28 +294,16 @@ int main(int argc, char** argv)
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     
-    if(1)
+    TEST_SECTION("Instance Creation")
     {
-        test_start_part("Instance Creation");
-        inst1 = test_new_instance(1, 2, 2, 64);
-        if(!inst1)
-        {
-            test_allocation_failed("Instance 1");
-            return 0;
-        }
-        inst2 = test_new_instance(2, 2, 2, 64);
-        if(!inst2)
-        {
-            test_allocation_failed("Instance 2");
-            return 0;
-        }
-        test_end_part();
+        TEST_TRUE("z_pd_instance_new", (inst1 = test_new_instance(1, 2, 2, 64)))
+        TEST_TRUE("z_pd_instance_new", (inst2 = test_new_instance(1, 2, 2, 64)))
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     
-    if(1)
+    TEST_SECTION("Print Hook")
     {
         test_start_part("Print Hook");
         z_pd_instance_set_hook_console((z_instance *)inst1, &hook_console);
@@ -329,27 +326,11 @@ int main(int argc, char** argv)
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     
-    if(1)
+    TEST_SECTION("Message Hook")
     {
-        test_start_part("Message Hook");
-        tie1 = z_pd_tie_create("tie1");
-        if(!tie1)
-        {
-            test_allocation_failed("Tie 1");
-            return 0;
-        }
-        tie2 = z_pd_tie_create("tie2");
-        if(!tie2)
-        {
-            test_allocation_failed("Tie 2");
-            return 0;
-        }
-        list = z_pd_list_create(3);
-        if(!list)
-        {
-            test_allocation_failed("List");
-            return 0;
-        }
+        TEST_TRUE("z_pd_tie_create", (tie1 = z_pd_tie_create("tie1")))
+        TEST_TRUE("z_pd_tie_create", (tie2 = z_pd_tie_create("tie2")))
+        TEST_TRUE("z_pd_list_create", (list = z_pd_list_create(3)))
         z_pd_list_set_float(list, 0, 0.f);
         z_pd_list_set_float(list, 1, 1.f);
         z_pd_list_set_symbol(list, 2, z_pd_symbol_create("symbol"));
@@ -373,15 +354,14 @@ int main(int argc, char** argv)
         z_pd_messagesend_anything(tie2, z_pd_symbol_create("blabha"), list);
         
         z_pd_list_free(list);
-        test_end_part();
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     
-    TEST_SECTION_START("Patch Creation && Informations")
+    TEST_SECTION("Patches & Objects")
     {
-        test_start_part("Patch Creation && Informations");
+        int size = 0, x = 0, y = 0, width = 0, height = 0; char* text = NULL;
         z_pd_instance_set((z_instance *)inst1);
         TEST_FALSE("z_pd_patch_new", (patch1 = z_pd_patch_new("test.pd", "zaza")))
         TEST_TRUE("z_pd_patch_new", (patch1 = z_pd_patch_new("test.pd", NULL)))
@@ -393,7 +373,19 @@ int main(int argc, char** argv)
         TEST_TRUE("z_pd_patch_get_height", z_pd_patch_get_height(patch1) == 60)
         z_pd_instance_set((z_instance *)inst2);
         TEST_TRUE("z_pd_patch_new", (patch2 = z_pd_patch_new("test.pd", NULL)));
-        test_end_part();
+        z_object* obj = NULL;
+        TEST_TRUE("z_pd_patch_get_first_object", (obj = z_pd_patch_get_first_object(patch2)));
+        while((obj = z_pd_patch_get_next_object(patch2, obj)))
+        {
+            TEST_TRUE("z_pd_patch_get_next_object", obj);
+            TEST_TRUE("z_pd_object_get_name", z_pd_object_get_name(obj));
+            z_pd_object_get_text(obj, &size, &text);
+            TEST_TRUE("z_pd_object_get_text", (size && text));
+            size = 0;
+            free(text);
+            z_pd_object_get_bounds(obj, patch2, &x, &y, &width, &height);
+            x = 0; y = 0; width = 0; height = 0;
+        }
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////
