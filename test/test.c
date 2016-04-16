@@ -240,25 +240,29 @@ static void test_allocation_failed(const char* message)
 
 static char* test_get_patch_folder(char* location)
 {
-    size_t size = strlen(location), i;
-    for(i = 0; i < size; ++i)
+    size_t size, i;
+    if(location)
     {
-        if(strncmp(location+i, "/build/", 7) == 0)
+        size = strlen(location);
+        for(i = 0; i < size; ++i)
         {
-            memset(location+i+7, '\0', size-i);
-            sprintf(location+i+7, "../test/");
-            return location;
-        }
-        if(strncmp(location+i, "/zpd/", 5) == 0)
-        {
-            memset(location+i+5, '\0', size-i);
-            sprintf(location+i+5, "/test/");
-            return location;
-        }
-        if(strncmp(location+i, "/test/", 6) == 0)
-        {
-            memset(location+i+6, '\0', size-i);
-            return location;
+            if(strncmp(location+i, "/build/", 7) == 0)
+            {
+                memset(location+i+7, '\0', size-i);
+                sprintf(location+i+7, "../test/");
+                return location;
+            }
+            if(strncmp(location+i, "/zpd/", 5) == 0)
+            {
+                memset(location+i+5, '\0', size-i);
+                sprintf(location+i+5, "/test/");
+                return location;
+            }
+            if(strncmp(location+i, "/test/", 6) == 0)
+            {
+                memset(location+i+6, '\0', size-i);
+                return location;
+            }
         }
     }
     return NULL;
@@ -295,25 +299,10 @@ int main(int argc, char** argv)
     {
         z_pd_init();
         z_pd_init();
-        zprintf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
         z_pd_searchpath_clear();
-        if(argc && argv[0])
-        {
-            location = test_get_patch_folder(argv[0]);
-            if(location)
-            {
-                printf("Add searchpath : %s\n", location);
-                z_pd_searchpath_add(location);
-            }
-            else
-            {
-                printf("%s Can't find patch directory\n", argv[0]);
-            }
-        }
-        else
-        {
-            printf("Can't find patch directory\n");
-        }
+        zprintf("Pure Data %u.%u.%u :\n", z_pd_version_getmajor(), z_pd_version_getminor(), z_pd_version_getbug());
+        TEST_TRUE("test location", (location = test_get_patch_folder(argv[0])))
+        z_pd_searchpath_add(location);
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////
