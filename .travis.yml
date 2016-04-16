@@ -26,6 +26,8 @@ matrix:
           - ./zpdtest pwd
       after_success:
         - coveralls --gcov-options '\-lp'
+      env:
+        - Coveralls
 
     - os: linux
       compiler: gcc
@@ -34,8 +36,6 @@ matrix:
         - cmake ..
         - cmake --build .
         - ./zpdtest pwd
-      env:
-        - Coveralls
 
     - os: linux
       compiler: clang
