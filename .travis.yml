@@ -24,7 +24,7 @@ matrix:
           - cd ../
           - ./test/zpdtest pwd
       after_success:
-        - coveralls -i build/test.gcno --gcov-options '\-lp' --gcov 'gcov-4.9'
+        - coveralls -i zpd/zpd.c -i zpd/zpd.h -i build/test.gcno --gcov-options '\-lp' --gcov 'gcov-4.9'
 
     - os: linux
       compiler: clang
