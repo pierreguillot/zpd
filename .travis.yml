@@ -1,6 +1,4 @@
 language: c
-dist: trusty
-sudo: required
 
 notifications:
   email: false
@@ -13,10 +11,6 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-4.9', 'python-pip', 'python-yaml']
       before_script:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
       script:
@@ -25,7 +19,7 @@ matrix:
           - cmake --build .
           - ./zpdtest pwd
       after_success:
-        - coveralls -e build/CMakeFiles/feature_tests.cxx -e build/CMakeFiles/3.2.2/CompilerIdCXX/CMakeCXXCompilerId.cpp -e test --gcov-options '\-lp' --gcov 'gcov-4.9'
+        - coveralls -e build/CMakeFiles/feature_tests.cxx -e build/CMakeFiles/3.2.2/CompilerIdCXX/CMakeCXXCompilerId.cpp -e test --gcov-options '\-lp'
       env:
         - Coveralls
 
