@@ -17,10 +17,9 @@ matrix:
           - mkdir build && cd build
           - cmake -DCOVERALLS=1 -DCMAKE_BUILD_TYPE=Debug ..
           - cmake --build .
-          - cd ../
-          - ./build/zpdtest pwd
+          - ./zpdtest pwd
       after_success:
-        - coveralls --exclude lib --exclude pd --exclude test --gcov-options '\-lp' --gcov 'gcov-4.9'
+        - coveralls --exclude lib --exclude pd --exclude test --gcov-options -exclude build/CMakeFiles/CompilerIdC/CMakeCCompilerId.c '\-lp' --gcov 'gcov-4.9'
 
     - os: linux
       compiler: clang
@@ -28,8 +27,7 @@ matrix:
         - mkdir build && cd build
         - cmake ..
         - cmake --build .
-        - cd ../
-        - ./test/zpdtest pwd
+        - ./zpdtest pwd
 
     - os: osx
       compiler: gcc
@@ -37,8 +35,7 @@ matrix:
         - mkdir build && cd build
         - cmake ..
         - cmake --build .
-        - cd ../
-        - ./test/zpdtest pwd
+        - ./zpdtest pwd
 
     - os: osx
       compiler: clang
@@ -46,5 +43,4 @@ matrix:
         - mkdir build && cd build
         - cmake ..
         - cmake --build .
-        - cd ../
-        - ./test/zpdtest pwd
+        - ./zpdtest pwd
