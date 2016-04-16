@@ -1,4 +1,6 @@
 language: c
+dist: trusty
+sudo: required
 
 notifications:
   email: false
@@ -14,7 +16,7 @@ matrix:
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test']
-          packages: ['python-pip', 'python-yaml']
+          packages: ['g++-4.9', 'python-pip', 'python-yaml']
       before_script:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
       script:
