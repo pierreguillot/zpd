@@ -29,13 +29,7 @@ matrix:
       env:
         - Coveralls
 
-    - os: linux
-      compiler: gcc
-      script:
-        - mkdir build && cd build
-        - cmake ..
-        - cmake --build .
-        - ./zpdtest pwd
+
 
     - os: linux
       compiler: clang
