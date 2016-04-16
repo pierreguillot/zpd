@@ -126,15 +126,6 @@ include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 #         The zPure Data Library        #
 #---------------------------------------#
 
-
-if(${COVERALLS})
-    message(STATUS "Build with coveralls")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage" )
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage" )
-  else()
-    message(STATUS "Build without coveralls")
-endif()
-
 if(${APPLE})
   set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
   add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
@@ -162,7 +153,25 @@ elseif(${UNIX})
   find_library(MATH_LIB m)
   find_package(Threads REQUIRED)
 
-  
+  #---------------------------------------#
+  #             Shared Library            #
+  #---------------------------------------#
+  add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  target_link_libraries(zpdshared ${MATH_LIB})
+  target_link_libraries(zpdshared ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(zpdshared ${CMAKE_DL_LIBS})
+  set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
+  set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
+
+  #---------------------------------------#
+  #             Static Library            #
+  #---------------------------------------#
+  add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+  target_link_libraries(zpdstatic ${MATH_LIB})
+  target_link_libraries(zpdstatic ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(zpdstatic ${CMAKE_DL_LIBS})
+  set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
+  set_target_properties(zpdstatic PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
   #---------------------------------------#
   #                  Test                 #
@@ -171,6 +180,13 @@ elseif(${UNIX})
   target_link_libraries(zpdtest ${MATH_LIB})
   target_link_libraries(zpdtest ${CMAKE_THREAD_LIBS_INIT})
   target_link_libraries(zpdtest ${CMAKE_DL_LIBS})
+  if(${COVERALLS})
+      message(STATUS "Build with coveralls")
+      set_target_properties(zpdtest PROPERTIES COMPILE_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
+    else()
+      message(STATUS "Build without coveralls")
+  endif()
+
 
 elseif(${WIN32})
   add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_STRUCT_TIMESPEC=1 -DPTW32_STATIC_LIB=1)
