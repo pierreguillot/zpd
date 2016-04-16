@@ -11,10 +11,6 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['python-pip', 'python-yaml']
       before_script:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
       script:
@@ -24,7 +20,7 @@ matrix:
           - cd ../
           - ./test/zpdtest pwd
       after_success:
-        - coveralls -i zpd/zpd.c -i zpd/zpd.h -i build/test.gcno --gcov-options '\-lp' --gcov 'gcov-4.9'
+        - coveralls --exclude lib --exclude test --gcov-options '\-lp'
 
     - os: linux
       compiler: clang
