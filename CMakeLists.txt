@@ -126,6 +126,11 @@ include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 #---------------------------------------#
 
 
+if(${COVERALLS})
+    message(STATUS "Build with coverall")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage" )
+endif()
+
 if(${APPLE})
   set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
   add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
