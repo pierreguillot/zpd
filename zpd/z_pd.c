@@ -546,9 +546,22 @@ void z_pd_instance_bind(z_instance* instance, z_tie* tie, z_hook_message* messag
 
 void z_pd_instance_unbind(z_instance* instance, z_tie* tie)
 {
-    z_receiver *x = z_pd_instance_getreceiver(instance, tie);
+    z_receiver *x = z_pd_instance_getreceiver(instance, tie), *temp = NULL;
     if(x)
     {
+        if(instance->z_internal_ptr->z_receiver_list == x)
+        {
+            instance->z_internal_ptr->z_receiver_list = x->z_next;
+        }
+        else
+        {
+            temp = instance->z_internal_ptr->z_receiver_list;
+            while(temp->z_next != x)
+            {
+                temp = temp->z_next;
+            }
+            temp->z_next = x->z_next;
+        }
         pd_free((t_pd *)x);
     }
 }

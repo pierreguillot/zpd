@@ -394,6 +394,35 @@ int main(int argc, char** argv)
         TEST_TRUE("z_pd_messagesend_list", inst2->z_list_inc == 1)
         TEST_TRUE("z_pd_messagesend_anything", inst2->z_anything_inc == 1)
         
+        z_pd_instance_unbind((z_instance *)inst1, tie1);
+        z_pd_instance_unbind((z_instance *)inst2, tie2);
+        
+        z_pd_messagesend_bang(tie1);
+        z_pd_messagesend_float(tie1, 32.54f);
+        z_pd_messagesend_gpointer(tie1, NULL);
+        z_pd_messagesend_symbol(tie1, z_pd_symbol_create("blabha"));
+        z_pd_messagesend_list(tie1, list);
+        z_pd_messagesend_anything(tie1, z_pd_symbol_create("blabha"), list);
+        
+        z_pd_messagesend_bang(tie2);
+        z_pd_messagesend_float(tie2, 32.54f);
+        z_pd_messagesend_gpointer(tie2, NULL);
+        z_pd_messagesend_symbol(tie2, z_pd_symbol_create("blabha"));
+        z_pd_messagesend_list(tie2, list);
+        z_pd_messagesend_anything(tie2, z_pd_symbol_create("blabha"), list);
+        
+        TEST_TRUE("z_pd_messagesend_bang", inst1->z_bang_inc == 1)
+        TEST_TRUE("z_pd_messagesend_float", inst1->z_float_inc == 1)
+        TEST_TRUE("z_pd_messagesend_symbol", inst1->z_symbol_inc == 1)
+        TEST_TRUE("z_pd_messagesend_list", inst1->z_list_inc == 1)
+        TEST_TRUE("z_pd_messagesend_anything", inst1->z_anything_inc == 1)
+        
+        TEST_TRUE("z_pd_messagesend_bang", inst2->z_bang_inc == 1)
+        TEST_TRUE("z_pd_messagesend_float", inst2->z_float_inc == 1)
+        TEST_TRUE("z_pd_messagesend_symbol", inst2->z_symbol_inc == 1)
+        TEST_TRUE("z_pd_messagesend_list", inst2->z_list_inc == 1)
+        TEST_TRUE("z_pd_messagesend_anything", inst2->z_anything_inc == 1)
+        
         z_pd_list_free(list);
     }
     
