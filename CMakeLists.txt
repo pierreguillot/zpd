@@ -153,9 +153,9 @@ if(${COVERALLS})
 else()
     message(STATUS "Build without coveralls")
     if(${APPLE})
-      set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
       set(CMAKE_MACOSX_RPATH Off)
+      set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
       #---------------------------------------#
       #             Shared Library            #
       #---------------------------------------#
@@ -174,7 +174,11 @@ else()
       #                  Test                 #
       #---------------------------------------#
       add_executable(zpdtest test/test.c ${ZPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
-      add_executable(xpdtest ${XPDSOURCES} ${ZPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+      set_target_properties(zpdtest PROPERTIES MACOSX_DEPLOYMENT_TARGET 10.7)
+
+      add_executable(xpdtest test/test.cpp ${XPDSOURCES} ${ZPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+      target_compile_features(xpdtest PRIVATE cxx_range_for)
+      set_target_properties(xpdtest PROPERTIES MACOSX_DEPLOYMENT_TARGET 10.9)
     elseif(${UNIX})
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
       find_library(MATH_LIB m)

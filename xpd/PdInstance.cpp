@@ -9,8 +9,7 @@
 
 extern "C"
 {
-#include "z_pd.h"
-    
+#include "../zpd/z_pd.h"
 }
 
 namespace pd
@@ -159,7 +158,9 @@ namespace pd
     Instance::Instance(const std::string& name) noexcept
     {
         Environment::lock();
-        m_ptr = z_pd_instance_new(sizeof(Instance::Internal),
+        m_ptr = z_pd_instance_new(sizeof(Instance::Internal));
+        /*
+        z_pd_instance_set_hook_console(static_cast<z_instance *>(m_ptr), <#z_hook_console *consolehook#>)
                                   (z_hook_print)Instance::Internal::m_print,
                                   (z_hook_noteon)Instance::Internal::m_noteon,
                                   (z_hook_controlchange)Instance::Internal::m_controlchange,
@@ -168,6 +169,7 @@ namespace pd
                                   (z_hook_aftertouch)Instance::Internal::m_aftertouch,
                                   (z_hook_polyaftertouch)Instance::Internal::m_polyaftertouch,
                                   (z_hook_byte)Instance::Internal::m_byte);
+        */
         reinterpret_cast<Instance::Internal*>(m_ptr)->ref = this;
         m_count = new std::atomic<long>(1);
         Environment::unlock();

@@ -7,10 +7,12 @@
 #include "PdEnvironment.hpp"
 #include "PdInstance.hpp"
 
+
 extern "C"
 {
-#include "z_pd.h"
+#include "../zpd/z_pd.h"
 }
+
 
 namespace pd
 {
