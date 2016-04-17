@@ -20,8 +20,9 @@ ${PROJECT_SOURCE_DIR}/zpd/z_pd.h
 #         The xpd Sources        #
 #---------------------------------------#
 
-set( ${ZPDSOURCES} XPDSOURCES
-${PROJECT_SOURCE_DIR}/xpd
+file(GLOB XPDSOURCES
+	${PROJECT_SOURCE_DIR}/xpd/*.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/*.cpp
 )
 
 #---------------------------------------#
