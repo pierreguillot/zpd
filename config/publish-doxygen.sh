@@ -1,19 +1,8 @@
 #!/bin/bash -e
 
-# Settings
-REPO_PATH=git@github.com:pierreguillot/zpd.git
-HTML_PATH=doc
-COMMIT_USER="Documentation Builder"
-COMMIT_EMAIL="guillotpierre6@gmail.com"
-CHANGESET=$(git rev-parse --verify HEAD)
-
-# Get a clean version of the HTML documentation repo.
-rm -rf ${HTML_PATH}
-mkdir -p ${HTML_PATH}
-git clone -b gh-pages "${REPO_PATH}" --single-branch ${HTML_PATH}
 
 # rm all the files through git to prevent stale files.
-cd ${HTML_PATH}
+cd doc
 git rm -rf .
 cd -
 
@@ -21,10 +10,10 @@ cd -
 doxygen zpddoc
 
 # Create and commit the documentation repo.
-cd ${HTML_PATH}
+cd doc
 git add .
-git config user.name "${COMMIT_USER}"
-git config user.email "${COMMIT_EMAIL}"
-git commit -m "Automated documentation build for changeset ${CHANGESET}."
+git config user.name "Documentation Builder"
+git config user.email ""
+git commit -m "Automated documentation build for changeset git rev-parse --verify HEAD."
 git push origin gh-pages
 cd -

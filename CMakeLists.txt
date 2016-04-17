@@ -8,12 +8,21 @@ option(COVERALLS "Build with coveralls" OFF)
 #set(CMAKE_BUILD_TYPE Release)
 
 #---------------------------------------#
-#         The zPure Data Sources        #
+#         The zpd Sources        #
 #---------------------------------------#
 
 set(ZPDSOURCES
 ${PROJECT_SOURCE_DIR}/zpd/z_pd.c
 ${PROJECT_SOURCE_DIR}/zpd/z_pd.h
+)
+
+#---------------------------------------#
+#         The xpd Sources        #
+#---------------------------------------#
+
+set(XPDSOURCES
+${PROJECT_SOURCE_DIR}/xpd/*.hpp
+${PROJECT_SOURCE_DIR}/xpd/*.cpp
 )
 
 #---------------------------------------#
@@ -117,9 +126,11 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 )
 
 source_group(zpd FILES ${ZPDSOURCES})
+source_group(xpd FILES ${XPDSOURCES})
 source_group(pd FILES ${PDSOURCES})
 source_group(pdextra FILES ${PDEXTRASOURCES})
 include_directories(${PROJECT_SOURCE_DIR}/zpd)
+include_directories(${PROJECT_SOURCE_DIR}/xpd)
 include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 
 #---------------------------------------#
