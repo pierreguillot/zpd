@@ -34,7 +34,7 @@ matrix:
           - cd ../
           - ./build/zpdtest pwd
           - git clone -b gh-pages https://github.com/pierreguillot/zpd.git --single-branch doc
-          - cd ${HTML_PATH}
+          - cd doc
           - git rm -rf .
           - cd ../
           - doxygen zpddoc
