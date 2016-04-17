@@ -20,6 +20,11 @@ matrix:
       addons:
         apt:
           packages: ['python-pip', 'python-yaml']
+      before_install:
+        - sudo apt-get install python-software-properties
+        - sudo apt-add-repository -y ppa:libreoffice/libreoffice-4-2
+        - sudo apt-get update
+        - sudo apt-get install doxygen
       before_script:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
       script:
@@ -28,6 +33,10 @@ matrix:
           - cmake --build .
           - cd ../
           - ./build/zpdtest pwd
+          - git clone -b gh-pages https://github.com/pierreguillot/zpd.git --single-branch doc
+          - cd ${HTML_PATH}
+          - git rm -rf .
+          - cd ../
           - doxygen zpddoc
 
       after_success:
