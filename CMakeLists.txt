@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 2.8)
 
 #---------------------------------------#
 #         The zPure Data Project        #
@@ -177,7 +177,6 @@ else()
       set_target_properties(zpdtest PROPERTIES MACOSX_DEPLOYMENT_TARGET 10.7)
 
       add_executable(xpdtest test/test.cpp ${XPDSOURCES} ${ZPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
-      target_compile_features(xpdtest PRIVATE cxx_range_for)
       set_target_properties(xpdtest PROPERTIES MACOSX_DEPLOYMENT_TARGET 10.9)
     elseif(${UNIX})
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
