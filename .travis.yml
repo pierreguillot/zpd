@@ -33,16 +33,7 @@ matrix:
           -in config/travisci_rsa.enc -out config/travisci_rsa -d
         - chmod 0600 config/travisci_rsa
         - cp config/travisci_rsa ~/.ssh/id_rsa
-        - git clone -b gh-pages git@github.com:pierreguillot/zpd.git --single-branch doc
-        - cd doc
-        - git rm -rf .
-        - cd ../
-        - doxygen zpddoc
-        - cd doc
-        - git add .
-        - git config user.name "Documentation Builder"
-        - git commit -m "Automated documentation build."
-        - git push origin gh-pages
+        - ./config/publish-doxygen
       env:
         - Coveralls and Documentations
 
