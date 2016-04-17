@@ -13,3 +13,6 @@ cmake --build .
 cd ../  
 ./build/zpdtest pwd    
 ```
+
+doc:
+https://pierreguillot.github.io/zpd/index.html
