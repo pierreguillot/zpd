@@ -38,6 +38,12 @@ matrix:
 
       after_success:
         - coveralls -e build/CMakeFiles/feature_tests.cxx -e build/CMakeFiles/feature_tests.c -e build/CMakeFiles/CompilerIdCXX/CMakeCXXCompilerId.cpp -e build/CMakeFiles/CompilerIdCXX/CMakeCXXCompilerId.c -e build/CMakeFiles/3.2.2/CompilerIdCXX/CMakeCXXCompilerId.cpp -e build/CMakeFiles/3.2.2/CompilerIdC/CMakeCCompilerId.c -e test -e pd --gcov-options '\-lp'
+        - cd doc
+        - git add .
+        - git config user.name "${COMMIT_USER}"
+        - git config user.email "${COMMIT_EMAIL}"
+        - git commit -m "Automated documentation build for changeset ${CHANGESET}."
+        - git push origin gh-pages
       env:
         - Coveralls and Documentations
 
