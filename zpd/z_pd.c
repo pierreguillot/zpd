@@ -570,9 +570,7 @@ void z_pd_instance_dsp_prepare(z_instance* instance,
                                const int nins, const int nouts,
                                const int samplerate, const int nsamples)
 {
-    if(samplerate != instance->z_internal_ptr->z_samplerate ||
-       nins != instance->z_internal_ptr->z_ninputs ||
-       nouts != instance->z_internal_ptr->z_noutputs)
+    if(samplerate != instance->z_internal_ptr->z_samplerate || nins != instance->z_internal_ptr->z_ninputs || nouts != instance->z_internal_ptr->z_noutputs)
     {
         sys_setchsr(nins, nouts, samplerate);
         instance->z_internal_ptr->z_inputs      = sys_soundin;

@@ -41,9 +41,23 @@ Z_PD_EXTERN_STRUCT _glist;
 Z_PD_EXTERN_STRUCT _text;
 Z_PD_EXTERN_STRUCT _iemgui;
 
+//! @defgroup zpd The zpd part.
+//! @brief The low level c methods of the Pure Data wrapper
+
+//! @defgroup enviroment The global enviroment.
+//! @brief The methods that manage the global Pure Data enviroment
+
+//! @addtogroup zpd
+//! @{
+//!
+
+//! @brief The type used for samples during DSP.
 typedef float z_sample;
+//! @brief The type used to .
 typedef float z_float;
+//! @brief The tie type.
 typedef struct _symbol      z_tie;
+//! @brief The type used for fast comparaison of string characters.
 typedef struct _symbol      z_symbol;
 typedef struct _list        z_list;
 typedef struct _internal    z_internal;
@@ -52,41 +66,23 @@ typedef struct _glist       z_patch;
 typedef struct _text        z_object;
 typedef struct _iemgui      z_gui;
 
-typedef enum
-{
-    Z_NULL,
-    Z_FLOAT,
-    Z_SYMBOL,
-    Z_POINTER
-} z_listtype;
-
 typedef struct _instance
 {
     z_internal* z_internal_ptr;
 }z_instance;
 
-typedef struct _pt
+//! @brief The type of messages in a list.
+typedef enum
 {
-    int x;
-    int y;
-}z_pt;
+    Z_NULL,     //!< @brief Undefined or null
+    Z_FLOAT,    //!< @brief Floating point number
+    Z_SYMBOL,   //!< @brief Symbol
+    Z_POINTER   //!< @brief Graphical pointer
+} z_listtype;
 
-typedef struct _rect
-{
-    int x;
-    int y;
-    int w;
-    int h;
-}z_rect;
 
-typedef void (*z_hook_print)(struct _instance* instance, const char *s);
-typedef void (*z_hook_noteon)(struct _instance* instance, int port, int channel, int pitch, int velocity);
-typedef void (*z_hook_controlchange)(struct _instance* instance, int port, int channel, int control, int value);
-typedef void (*z_hook_programchange)(struct _instance* instance, int port, int channel, int value);
-typedef void (*z_hook_pitchbend)(struct _instance* instance, int port, int channel, int value);
-typedef void (*z_hook_aftertouch)(struct _instance* instance, int port, int channel, int value);
-typedef void (*z_hook_polyaftertouch)(struct _instance* instance, int port, int channel, int pitch, int value);
-typedef void (*z_hook_byte)(struct _instance* instance, int port, int value);
+
+
 
 typedef void (*z_hook_bang)(struct _instance* instance, z_tie* tie);
 typedef void (*z_hook_float)(struct _instance* instance, z_tie* tie, z_float f);
@@ -96,30 +92,46 @@ typedef void (*z_hook_list)(struct _instance* instance, z_tie* tie, z_list *list
 typedef void (*z_hook_anything)(struct _instance* instance, z_tie* tie, z_symbol *s, z_list *list);
 
 
-
+//! @brief The method prototype to receive messages from the console.
+typedef void (*z_hook_print)(struct _instance* instance, const char *s);
 
 //! @brief The console methods.
 typedef struct _hook_console
 {
-    z_hook_print    m_post;
-    z_hook_print    m_log;
-    z_hook_print    m_error;
-    z_hook_print    m_fatal;
+    z_hook_print  m_post;   //!< @brief The post method
+    z_hook_print  m_log;    //!< @brief The log method
+    z_hook_print  m_error;  //!< @brief The error method
+    z_hook_print  m_fatal;  //!< @brief The fatal method
 }z_hook_console;
+
+//! @brief The midi note on method prototype.
+typedef void (*z_hook_noteon)(struct _instance* instance, int port, int channel, int pitch, int velocity);
+//! @brief The midi control change method prototype.
+typedef void (*z_hook_controlchange)(struct _instance* instance, int port, int channel, int control, int value);
+//! @brief The midi progam change method prototype.
+typedef void (*z_hook_programchange)(struct _instance* instance, int port, int channel, int value);
+//! @brief The midi pitch bend method prototype.
+typedef void (*z_hook_pitchbend)(struct _instance* instance, int port, int channel, int value);
+//! @brief The midi after touch method prototype.
+typedef void (*z_hook_aftertouch)(struct _instance* instance, int port, int channel, int value);
+//! @brief The midi poly after touch method prototype.
+typedef void (*z_hook_polyaftertouch)(struct _instance* instance, int port, int channel, int pitch, int value);
+//! @brief The midi byte method prototype.
+typedef void (*z_hook_byte)(struct _instance* instance, int port, int value);
 
 //! @brief The midi methods.
 typedef struct _hook_midi
 {
-    z_hook_noteon           m_noteon;
-    z_hook_controlchange    m_controlchange;
-    z_hook_programchange    m_programchange;
-    z_hook_pitchbend        m_pitchbend;
-    z_hook_aftertouch       m_aftertouch;
-    z_hook_polyaftertouch   m_polyaftertouch;
-    z_hook_byte             m_byte;
+    z_hook_noteon           m_noteon;           //!< brief The note on method
+    z_hook_controlchange    m_controlchange;    //!< brief The control change method
+    z_hook_programchange    m_programchange;    //!< brief The program change method
+    z_hook_pitchbend        m_pitchbend;        //!< brief The pitch bend method
+    z_hook_aftertouch       m_aftertouch;       //!< brief The after touch method
+    z_hook_polyaftertouch   m_polyaftertouch;   //!< brief The poly after touch method
+    z_hook_byte             m_byte;             //!< brief The byte method
 }z_hook_midi;
 
-//! @brief The messages methods.
+//! \brief The messages methods.
 typedef struct _hook_message
 {
     z_hook_bang     m_bang;
@@ -131,6 +143,9 @@ typedef struct _hook_message
 }z_hook_message;
 
 
+//! @addtogroup enviroment
+//! @{
+//!
 
 //! @brief Initializes the Pure Data environment.
 //! @details The method should be called only one time at the initialization, before
@@ -141,8 +156,6 @@ Z_PD_EXTERN void z_pd_init();
 //! @details The method should be called only one time when the Pure Data environment will
 //! never be called again.
 Z_PD_EXTERN void z_pd_clear();
-
-
 
 
 
@@ -159,33 +172,33 @@ Z_PD_EXTERN unsigned int z_pd_version_getbug();
 
 
 
-
-
 //! @brief Clears the search path of Pure Data.
+//! @details Clears the search path for all the environment. The path will be used when you
+//! try to open a patch, to load an abstraction or an external.
 Z_PD_EXTERN void z_pd_searchpath_clear();
 
 //! @brief Adds a path to the search path of Pure Data.
+//! @details Adds a path to the search path for all the environment. The path will be used
+//! when you try to open a patch, to load an abstraction or an external.
 Z_PD_EXTERN void z_pd_searchpath_add(const char* path);
 
 
 
 
-
-
-//! @brief Sends a normal post to the Pure Data console.
+//! @brief Sends a normal post to the current instance.
 Z_PD_EXTERN void z_pd_console_post(char const* message, ...);
 
-//! @brief Sends a log post to the Pure Data console.
+//! @brief Sends a log post to the current instance.
 Z_PD_EXTERN void z_pd_console_log(char const* message, ...);
 
-//! @brief Sends an error to the Pure Data console.
+//! @brief Sends an error to the current instance.
 Z_PD_EXTERN void z_pd_console_error(char const* message, ...);
 
-//! @brief Sends a fatal error to the Pure Data console.
+//! @brief Sends a fatal error to the current instance.
 Z_PD_EXTERN void z_pd_console_fatal(char const* message, ...);
 
 
-
+//! @}
 
 
 
@@ -429,8 +442,10 @@ Z_PD_EXTERN void z_pd_midisend_sysex(int port, int byte);
 //! @brief Sends a midi real time in event to Pure Data.
 Z_PD_EXTERN void z_pd_midisend_sysrealtimein(int port, int byte);
 
+//! @}
 
 #undef Z_PD_EXTERN
 #undef Z_PD_EXTERN_STRUCT
+
 
 #endif /* z_pd_h */

@@ -423,14 +423,25 @@ int main(int argc, char** argv)
         z_pd_instance_set((z_instance *)inst1);
         TEST_FALSE("z_pd_patch_new", (patch1 = z_pd_patch_new("test.pd", "zaza")))
         TEST_TRUE("z_pd_patch_new", (patch1 = z_pd_patch_new("test.pd", NULL)))
+        sprintf(bindingname, "%i-patch", z_pd_patch_get_dollarzero(patch1));
+        TEST_TRUE("z_pd_patch_get_height", (tie1 = z_pd_tie_create(bindingname)))
+        
         TEST_TRUE("z_pd_patch_get_name", z_pd_patch_get_name(patch1))
         TEST_TRUE("z_pd_patch_get_path", z_pd_patch_get_path(patch1))
         TEST_TRUE("z_pd_patch_get_x", z_pd_patch_get_x(patch1) == 100)
         TEST_TRUE("z_pd_patch_get_x", z_pd_patch_get_y(patch1) == 100)
         TEST_TRUE("z_pd_patch_get_width", z_pd_patch_get_width(patch1) == 85)
         TEST_TRUE("z_pd_patch_get_height", z_pd_patch_get_height(patch1) == 60)
+        
         z_pd_instance_set((z_instance *)inst2);
         TEST_TRUE("z_pd_patch_new", (patch2 = z_pd_patch_new("test.pd", NULL)));
+        sprintf(bindingname, "%i-patch", z_pd_patch_get_dollarzero(patch2));
+        TEST_TRUE("z_pd_patch_get_height", (tie2 = z_pd_tie_create(bindingname)))
+        
+        z_pd_instance_bind((z_instance *)inst1, tie1, &hook_message);
+        z_pd_instance_bind((z_instance *)inst2, tie2, &hook_message);
+        
+        
         z_object* obj = NULL;
         TEST_TRUE("z_pd_patch_get_first_object", (obj = z_pd_patch_get_first_object(patch2)));
         while((obj = z_pd_patch_get_next_object(patch2, obj)))
@@ -451,24 +462,7 @@ int main(int argc, char** argv)
     
     if(1)
     {
-        test_start_part("Patch Binding");
-        sprintf(bindingname, "%i-patch", z_pd_patch_get_dollarzero(patch1));
-        tie1 = z_pd_tie_create(bindingname);
-        if(!tie1)
-        {
-            test_allocation_failed("Tie 1");
-            return 0;
-        }
-        z_pd_instance_bind((z_instance *)inst1, tie1, &hook_message);
         
-        sprintf(bindingname, "%i-patch", z_pd_patch_get_dollarzero(patch2));
-        tie2 = z_pd_tie_create(bindingname);
-        if(!tie1)
-        {
-            test_allocation_failed("Tie 2");
-            return 0;
-        }
-        z_pd_instance_bind((z_instance *)inst2, tie2, &hook_message);
         
         sprintf(bindingname, "%i-value", z_pd_patch_get_dollarzero(patch1));
         tie1 = z_pd_tie_create(bindingname);
