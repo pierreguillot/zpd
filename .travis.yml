@@ -31,7 +31,7 @@ matrix:
         - sudo apt-get install --yes doxygen graphviz
         - rm -rf doc
         - mkdir -p doc
-        - git clone -b gh-pages git@github.com:pierreguillot/zpd.git --single-branch doc
+        - git clone -b gh-pages https://github.com/pierreguillot/zpd.git --single-branch doc
         - openssl aes-256-cbc
           -K $encrypted_e84e7849f94f_key
           -iv $encrypted_e84e7849f94f_iv
