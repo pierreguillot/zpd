@@ -54,7 +54,7 @@ namespace pd
         std::string getText() const;
         
         //! @brief The bounds of the Object.
-        std::array<int, 4> getBounds() const noexcept;
+        Rectangle<int> getBounds() const noexcept;
         
     protected:
         
@@ -145,7 +145,7 @@ namespace pd
         
         size_t getNumberOfSteps() const noexcept;
         
-        std::array<int, 2> getLabelPosition() const noexcept;
+        Point<int> getLabelPosition() const noexcept;
         
     private:
 

@@ -73,10 +73,10 @@ namespace pd
         int getDollarZero();
         
         //! @brief Gets the Patch position.
-        std::array<int, 2> getPosition() const noexcept;
+        Point<int> getPosition() const noexcept;
         
         //! @brief Gets the Patch size.
-        std::array<int, 2> getSize() const noexcept;
+        Point<int> getSize() const noexcept;
         
         //! @brief Gets the Gui objects from the patch.
         std::vector<Gui> getGuis() const noexcept;

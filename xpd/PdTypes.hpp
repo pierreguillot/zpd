@@ -8,7 +8,6 @@
 #define Z_PD_TYPES_HPP
 
 #include <string>
-#include <array>
 #include <vector>
 #include <set>
 #include <map>
@@ -25,6 +24,22 @@ namespace pd
 {
     class Smuggler;
     class List;
+    
+    template<typename T> class Point
+    {
+    public:
+        T x;
+        T y;
+    };
+    
+    template<typename T> class Rectangle
+    {
+    public:
+        T x;
+        T y;
+        T w;
+        T h;
+    };
     
     // ==================================================================================== //
     //                                      TIE                                             //

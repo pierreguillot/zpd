@@ -87,7 +87,7 @@ namespace pd
         return std::string();
     }
     
-    std::array<int, 4> Object::getBounds() const noexcept
+    Rectangle<int> Object::getBounds() const noexcept
     {
         int x = 0, y = 0, w = 0, h = 0;
         if(isValid())
@@ -259,7 +259,7 @@ namespace pd
         return 0.f;
     }
     
-    std::array<int, 2> Gui::getLabelPosition() const noexcept
+    Point<int> Gui::getLabelPosition() const noexcept
     {
         int x = 0, y = 0;
         if(isValid())

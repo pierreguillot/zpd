@@ -125,18 +125,16 @@ namespace pd
         return value;
     }
     
-    std::array<int, 2> Patch::getPosition() const noexcept
+    Point<int> Patch::getPosition() const noexcept
     {
         return isValid() ?
-        std::array<int, 2>{z_pd_patch_get_x(reinterpret_cast<z_patch *>(m_ptr)), z_pd_patch_get_y(reinterpret_cast<z_patch *>(m_ptr))} :
-        std::array<int, 2>{0, 0};
+        Point<int>{z_pd_patch_get_x(reinterpret_cast<z_patch *>(m_ptr)), z_pd_patch_get_y(reinterpret_cast<z_patch *>(m_ptr))} : Point<int>{0, 0};
     }
     
-    std::array<int, 2> Patch::getSize() const noexcept
+    Point<int> Patch::getSize() const noexcept
     {
         return isValid() ?
-        std::array<int, 2>{z_pd_patch_get_width(reinterpret_cast<z_patch *>(m_ptr)), z_pd_patch_get_height(reinterpret_cast<z_patch *>(m_ptr))} :
-        std::array<int, 2>{0, 0};
+        Point<int>{z_pd_patch_get_width(reinterpret_cast<z_patch *>(m_ptr)), z_pd_patch_get_height(reinterpret_cast<z_patch *>(m_ptr))} : Point<int>{0, 0};
     }
     
     std::vector<Gui> Patch::getGuis() const noexcept
