@@ -33,6 +33,7 @@ matrix:
           -in config/travisci_rsa.enc -out config/travisci_rsa -d
         - chmod 0600 config/travisci_rsa
         - cp config/travisci_rsa ~/.ssh/id_rsa
+        - chmod +x ./config/publish-doxygen.sh
         - ./config/publish-doxygen.sh
       env:
         - Coveralls and Documentations
