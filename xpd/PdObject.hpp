@@ -7,15 +7,15 @@
 #ifndef Z_PD_OBJECT_HPP
 #define Z_PD_OBJECT_HPP
 
-#include "PdPatch.hpp"
+#include "Pdpatch.hpp"
 
 namespace xpd
 {
     //! @brief The Pure Data Object.
     //! @details The instance is a wrapper for the Pure Data's native comment.
     //! With the default constructor, theObjectGui won't be initialized. A valid
-    //! Object should be created via a Patch. The Gui should be used as tempory object,
-    //! because it locks the Patch.
+    //! Object should be created via a patch. The Gui should be used as tempory object,
+    //! because it locks the patch.
     class Object
     {
     public:
@@ -31,7 +31,7 @@ namespace xpd
         
         //! @brief The move constructor.
         //! @details Creates a copy of an Object without incrementing his counter. The
-        //! Object Patch will be useless.
+        //! Object patch will be useless.
         Object(Object&& other) noexcept;
         
         //! @brief The copy operator.
@@ -58,20 +58,20 @@ namespace xpd
         
     protected:
         
-        void* getPatchPtr() const noexcept;
+        void* getpatchPtr() const noexcept;
         
         void* getPtr() const noexcept;
         
         //! @brief The constructor for a new Object.
         //! @details Creates a new valid Object. You should never have to use it. Use the
-        //! Patch to retrieve an Object.
-        Object(Patch const& patch, void* ptr) noexcept;
+        //! patch to retrieve an Object.
+        Object(patch const& patch, void* ptr) noexcept;
         
     private:
         
         void*       m_ptr;
-        Patch       m_patch;
-        friend class Patch;
+        patch       m_patch;
+        friend class patch;
     };
     
     // ==================================================================================== //
@@ -81,8 +81,8 @@ namespace xpd
     //! @brief The Pure Data GUI.
     //! @details The instance is a wrapper for the Pure Data's native GUI.
     //! With the default constructor, the Gui won't be initialized. A valid
-    //! Gui should be created via a Patch. The Gui should be used as tempory object,
-    //! because it locks the Patch.
+    //! Gui should be created via a patch. The Gui should be used as tempory object,
+    //! because it locks the patch.
     class Gui : public Object, private smuggler
     {
     public:
@@ -109,7 +109,7 @@ namespace xpd
         
         //! @brief The move constructor.
         //! @details Creates a copy of an Object without incrementing his counter. The
-        //! Object Patch will be useless.
+        //! Object patch will be useless.
         Gui(Gui&& other) noexcept;
         
         //! @brief The copy operator.
@@ -151,11 +151,11 @@ namespace xpd
 
         //! @brief The constructor for a new Object.
         //! @details Creates a new valid Object. You should never have to use it. Use the
-        //! Patch to retrieve an Object.
-        Gui(Patch const& patch, Type type, void* ptr) noexcept;
+        //! patch to retrieve an Object.
+        Gui(patch const& patch, Type type, void* ptr) noexcept;
         
         Type        m_type;
-        friend class Patch;
+        friend class patch;
     };
 }
 

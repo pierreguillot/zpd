@@ -8,6 +8,7 @@
 #define XPD_INSTANCE_HPP
 
 #include "xpd_environment.hpp"
+#include "xpd_console.hpp"
 #include <vector>
 #include <set>
 
@@ -40,32 +41,11 @@ namespace xpd
         int get_sample_rate() const noexcept;
         
         
+        //! @brief Sends a message the console.
+        void send(console::message const& mess) noexcept;
         
-        //! @brief Sends a normal post to the Pure Data console.
-        void sendConsolePost(std::string const& message) noexcept;
-        
-        //! @brief Sends a log post to the Pure Data console.
-        void sendConsoleLog(std::string const& message) noexcept;
-        
-        //! @brief Sends an error to the Pure Data console.
-        void sendConsoleError(std::string const& message) noexcept;
-        
-        //! @brief Sends a fatal error to the Pure Data console.
-        void sendConsoleFatal(std::string const& message) noexcept;
-        
-        
-        //! @brief Receives a normal post to the Pure Data console.
-        virtual void receiveConsolePost(std::string const& message) {};
-        
-        //! @brief Receives a log post to the Pure Data console.
-        virtual void receiveConsoleLog(std::string const& message) {};
-        
-        //! @brief Receives a error to the Pure Data console.
-        virtual void receiveConsoleError(std::string const& message) {};
-        
-        //! @brief Receives a fatal error to the Pure Data console.
-        virtual void receiveConsoleFatal(std::string const& message) {};
-        
+        //! @brief Sends a message the console.
+        virtual void receive(console::message const& mess) {};
         
         class listener
         {
@@ -81,14 +61,6 @@ namespace xpd
         
     protected:
         
-        //! @brief Locks instance.
-        void lock() noexcept;
-        
-        //! @brief Unlocks instance.
-        void unlock() noexcept;
-        
-        
-        
         //! @brief Prepares the digital signal processing chain of the instance.
         void dsp_prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept;
         
@@ -98,59 +70,6 @@ namespace xpd
         
         //! @brief Releases the digital signal processing chain of the instance.
         void dsp_release() noexcept;
-        
-        
-        
-        //! @brief Sends midi note on.
-        void sendMidiNote(int channel, int pitch, int velocity) const;
-        
-        //! @brief Sends midi control change.
-        void sendMidiControlChange(int channel, int controller, int value) const;
-        
-        //! @brief Sends midi program change.
-        void sendMidiProgramChange(int channel, int value) const;
-        
-        //! @brief Sends midi pitch bend.
-        void sendMidiPitchBend(int channel, int value) const;
-        
-        //! @brief Sends midi after touch.
-        void sendMidiAfterTouch(int channel, int value) const;
-        
-        //! @brief Sends midi poly after touch.
-        void sendMidiPolyAfterTouch(int channel, int pitch, int value) const;
-        
-        //! @brief Sends midi byte.
-        void sendMidiByte(int port, int byte) const;
-        
-        //! @brief Sends midi sys ex.
-        void sendMidiSysEx(int port, int byte) const;
-        
-        //! @brief Sends midi sys real time.
-        void sendMidiSysRealtime(int port, int byte) const;
-        
-        
-        
-        
-        //! @brief Receives midi note on.
-        virtual void receiveMidiNoteOn(int channel, int pitch, int velocity) {};
-        
-        //! @brief Receives midi control change.
-        virtual void receiveMidiControlChange(int channel, int control, int value) {}
-        
-        //! @brief Receives midi program change.
-        virtual void receiveMidiProgramChange(int channel, int value) {}
-        
-        //! @brief Receives midi pitch bend.
-        virtual void receiveMidiPitchBend(int channel, int value) {}
-        
-        //! @brief Receives midi after touch.
-        virtual void receiveMidiAfterTouch(int channel, int value) {}
-        
-        //! @brief Receives midi poly after touch.
-        virtual void receiveMidiPolyAfterTouch(int channel, int pitch, int value) {}
-        
-        //! @brief Receives midi byte.
-        virtual void receiveMidiByte(int port, int value) {}
         
         
         //! @brief Sends anything.

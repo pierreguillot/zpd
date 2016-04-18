@@ -8,8 +8,6 @@
 #define Z_PD_HPP
 
 #include "PdObject.hpp"
-#include "PdConsole.hpp"
 #include "PdParameter.hpp"
-#include "PdPatchManager.hpp"
 
 #endif // Z_PD_HPP

@@ -5,7 +5,7 @@
 */
 
 #include "xpd_instance.hpp"
-#include "PdPatch.hpp"
+#include "Pdpatch.hpp"
 
 extern "C"
 {
@@ -41,11 +41,6 @@ namespace xpd
             if(ptr)
             {
                 ptr->ref = _ref;
-                ptr->s_bang     = symbol("bang");
-                ptr->s_float    = symbol("float");
-                ptr->s_symbol   = symbol("symbol");
-                ptr->s_list     = symbol("list");
-                ptr->s_gpointer = symbol("gpointer");
                 cpd_instance_set_hook_console(reinterpret_cast<c_instance*>(ptr), &console);
                 cpd_instance_set_hook_midi(reinterpret_cast<c_instance*>(ptr), &midi);
                 
@@ -55,22 +50,22 @@ namespace xpd
         
         static void m_post_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receiveConsolePost(std::string(s));
+            instance->ref->receive(console::message{console::level::post, std::string(s)});
         }
         
         static void m_log_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receiveConsoleLog(std::string(s));
+            instance->ref->receive(console::message{console::level::log, std::string(s)});
         }
         
         static void m_error_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receiveConsoleError(std::string(s));
+            instance->ref->receive(console::message{console::level::error, std::string(s)});
         }
         
         static void m_fatal_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receiveConsoleFatal(std::string(s));
+            instance->ref->receive(console::message{console::level::fatal, std::string(s)});
         }
         
 
@@ -183,6 +178,14 @@ namespace xpd
         {
             throw std::runtime_error("can't allocate instance.");
         }
+        int todo;
+        /*
+        ptr->s_bang     = symbol("bang");
+        ptr->s_float    = symbol("float");
+        ptr->s_symbol   = symbol("symbol");
+        ptr->s_list     = symbol("list");
+        ptr->s_gpointer = symbol("gpointer");
+         */
     }
     
     instance::~instance() noexcept
@@ -216,34 +219,27 @@ namespace xpd
     
     
     
-    void instance::sendConsolePost(std::string const& message) noexcept
+    void instance::send(console::message const& mess) noexcept
     {
         lock();
-        cpd_console_post(message.c_str());
+        if(mess.lvl == console::level::error)
+        {
+            cpd_console_error(mess.txt.c_str());
+        }
+        else if(mess.lvl == console::level::fatal)
+        {
+            cpd_console_fatal(mess.txt.c_str());
+        }
+        else if(mess.lvl == console::level::post)
+        {
+            cpd_console_post(mess.txt.c_str());
+        }
+        else
+        {
+            cpd_console_log(mess.txt.c_str());
+        }
         unlock();
     }
-    
-    void instance::sendConsoleLog(std::string const& message) noexcept
-    {
-        lock();
-        cpd_console_log(message.c_str());
-        unlock();
-    }
-    
-    void instance::sendConsoleError(std::string const& message) noexcept
-    {
-        lock();
-        cpd_console_error(message.c_str());
-        unlock();
-    }
-    
-    void instance::sendConsoleFatal(std::string const& message) noexcept
-    {
-        lock();
-        cpd_console_fatal(message.c_str());
-        unlock();
-    }
-    
     
     void instance::send(tie name, symbol s, std::vector<atom> const& atoms) const
     {

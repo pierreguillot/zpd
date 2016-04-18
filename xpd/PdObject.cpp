@@ -26,7 +26,7 @@ namespace xpd
         
     }
     
-    Object::Object(Patch const& patch, void* ptr) noexcept :
+    Object::Object(patch const& patch, void* ptr) noexcept :
     m_ptr(ptr), m_patch(patch)
     {
         ;
@@ -42,7 +42,7 @@ namespace xpd
     m_ptr(other.m_ptr), m_patch(other.m_patch)
     {
         other.m_ptr   = nullptr;
-        other.m_patch = Patch();
+        other.m_patch = patch();
     }
     
     Object& Object::operator=(Object const& other) noexcept
@@ -62,7 +62,7 @@ namespace xpd
     Object::~Object() noexcept
     {
         m_ptr = nullptr;
-        m_patch = Patch();
+        m_patch = patch();
     }
     
     bool Object::isValid() const noexcept
@@ -99,7 +99,7 @@ namespace xpd
         return {x, y, w, h};
     }
     
-    void* Object::getPatchPtr() const noexcept
+    void* Object::getpatchPtr() const noexcept
     {
         return isValid() ? m_patch.m_ptr : nullptr;
     }
@@ -118,7 +118,7 @@ namespace xpd
         
     }
     
-    Gui::Gui(Patch const& patch, Type type, void* ptr) noexcept :
+    Gui::Gui(patch const& patch, Type type, void* ptr) noexcept :
     Object(patch, ptr), m_type(type)
     {
         ;
@@ -265,7 +265,7 @@ namespace xpd
         if(isValid())
         {
             cpd_gui_get_label_position(reinterpret_cast<c_gui *>(getPtr()),
-                                reinterpret_cast<c_patch *>(getPatchPtr()),
+                                reinterpret_cast<c_patch *>(getpatchPtr()),
                                 &x, &y);
         }
         return {x, y};

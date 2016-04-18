@@ -4,7 +4,7 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#include "PdPatch.hpp"
+#include "Pdpatch.hpp"
 #include "PdObject.hpp"
 
 extern "C"
@@ -18,30 +18,30 @@ namespace xpd
     //                                          PATCHER                                     //
     // ==================================================================================== //
     
-    Patch::Patch(instance& instance, std::string const& name, std::string const& path) noexcept :
+    patch::patch(instance& instance, std::string const& name, std::string const& path) noexcept :
     m_ptr(nullptr)
     {
         m_ptr = cpd_patch_new(name.c_str(), path.c_str());
     }
     
-    Patch::~Patch() noexcept
+    patch::~patch() noexcept
     {
         m_instance.lock();
         cpd_patch_free(reinterpret_cast<c_patch *>(m_ptr));
         m_instance.unlock();
     }
     
-    std::string Patch::getName() const
+    std::string patch::getName() const
     {
         return cpd_patch_get_name(reinterpret_cast<c_patch *>(m_ptr));
     }
     
-    std::string Patch::getPath() const
+    std::string patch::getPath() const
     {
         return cpd_patch_get_path(reinterpret_cast<c_patch *>(m_ptr));
     }
     
-    int Patch::getDollarZero()
+    int patch::getDollarZero()
     {
         m_instance.lock();
         int value = cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(m_ptr));
@@ -49,27 +49,27 @@ namespace xpd
         return value;
     }
     
-    int Patch::get_x() const noexcept
+    int patch::get_x() const noexcept
     {
         return cpd_patch_get_x(reinterpret_cast<c_patch *>(m_ptr));
     }
     
-    int Patch::get_y() const noexcept
+    int patch::get_y() const noexcept
     {
         return cpd_patch_get_y(reinterpret_cast<c_patch *>(m_ptr));
     }
     
-    int Patch::get_width() const noexcept
+    int patch::get_width() const noexcept
     {
         return cpd_patch_get_width(reinterpret_cast<c_patch *>(m_ptr));
     }
     
-    int Patch::get_height() const noexcept
+    int patch::get_height() const noexcept
     {
         return cpd_patch_get_height(reinterpret_cast<c_patch *>(m_ptr));
     }
     
-    std::vector<Gui> Patch::getGuis() const noexcept
+    std::vector<Gui> patch::getGuis() const noexcept
     {
         std::vector<Gui> objects;
         if(isValid())
@@ -112,7 +112,7 @@ namespace xpd
         return objects;
     }
     
-    std::vector<Object> Patch::getComments() const noexcept
+    std::vector<Object> patch::getComments() const noexcept
     {
         std::vector<Object> objects;
         if(isValid())
