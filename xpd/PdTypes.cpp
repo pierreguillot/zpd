@@ -13,66 +13,12 @@ extern "C"
 }
 
 
-namespace pd
+namespace xpd
 {
-    Tie::Tie(std::string const& name) noexcept : ptr(z_pd_tie_create(name.c_str()))
-    {
-        ;
-    }
-    
-    Tie::Tie(char const* name) noexcept : ptr(z_pd_tie_create(name))
-    {
-        
-    }
-    
-    Tie& Tie::operator=(std::string const& name)
-    {
-        ptr = z_pd_tie_create(name.c_str());
-        return *this;
-    }
-    
-    Tie& Tie::operator=(char const* name)
-    {
-        ptr = z_pd_tie_create(name);
-        return *this;
-    }
-    
-    std::string Tie::getName() const
-    {
-        return z_pd_tie_get_name(reinterpret_cast<z_tie const *>(ptr));
-    }
     
     
     
     
-    
-    
-    Symbol::Symbol(std::string const& name) noexcept : ptr(z_pd_tie_create(name.c_str()))
-    {
-        ;
-    }
-    
-    Symbol::Symbol(char const* name) noexcept : ptr(z_pd_tie_create(name))
-    {
-        
-    }
-    
-    Symbol& Symbol::operator=(std::string const& name)
-    {
-        ptr = z_pd_tie_create(name.c_str());
-        return *this;
-    }
-    
-    Symbol& Symbol::operator=(char const* name)
-    {
-        ptr = z_pd_tie_create(name);
-        return *this;
-    }
-    
-    std::string Symbol::getName() const
-    {
-        return z_pd_tie_get_name(reinterpret_cast<z_tie const *>(ptr));
-    }
     
     
     
@@ -124,7 +70,7 @@ namespace pd
         if(t == Z_FLOAT)
             return Type::Float;
         if(t == Z_SYMBOL)
-            return Type::Symbol;
+            return Type::symbol;
         return Type::Gpointer;
     }
     
@@ -138,9 +84,9 @@ namespace pd
         return z_pd_list_get_float(reinterpret_cast<z_list *>(ptr), index);
     }
     
-    Symbol List::getSymbol(size_t index) const
+    symbol List::getsymbol(size_t index) const
     {
-        return Symbol(z_pd_list_get_symbol(reinterpret_cast<z_list *>(ptr), index));
+        return symbol(z_pd_list_get_symbol(reinterpret_cast<z_list *>(ptr), index));
     }
     
     Gpointer List::getGpointer(size_t index) const
@@ -158,7 +104,7 @@ namespace pd
         z_pd_list_set_float(reinterpret_cast<z_list *>(ptr), index, value);
     }
     
-    void List::setSymbol(size_t index, Symbol& symbol)
+    void List::setsymbol(size_t index, symbol& symbol)
     {
         z_pd_list_set_symbol(reinterpret_cast<z_list *>(ptr), index,
                              reinterpret_cast<z_symbol *>(symbol.ptr));

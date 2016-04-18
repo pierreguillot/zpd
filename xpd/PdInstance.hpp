@@ -9,7 +9,7 @@
 
 #include "PdEnvironment.hpp"
 
-namespace pd
+namespace xpd
 {
     class Patch;
     // ==================================================================================== //
@@ -166,40 +166,40 @@ namespace pd
         
         
         //! @brief Sends bang.
-        void sendMessageBang(Tie const& name) const;
+        void sendMessageBang(tie const& name) const;
         
         //! @brief Sends float.
-        void sendMessageFloat(Tie const& name, float f) const;
+        void sendMessageFloat(tie const& name, float f) const;
         
         //! @brief Sends symbol.
-        void sendMessageSymbol(Tie const& name, Symbol const& s) const;
+        void sendMessagesymbol(tie const& name, symbol const& s) const;
         
         //! @brief Sends gpointer.
-        void sendMessageGpointer(Tie const& name, Gpointer const& g) const;
+        void sendMessageGpointer(tie const& name, Gpointer const& g) const;
         
         //! @brief Sends list.
-        void sendMessageList(Tie const& name, List const& list) const;
+        void sendMessageList(tie const& name, List const& list) const;
         
         //! @brief Sends anything.
-        void sendMessageAnything(Tie const& name, Symbol const& s, List const& list) const;
+        void sendMessageAnything(tie const& name, symbol const& s, List const& list) const;
         
         //! @brief Receives bang.
-        virtual void receiveMessageBang(Tie const& tie) {}
+        virtual void receiveMessageBang(tie const& tie) {}
         
         //! @brief Receives float.
-        virtual void receiveMessageFloat(Tie const& tie, float f) {}
+        virtual void receiveMessageFloat(tie const& tie, float f) {}
         
         //! @brief Receives symbol.
-        virtual void receiveMessageSymbol(Tie const& tie, Symbol const& s) {}
+        virtual void receiveMessagesymbol(tie const& tie, symbol const& s) {}
         
         //! @brief Receives gpointer.
-        virtual void receiveMessageGpointer(Tie const& tie, Gpointer const& g) {}
+        virtual void receiveMessageGpointer(tie const& tie, Gpointer const& g) {}
         
         //! @brief Receives list.
-        virtual void receiveMessageList(Tie const& tie, List const& list) {}
+        virtual void receiveMessageList(tie const& tie, List const& list) {}
         
         //! @brief Receives anything.
-        virtual void receiveMessageAnything(Tie const& tie, Symbol const& s, List const& list) {}
+        virtual void receiveMessageAnything(tie const& tie, symbol const& s, List const& list) {}
         
     private:
         struct Internal;

@@ -6,7 +6,7 @@
 
 #include "PdPatchManager.hpp"
 
-namespace pd
+namespace xpd
 {
     PatchManager::PatchManager()
     {

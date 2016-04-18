@@ -9,7 +9,7 @@
 
 #include "PdObject.hpp"
 
-namespace pd
+namespace xpd
 {
     //! @brief A class that manages a parameter
     class Parameter
@@ -75,7 +75,7 @@ namespace pd
         inline int getNumberOfSteps() const noexcept {return m_nsteps != 0 ? m_nsteps : 0x7fffffff;}
         
         //! @brief Gets the tie of the parameter.
-        inline pd::Tie const& getTie() const noexcept {return m_bname;}
+        inline xpd::tie const& gettie() const noexcept {return m_bname;}
         
     private:
         bool        m_valid;
@@ -84,7 +84,7 @@ namespace pd
         float       m_max;
         std::string m_name;
         std::string m_label;
-        pd::Tie     m_bname;
+        xpd::tie     m_bname;
         int         m_nsteps;
     };
 }

@@ -9,7 +9,7 @@
 
 #include "PdPatch.hpp"
 
-namespace pd
+namespace xpd
 {
     //! @brief The Pure Data Object.
     //! @details The Instance is a wrapper for the Pure Data's native comment.
@@ -133,7 +133,7 @@ namespace pd
         
         std::string getLabel() const;
         
-        Tie getReceiveTie() const;
+        tie getReceivetie() const;
         
         bool isParameter() const noexcept;
         

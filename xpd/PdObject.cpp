@@ -13,7 +13,7 @@ extern "C"
 }
 
 
-namespace pd
+namespace xpd
 {
     
     // ==================================================================================== //
@@ -162,7 +162,7 @@ namespace pd
     
     bool Gui::isParameter() const noexcept
     {
-        return isValid() && !getName().empty() && getReceiveTie() != Tie();
+        return isValid() && !getName().empty() && getReceivetie() != tie();
     }
     
     std::string Gui::getName() const
@@ -210,17 +210,17 @@ namespace pd
     }
     
     
-    Tie Gui::getReceiveTie() const
+    tie Gui::getReceivetie() const
     {
         if(isValid())
         {
             z_symbol* s = z_pd_gui_get_receive_symbol(reinterpret_cast<z_gui *>(getPtr()));
             if(s && s != z_pd_symbol_create("empty"))
             {
-                return Smuggler::createTie(s);
+                return Smuggler::createtie(s);
             }
         }
-        return Tie();
+        return tie();
     }
     
     size_t Gui::getNumberOfSteps() const noexcept

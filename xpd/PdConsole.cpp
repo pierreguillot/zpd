@@ -6,7 +6,7 @@
 
 #include "PdConsole.hpp"
 
-namespace pd
+namespace xpd
 {
     
     Console::History::History() :

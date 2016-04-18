@@ -9,7 +9,7 @@
 
 #include "PdObject.hpp"
 
-namespace pd
+namespace xpd
 {
     //! @brief A class that manages a patch to clean
     class PatchManager
@@ -31,11 +31,11 @@ namespace pd
         
         virtual void loadPatch(std::string const& name, std::string const& path) = 0;
         virtual void closePatch() = 0;
-        inline const pd::Patch getPatch() const noexcept {return m_patch;}
-        inline pd::Patch getPatch() noexcept {return m_patch;}
+        inline const xpd::Patch getPatch() const noexcept {return m_patch;}
+        inline xpd::Patch getPatch() noexcept {return m_patch;}
     protected:
         void notifyListeners();
-        pd::Patch   m_patch;
+        xpd::Patch   m_patch;
     private:
         
         std::set<Listener*> m_listeners;

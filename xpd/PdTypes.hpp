@@ -16,6 +16,7 @@
 #include <cassert>
 #include <cstring>
 #include <cmath>
+#include <exception>
 
 #if (__cplusplus <= 199711L)
 #define noexcept
@@ -27,82 +28,14 @@
 #include <mutex>
 #endif
 
+#include "xpd_tie.hpp"
+#include "xpd_symbol.hpp"
 
-namespace pd
+
+namespace xpd
 {
     class Smuggler;
     class List;
-    
-    template<typename T> class Point
-    {
-    public:
-        T x;
-        T y;
-    };
-    
-    template<typename T> class Rectangle
-    {
-    public:
-        T x;
-        T y;
-        T w;
-        T h;
-    };
-    
-    // ==================================================================================== //
-    //                                      TIE                                             //
-    // ==================================================================================== //
-    //! @brief A tie is used as a connection between the interface and Pure Data.
-    class Tie
-    {
-    public:
-        Tie(std::string const& name) noexcept ;
-        Tie(char const* name) noexcept ;
-        inline constexpr Tie() : ptr(nullptr) {}
-        inline constexpr Tie(Tie const& other) : ptr(other.ptr) {}
-        inline Tie& operator=(Tie const& other) {ptr = other.ptr; return *this;}
-        Tie& operator=(std::string const& name);
-        Tie& operator=(char const* name);
-        inline constexpr bool operator!=(Tie const& other)const noexcept {return other.ptr != ptr;}
-        inline constexpr bool operator==(Tie const& other) const noexcept {return other.ptr == ptr;}
-        inline constexpr operator bool() const noexcept {return bool(ptr);}
-        std::string getName() const;
-    
-    private:
-        void* ptr;
-        friend class Smuggler;
-        friend class List;
-        inline constexpr void const* get() const noexcept{return ptr;}
-        inline constexpr Tie(void *_ptr) : ptr(_ptr) {}
-    };
-    
-    
-    // ==================================================================================== //
-    //                                      SYMBOL                                          //
-    // ==================================================================================== //
-    //! @brief A symbol is used as for fast comparaison of string with Pure Data.
-    class Symbol
-    {
-    public:
-        Symbol(std::string const& name) noexcept ;
-        Symbol(char const* name) noexcept ;
-        inline constexpr Symbol() : ptr(nullptr) {}
-        inline constexpr Symbol(Symbol const& other) : ptr(other.ptr) {}
-        inline Symbol& operator=(Symbol const& other) {ptr = other.ptr; return *this;}
-        Symbol& operator=(std::string const& name);
-        Symbol& operator=(char const* name);
-        inline constexpr bool operator!=(Symbol const& other)const noexcept {return other.ptr != ptr;}
-        inline constexpr bool operator==(Symbol const& other) const noexcept{return other.ptr == ptr;}
-        inline constexpr operator bool() const noexcept {return bool(ptr);}
-        std::string getName() const;
-        
-    private:
-        void* ptr;
-        friend class Smuggler;
-        friend class List;
-        inline constexpr void const* get() const noexcept{return ptr;}
-        inline constexpr Symbol(void *_ptr) : ptr(_ptr) {}
-    };
     
     
     // ==================================================================================== //
@@ -137,7 +70,7 @@ namespace pd
         {
             Nothing,
             Float,
-            Symbol,
+            symbol,
             Gpointer
         };
         List();
@@ -151,10 +84,10 @@ namespace pd
         size_t getSize() const noexcept;
         Type getType(size_t index) const;
         float getFloat(size_t index) const;
-        Symbol getSymbol(size_t index) const;
+        symbol getsymbol(size_t index) const;
         Gpointer getGpointer(size_t index) const;
         void setFloat(size_t index, float value);
-        void setSymbol(size_t index, Symbol& symbol);
+        void setsymbol(size_t index, symbol& symbol);
         void setGpointer(size_t index, Gpointer& pointer);
     private:
         void* ptr;
@@ -172,10 +105,10 @@ namespace pd
     public:
         ~Smuggler() noexcept {}
     protected:
-        inline static constexpr void const* getTie(Tie const& tie) noexcept {return tie.ptr;}
-        inline static constexpr Tie createTie(void *ptr) noexcept {return Tie(ptr);}
-        inline static constexpr void const* getSymbol(Symbol const& symbol) noexcept {return symbol.ptr;}
-        inline static constexpr Symbol createSymbol(void *ptr) noexcept {return Symbol(ptr);}
+        inline static constexpr void const* gettie(tie const& tie) noexcept {return tie.ptr;}
+        inline static constexpr tie createtie(void *ptr) noexcept {return tie(ptr);}
+        inline static constexpr void const* getsymbol(symbol const& symbol) noexcept {return symbol.ptr;}
+        inline static constexpr symbol createsymbol(void *ptr) noexcept {return symbol(ptr);}
         inline static constexpr void const* getGpointer(Gpointer const& gpointer) noexcept {return gpointer.ptr;}
         inline static constexpr Gpointer createGpointer(void *ptr) noexcept {return Gpointer(ptr);}
         

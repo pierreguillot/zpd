@@ -9,7 +9,7 @@
 
 #include "PdTypes.hpp"
 
-namespace pd
+namespace xpd
 {
     // ==================================================================================== //
     //                                      ENVIRONMENT                                     //

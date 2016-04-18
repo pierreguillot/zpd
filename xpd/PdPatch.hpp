@@ -9,7 +9,7 @@
 
 #include "PdInstance.hpp"
 
-namespace pd
+namespace xpd
 {
     class Gui;
     class Object;

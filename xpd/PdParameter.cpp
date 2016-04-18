@@ -6,7 +6,7 @@
 
 #include "PdParameter.hpp"
 
-namespace pd
+namespace xpd
 {
     
     Parameter::Parameter()
@@ -25,13 +25,13 @@ namespace pd
         
     }
     
-    Parameter::Parameter(pd::Gui const& gui)
+    Parameter::Parameter(xpd::Gui const& gui)
     : m_valid(true), m_value (0.f),
     m_min(gui.getMinimum()),
     m_max(gui.getMaximum()),
     m_name(gui.getName()),
     m_label(gui.getLabel()),
-    m_bname(gui.getReceiveTie()),
+    m_bname(gui.getReceivetie()),
     m_nsteps(int(gui.getNumberOfSteps()))
     {
         setValueNonNormalized(gui.getValue());

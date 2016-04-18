@@ -9,7 +9,7 @@
 
 #include "PdTypes.hpp"
 
-namespace pd
+namespace xpd
 {
     //! @brief A class that manages the console
     class Console
