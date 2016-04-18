@@ -12,9 +12,6 @@
 
 namespace xpd
 {
-    class Smuggler;
-    class vector;
-    
     // ==================================================================================== //
     //                                      SYMBOL                                          //
     // ==================================================================================== //
@@ -85,10 +82,8 @@ namespace xpd
         std::string name() const;
         
     private:
-        class manager;
         void* ptr;
-        friend class Smuggler;
-        friend class atom;
+        friend class smuggler;
         inline constexpr void const* get() const noexcept{return ptr;}
         inline constexpr symbol(void *_ptr) : ptr(_ptr) {}
     };

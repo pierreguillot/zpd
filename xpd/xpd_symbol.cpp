@@ -18,7 +18,7 @@ namespace xpd
     //                                      SYMBOL                                          //
     // ==================================================================================== //
     
-    symbol::symbol(std::string const& name) : ptr(z_pd_tie_create(name.c_str()))
+    symbol::symbol(std::string const& name) : ptr(cpd_tie_create(name.c_str()))
     {
         if(!ptr)
         {
@@ -26,7 +26,7 @@ namespace xpd
         }
     }
     
-    symbol::symbol(char const* name) : ptr(z_pd_tie_create(name))
+    symbol::symbol(char const* name) : ptr(cpd_tie_create(name))
     {
         if(!ptr)
         {
@@ -36,7 +36,7 @@ namespace xpd
     
     symbol& symbol::operator=(std::string const& name)
     {
-        ptr = z_pd_tie_create(name.c_str());
+        ptr = cpd_tie_create(name.c_str());
         if(!ptr)
         {
             throw std::runtime_error("can't allocate symbol.");
@@ -46,7 +46,7 @@ namespace xpd
     
     symbol& symbol::operator=(char const* name)
     {
-        ptr = z_pd_tie_create(name);
+        ptr = cpd_tie_create(name);
         if(!ptr)
         {
             throw std::runtime_error("can't allocate symbol.");
@@ -56,7 +56,7 @@ namespace xpd
     
     std::string symbol::name() const
     {
-        return z_pd_tie_get_name(reinterpret_cast<z_tie const *>(ptr));
+        return cpd_tie_get_name(reinterpret_cast<c_tie const *>(ptr));
     }
 }
 

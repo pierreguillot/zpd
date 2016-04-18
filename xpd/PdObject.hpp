@@ -12,7 +12,7 @@
 namespace xpd
 {
     //! @brief The Pure Data Object.
-    //! @details The Instance is a wrapper for the Pure Data's native comment.
+    //! @details The instance is a wrapper for the Pure Data's native comment.
     //! With the default constructor, theObjectGui won't be initialized. A valid
     //! Object should be created via a Patch. The Gui should be used as tempory object,
     //! because it locks the Patch.
@@ -79,11 +79,11 @@ namespace xpd
     // ==================================================================================== //
     
     //! @brief The Pure Data GUI.
-    //! @details The Instance is a wrapper for the Pure Data's native GUI.
+    //! @details The instance is a wrapper for the Pure Data's native GUI.
     //! With the default constructor, the Gui won't be initialized. A valid
     //! Gui should be created via a Patch. The Gui should be used as tempory object,
     //! because it locks the Patch.
-    class Gui : public Object, private Smuggler
+    class Gui : public Object, private smuggler
     {
     public:
         

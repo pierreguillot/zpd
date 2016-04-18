@@ -8,6 +8,7 @@
 #define Z_PD_CONSOLE_HPP
 
 #include "PdTypes.hpp"
+#include <vector>
 
 namespace xpd
 {

@@ -10,10 +10,15 @@
 #include <exception>
 #include <string>
 
+#if (__cplusplus <= 199711L)
+#define noexcept
+#define nullptr NULL
+#define constexpr
+#define override
+#endif
+
 namespace xpd
 {
-    class Smuggler;
-    
     // ==================================================================================== //
     //                                      TIE                                             //
     // ==================================================================================== //
@@ -86,8 +91,7 @@ namespace xpd
         
     private:
         void* ptr;
-        class manager;
-        friend class Smuggler;
+        friend class smuggler;
         inline constexpr void const* get() const noexcept{return ptr;}
         inline constexpr tie(void *_ptr) : ptr(_ptr) {}
     };

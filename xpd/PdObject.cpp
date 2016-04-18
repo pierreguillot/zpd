@@ -76,7 +76,7 @@ namespace xpd
         {
             char* text = nullptr;
             int size = 0;
-            z_pd_object_get_text(reinterpret_cast<z_object *>(m_ptr), &size, &text);
+            cpd_object_get_text(reinterpret_cast<c_object *>(m_ptr), &size, &text);
             if(text && size)
             {
                 std::string txt(text, size);
@@ -92,8 +92,8 @@ namespace xpd
         int x = 0, y = 0, w = 0, h = 0;
         if(isValid())
         {
-            z_pd_object_get_bounds(reinterpret_cast<z_object *>(m_ptr),
-                                reinterpret_cast<z_patch *>(m_patch.m_ptr),
+            cpd_object_get_bounds(reinterpret_cast<c_object *>(m_ptr),
+                                reinterpret_cast<c_patch *>(m_patch.m_ptr),
                                 &x, &y, &w, &h);
         }
         return {x, y, w, h};
@@ -169,10 +169,10 @@ namespace xpd
     {
         if(isValid())
         {
-            z_symbol* s = z_pd_gui_get_label(reinterpret_cast<z_gui *>(getPtr()));
+            c_symbol* s = cpd_gui_get_label(reinterpret_cast<c_gui *>(getPtr()));
             if(s)
             {
-                std::string name(z_pd_symbol_get_name(s));
+                std::string name(cpd_symbol_get_name(s));
                 if(!name.empty() && name != "empty")
                 {
                     auto pos = name.find("_");
@@ -191,10 +191,10 @@ namespace xpd
     {
         if(isValid())
         {
-            z_symbol* s = z_pd_gui_get_label(reinterpret_cast<z_gui *>(getPtr()));
+            c_symbol* s = cpd_gui_get_label(reinterpret_cast<c_gui *>(getPtr()));
             if(s)
             {
-                std::string name(z_pd_symbol_get_name(s));
+                std::string name(cpd_symbol_get_name(s));
                 if(!name.empty() && name != "empty")
                 {
                     auto pos = name.find("_");
@@ -214,10 +214,10 @@ namespace xpd
     {
         if(isValid())
         {
-            z_symbol* s = z_pd_gui_get_receive_symbol(reinterpret_cast<z_gui *>(getPtr()));
-            if(s && s != z_pd_symbol_create("empty"))
+            c_symbol* s = cpd_gui_get_receive_symbol(reinterpret_cast<c_gui *>(getPtr()));
+            if(s && s != cpd_symbol_create("empty"))
             {
-                return Smuggler::createtie(s);
+                return smuggler::createtie(s);
             }
         }
         return tie();
@@ -227,7 +227,7 @@ namespace xpd
     {
         if(isValid())
         {
-            return z_pd_gui_get_number_of_steps(reinterpret_cast<z_gui *>(getPtr()));
+            return cpd_gui_get_number_of_steps(reinterpret_cast<c_gui *>(getPtr()));
         }
         return 0.f;
     }
@@ -236,7 +236,7 @@ namespace xpd
     {
         if(isValid())
         {
-            return z_pd_gui_get_minimum_value(reinterpret_cast<z_gui *>(getPtr()));
+            return cpd_gui_get_minimum_value(reinterpret_cast<c_gui *>(getPtr()));
         }
         return 0.f;
     }
@@ -245,7 +245,7 @@ namespace xpd
     {
         if(isValid())
         {
-            return z_pd_gui_get_maximum_value(reinterpret_cast<z_gui *>(getPtr()));
+            return cpd_gui_get_maximum_value(reinterpret_cast<c_gui *>(getPtr()));
         }
         return 1.f;
     }
@@ -254,7 +254,7 @@ namespace xpd
     {
         if(isValid())
         {
-            return z_pd_gui_get_value(reinterpret_cast<z_gui *>(getPtr()));
+            return cpd_gui_get_value(reinterpret_cast<c_gui *>(getPtr()));
         }
         return 0.f;
     }
@@ -264,8 +264,8 @@ namespace xpd
         int x = 0, y = 0;
         if(isValid())
         {
-            z_pd_gui_get_label_position(reinterpret_cast<z_gui *>(getPtr()),
-                                reinterpret_cast<z_patch *>(getPatchPtr()),
+            cpd_gui_get_label_position(reinterpret_cast<c_gui *>(getPtr()),
+                                reinterpret_cast<c_patch *>(getPatchPtr()),
                                 &x, &y);
         }
         return {x, y};

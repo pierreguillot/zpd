@@ -8,6 +8,7 @@
 #define Z_PD_PARAMETER_HPP
 
 #include "PdObject.hpp"
+#include <iostream>
 
 namespace xpd
 {

@@ -4,60 +4,40 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef Z_PD_INSTANCE_HPP
-#define Z_PD_INSTANCE_HPP
+#ifndef XPD_INSTANCE_HPP
+#define XPD_INSTANCE_HPP
 
-#include "PdEnvironment.hpp"
+#include "xpd_environment.hpp"
+#include <vector>
+#include <set>
 
 namespace xpd
 {
-    class Patch;
+    class patch;
     // ==================================================================================== //
     //                                          INSTANCE                                    //
     // ==================================================================================== //
     
-    //! @brief The Pure Data instance.
-    //! @details The Instance is a wrapper for the Pure Data's native instance.
-    //! With the default constructor, the Instance won't be initialized. The Instance has some
-    //! kind of smart pointer behavior so when an Instance object is no more useful the object
+    //! @brief The instance manages a set of patches.
+    //! @details The instance is a wrapper for the Pure Data's native instance.
+    //! With the default constructor, the instance won't be initialized. The instance has some
+    //! kind of smart pointer behavior so when an instance object is no more useful the object
     //! is deleted.
-    class Instance : private Smuggler
+    class instance : private smuggler
     {
     public:
         
-        //! @brief The constructor for an empty Instance.
-        //! @details Creates an Instance that can be used as an empty reference inside
+        //! @brief The constructor for an empty instance.
+        //! @details Creates an instance that can be used as an empty reference inside
         //! another class.
-        Instance() noexcept;
-        
-        //! @brief The copy constructor.
-        //! Creates a copy of an Instance and increments his counter.
-        Instance(Instance const& other) noexcept;
-        
-        //! @brief The move constructor.
-        //! @details Creates a copy of an Instance without incrementing his counter. The
-        //! other Instance will be useless.
-        Instance(Instance&& other) noexcept;
-        
-        //! @brief The copy operator.
-        //! Copies the Instance and increments his counter.
-        Instance& operator=(Instance const& other) noexcept;
-        
-        //! @brief The move operator.
-        //! @details Copies the Instance without incrementing his counter. The other
-        //! Instance will be destroyed if needed.
-        Instance& operator=(Instance&& other) noexcept;
+        instance() noexcept;
         
         //! @brief The destructor.
-        //! @details The Instance will be destroyed if no other copy exists.
-        virtual ~Instance() noexcept;
+        //! @details The instance will be destroyed if no other copy exists.
+        virtual ~instance() noexcept;
         
-        //! @brief Retrieves if the Instance is valid.
-        bool isValid() const noexcept;
-        
-        //! @brief Retrieves the sample rate of the Instance.
-        int getSampleRate() const noexcept;
-        
+        //! @brief Gets the sample rate of the instance.
+        int get_sample_rate() const noexcept;
         
         
         
@@ -85,29 +65,39 @@ namespace xpd
         
         //! @brief Receives a fatal error to the Pure Data console.
         virtual void receiveConsoleFatal(std::string const& message) {};
+        
+        
+        class listener
+        {
+        public:
+            inline constexpr listener() {}
+            inline virtual ~listener() {}
+            virtual void patch_created(patch* p) = 0;
+            virtual void patch_deleted(patch* p) = 0;
+        };
+        
+        void listener_add(listener* listener);
+        void listener_remove(listener* listener);
+        
     protected:
         
-        //! @brief The real constructor.
-        Instance(const std::string& name) noexcept;
-        
-        //! @brief Locks Instance.
+        //! @brief Locks instance.
         void lock() noexcept;
         
-        //! @brief Unlocks Instance.
+        //! @brief Unlocks instance.
         void unlock() noexcept;
         
         
         
+        //! @brief Prepares the digital signal processing chain of the instance.
+        void dsp_prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept;
         
-        //! @brief Prepares the digital signal processing chain of the Instance.
-        void prepareDsp(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept;
+        //! @brief Performs the digital signal processing chain of the instance.
+        //! @details You should locks the instance to ensure thread safety.
+        void dsp_perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept;
         
-        //! @brief Performs the digital signal processing chain of the Instance.
-        //! @details You should locks the Instance to ensure thread safety.
-        void performDsp(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept;
-        
-        //! @brief Releases the digital signal processing chain of the Instance.
-        void releaseDsp() noexcept;
+        //! @brief Releases the digital signal processing chain of the instance.
+        void dsp_release() noexcept;
         
         
         
@@ -163,48 +153,27 @@ namespace xpd
         virtual void receiveMidiByte(int port, int value) {}
         
         
-        
-        
-        //! @brief Sends bang.
-        void sendMessageBang(tie const& name) const;
-        
-        //! @brief Sends float.
-        void sendMessageFloat(tie const& name, float f) const;
-        
-        //! @brief Sends symbol.
-        void sendMessagesymbol(tie const& name, symbol const& s) const;
-        
-        //! @brief Sends list.
-        void sendMessagevector(tie const& name, vector const& list) const;
-        
         //! @brief Sends anything.
-        void sendMessageAnything(tie const& name, symbol const& s, vector const& list) const;
-        
-        //! @brief Receives bang.
-        virtual void receiveMessageBang(tie const& tie) {}
-        
-        //! @brief Receives float.
-        virtual void receiveMessageFloat(tie const& tie, float f) {}
-        
-        //! @brief Receives symbol.
-        virtual void receiveMessagesymbol(tie const& tie, symbol const& s) {}
-        
-        //! @brief Receives list.
-        virtual void receiveMessagevector(tie const& tie, vector const& list) {}
+        void send(tie name, symbol s, std::vector<atom> const& atoms) const;
         
         //! @brief Receives anything.
-        virtual void receiveMessageAnything(tie const& tie, symbol const& s, vector const& list) {}
+        virtual void receive(tie tie, symbol s, std::vector<atom> const& atoms) {}
         
     private:
-        struct Internal;
-        void release() noexcept;
+        instance(instance const& other) = delete;
+        instance& operator=(instance const& other) = delete;
+        struct internal;
         
-        void*               m_ptr;
-        std::atomic<long>*  m_count;
-        friend class Patch;
+        static symbol   m_sym_bang;
+        static symbol   m_sym_float;
+        static symbol   m_sym_symbol;
+        static symbol   m_sym_list;
+        static symbol   m_sym_gpointer;
         
+        internal*           m_ptr;
+        std::set<listener*> m_listeners;
     };
 
 }
 
-#endif // Z_PD_INSTANCE_HPP
+#endif // XPD_INSTANCE_HPP
