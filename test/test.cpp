@@ -4,10 +4,6 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-// This part of the code is greatly inspired by Pure Data and libPD, and sometimes
-// directly copied. None of the authors of Pure Data and libPD is responsible for these
-// experiments but you must be aware of their unintended contribution.
-
 #include "../xpd/PdTypes.hpp"
 
 using namespace pd;
