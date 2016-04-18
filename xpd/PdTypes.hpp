@@ -11,14 +11,22 @@
 #include <vector>
 #include <set>
 #include <map>
-#include <mutex>
-#include <tuple>
 #include <iostream>
 #include <memory>
 #include <cassert>
-#include <atomic>
 #include <cstring>
 #include <cmath>
+
+#if (__cplusplus <= 199711L)
+#define noexcept
+#define nullptr NULL
+#define constexpr
+#define override
+#else
+#include <atomic>
+#include <mutex>
+#endif
+
 
 namespace pd
 {
@@ -45,7 +53,6 @@ namespace pd
     //                                      TIE                                             //
     // ==================================================================================== //
     //! @brief A tie is used as a connection between the interface and Pure Data.
-    //! @details The wrapper for z_tie struct.
     class Tie
     {
     public:
@@ -74,7 +81,6 @@ namespace pd
     //                                      SYMBOL                                          //
     // ==================================================================================== //
     //! @brief A symbol is used as for fast comparaison of string with Pure Data.
-    //! @details The wrapper for z_symbol struct.
     class Symbol
     {
     public:
@@ -103,7 +109,6 @@ namespace pd
     //                                      GPOINTER                                        //
     // ==================================================================================== //
     //! @brief A gpointer.
-    //! @details The wrapper for z_gpointer struct.
     class Gpointer
     {
     public:
@@ -125,7 +130,6 @@ namespace pd
     //                                      LIST                                          //
     // ==================================================================================== //
     //! @brief A list.
-    //! @details The wrapper for z_list struct.
     class List
     {
     public:
