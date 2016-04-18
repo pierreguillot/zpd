@@ -40,6 +40,7 @@ Z_PD_EXTERN_STRUCT _gpointer;
 Z_PD_EXTERN_STRUCT _glist;
 Z_PD_EXTERN_STRUCT _text;
 Z_PD_EXTERN_STRUCT _iemgui;
+Z_PD_EXTERN_STRUCT _atom;
 
 //! @defgroup zpd The zpd part.
 //! @brief The low level c methods of the Pure Data wrapper
@@ -59,6 +60,9 @@ typedef float z_float;
 typedef struct _symbol      z_tie;
 //! @brief The type used for fast comparaison of string characters.
 typedef struct _symbol      z_symbol;
+//! @brief The atom type.
+typedef struct _atom        z_atom;
+
 typedef struct _list        z_list;
 typedef struct _internal    z_internal;
 typedef struct _gpointer    z_gpointer;
@@ -78,7 +82,7 @@ typedef enum
     Z_FLOAT,    //!< @brief Floating point number
     Z_SYMBOL,   //!< @brief Symbol
     Z_POINTER   //!< @brief Graphical pointer
-} z_listtype;
+} z_atomtype;
 
 
 
@@ -362,7 +366,7 @@ Z_PD_EXTERN char z_pd_list_copy(z_list* list1, z_list const* list2);
 Z_PD_EXTERN size_t z_pd_list_get_size(z_list const* list);
 
 //! @brief Gets the type of a data of the list.
-Z_PD_EXTERN z_listtype z_pd_list_get_type(z_list const* list, size_t index);
+Z_PD_EXTERN z_atomtype z_pd_list_get_type(z_list const* list, size_t index);
 
 //! @brief Gets the float value of a data of the list.
 Z_PD_EXTERN z_float z_pd_list_get_float(z_list const* list, size_t index);
@@ -381,6 +385,15 @@ Z_PD_EXTERN void z_pd_list_set_symbol(z_list *list, size_t index, z_symbol* symb
 
 //! @brief Sets the gpointer of a data of the list.
 Z_PD_EXTERN void z_pd_list_set_gpointer(z_list *list, size_t index, z_gpointer* pointer);
+
+Z_PD_EXTERN void* z_pd_list_get_atom(z_list* list, size_t index);
+
+Z_PD_EXTERN z_atomtype cpd_atom_get_type(z_atom const* atom);
+Z_PD_EXTERN z_float cpd_atom_get_float(z_atom const* atom);
+Z_PD_EXTERN z_symbol* cpd_atom_get_symbol(z_atom const* atom);
+Z_PD_EXTERN void cpd_atom_set_float(z_atom* atom, z_float value);
+Z_PD_EXTERN void cpd_atom_set_symbol(z_atom* atom, z_symbol* symbol);
+
 
 
 

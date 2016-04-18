@@ -9,7 +9,7 @@
 
 extern "C"
 {
-#include "../zpd/z_pd.h"
+#include "../cpd/cpd.h"
 }
 
 namespace xpd
@@ -99,17 +99,17 @@ namespace xpd
         
         static void m_gpointer(Instance::Internal* instance, z_tie* tie, z_gpointer *g)
         {
-            instance->ref->receiveMessageGpointer(createtie(tie), createGpointer(g));
+            ;
         }
         
         static void m_list(Instance::Internal* instance, z_tie* tie, z_list *list)
         {
-            instance->ref->receiveMessageList(createtie(tie), createList(list));
+            instance->ref->receiveMessagevector(createtie(tie), createvector(list));
         }
         
         static void m_anything(Instance::Internal* instance, z_tie* tie, z_symbol *s, z_list *list)
         {
-            instance->ref->receiveMessageAnything(createtie(tie), createsymbol(s), createList(list));
+            instance->ref->receiveMessageAnything(createtie(tie), createsymbol(s), createvector(list));
         }
     };
     
@@ -283,23 +283,17 @@ namespace xpd
                                 reinterpret_cast<z_symbol const *>(getsymbol(s)));
     }
     
-    void Instance::sendMessageGpointer(tie const& name, Gpointer const& g) const
-    {
-        z_pd_messagesend_gpointer(reinterpret_cast<z_tie const *>(gettie(name)),
-                                  reinterpret_cast<z_gpointer const *>(getGpointer(g)));
-    }
-    
-    void Instance::sendMessageList(tie const& name, List const& list) const
+    void Instance::sendMessagevector(tie const& name, vector const& list) const
     {
         z_pd_messagesend_list(reinterpret_cast<z_tie const *>(gettie(name)),
-                              reinterpret_cast<z_list const *>(getList(list)));
+                              reinterpret_cast<z_list const *>(getvector(list)));
     }
     
-    void Instance::sendMessageAnything(tie const& name, symbol const& s, List const& list) const
+    void Instance::sendMessageAnything(tie const& name, symbol const& s, vector const& list) const
     {
         z_pd_messagesend_anything(reinterpret_cast<z_tie const *>(gettie(name)),
                                   reinterpret_cast<z_symbol const *>(getsymbol(s)),
-                                  reinterpret_cast<z_list const *>(getList(list)));
+                                  reinterpret_cast<z_list const *>(getvector(list)));
     }
     
     void Instance::sendMidiNote(int channel, int pitch, int velocity) const

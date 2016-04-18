@@ -174,14 +174,11 @@ namespace xpd
         //! @brief Sends symbol.
         void sendMessagesymbol(tie const& name, symbol const& s) const;
         
-        //! @brief Sends gpointer.
-        void sendMessageGpointer(tie const& name, Gpointer const& g) const;
-        
         //! @brief Sends list.
-        void sendMessageList(tie const& name, List const& list) const;
+        void sendMessagevector(tie const& name, vector const& list) const;
         
         //! @brief Sends anything.
-        void sendMessageAnything(tie const& name, symbol const& s, List const& list) const;
+        void sendMessageAnything(tie const& name, symbol const& s, vector const& list) const;
         
         //! @brief Receives bang.
         virtual void receiveMessageBang(tie const& tie) {}
@@ -192,14 +189,11 @@ namespace xpd
         //! @brief Receives symbol.
         virtual void receiveMessagesymbol(tie const& tie, symbol const& s) {}
         
-        //! @brief Receives gpointer.
-        virtual void receiveMessageGpointer(tie const& tie, Gpointer const& g) {}
-        
         //! @brief Receives list.
-        virtual void receiveMessageList(tie const& tie, List const& list) {}
+        virtual void receiveMessagevector(tie const& tie, vector const& list) {}
         
         //! @brief Receives anything.
-        virtual void receiveMessageAnything(tie const& tie, symbol const& s, List const& list) {}
+        virtual void receiveMessageAnything(tie const& tie, symbol const& s, vector const& list) {}
         
     private:
         struct Internal;

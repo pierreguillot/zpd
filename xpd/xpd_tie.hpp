@@ -13,7 +13,7 @@
 namespace xpd
 {
     class Smuggler;
-    class List;
+    
     // ==================================================================================== //
     //                                      TIE                                             //
     // ==================================================================================== //
@@ -86,8 +86,8 @@ namespace xpd
         
     private:
         void* ptr;
+        class manager;
         friend class Smuggler;
-        friend class List;
         inline constexpr void const* get() const noexcept{return ptr;}
         inline constexpr tie(void *_ptr) : ptr(_ptr) {}
     };

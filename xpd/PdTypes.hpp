@@ -30,72 +30,28 @@
 
 #include "xpd_tie.hpp"
 #include "xpd_symbol.hpp"
+#include "xpd_vector.hpp"
 
 
 namespace xpd
 {
     class Smuggler;
-    class List;
     
-    
-    // ==================================================================================== //
-    //                                      GPOINTER                                        //
-    // ==================================================================================== //
-    //! @brief A gpointer.
-    class Gpointer
+    template<typename T> class Point
     {
     public:
-        inline constexpr Gpointer() : ptr(nullptr) {}
-        inline constexpr Gpointer(Gpointer const& other) : ptr(other.ptr) {}
-        inline Gpointer& operator=(Gpointer const& other) {ptr = other.ptr; return *this;}
-        inline bool operator!=(Gpointer const& other)const noexcept {return other.ptr != ptr;}
-        inline bool operator==(Gpointer const& other) const noexcept{return other.ptr == ptr;}
-        
-    private:
-        void* ptr;
-        friend class Smuggler;
-        friend class List;
-        inline constexpr void const* get() const noexcept{return ptr;}
-        inline constexpr Gpointer(void *_ptr) : ptr(_ptr) {}
+        T x;
+        T y;
     };
     
-    // ==================================================================================== //
-    //                                      LIST                                          //
-    // ==================================================================================== //
-    //! @brief A list.
-    class List
+    template<typename T> class Rectangle
     {
     public:
-        enum class Type
-        {
-            Nothing,
-            Float,
-            symbol,
-            Gpointer
-        };
-        List();
-        List(size_t size);
-        List(List const& other);
-        List(List&& other);
-        ~List();
-        List& operator=(List const& other);
-        List& operator=(List&& other);
-        void resize(size_t size);
-        size_t getSize() const noexcept;
-        Type getType(size_t index) const;
-        float getFloat(size_t index) const;
-        symbol getsymbol(size_t index) const;
-        Gpointer getGpointer(size_t index) const;
-        void setFloat(size_t index, float value);
-        void setsymbol(size_t index, symbol& symbol);
-        void setGpointer(size_t index, Gpointer& pointer);
-    private:
-        void* ptr;
-        friend class Smuggler;
-        inline void const* get() const noexcept{return ptr;}
-        inline List(void *_ptr) : ptr(_ptr) {}
-    };
-    
+        T x;
+        T y;
+        T w;
+        T h;
+    };    
     
     //! @brief The smuggler is optimized for internal use.
     //! @details The class doesn't break the efficiency of creation of some type, but you
@@ -109,11 +65,8 @@ namespace xpd
         inline static constexpr tie createtie(void *ptr) noexcept {return tie(ptr);}
         inline static constexpr void const* getsymbol(symbol const& symbol) noexcept {return symbol.ptr;}
         inline static constexpr symbol createsymbol(void *ptr) noexcept {return symbol(ptr);}
-        inline static constexpr void const* getGpointer(Gpointer const& gpointer) noexcept {return gpointer.ptr;}
-        inline static constexpr Gpointer createGpointer(void *ptr) noexcept {return Gpointer(ptr);}
-        
-        inline static constexpr void const* getList(List const& list) noexcept {return list.ptr;}
-        inline static List createList(void *ptr) noexcept {return List(ptr);}
+        inline static constexpr void const* getvector(vector const& list) noexcept {return list.ptr;}
+        inline static vector createvector(void *ptr) noexcept {return vector(ptr);}
     };
 }
 
