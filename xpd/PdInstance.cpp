@@ -20,67 +20,29 @@ namespace pd
         z_instance object;
         Instance*  ref;
         
-        static void m_print(Instance::Internal* instance, const char *s)
+        static void m_post_hook(Instance::Internal* instance, const char *s)
         {
-            int level = 2;
-            std::string message(s);
-            if(!message.compare(0, 6, "error:"))
-            {
-                level = 1;
-                message.erase(message.begin(), message.begin()+5);
-            }
-            else if(!message.compare(0, 8, "verbose(") && isdigit(message[8]))
-            {
-                level = std::atoi(message.c_str()+8);
-                message.erase(message.begin(), message.begin()+12);
-            }
-            else if(!message.compare(0, 5, "tried") || !message.compare(0, 5, "input"))
-            {
-                level = 3;
-            }
-            std::string const whitespaces(" \t\f\v\n\r");
-            std::size_t const found = message.find_last_not_of(whitespaces);
-            if(found!=std::string::npos)
-            {
-                message.erase(found+1);
-            }
-            else
-            {
-                return;
-            }
-            if(!message.empty())
-            {
-                if(message[0] == ' ' || message[0] == '\n')
-                {
-                    size_t i = message.find_first_not_of(" \n");
-                    if(i != std::string::npos)
-                    {
-                        message.erase(message.begin(), message.begin()+i+1);
-                    }
-                }
-            }
-            if(message.empty())
-            {
-                return;
-            }
-
-            if(level == 0)
-            {
-                instance->ref->receiveConsoleFatal(message);
-            }
-            else if(level == 1)
-            {
-                instance->ref->receiveConsoleError(message);
-            }
-            else if(level == 2)
-            {
-                instance->ref->receiveConsolePost(message);
-            }
-            else
-            {
-                instance->ref->receiveConsoleLog(message);
-            }
+            instance->ref->receiveConsolePost(std::string(s));
         }
+        
+        static void m_log_hook(Instance::Internal* instance, const char *s)
+        {
+            instance->ref->receiveConsoleLog(std::string(s));
+        }
+        
+        static void m_error_hook(Instance::Internal* instance, const char *s)
+        {
+            instance->ref->receiveConsoleError(std::string(s));
+        }
+        
+        static void m_fatal_hook(Instance::Internal* instance, const char *s)
+        {
+            instance->ref->receiveConsoleFatal(std::string(s));
+        }
+        
+        
+        
+        
         
         static void m_noteon(Instance::Internal* instance, int port, int channel, int pitch, int velocity)
         {
@@ -157,21 +119,32 @@ namespace pd
     
     Instance::Instance(const std::string& name) noexcept
     {
+        z_hook_console console;
+        console.m_log   = (z_hook_print)Instance::Internal::m_log_hook;
+        console.m_post  = (z_hook_print)Instance::Internal::m_post_hook;
+        console.m_error = (z_hook_print)Instance::Internal::m_error_hook;
+        console.m_fatal = (z_hook_print)Instance::Internal::m_fatal_hook;
+        
+        z_hook_midi midi;
+        midi.m_noteon           = (z_hook_noteon)Instance::Internal::m_noteon;
+        midi.m_controlchange    = (z_hook_controlchange)Instance::Internal::m_controlchange;
+        midi.m_programchange    = (z_hook_programchange)Instance::Internal::m_programchange;
+        midi.m_pitchbend        = (z_hook_pitchbend)Instance::Internal::m_pitchbend;
+        midi.m_aftertouch       = (z_hook_aftertouch)Instance::Internal::m_aftertouch;
+        midi.m_polyaftertouch   = (z_hook_polyaftertouch)Instance::Internal::m_polyaftertouch;
+        midi.m_byte             = (z_hook_byte)Instance::Internal::m_byte;
+        
+        
         Environment::lock();
         m_ptr = z_pd_instance_new(sizeof(Instance::Internal));
-        /*
-        z_pd_instance_set_hook_console(static_cast<z_instance *>(m_ptr), <#z_hook_console *consolehook#>)
-                                  (z_hook_print)Instance::Internal::m_print,
-                                  (z_hook_noteon)Instance::Internal::m_noteon,
-                                  (z_hook_controlchange)Instance::Internal::m_controlchange,
-                                  (z_hook_programchange)Instance::Internal::m_programchange,
-                                  (z_hook_pitchbend)Instance::Internal::m_pitchbend,
-                                  (z_hook_aftertouch)Instance::Internal::m_aftertouch,
-                                  (z_hook_polyaftertouch)Instance::Internal::m_polyaftertouch,
-                                  (z_hook_byte)Instance::Internal::m_byte);
-        */
-        reinterpret_cast<Instance::Internal*>(m_ptr)->ref = this;
-        m_count = new std::atomic<long>(1);
+        if(m_ptr)
+        {
+            reinterpret_cast<Instance::Internal*>(m_ptr)->ref = this;
+            m_count = new std::atomic<long>(1);
+            z_pd_instance_set_hook_console(reinterpret_cast<z_instance*>(m_ptr), &console);
+            z_pd_instance_set_hook_midi(reinterpret_cast<z_instance*>(m_ptr), &midi);
+           
+        }
         Environment::unlock();
     }
     
