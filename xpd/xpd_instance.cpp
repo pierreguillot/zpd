@@ -25,7 +25,7 @@ namespace xpd
         inline static xpd_constexpr symbol createsymbol(void *ptr) xpd_noexcept {return symbol(ptr);}
     };
     
-    struct instance::internal : public smuggler
+    struct instance::internal
     {
     public:        
         c_instance object;
@@ -140,18 +140,17 @@ namespace xpd
         
         static void m_bang(instance::internal* instance, c_tie* tie)
         {
-            instance->ref->receive(createtie(tie), symbol::bang_s, std::vector<atom>());
+            instance->ref->receive(smuggler::createtie(tie), symbol::bang_s, std::vector<atom>());
         }
         
         static void m_float(instance::internal* instance, c_tie* tie, c_float f)
         {
-            instance->ref->receive(createtie(tie), symbol::float_s, std::vector<atom>(1, f));
+            instance->ref->receive(smuggler::createtie(tie), symbol::float_s, std::vector<atom>(1, f));
         }
         
         static void m_symbol(instance::internal* instance, c_tie* tie, c_symbol* s)
         {
-            symbol sy(createsymbol(s));
-            instance->ref->receive(createtie(tie), symbol::symbol_s, std::vector<atom>(1, sy));
+            instance->ref->receive(smuggler::createtie(tie), symbol::symbol_s, std::vector<atom>(1, smuggler::createsymbol(s)));
         }
         
         static void m_gpointer(instance::internal* instance, c_tie* tie, c_gpointer *g)
@@ -168,15 +167,15 @@ namespace xpd
                 {
                     vec[i] = cpd_list_get_float(list, i);
                 }
-                else if(cpd_list_get_type(list, i) == Z_FLOAT)
+                else if(cpd_list_get_type(list, i) == Z_SYMBOL)
                 {
-                    vec[i] = createsymbol(cpd_list_get_symbol(list, i));
+                    vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
 #ifdef _XPD_CPP11_NOSUPPORT_
-            instance->ref->receive(createtie(tie), symbol::list_s, vec);
+            instance->ref->receive(smuggler::createtie(tie), symbol::list_s, vec);
 #else
-            instance->ref->receive(createtie(tie), instance::m_sym_list, std::move(vec));
+            instance->ref->receive(smuggler::createtie(tie), instance::m_sym_list, std::move(vec));
 #endif
         }
         
@@ -189,15 +188,15 @@ namespace xpd
                 {
                     vec[i] = cpd_list_get_float(list, i);
                 }
-                else if(cpd_list_get_type(list, i) == Z_FLOAT)
+                else if(cpd_list_get_type(list, i) == Z_SYMBOL)
                 {
-                    vec[i] = createsymbol(cpd_list_get_symbol(list, i));
+                    vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
 #ifdef _XPD_CPP11_NOSUPPORT_
-            instance->ref->receive(createtie(tie), createsymbol(s), vec);
+            instance->ref->receive(smuggler::createtie(tie), smuggler::createsymbol(s), vec);
 #else
-            instance->ref->receive(createtie(tie), createsymbol(s), std::move(vec));
+            instance->ref->receive(smuggler::createtie(tie), smuggler::createsymbol(s), std::move(vec));
 #endif
         }
     };

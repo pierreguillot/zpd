@@ -41,11 +41,11 @@ namespace xpd
         
         //! @brief The symbol constructor.
         //! @details Creates an symbol atom.
-       inline xpd_constexpr atom(symbol& symbol) xpd_noexcept : m_type(symbol_t), m_word(symbol) {}
+       inline xpd_constexpr atom(symbol const& symbol) xpd_noexcept : m_type(symbol_t), m_word(symbol) {}
         
         //! @brief The copy constructor.
         //! @details Creates an copy of another atom.
-       inline xpd_constexpr atom(atom& other) xpd_noexcept : m_type(other.m_type), m_word(m_type == float_t ? other.m_word.w_float : other.m_word.w_symbol) {}
+       inline xpd_constexpr atom(atom const& other) xpd_noexcept : m_type(other.m_type), m_word(m_type == float_t ? other.m_word.w_float : other.m_word.w_symbol) {}
         
         //! @brief The float assignment.
         //! @details Sets the atom to a new float value.
@@ -57,13 +57,13 @@ namespace xpd
         //! @details Sets the atom to a new symbol.
         //! @param symbol The symbol value.
         //! @return The reference of the atom.
-        inline atom& operator=(symbol& symbol) xpd_noexcept {m_type = symbol_t; m_word.w_symbol = symbol; return *this;}
+        inline atom& operator=(symbol const& symbol) xpd_noexcept {m_type = symbol_t; m_word.w_symbol = symbol; return *this;}
         
         //! @brief The copy assignment.
         //! @details Returns a copy of another atom.
         //! @param other The other atom.
         //! @return The reference of the atom.
-        inline atom& operator=(atom& other) {m_type = other.m_type; m_type == float_t ? m_word.w_float = other.m_word.w_float : m_word.w_symbol = other.m_word.w_symbol; return *this;}
+        inline atom& operator=(atom const& other) {m_type = other.m_type; m_type == float_t ? m_word.w_float = other.m_word.w_float : m_word.w_symbol = other.m_word.w_symbol; return *this;}
         
         
         //! @brief Gets the float value of the atom.
@@ -89,9 +89,9 @@ namespace xpd
         {
             float w_float;
             symbol  w_symbol;
-           inline xpd_constexpr a_word() xpd_noexcept : w_float(0.f) {};
-           inline xpd_constexpr a_word(const float value) xpd_noexcept : w_float(value) {}
-           inline xpd_constexpr a_word(symbol& symbol) xpd_noexcept : w_symbol(symbol) {}
+            inline xpd_constexpr a_word() xpd_noexcept : w_float(0.f) {};
+            inline xpd_constexpr a_word(const float value) xpd_noexcept : w_float(value), w_symbol() {}
+            inline xpd_constexpr a_word(symbol& symbol) xpd_noexcept : w_float(0.f), w_symbol(symbol) {}
             
         };
 #else

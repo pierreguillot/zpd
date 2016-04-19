@@ -31,7 +31,7 @@ public:
         ;
     }
     
-    void receive(console::post post) xpd_final
+    void receive(console::post const& post) xpd_final
     {
         if(post.type == console::fatal) {
             m_count_fatal++;
@@ -47,7 +47,7 @@ public:
         }
     }
     
-    void receive(tie tie, symbol s, std::vector<atom> atoms) xpd_final
+    void receive(tie tie, symbol s, std::vector<atom> const& atoms) xpd_final
     {
         if(s == symbol::bang_s) {
             m_count_bang++;
@@ -64,9 +64,29 @@ public:
         else {
             m_count_anything++;
         }
+        
+        std::vector<atom> const& temp = m_atoms;
+        assert("receive atoms s" && s == m_name);
+        assert("receive atoms size" && atoms.size() == temp.size());
+        
+        int to_check_strange;
+        /*
+        for(size_t i = 0; i < atoms.size(); ++i)
+        {
+            assert("receive atoms type" && atoms[i].type() == temp[i].type());
+            if(atoms[i].type() == atom::float_t)
+            {
+                assert("receive atoms type" && float(atoms[i]) == float(temp[i]));
+            }
+            else if(atoms[i].type() == atom::symbol_t)
+            {
+                assert("receive atoms type" && symbol(atoms[i]) == symbol(temp[i]));
+            }
+        }
+         */
     }
     
-    void receive(midi::event event)
+    void receive(midi::event const& event)
     {
         if(event.type() == midi::event::note_t) {
             m_count_note++;
@@ -128,23 +148,35 @@ public:
         inst->m_count_symbol = 0;
         inst->m_count_list = 0;
         inst->m_count_anything = 0;
+        inst->m_atoms.reserve(5);
         symbol zozo("zozo");
-        std::vector<atom> vec;
-        vec.reserve(3);
         for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
         {
-            vec.clear();
-            inst->send(from, symbol::bang_s, vec);
-            vec.push_back(1.f);
-            inst->send(from, symbol::float_s, vec);
-            vec[0] = zozo;
-            inst->send(from, symbol::symbol_s, vec);
-            vec[0] = 1.f;
-            vec.push_back(1.f);
-            vec.push_back(zozo);
-            inst->send(from, symbol::list_s, vec);
-            vec[0] = zozo;
-            inst->send(from, symbol("zaza"), vec);
+            inst->m_name = symbol::bang_s;
+            inst->m_atoms.clear();
+            inst->send(from, inst->m_name, inst->m_atoms);
+            
+            inst->m_name = symbol::float_s;
+            inst->m_atoms.push_back(1.f);
+            assert("test_message float" && inst->m_atoms[0].type() == atom::float_t && float(inst->m_atoms[0]) == 1.f);
+            inst->send(from, inst->m_name, inst->m_atoms);
+            
+           
+            inst->m_name = symbol::symbol_s;
+            inst->m_atoms[0] = zozo;
+            assert("test_message symbol" && inst->m_atoms[0].type() == atom::symbol_t && symbol(inst->m_atoms[0]) == zozo);
+            inst->send(from, inst->m_name, inst->m_atoms);
+            
+            inst->m_name = symbol::list_s;
+            inst->m_atoms[0] = 1.f;
+            inst->m_atoms.push_back(1.f);
+            inst->m_atoms.push_back(zozo);
+            inst->send(from, inst->m_name, inst->m_atoms);
+            
+            inst->m_name = symbol("zaza");
+            inst->m_atoms[0] = zozo;
+            inst->m_atoms.push_back(symbol("zizi"));
+            inst->send(from, inst->m_name, inst->m_atoms);
         }
         inst->unbind(to1);
         inst->unbind(to2);
@@ -239,6 +271,8 @@ private:
     size_t  m_ninouts;
     float* m_input[2];
     float* m_output[2];
+    symbol            m_name;
+    std::vector<atom> m_atoms;
     
     size_t m_count_fatal;
     size_t m_count_error;

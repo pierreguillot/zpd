@@ -92,13 +92,13 @@ namespace xpd
         
 #define LCOV_EXCL_START
         //! @brief Receives a message from a tie.
-        virtual void receive(tie tie, symbol s, std::vector<atom> atoms) {}
+        virtual void receive(tie tie, symbol s, std::vector<atom> const& atoms) {}
         
         //! @brief Receives a midi event.
-        virtual void receive(midi::event event) {}
+        virtual void receive(midi::event const& event) {}
         
         //! @brief Receives a post from the console.
-        virtual void receive(console::post post) {};
+        virtual void receive(console::post const& post) {};
 #define LCOV_EXCL_STOP
         
         void bind(tie name);

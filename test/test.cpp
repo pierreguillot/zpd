@@ -67,7 +67,7 @@ int main(int argc, char** argv)
     }
     std::cout << "ok\n";
     
-    std::cout << "perform tests for binding and messages...";
+    std::cout << "perform tests for binding and atoms...";
     {
         synch::Thread t1((test_method)(&instance_test::test_message), inst1);
         synch::Thread t2((test_method)(&instance_test::test_message), inst2);
