@@ -150,7 +150,7 @@ public:
         inst->m_count_list = 0;
         inst->m_count_anything = 0;
         inst->m_atoms.reserve(5);
-        symbol zozo("zozo");
+        symbol zozo;
         for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
         {
             inst->m_name = symbol::bang_s;
@@ -164,6 +164,8 @@ public:
             
            
             inst->m_name = symbol::symbol_s;
+            zozo = "zozo";
+            assert("test_message symbol" && zozo.name() == "zozo");
             inst->m_atoms[0] = zozo;
             assert("test_message symbol" && inst->m_atoms[0].type() == atom::symbol_t && symbol(inst->m_atoms[0]) == zozo);
             inst->send(from, inst->m_name, inst->m_atoms);
@@ -175,9 +177,16 @@ public:
             inst->send(from, inst->m_name, inst->m_atoms);
             
             inst->m_name = symbol(std::string("zaza"));
-            inst->m_atoms[0] = "zozo";
-            inst->m_atoms[2] = std::string("zuzu");
+            assert("test_message symbol" && inst->m_name.name() == "zaza");
+            zozo =  std::string("zozo");
+            assert("test_message symbol" && zozo.name() == "zozo");
+            inst->m_atoms[0] = zozo;
+            assert("test_message symbol" && inst->m_atoms[0].type() == atom::symbol_t && symbol(inst->m_atoms[0]) == zozo);
+            inst->m_atoms[2] = "zuzu";
+            assert("test_message symbol" && inst->m_atoms[2].type() == atom::symbol_t && symbol(inst->m_atoms[2]).name() == "zuzu");
             inst->m_atoms.push_back(symbol("zizi"));
+            int to_see;
+            //assert("test_message symbol" && inst->m_atoms[3].type() == atom::symbol_t && symbol(inst->m_atoms[3]).name() == "zizi");
             inst->send(from, inst->m_name, inst->m_atoms);
         }
         inst->unbind(to1);
@@ -193,6 +202,7 @@ public:
     static void test_midi(instance_test* inst)
     {
         patch* p = inst->load("test.pd", "");
+        assert("test_message patch" && p);
         inst->m_count_note = 0;
         inst->m_count_ctl = 0;
         inst->m_count_pgm = 0;
@@ -251,6 +261,7 @@ public:
     static void test_dsp(instance_test* inst)
     {
         patch* p = inst->load("test.pd", "");
+        assert("test_message patch" && p);
         inst->m_input[0] = new float[256];
         inst->m_input[1] = new float[256];
         inst->m_output[0] = new float[256];
@@ -265,6 +276,16 @@ public:
         delete [] inst->m_input[1];
         delete [] inst->m_output[0];
         delete [] inst->m_output[1];
+        inst->close(*p);
+    }
+    
+    static void test_patch(instance_test* inst)
+    {
+        patch* p = inst->load("test.pd", "/home/maison/");
+        assert("test_message patch" && !p);
+        p = inst->load("test.pd", "");
+        assert("test_message patch" && p);
+        
         inst->close(*p);
     }
     
