@@ -343,6 +343,7 @@ namespace xpd
                 }
             }
             cpd_messagesend_list(smuggler::gettie(name), list);
+            cpd_list_free(list);
         }
         else
         {
@@ -359,6 +360,7 @@ namespace xpd
                 }
             }
             cpd_messagesend_anything(smuggler::gettie(name), smuggler::getsymbol(s), list);
+            cpd_list_free(list);
         }
         environment::unlock();
     }

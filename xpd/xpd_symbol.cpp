@@ -24,7 +24,7 @@ namespace xpd
     symbol const symbol::symbol_s = symbol("symbol");
     symbol const symbol::list_s   = symbol("list");
     
-    symbol::symbol(std::string const& name) : ptr(cpd_tie_create(name.c_str()))
+    symbol::symbol(std::string const& name) : ptr(cpd_symbol_create(name.c_str()))
     {
 #define LCOV_EXCL_START
         if(!ptr)
@@ -34,7 +34,7 @@ namespace xpd
 #define LCOV_EXCL_STOP
     }
     
-    symbol::symbol(char const* name) : ptr(cpd_tie_create(name))
+    symbol::symbol(char const* name) : ptr(cpd_symbol_create(name))
     {
 #define LCOV_EXCL_START
         if(!ptr)
@@ -46,7 +46,7 @@ namespace xpd
     
     symbol& symbol::operator=(std::string const& name)
     {
-        ptr = cpd_tie_create(name.c_str());
+        ptr = cpd_symbol_create(name.c_str());
 #define LCOV_EXCL_START
         if(!ptr)
         {
@@ -58,7 +58,7 @@ namespace xpd
     
     symbol& symbol::operator=(char const* name)
     {
-        ptr = cpd_tie_create(name);
+        ptr = cpd_symbol_create(name);
 #define LCOV_EXCL_START
         if(!ptr)
         {
@@ -70,7 +70,7 @@ namespace xpd
     
     std::string symbol::name() const
     {
-        return cpd_tie_get_name(reinterpret_cast<c_tie const *>(ptr));
+        return cpd_symbol_get_name(reinterpret_cast<c_tie const *>(ptr));
     }
 }
 

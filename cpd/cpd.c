@@ -1060,34 +1060,6 @@ void* cpd_list_get_atoms(c_list* list, size_t index)
     return (void *)list->l_vec+index;
 }
 
-c_atomtype cpd_atom_get_type(c_atom const* atom)
-{
-    return atom->a_type;
-}
-
-c_float cpd_atom_get_float(c_atom const* atom)
-{
-    return atom->a_w.w_float;
-}
-
-c_symbol* cpd_atom_get_symbol(c_atom const* atom)
-{
-    return atom->a_w.w_symbol;
-}
-
-void cpd_atom_set_float(c_atom* atom, c_float value)
-{
-    atom->a_type = Z_FLOAT;
-    atom->a_w.w_float = value;
-}
-
-void cpd_atom_set_symbol(c_atom* atom, c_symbol* symbol)
-{
-    atom->a_type = Z_FLOAT;
-    atom->a_w.w_symbol = symbol;
-}
-
-
 
 
 
@@ -1210,20 +1182,6 @@ void cpd_midisend_byte(int port, int byte)
     Z_PD_MIDI_CHECK_PORT(port)
     Z_PD_MIDI_CHECK_RANGE_8BIT(byte)
     inmidi_byte(port, byte);
-}
-
-void cpd_midisend_sysex(int port, int byte)
-{
-    Z_PD_MIDI_CHECK_PORT(port)
-    Z_PD_MIDI_CHECK_RANGE_7BIT(byte)
-    inmidi_sysex(port, byte);
-}
-
-void cpd_midisend_sysrealtimein(int port, int byte)
-{
-    Z_PD_MIDI_CHECK_PORT(port)
-    Z_PD_MIDI_CHECK_RANGE_8BIT(byte)
-    inmidi_realtimein(port, byte);
 }
 
 #undef Z_PD_MIDI_CHECK_CHANNEL

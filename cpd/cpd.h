@@ -57,7 +57,6 @@ typedef float c_float;
 typedef struct _symbol      c_tie;
 //! @brief The type used for fast comparaison of string characters.
 typedef struct _symbol      c_symbol;
-
 typedef struct _list        c_list;
 typedef struct _internal    c_internal;
 typedef struct _gpointer    c_gpointer;
@@ -79,20 +78,6 @@ typedef enum
     Z_SYMBOL,   //!< @brief Symbol
     Z_POINTER   //!< @brief Graphical pointer
 } c_atomtype;
-
-typedef struct _iatom
-{
-    c_atomtype  a_type;
-    union _word
-    {
-        c_float     w_float;
-        c_symbol*   w_symbol;
-        c_gpointer* w_gpointer;
-        c_array*    w_array;
-        c_list*     w_list;
-        int         w_index;
-    }a_w;
-}c_atom;
 
 
 
@@ -396,12 +381,6 @@ CPD_EXTERN void cpd_list_set_gpointer(c_list *list, size_t index, c_gpointer* po
 
 CPD_EXTERN void* cpd_list_get_atom(c_list* list, size_t index);
 
-CPD_EXTERN c_atomtype cpd_atom_get_type(c_atom const* atom);
-CPD_EXTERN c_float cpd_atom_get_float(c_atom const* atom);
-CPD_EXTERN c_symbol* cpd_atom_get_symbol(c_atom const* atom);
-CPD_EXTERN void cpd_atom_set_float(c_atom* atom, c_float value);
-CPD_EXTERN void cpd_atom_set_symbol(c_atom* atom, c_symbol* symbol);
-
 
 
 
@@ -456,12 +435,6 @@ CPD_EXTERN void cpd_midisend_polyaftertouch(int channel, int pitch, int value);
 
 //! @brief Sends a midi byte event to Pure Data.
 CPD_EXTERN void cpd_midisend_byte(int port, int byte);
-
-//! @brief Sends a midi sys ex event to Pure Data.
-CPD_EXTERN void cpd_midisend_sysex(int port, int byte);
-
-//! @brief Sends a midi real time in event to Pure Data.
-CPD_EXTERN void cpd_midisend_sysrealtimein(int port, int byte);
 
 //! @}
 
