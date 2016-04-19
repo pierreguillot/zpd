@@ -81,23 +81,25 @@ namespace xpd
         //! @brief Releases the digital signal processing chain of the instance.
         void release() xpd_noexcept;
         
-        //! @brief Sends a post to the console.
-        void send(console::post const& post) xpd_noexcept;
-        
-        //! @brief Receives a post from the console.
-        virtual void receive(console::post post) {};
+        //! @brief Sends a midi event.
+        void send(midi::event const& event) const;
         
         //! @brief Sends a message through a tie.
         void send(tie name, symbol s, std::vector<atom> const& atoms) const;
         
+        //! @brief Sends a post to the console.
+        void send(console::post const& post) xpd_noexcept;
+        
+#define LCOV_EXCL_START
         //! @brief Receives a message from a tie.
         virtual void receive(tie tie, symbol s, std::vector<atom> atoms) {}
         
-        //! @brief Sends a midi event.
-        void send(midi::event const& event) const;
-        
         //! @brief Receives a midi event.
         virtual void receive(midi::event event) {}
+        
+        //! @brief Receives a post from the console.
+        virtual void receive(console::post post) {};
+#define LCOV_EXCL_STOP
         
         void bind(tie name);
         

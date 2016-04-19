@@ -47,27 +47,10 @@ typedef void (*test_method)(void *);
 
 int main(int argc, char** argv)
 {
-    instance_test *inst1, *inst2;
-    patch *p1, *p2;
-    try
-    {
-        inst1 = new instance_test(1);
-    }
-    catch(...)
-    {
-        std::cout << "error can't allocate instance";
-        return -1;
-    }
-    try
-    {
-        inst2 = new instance_test(2);
-    }
-    catch(...)
-    {
-        std::cout << "error can't allocate instance";
-        return -1;
-    }
+    instance_test *inst1 = new instance_test(1);
+    instance_test *inst2 = new instance_test(2);
     
+    assert("test_dsp instance_test" && inst1 && inst2);
     std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
     << "." << environment::version_bug() << "\n";
