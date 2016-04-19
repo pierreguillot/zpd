@@ -94,6 +94,15 @@ int main(int argc, char** argv)
     }
     std::cout << "ok\n";
     
+    std::cout << "perform tests for patchs...";
+    {
+        synch::Thread t1((test_method)(&instance_test::test_patch), inst1);
+        synch::Thread t2((test_method)(&instance_test::test_patch), inst2);
+        t1.join();
+        t2.join();
+    }
+    std::cout << "ok\n";
+    
     delete inst1;
     delete inst2;
     return 0;

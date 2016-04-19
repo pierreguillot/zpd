@@ -281,14 +281,14 @@ public:
     
     static void test_patch(instance_test* inst)
     {
-        patch* p = inst->load("test.pd", "/home/maison/");
+        patch* p = inst->load("test.pd", "/home/maison");
         assert("test_patch patch" && !p);
         p = inst->load("test.pd", "");
         assert("test_patch patch" && p);
-        assert("test_patch patch x" && p->x() == 85);
-        assert("test_patch patch y" && p->y() == 60);
-        assert("test_patch patch w" && p->width() == 100);
-        assert("test_patch patch h" && p->height() == 100);
+        assert("test_patch patch x" && p->x() == 100);
+        assert("test_patch patch y" && p->y() == 100);
+        assert("test_patch patch w" && p->width() == 85);
+        assert("test_patch patch h" && p->height() == 60);
         
         int todo;
         std::vector<object*> objects(p->objects());
