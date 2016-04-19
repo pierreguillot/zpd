@@ -58,6 +58,9 @@ int main(int argc, char** argv)
     environment::searpath_clear();
     environment::searchpath_add(test_get_patch_folder(argv[0]));
     
+    type_test::test_tie();
+    type_test::test_symbol();
+    
     std::cout << "perform tests for console posts...";
     {
         synch::Thread t1((test_method)(&instance_test::test_post), inst1);
