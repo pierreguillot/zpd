@@ -83,8 +83,7 @@ namespace xpd
         //! @return The type of the atom.
         inline xpd_constexpr atom::type_t type() const xpd_noexcept {return m_type;}
     private:
-
-#ifdef _XPD_CPP11_NOSUPPORT_
+        
         struct a_word
         {
             float w_float;
@@ -94,17 +93,7 @@ namespace xpd
             inline xpd_constexpr a_word(symbol& symbol) xpd_noexcept : w_float(0.f), w_symbol(symbol) {}
             
         };
-#else
-        union a_word
-        {
-            float   w_float;
-            symbol  w_symbol;
-            inline xpd_constexpr a_word() xpd_noexcept : w_float(0.f) {};
-            inline xpd_constexpr a_word(const float value) xpd_noexcept : w_float(value) {}
-            inline xpd_constexpr a_word(symbol& symbol) xpd_noexcept : w_symbol(symbol) {}
-            
-        };
-#endif
+
         type_t m_type;
         a_word m_word;
     };

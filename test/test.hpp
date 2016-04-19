@@ -14,12 +14,16 @@
 
 using namespace xpd;
 
+//
+// Bug with copy of atoms of symbols
+//
+
 #ifndef XPD_TEST_HPP
 #define XPD_TEST_HPP
 
 #define XPD_TEST_NLOOP 1
 
-class instance_test : private instance
+class instance_test : private instance, public console::history
 {
 public:
     instance_test()
@@ -34,18 +38,7 @@ public:
     
     void receive(console::post const& post) xpd_final
     {
-        if(post.type == console::fatal) {
-            m_count_fatal++;
-        }
-        else if(post.type == console::error) {
-            m_count_error++;
-        }
-        else if(post.type == console::normal) {
-            m_count_normal++;
-        }
-        else {
-            m_count_log++;
-        }
+        console::history::add(post);
     }
     
     void receive(tie tie, symbol s, std::vector<atom> const& atoms) xpd_final
@@ -114,10 +107,7 @@ public:
     
     static void test_post(instance_test* inst)
     {
-        inst->m_count_log = 0;
-        inst->m_count_normal = 0;
-        inst->m_count_error = 0;
-        inst->m_count_fatal = 0;
+        inst->clear();
         for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
         {
             inst->send(console::post(console::log, "test"));
@@ -125,10 +115,17 @@ public:
             inst->send(console::post(console::error, "test"));
             inst->send(console::post(console::fatal, "test"));
         }
-        assert("test_post log" && inst->m_count_log == XPD_TEST_NLOOP);
-        assert("test_post normal" && inst->m_count_normal == XPD_TEST_NLOOP);
-        assert("test_post error" && inst->m_count_error == XPD_TEST_NLOOP);
-        assert("test_post fatal" && inst->m_count_fatal == XPD_TEST_NLOOP);
+        assert("test_post log" && inst->get_number_of_posts(console::log) == XPD_TEST_NLOOP);
+        assert("test_post normal" && inst->get_number_of_posts(console::normal)  == XPD_TEST_NLOOP);
+        assert("test_post error" && inst->get_number_of_posts(console::error) == XPD_TEST_NLOOP);
+        assert("test_post fatal" && inst->get_number_of_posts(console::fatal) == XPD_TEST_NLOOP);
+        
+        assert("test_post log" && inst->get_number_of_posts_to_level(console::log) == XPD_TEST_NLOOP * 4);
+        assert("test_post normal" && inst->get_number_of_posts_to_level(console::normal)  == XPD_TEST_NLOOP * 3);
+        assert("test_post error" && inst->get_number_of_posts_to_level(console::error) == XPD_TEST_NLOOP * 2);
+        assert("test_post fatal" && inst->get_number_of_posts_to_level(console::fatal) == XPD_TEST_NLOOP);
+        
+        inst->clear();
     }
     
     static void test_message(instance_test* inst)
@@ -137,6 +134,7 @@ public:
         patch* p = inst->load("test.pd", "");
         assert("test_message patch" && p);
         sprintf(uid, "%i", int(p->unique_id()));
+        
         tie from(std::string(uid) + "-fromxpd");
         tie to1(std::string(uid) + "-toxpd1");
         tie to2(std::string(uid) + "-toxpd2");
@@ -300,11 +298,6 @@ private:
     float* m_output[2];
     symbol            m_name;
     std::vector<atom> m_atoms;
-    
-    size_t m_count_fatal;
-    size_t m_count_error;
-    size_t m_count_normal;
-    size_t m_count_log;
     
     size_t m_count_bang;
     size_t m_count_float;

@@ -88,7 +88,7 @@ namespace xpd
             void clear() xpd_noexcept;
             
             //! @brief Adds a post in the history.
-            void add(post mess) xpd_noexcept;
+            void add(post const& mess) xpd_noexcept;
             
         private:
             size_t  m_counters[4];

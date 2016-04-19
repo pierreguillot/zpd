@@ -31,7 +31,7 @@ namespace xpd
             return m_posts.size();
         }
         size_t count = 0ul;
-        for(size_t i = 0ul; i < static_cast<size_t>(lvl); ++i)
+        for(size_t i = 0ul; i <= static_cast<size_t>(lvl); ++i)
         {
             count += m_counters[static_cast<size_t>(i)];
         }
@@ -80,13 +80,9 @@ namespace xpd
         return m_posts.clear();
     }
     
-    void console::history::add(post mess) xpd_noexcept
+    void console::history::add(post const& mess) xpd_noexcept
     {
-#ifdef _XPD_CPP11_NOSUPPORT_
         m_posts.push_back(mess);
-#else
-        m_posts.push_back(std::move(mess));
-#endif
         if(m_posts[m_posts.size()-1].type == all)
         {
             m_counters[3]++;

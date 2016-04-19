@@ -172,11 +172,7 @@ namespace xpd
                     vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
-#ifdef _XPD_CPP11_NOSUPPORT_
             instance->ref->receive(smuggler::createtie(tie), symbol::list_s, vec);
-#else
-            instance->ref->receive(smuggler::createtie(tie), instance::m_sym_list, std::move(vec));
-#endif
         }
         
         static void m_anything(instance::internal* instance, c_tie* tie, c_symbol *s, c_list *list)
@@ -193,11 +189,7 @@ namespace xpd
                     vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
-#ifdef _XPD_CPP11_NOSUPPORT_
             instance->ref->receive(smuggler::createtie(tie), smuggler::createsymbol(s), vec);
-#else
-            instance->ref->receive(smuggler::createtie(tie), smuggler::createsymbol(s), std::move(vec));
-#endif
         }
     };
     
