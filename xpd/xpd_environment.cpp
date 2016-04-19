@@ -34,17 +34,17 @@ namespace xpd
         return pd;
     }
     
-    unsigned int environment::get_major_version() noexcept
+    unsigned int environment::version_major() noexcept
     {
         return cpd_version_getmajor();
     }
     
-    unsigned int environment::get_minor_version() noexcept
+    unsigned int environment::version_minor() noexcept
     {
         return cpd_version_getminor();
     }
     
-    unsigned int environment::get_bug_version() noexcept
+    unsigned int environment::version_bug() noexcept
     {
         return cpd_version_getbug();
     }

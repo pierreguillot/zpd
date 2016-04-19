@@ -35,13 +35,13 @@ namespace xpd
         ~patch() noexcept;
         
         //! @brief Gets the file's name.
-        std::string get_name() const;
+        std::string name() const;
         
         //! @brief Gets the file's path.
-        std::string get_path() const;
+        std::string path() const;
         
         //! @brief Gets the id of the patch.
-        int get_id();
+        int unique_id() const noexcept;
         
         //! @brief Gets the patch position.
         int get_x() const noexcept;

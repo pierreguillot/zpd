@@ -55,7 +55,7 @@ namespace xpd
     //! With the default constructor, the Gui won't be initialized. A valid
     //! Gui should be created via a patch. The Gui should be used as tempory object,
     //! because it locks the patch.
-    class Gui : public object, private smuggler
+    class Gui : public object
     {
     public:
         

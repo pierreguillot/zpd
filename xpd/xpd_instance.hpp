@@ -32,11 +32,11 @@ namespace xpd
     //                                          INSTANCE                                    //
     // ==================================================================================== //
     
-    //! @brief The instance manages a set of patches.
-    //! @details The instance is a wrapper for the Pure Data's native instance.
-    //! With the default constructor, the instance won't be initialized. The instance has some
-    //! kind of smart pointer behavior so when an instance object is no more useful the object
-    //! is deleted.
+    //! @brief The instance is the main interface to communicate within the xpd environment.
+    //! @details The instance manages the posts to the console, the midi events, the messages
+    //! through tie and the digital signal processing. It is also the interface to load and
+    //! delete patches.
+    //! @todo set the instance at each call of method
     class instance
     {
     public:
@@ -51,8 +51,10 @@ namespace xpd
         virtual ~instance() noexcept;
         
         //! @brief Gets the sample rate of the instance.
-        int get_sample_rate() const noexcept;
+        int samplerate() const noexcept;
         
+        //! @brief The instance listener.
+        //! @details The instance listener id notified when a pacth is created or deleted.
         class listener
         {
         public:
@@ -62,20 +64,22 @@ namespace xpd
             virtual void patch_deleted(patch* p) = 0;
         };
         
-        void listener_add(listener* listener);
-        void listener_remove(listener* listener);
+        //! @brief Adds a listener to the instance.
+        void listener_add(listener& listener);
+        //! @brief Removes a listener from the instance.
+        void listener_remove(listener& listener);
         
     protected:
         
         //! @brief Prepares the digital signal processing chain of the instance.
-        void dsp_prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept;
+        void prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept;
         
         //! @brief Performs the digital signal processing chain of the instance.
         //! @details You should locks the instance to ensure thread safety.
-        void dsp_perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept;
+        void perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept;
         
         //! @brief Releases the digital signal processing chain of the instance.
-        void dsp_release() noexcept;
+        void release() noexcept;
         
         //! @brief Sends a post to the console.
         void send(console::post const& post) noexcept;
@@ -87,7 +91,7 @@ namespace xpd
         void send(tie name, symbol s, std::vector<atom> const& atoms) const;
         
         //! @brief Receives a message from a tie.
-        virtual void receive(tie tie, symbol s, std::vector<atom> const& atoms) {}
+        virtual void receive(tie tie, symbol s, std::vector<atom> atoms) {}
         
         //! @brief Sends a midi event.
         void send(midi::event const& event) const;

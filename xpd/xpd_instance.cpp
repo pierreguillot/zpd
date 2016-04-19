@@ -14,10 +14,6 @@ extern "C"
 
 namespace xpd
 {
-    
-    //! @brief The smuggler is optimized for internal use.
-    //! @details The class doesn't break the efficiency of creation of some type, but you
-    //! should use it if and only if you know what you do.
     class smuggler
     {
     public:
@@ -159,7 +155,7 @@ namespace xpd
                     vec[i] = createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
-            instance->ref->receive(createtie(tie), instance::m_sym_list, vec);
+            instance->ref->receive(createtie(tie), instance::m_sym_list, std::move(vec));
         }
         
         static void m_anything(instance::internal* instance, c_tie* tie, c_symbol *s, c_list *list)
@@ -176,7 +172,7 @@ namespace xpd
                     vec[i] = createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
-            instance->ref->receive(createtie(tie), createsymbol(s), vec);
+            instance->ref->receive(createtie(tie), createsymbol(s), std::move(vec));
         }
     };
     
@@ -205,27 +201,32 @@ namespace xpd
     
     instance::~instance() noexcept
     {
-        dsp_release();
+        release();
         environment::lock();
         cpd_instance_free(reinterpret_cast<c_instance *>(m_ptr));
         environment::unlock();
     }
     
-    void instance::dsp_prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept
+    int instance::samplerate() const noexcept
+    {
+        return cpd_instance_get_samplerate(reinterpret_cast<c_instance *>(m_ptr));
+    }
+    
+    void instance::prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept
     {
         environment::lock();
         cpd_instance_dsp_prepare(reinterpret_cast<c_instance *>(m_ptr), nins, nouts, samplerate, nsamples);
         environment::unlock();
     }
 
-    void instance::dsp_perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept
+    void instance::perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept
     {
         environment::lock();
         cpd_instance_dsp_perform(reinterpret_cast<c_instance *>(m_ptr), nsamples, nins, inputs, nouts, outputs);
         environment::unlock();
     }
     
-    void instance::dsp_release() noexcept
+    void instance::release() noexcept
     {
         environment::lock();
         cpd_instance_dsp_release(reinterpret_cast<c_instance *>(m_ptr));
@@ -261,22 +262,20 @@ namespace xpd
     {
         int todo_set_instance;
         environment::lock();
-        if(atoms.empty())
+        c_list* list = cpd_list_create(atoms.size());
+        for(size_t i = 0; i < atoms.size(); ++i)
         {
-            if(s || s  == m_sym_bang)
+            if(atoms[i].type() == atom::type_t::float_t)
             {
-                cpd_messagesend_bang(reinterpret_cast<c_tie const *>(gettie(name)));
+                cpd_list_set_float(list, i, float_t(atoms[i]));
+            }
+            else if(atoms[i].type() == atom::type_t::symbol_t)
+            {
+                cpd_list_set_float(list, i, symbol(atoms[i]));
             }
         }
-        else
-        {
-            
-        }
-        c_list* list = cpd_list_create(atoms.size());
-        int todo;
-        //cpd_messagesend_anything(reinterpret_cast<c_tie const *>(gettie(name)),
-        //                          reinterpret_cast<c_symbol const *>(getsymbol(s)),
-        //                          reinterpret_cast<c_list const *>(getvector(list)));
+        cpd_messagesend_anything(reinterpret_cast<c_tie const *>(smuggler::gettie(name)),
+                                 reinterpret_cast<c_symbol const *>(smuggler::getsymbol(s)), list);
         
         environment::unlock();
     }
@@ -285,52 +284,45 @@ namespace xpd
     {
         int todo_set_instance;
         environment::lock();
-        if(event.get_type() == midi::event::type::note)
+        if(event.type() == midi::event::type::note)
         {
-            cpd_midisend_noteon(event.get_channel(), event.get_pitch(), event.get_velocity());
+            cpd_midisend_noteon(event.channel(), event.pitch(), event.velocity());
         }
-        else if(event.get_type() == midi::event::type::control_change)
+        else if(event.type() == midi::event::type::control_change)
         {
-            cpd_midisend_controlchange(event.get_channel(), event.get_controler(), event.get_value());
+            cpd_midisend_controlchange(event.channel(), event.controler(), event.value());
         }
-        else if(event.get_type() == midi::event::type::program_change)
+        else if(event.type() == midi::event::type::program_change)
         {
-            cpd_midisend_programchange(event.get_channel(), event.get_program());
+            cpd_midisend_programchange(event.channel(), event.program());
         }
-        else if(event.get_type() == midi::event::type::pitch_bend)
+        else if(event.type() == midi::event::type::pitch_bend)
         {
-            cpd_midisend_pitchbend(event.get_channel(), event.get_bend());
+            cpd_midisend_pitchbend(event.channel(), event.bend());
         }
-        else if(event.get_type() == midi::event::type::after_touch)
+        else if(event.type() == midi::event::type::after_touch)
         {
-            cpd_midisend_pitchbend(event.get_channel(), event.get_value());
+            cpd_midisend_pitchbend(event.channel(), event.value());
         }
-        else if(event.get_type() == midi::event::type::poly_after_touch)
+        else if(event.type() == midi::event::type::poly_after_touch)
         {
-            cpd_midisend_polyaftertouch(event.get_channel(), event.get_pitch(), event.get_value());
+            cpd_midisend_polyaftertouch(event.channel(), event.pitch(), event.value());
         }
         else
         {
-            cpd_midisend_byte(0, event.get_value());
+            cpd_midisend_byte(0, event.value());
         }
         environment::unlock();
     }
     
-    int instance::get_sample_rate() const noexcept
+    void instance::listener_add(listener& listener)
     {
-        return cpd_instance_get_samplerate(reinterpret_cast<c_instance *>(m_ptr));
+        m_listeners.insert(&listener);
     }
     
-    void instance::listener_add(listener* listener)
+    void instance::listener_remove(listener& listener)
     {
-        assert("instance listener is nulltr" && listener);
-        m_listeners.insert(listener);
-    }
-    
-    void instance::listener_remove(listener* listener)
-    {
-        assert("instance listener is nulltr" && listener);
-        m_listeners.erase(listener);
+        m_listeners.erase(&listener);
     }
 }
 

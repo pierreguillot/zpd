@@ -24,13 +24,13 @@ namespace xpd
     {
     public:
         //! @brief Gets the major version of Pure Data.
-        static unsigned int get_major_version() noexcept;
+        static unsigned int version_major() noexcept;
         
         //! @brief Gets the minor version of Pure Data.
-        static unsigned int get_minor_version() noexcept;
+        static unsigned int version_minor() noexcept;
         
         //! @brief Gets the bug version of Pure Data.
-        static unsigned int get_bug_version() noexcept;
+        static unsigned int version_bug() noexcept;
         
         //! @brief Adds a path the search path.
         static void searchpath_add(std::string const& path) noexcept;

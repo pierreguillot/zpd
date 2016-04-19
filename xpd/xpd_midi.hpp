@@ -68,37 +68,37 @@ namespace xpd
             {return event(type::after_touch, 0, 0, value);}
             
             //! @brief Gets the type of the event.
-            inline constexpr type get_type() const noexcept {return m_type;}
+            inline constexpr type type() const noexcept {return m_type;}
             
             //! @brief Gets the channel value.
-            inline constexpr int get_channel() const noexcept {return m_val1;}
+            inline constexpr int channel() const noexcept {return m_val1;}
             
             //! @brief Gets the pitch value.
-            inline constexpr int get_pitch() const noexcept {return m_val2;}
+            inline constexpr int pitch() const noexcept {return m_val2;}
             
             //! @brief Gets the velocity value.
-            inline constexpr int get_velocity() const noexcept {return m_val3;}
+            inline constexpr int velocity() const noexcept {return m_val3;}
             
             //! @brief Gets the controler.
-            inline constexpr int get_controler() const noexcept {return m_val2;}
+            inline constexpr int controler() const noexcept {return m_val2;}
             
             //! @brief Gets the controler, after touch or poly after touch value.
-            inline constexpr int get_value() const noexcept {return m_val3;}
+            inline constexpr int value() const noexcept {return m_val3;}
             
             //! @brief Gets the program value.
-            inline constexpr int get_program() const noexcept {return m_val2;}
+            inline constexpr int program() const noexcept {return m_val2;}
             
             //! @brief Gets the bend value.
-            inline constexpr int get_bend() const noexcept {return m_val2;}
+            inline constexpr int bend() const noexcept {return m_val2;}
             
             //! @brief Gets the after touch value.
-            inline constexpr int get_after_touch() const noexcept {return m_val3;}
+            inline constexpr int after_touch() const noexcept {return m_val3;}
             
         private:
-            type    m_type;
-            int     m_val1;
-            int     m_val2;
-            int     m_val3;
+            enum type   m_type;
+            int         m_val1;
+            int         m_val2;
+            int         m_val3;
         };
         
     };
