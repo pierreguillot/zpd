@@ -222,10 +222,19 @@ namespace xpd
     patch* instance::load(std::string const& name, std::string const& path)
     {
         int todo;
-        patch* p = NULL;
+        patch* p = xpd_nullptr;
+        void* ptr = xpd_nullptr;
         environment::lock();
         cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
-        void* ptr = cpd_patch_new(name.c_str(), path.c_str());
+        if(path.empty())
+        {
+            ptr = cpd_patch_new(name.c_str(), xpd_nullptr);
+        }
+        else
+        {
+            ptr = cpd_patch_new(name.c_str(), path.c_str());
+        }
+        
         if(ptr)
         {
             p = new patch(ptr, name, path, cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(m_ptr)));
