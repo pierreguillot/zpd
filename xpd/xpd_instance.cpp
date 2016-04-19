@@ -391,7 +391,7 @@ namespace xpd
         }
         else if(event.type() == midi::event::after_touch_t)
         {
-            cpd_midisend_pitchbend(event.channel(), event.value());
+            cpd_midisend_aftertouch(event.channel(), event.value());
         }
         else if(event.type() == midi::event::poly_after_touch_t)
         {

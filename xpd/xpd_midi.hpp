@@ -50,7 +50,7 @@ namespace xpd
             
             //! @brief The program change event constructor.
             static inline xpd_constexpr event program_change(int channel, int program) xpd_noexcept
-            {return event(control_change_t, channel, program, 0);}
+            {return event(program_change_t, channel, program, 0);}
             
             //! @brief The pitch bend event constructor.
             static inline xpd_constexpr event pitch_bend(int channel, int bend) xpd_noexcept
@@ -62,11 +62,11 @@ namespace xpd
             
             //! @brief The pitch bend event constructor.
             static inline xpd_constexpr event poly_after_touch(int channel, int pitch, int value) xpd_noexcept
-            {return event(after_touch_t, channel, pitch, value);}
+            {return event(poly_after_touch_t, channel, pitch, value);}
             
             //! @brief The pitch bend event constructor.
             static inline xpd_constexpr event byte(int value) xpd_noexcept
-            {return event(after_touch_t, 0, 0, value);}
+            {return event(byte_t, 0, 0, value);}
             
             //! @brief Gets the type of the event.
            inline xpd_constexpr type_t type() const xpd_noexcept {return m_type;}

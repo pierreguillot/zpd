@@ -15,7 +15,7 @@ using namespace xpd;
 #ifndef XPD_TEST_HPP
 #define XPD_TEST_HPP
 
-#define XPD_TEST_NLOOP 100
+#define XPD_TEST_NLOOP 1
 
 class instance_test : private instance
 {
@@ -71,7 +71,27 @@ public:
     
     void receive(midi::event event)
     {
-        ;
+        if(event.type() == midi::event::note_t) {
+            m_count_note++;
+        }
+        else if(event.type() == midi::event::control_change_t) {
+            m_count_ctl++;
+        }
+        else if(event.type() == midi::event::program_change_t) {
+            m_count_pgm++;
+        }
+        else if(event.type() == midi::event::pitch_bend_t) {
+            m_count_bend++;
+        }
+        else if(event.type() == midi::event::after_touch_t) {
+            m_count_after++;
+        }
+        else if(event.type() == midi::event::poly_after_touch_t) {
+            m_count_poly++;
+        }
+        else {
+            m_count_byte++;
+        }
     }
     
     static void test_post(instance_test* inst)
@@ -135,6 +155,38 @@ public:
         inst->close(*p);
     }
     
+    static void test_midi(instance_test* inst)
+    {
+        patch* p = inst->load("test.pd", "");
+        inst->m_count_note = 0;
+        inst->m_count_ctl = 0;
+        inst->m_count_pgm = 0;
+        inst->m_count_bend = 0;
+        inst->m_count_after = 0;
+        inst->m_count_poly = 0;
+        inst->m_count_byte = 0;
+ 
+        for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
+        {
+            inst->send(midi::event::note(1, 1, 127));
+            inst->send(midi::event::control_change(1, 1, 127));
+            inst->send(midi::event::program_change(1, 1));
+            inst->send(midi::event::pitch_bend(1, 1));
+            inst->send(midi::event::after_touch(1, 1));
+            inst->send(midi::event::poly_after_touch(1, 1, 1));
+            inst->send(midi::event::byte(1));
+        }
+
+        assert("test_midi note" && inst->m_count_note == XPD_TEST_NLOOP);
+        assert("test_midi ctl" && inst->m_count_ctl == XPD_TEST_NLOOP);
+        assert("test_midi pgm" && inst->m_count_pgm == XPD_TEST_NLOOP);
+        assert("test_midi bend" && inst->m_count_bend == XPD_TEST_NLOOP);
+        assert("test_midi after" && inst->m_count_after == XPD_TEST_NLOOP);
+        assert("test_midi poly" && inst->m_count_poly == XPD_TEST_NLOOP);
+        assert("test_midi byte" && inst->m_count_byte == XPD_TEST_NLOOP);
+        inst->close(*p);
+    }
+    
 private:
     const size_t m_index;
     size_t  m_ninouts;
@@ -150,6 +202,14 @@ private:
     size_t m_count_symbol;
     size_t m_count_list;
     size_t m_count_anything;
+    
+    size_t m_count_note;
+    size_t m_count_ctl;
+    size_t m_count_pgm;
+    size_t m_count_bend;
+    size_t m_count_after;
+    size_t m_count_poly;
+    size_t m_count_byte;
 };
 
 

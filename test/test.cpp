@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     environment::searpath_clear();
     environment::searchpath_add(test_get_patch_folder(argv[0]));
     
-    std::cout << "perform tests for posts...";
+    std::cout << "perform tests for console posts...";
     {
         synch::Thread t1((test_method)(&instance_test::test_post), inst1);
         synch::Thread t2((test_method)(&instance_test::test_post), inst2);
@@ -88,6 +88,15 @@ int main(int argc, char** argv)
     {
         synch::Thread t1((test_method)(&instance_test::test_message), inst1);
         synch::Thread t2((test_method)(&instance_test::test_message), inst2);
+        t1.join();
+        t2.join();
+    }
+    std::cout << "ok\n";
+    
+    std::cout << "perform tests for midi events...";
+    {
+        synch::Thread t1((test_method)(&instance_test::test_midi), inst1);
+        synch::Thread t2((test_method)(&instance_test::test_midi), inst2);
         t1.join();
         t2.join();
     }
