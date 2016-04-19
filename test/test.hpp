@@ -148,20 +148,104 @@ public:
         inst->clear();
         for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
         {
-            inst->send(console::post(console::log, "test"));
-            inst->send(console::post(console::normal, "test"));
-            inst->send(console::post(console::error, "test"));
-            inst->send(console::post(console::fatal, "test"));
+            inst->send(console::post(console::log, "log"));
+            inst->send(console::post(console::normal, "normal"));
+            inst->send(console::post(console::error, "error"));
+            inst->send(console::post(console::fatal, "fatal"));
         }
-        assert("test_post log" && inst->get_number_of_posts(console::log) == XPD_TEST_NLOOP);
-        assert("test_post normal" && inst->get_number_of_posts(console::normal)  == XPD_TEST_NLOOP);
-        assert("test_post error" && inst->get_number_of_posts(console::error) == XPD_TEST_NLOOP);
-        assert("test_post fatal" && inst->get_number_of_posts(console::fatal) == XPD_TEST_NLOOP);
+        assert("test_post get_n log" && inst->get_number_of_posts(console::log) == XPD_TEST_NLOOP);
+        assert("test_post get_n normal" && inst->get_number_of_posts(console::normal)  == XPD_TEST_NLOOP);
+        assert("test_post get_n error" && inst->get_number_of_posts(console::error) == XPD_TEST_NLOOP);
+        assert("test_post get_n fatal" && inst->get_number_of_posts(console::fatal) == XPD_TEST_NLOOP);
         
-        assert("test_post log" && inst->get_number_of_posts_to_level(console::log) == XPD_TEST_NLOOP * 4);
-        assert("test_post normal" && inst->get_number_of_posts_to_level(console::normal)  == XPD_TEST_NLOOP * 3);
-        assert("test_post error" && inst->get_number_of_posts_to_level(console::error) == XPD_TEST_NLOOP * 2);
-        assert("test_post fatal" && inst->get_number_of_posts_to_level(console::fatal) == XPD_TEST_NLOOP);
+        assert("test_post get_nt log" && inst->get_number_of_posts_to_level(console::log) == XPD_TEST_NLOOP * 4);
+        assert("test_post get_nt normal" && inst->get_number_of_posts_to_level(console::normal)  == XPD_TEST_NLOOP * 3);
+        assert("test_post get_nt error" && inst->get_number_of_posts_to_level(console::error) == XPD_TEST_NLOOP * 2);
+        assert("test_post get_nt fatal" && inst->get_number_of_posts_to_level(console::fatal) == XPD_TEST_NLOOP);
+        
+        for(size_t i = 0; i < inst->get_number_of_posts(console::all); i += 4)
+        {
+            console::post p1 = inst->get_post(i, console::all);
+            console::post p2 = inst->get_post(i+1, console::all);
+            console::post p3 = inst->get_post(i+2, console::all);
+            console::post p4 = inst->get_post(i+3, console::all);
+            assert("test_post get_p log" && p1.type == console::log && p1.text == "log\n");
+            assert("test_post get_p normal" && p2.type == console::normal && p2.text == "normal\n");
+            assert("test_post get_p error" && p3.type == console::error && p3.text == "error\n");
+            assert("test_post get_p fatal" && p4.type == console::fatal && p4.text == "fatal\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts(console::log); i++)
+        {
+            console::post p1 = inst->get_post(i, console::log);
+            assert("test_post get_p log" && p1.type == console::log && p1.text == "log\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts(console::normal); i++)
+        {
+            console::post p1 = inst->get_post(i, console::normal);
+            assert("test_post get_p normal" && p1.type == console::normal && p1.text == "normal\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts(console::error); i++)
+        {
+            console::post p1 = inst->get_post(i, console::error);
+            assert("test_post get_p error" && p1.type == console::error && p1.text == "error\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts(console::fatal); i++)
+        {
+            console::post p1 = inst->get_post(i, console::fatal);
+            assert("test_post get_p fatal" && p1.type == console::fatal && p1.text == "fatal\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts_to_level(console::all); i += 4)
+        {
+            console::post p1 = inst->get_post_to_level(i, console::all);
+            console::post p2 = inst->get_post_to_level(i+1, console::all);
+            console::post p3 = inst->get_post_to_level(i+2, console::all);
+            console::post p4 = inst->get_post_to_level(i+3, console::all);
+            assert("test_post get_p log" && p1.type == console::log && p1.text == "log\n");
+            assert("test_post get_p normal" && p2.type == console::normal && p2.text == "normal\n");
+            assert("test_post get_p error" && p3.type == console::error && p3.text == "error\n");
+            assert("test_post get_p fatal" && p4.type == console::fatal && p4.text == "fatal\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts_to_level(console::log); i += 4)
+        {
+            console::post p1 = inst->get_post_to_level(i, console::log);
+            console::post p2 = inst->get_post_to_level(i+1, console::log);
+            console::post p3 = inst->get_post_to_level(i+2, console::log);
+            console::post p4 = inst->get_post_to_level(i+3, console::log);
+            assert("test_post get_p log" && p1.type == console::log && p1.text == "log\n");
+            assert("test_post get_p normal" && p2.type == console::normal && p2.text == "normal\n");
+            assert("test_post get_p error" && p3.type == console::error && p3.text == "error\n");
+            assert("test_post get_p fatal" && p4.type == console::fatal && p4.text == "fatal\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts_to_level(console::normal); i += 3)
+        {
+            console::post p2 = inst->get_post_to_level(i, console::normal);
+            console::post p3 = inst->get_post_to_level(i+1, console::normal);
+            console::post p4 = inst->get_post_to_level(i+2, console::normal);
+            assert("test_post get_p normal" && p2.type == console::normal && p2.text == "normal\n");
+            assert("test_post get_p error" && p3.type == console::error && p3.text == "error\n");
+            assert("test_post get_p fatal" && p4.type == console::fatal && p4.text == "fatal\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts_to_level(console::error); i += 2)
+        {
+            console::post p3 = inst->get_post_to_level(i, console::error);
+            console::post p4 = inst->get_post_to_level(i+1, console::error);
+            assert("test_post get_p error" && p3.type == console::error && p3.text == "error\n");
+            assert("test_post get_p fatal" && p4.type == console::fatal && p4.text == "fatal\n");
+        }
+        
+        for(size_t i = 0; i < inst->get_number_of_posts_to_level(console::fatal); i++)
+        {
+            console::post p1 = inst->get_post_to_level(i, console::fatal);
+            assert("test_post get_p fatal" && p1.type == console::fatal && p1.text == "fatal\n");
+        }
         
         inst->clear();
     }
