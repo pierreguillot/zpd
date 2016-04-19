@@ -7,10 +7,23 @@
 #ifndef XPD_INSTANCE_HPP
 #define XPD_INSTANCE_HPP
 
-#include "xpd_environment.hpp"
+#include "xpd_tie.hpp"
+#include "xpd_symbol.hpp"
+#include "xpd_atom.hpp"
+#include "xpd_midi.hpp"
 #include "xpd_console.hpp"
+#include "xpd_environment.hpp"
+
 #include <vector>
 #include <set>
+
+#include <iostream>
+#include <memory>
+#include <cassert>
+#include <cstring>
+#include <cmath>
+#include <exception>
+#include <string>
 
 namespace xpd
 {
@@ -24,7 +37,7 @@ namespace xpd
     //! With the default constructor, the instance won't be initialized. The instance has some
     //! kind of smart pointer behavior so when an instance object is no more useful the object
     //! is deleted.
-    class instance : private smuggler
+    class instance
     {
     public:
         
@@ -39,13 +52,6 @@ namespace xpd
         
         //! @brief Gets the sample rate of the instance.
         int get_sample_rate() const noexcept;
-        
-        
-        //! @brief Sends a message the console.
-        void send(console::message const& mess) noexcept;
-        
-        //! @brief Sends a message the console.
-        virtual void receive(console::message const& mess) {};
         
         class listener
         {
@@ -71,12 +77,23 @@ namespace xpd
         //! @brief Releases the digital signal processing chain of the instance.
         void dsp_release() noexcept;
         
+        //! @brief Sends a post to the console.
+        void send(console::post const& post) noexcept;
         
-        //! @brief Sends anything.
+        //! @brief Receives a post from the console.
+        virtual void receive(console::post post) {};
+        
+        //! @brief Sends a message through a tie.
         void send(tie name, symbol s, std::vector<atom> const& atoms) const;
         
-        //! @brief Receives anything.
+        //! @brief Receives a message from a tie.
         virtual void receive(tie tie, symbol s, std::vector<atom> const& atoms) {}
+        
+        //! @brief Sends a midi event.
+        void send(midi::event const& event) const;
+        
+        //! @brief Receives a midi event.
+        virtual void receive(midi::event event) {}
         
     private:
         instance(instance const& other) = delete;

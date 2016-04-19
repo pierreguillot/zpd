@@ -10,13 +10,6 @@
 #include <exception>
 #include <string>
 
-#if (__cplusplus <= 199711L)
-#define noexcept
-#define nullptr NULL
-#define constexpr
-#define override
-#endif
-
 namespace xpd
 {
     // ==================================================================================== //

@@ -7,63 +7,88 @@
 #ifndef XPD_CONSOLE_HPP
 #define XPD_CONSOLE_HPP
 
-#include "PdTypes.hpp"
+#include <exception>
+#include <string>
 #include <vector>
 
 namespace xpd
 {
-    //! @brief A class that manages the console
+    //! @brief A class that manages console posts and an historic.
+    //! @detail The class acts like a namespace, its owns three subclasses the level, the
+    //! post and an history.
     class console
     {
     public:
-        enum class level
+        //! @brief The available level of posts.
+        //! @details The level can be used to filters the posts.
+        enum class level : size_t
         {
-            all = -1,
-            fatal = 0,
-            error = 1,
-            post = 2,
-            log = 3
+            all     = size_t(-1),   //!< @brief All the posts.
+            fatal   = 0,            //!< @brief The fatal error posts.
+            error   = 1,            //!< @brief The error posts.
+            normal  = 2,            //!< @brief The normal posts.
+            log     = 3             //!< @brief The log posts.
         };
         
-        //! @brief A small class that describes a message in the console
-        class message
+        //! @brief A class that describes a post.
+        //! @details The post are used by the instance to send and receive post to and
+        //! from the console.
+        class post
         {
         public:
-            level       lvl;
-            std::string txt;
+            level       type;   //!< @brief The level of the post.
+            std::string text;   //!< @brief The text of the post.
         };
         
-        //! @brief A small class that manages the history of message in the console
+        //! @brief A class that manages an history of posts.
+        //! @details The history record posts and facilitates the retrieving of posts
+        //! from a specified level.
         class history
         {
         public:
             //! @brief the constructor.
+            //! @details Preallocte space for posts
             history();
             
-            //! @brief Gets the number of fatal messages.
-            size_t get_number_of_messages(level lvl = level::all) const noexcept;
+            //! @brief Gets the number of posts of a specified level.
+            //! @details The count of posts by level is optimized to avoid unecessary extra
+            //! computation.
+            //! @param lvl The level of the posts (default level::all).
+            //! @return The number of posts from this level.
+            size_t get_number_of_posts(level lvl = level::all) const noexcept;
             
-            //! @brief Gets the number of messages until a level.
-            size_t get_number_of_messages_until(level lvl) const noexcept;
+            //! @brief Gets the number of all posts to a specified level.
+            //! @details The method retrieves the number of posts that are more or equally
+            //! important as the specified level.
+            //! @param lvl The limit level of the posts (default level::all).
+            //! @return The number of posts to this level.
+            size_t get_number_of_posts_to_level(level lvl) const noexcept;
             
-            //! @brief Gets a message at an index.
-            message get_message(size_t index, level lvl = level::all) const;
+            //! @brief Gets a post at an index.
+            //! @details If a level if specified only this level of post will be taken into
+            //! account.
+            //! @param index The index of the post
+            //! @param lvl The level of the posts (default level::all).
+            //! @return The post.
+            post get_post(size_t index, level lvl = level::all) const;
             
-            //! @brief Gets a message at an index until a level.
-            message get_message_until(size_t index, level lvl) const;
+            //! @brief Gets a post at an index to a specified level.
+            //! @details The method takes into account all the posts that are more or
+            //! equally important as the specified level.
+            //! @param index The index of the post
+            //! @param lvl The limit level of the posts (default level::all).
+            //! @return The post.
+            post get_post_to_level(size_t index, level lvl) const;
             
             //! @brief Clears the history.
             void clear() noexcept;
             
-            //! @brief Adds a message in the history.
-            void add(message mess) noexcept;
+            //! @brief Adds a post in the history.
+            void add(post mess) noexcept;
             
         private:
-            size_t               m_fatal_count;
-            size_t               m_error_count;
-            size_t               m_post_count;
-            size_t               m_log_count;
-            std::vector<message> m_messages;
+            size_t  m_counters[4];
+            std::vector<post> m_posts;
         };
     };
 }

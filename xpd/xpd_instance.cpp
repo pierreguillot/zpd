@@ -14,6 +14,21 @@ extern "C"
 
 namespace xpd
 {
+    
+    //! @brief The smuggler is optimized for internal use.
+    //! @details The class doesn't break the efficiency of creation of some type, but you
+    //! should use it if and only if you know what you do.
+    class smuggler
+    {
+    public:
+        ~smuggler() noexcept {}
+    public:
+        inline static constexpr void const* gettie(tie const& tie) noexcept {return tie.ptr;}
+        inline static constexpr tie createtie(void *ptr) noexcept {return tie(ptr);}
+        inline static constexpr void const* getsymbol(symbol const& symbol) noexcept {return symbol.ptr;}
+        inline static constexpr symbol createsymbol(void *ptr) noexcept {return symbol(ptr);}
+    };
+    
     struct instance::internal : public smuggler
     {
     public:        
@@ -50,22 +65,22 @@ namespace xpd
         
         static void m_post_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::message{console::level::post, std::string(s)});
+            instance->ref->receive(console::post{console::level::normal, std::string(s)});
         }
         
         static void m_log_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::message{console::level::log, std::string(s)});
+            instance->ref->receive(console::post{console::level::log, std::string(s)});
         }
         
         static void m_error_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::message{console::level::error, std::string(s)});
+            instance->ref->receive(console::post{console::level::error, std::string(s)});
         }
         
         static void m_fatal_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::message{console::level::fatal, std::string(s)});
+            instance->ref->receive(console::post{console::level::fatal, std::string(s)});
         }
         
 
@@ -73,37 +88,37 @@ namespace xpd
         
         static void m_noteon(instance::internal* instance, int port, int channel, int pitch, int velocity)
         {
-            instance->ref->receiveMidiNoteOn(channel, pitch, velocity);
+            instance->ref->receive(midi::event::note(channel, pitch, velocity));
         }
         
         static void m_controlchange(instance::internal* instance, int port, int channel, int control, int value)
         {
-            instance->ref->receiveMidiControlChange(channel, control, value);
+            instance->ref->receive(midi::event::control_change(channel, control, value));
         }
         
         static void m_programchange(instance::internal* instance, int port, int channel, int value)
         {
-            instance->ref->receiveMidiProgramChange(channel, value);
+            instance->ref->receive(midi::event::program_change(channel, value));
         }
         
         static void m_pitchbend(instance::internal* instance, int port, int channel, int value)
         {
-            instance->ref->receiveMidiPitchBend(channel, value);
+            instance->ref->receive(midi::event::pitch_bend(channel, value));
         }
         
         static void m_aftertouch(instance::internal* instance, int port, int channel, int value)
         {
-            instance->ref->receiveMidiAfterTouch(channel, value);
+            instance->ref->receive(midi::event::after_touch(channel, value));
         }
         
         static void m_polyaftertouch(instance::internal* instance, int port, int channel, int pitch, int value)
         {
-            instance->ref->receiveMidiPolyAfterTouch(channel, pitch, value);
+            instance->ref->receive(midi::event::poly_after_touch(channel, pitch, value));
         }
         
         static void m_byte(instance::internal* instance, int port, int value)
         {
-            instance->ref->receiveMidiByte(port, value);
+            instance->ref->receive(midi::event::byte(value));
         }
         
         
@@ -191,58 +206,61 @@ namespace xpd
     instance::~instance() noexcept
     {
         dsp_release();
-        lock();
+        environment::lock();
         cpd_instance_free(reinterpret_cast<c_instance *>(m_ptr));
-        unlock();
+        environment::unlock();
     }
     
     void instance::dsp_prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept
     {
-        lock();
+        environment::lock();
         cpd_instance_dsp_prepare(reinterpret_cast<c_instance *>(m_ptr), nins, nouts, samplerate, nsamples);
-        unlock();
+        environment::unlock();
     }
 
     void instance::dsp_perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept
     {
+        environment::lock();
         cpd_instance_dsp_perform(reinterpret_cast<c_instance *>(m_ptr), nsamples, nins, inputs, nouts, outputs);
+        environment::unlock();
     }
     
     void instance::dsp_release() noexcept
     {
-        lock();
+        environment::lock();
         cpd_instance_dsp_release(reinterpret_cast<c_instance *>(m_ptr));
-        unlock();
+        environment::unlock();
     }
     
     
     
-    
-    
-    void instance::send(console::message const& mess) noexcept
+    void instance::send(console::post const& post) noexcept
     {
-        lock();
-        if(mess.lvl == console::level::error)
+        int todo_set_instance;
+        environment::lock();
+        if(post.type == console::level::error)
         {
-            cpd_console_error(mess.txt.c_str());
+            cpd_console_error(post.text.c_str());
         }
-        else if(mess.lvl == console::level::fatal)
+        else if(post.type == console::level::fatal)
         {
-            cpd_console_fatal(mess.txt.c_str());
+            cpd_console_fatal(post.text.c_str());
         }
-        else if(mess.lvl == console::level::post)
+        else if(post.type == console::level::normal)
         {
-            cpd_console_post(mess.txt.c_str());
+            cpd_console_post(post.text.c_str());
         }
         else
         {
-            cpd_console_log(mess.txt.c_str());
+            cpd_console_log(post.text.c_str());
         }
-        unlock();
+        environment::unlock();
     }
     
     void instance::send(tie name, symbol s, std::vector<atom> const& atoms) const
     {
+        int todo_set_instance;
+        environment::lock();
         if(atoms.empty())
         {
             if(s || s  == m_sym_bang)
@@ -259,61 +277,42 @@ namespace xpd
         //cpd_messagesend_anything(reinterpret_cast<c_tie const *>(gettie(name)),
         //                          reinterpret_cast<c_symbol const *>(getsymbol(s)),
         //                          reinterpret_cast<c_list const *>(getvector(list)));
+        
+        environment::unlock();
     }
     
-    void instance::sendMidiNote(int channel, int pitch, int velocity) const
+    void instance::send(midi::event const& event) const
     {
-        cpd_midisend_noteon(channel, pitch, velocity);
-    }
-    
-    void instance::sendMidiControlChange(int channel, int controller, int value) const
-    {
-        cpd_midisend_controlchange(channel, controller, value);
-    }
-    
-    void instance::sendMidiProgramChange(int channel, int value) const
-    {
-        cpd_midisend_programchange(channel, value);
-    }
-    
-    void instance::sendMidiPitchBend(int channel, int value) const
-    {
-        cpd_midisend_pitchbend(channel, value);
-    }
-    
-    void instance::sendMidiAfterTouch(int channel, int value) const
-    {
-        cpd_midisend_aftertouch(channel, value);
-    }
-    
-    void instance::sendMidiPolyAfterTouch(int channel, int pitch, int value) const
-    {
-        cpd_midisend_polyaftertouch(channel, pitch, value);
-    }
-    
-    void instance::sendMidiByte(int port, int byte) const
-    {
-        cpd_midisend_byte(port, byte);
-    }
-    
-    void instance::sendMidiSysEx(int port, int byte) const
-    {
-        cpd_midisend_sysex(port, byte);
-    }
-    
-    void instance::sendMidiSysRealtime(int port, int byte) const
-    {
-        cpd_midisend_sysrealtimein(port, byte);
-    }
-    
-    void instance::lock() noexcept
-    {
+        int todo_set_instance;
         environment::lock();
-        cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
-    }
-    
-    void instance::unlock() noexcept
-    {
+        if(event.get_type() == midi::event::type::note)
+        {
+            cpd_midisend_noteon(event.get_channel(), event.get_pitch(), event.get_velocity());
+        }
+        else if(event.get_type() == midi::event::type::control_change)
+        {
+            cpd_midisend_controlchange(event.get_channel(), event.get_controler(), event.get_value());
+        }
+        else if(event.get_type() == midi::event::type::program_change)
+        {
+            cpd_midisend_programchange(event.get_channel(), event.get_program());
+        }
+        else if(event.get_type() == midi::event::type::pitch_bend)
+        {
+            cpd_midisend_pitchbend(event.get_channel(), event.get_bend());
+        }
+        else if(event.get_type() == midi::event::type::after_touch)
+        {
+            cpd_midisend_pitchbend(event.get_channel(), event.get_value());
+        }
+        else if(event.get_type() == midi::event::type::poly_after_touch)
+        {
+            cpd_midisend_polyaftertouch(event.get_channel(), event.get_pitch(), event.get_value());
+        }
+        else
+        {
+            cpd_midisend_byte(0, event.get_value());
+        }
         environment::unlock();
     }
     

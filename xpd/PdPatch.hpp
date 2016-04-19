@@ -11,8 +11,8 @@
 
 namespace xpd
 {
-    class Gui;
-    class Object;
+    class gui;
+    class object;
     // ==================================================================================== //
     //                                          PATCHER                                     //
     // ==================================================================================== //
@@ -56,10 +56,10 @@ namespace xpd
         int get_height() const noexcept;
         
         //! @brief Gets the Gui objects from the patch.
-        std::vector<Gui> getGuis() const noexcept;
+        std::vector<gui> get_guis() const noexcept;
         
         //! @brief Gets the Comment objects from the patch.
-        std::vector<Object> getComments() const noexcept;
+        std::vector<object> get_comments() const noexcept;
     private:
         patch(patch const& other) = delete;
         patch& operator=(patch const& other) = delete;

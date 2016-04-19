@@ -9,113 +9,89 @@
 namespace xpd
 {
     
-    console::history::history() :
-    m_fatal_count(0),
-    m_error_count(0),
-    m_post_count(0),
-    m_log_count(0)
+    console::history::history()
     {
-        m_messages.reserve(512);
+        m_counters[0] = m_counters[1] = m_counters[2] = m_counters[3] = 0ul;
+        m_posts.reserve(512);
     }
     
-    size_t console::history::get_number_of_messages(level lvl) const noexcept
+    size_t console::history::get_number_of_posts(level lvl) const noexcept
     {
         if(lvl == level::all)
         {
-            return m_messages.size();
+            return m_posts.size();
         }
-        if(lvl == level::fatal)
-        {
-            return m_fatal_count;
-        }
-        if(lvl == level::error)
-        {
-            return m_error_count;
-        }
-        if(lvl == level::post)
-        {
-            return m_post_count;
-        }
-        return m_log_count;
+        return m_counters[static_cast<size_t>(lvl)];
     }
     
-    size_t console::history::get_number_of_messages_until(level lvl) const noexcept
-    {
-        if(lvl == level::fatal)
-        {
-            return m_fatal_count;
-        }
-        if(lvl == level::error)
-        {
-            return m_fatal_count + m_error_count;
-        }
-        if(lvl == level::post)
-        {
-            return m_fatal_count + m_error_count + m_post_count;
-        }
-        return m_fatal_count + m_error_count + m_post_count + m_log_count;
-    }
-    
-    console::message console::history::get_message(size_t index, level lvl) const
+    size_t console::history::get_number_of_posts_to_level(level lvl) const noexcept
     {
         if(lvl == level::all)
         {
-             return m_messages[index];
+            return m_posts.size();
         }
-        for(size_t i = 0, c = 0; i < m_messages.size(); ++i)
+        size_t count = 0ul;
+        for(size_t i = 0ul; i < static_cast<size_t>(lvl); ++i)
         {
-            if(m_messages[i].lvl == lvl)
+            count += m_counters[static_cast<size_t>(i)];
+        }
+        return count;
+    }
+    
+    console::post console::history::get_post(size_t index, level lvl) const
+    {
+        if(lvl == level::all)
+        {
+             return m_posts[index];
+        }
+        for(size_t i = 0, c = 0; i < m_posts.size(); ++i)
+        {
+            if(m_posts[i].type == lvl)
             {
                 ++c;
                 if(c == index+1)
                 {
-                    return m_messages[i];
+                    return m_posts[static_cast<size_t>(i)];
                 }
             }
         }
-        return message{lvl, std::string()};
+        return post{lvl, std::string()};
     }
     
-    console::message console::history::get_message_until(size_t index, level lvl) const
+    console::post console::history::get_post_to_level(size_t index, level lvl) const
     {
-        for(size_t i = 0, c = 0; i < m_messages.size(); ++i)
+        for(size_t i = 0, c = 0; i < m_posts.size(); ++i)
         {
-            if(m_messages[i].lvl <= lvl)
+            if(m_posts[i].type <= lvl)
             {
                 ++c;
                 if(c == index+1)
                 {
-                    return m_messages[i];
+                    return m_posts[static_cast<size_t>(i)];
                 }
             }
         }
-        return message{lvl, std::string()};
+        return post{lvl, std::string()};
     }
     
     void console::history::clear() noexcept
     {
-        m_fatal_count = m_error_count = m_post_count = m_log_count = 0;
-        return m_messages.clear();
+        m_counters[0] = m_counters[1] = m_counters[2] = m_counters[3] = 0ul;
+        return m_posts.clear();
     }
     
-    void console::history::add(message mess) noexcept
+    void console::history::add(post mess) noexcept
     {
-        if(mess.lvl == level::fatal)
+        m_posts.push_back(std::move(mess));
+        if(m_posts[m_posts.size()-1].type == level::all)
         {
-            m_fatal_count++;
-        }
-        if(mess.lvl == level::error)
-        {
-            m_error_count++;
-        }
-        if(mess.lvl == level::post)
-        {
-            m_post_count++;
+            m_counters[3]++;
+            m_posts[m_posts.size()-1].type = level::log;
         }
         else
         {
-            m_log_count++;
+            m_counters[static_cast<size_t>(m_posts[m_posts.size()-1].type)]++;
         }
-        m_messages.push_back(std::move(mess));
+        
     }
 }

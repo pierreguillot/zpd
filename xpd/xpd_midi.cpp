@@ -4,7 +4,7 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#include "PdTypes.hpp"
+#include "xpd_midi.hpp"
 
 
 extern "C"

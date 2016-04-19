@@ -17,137 +17,21 @@ namespace xpd
 {
     
     // ==================================================================================== //
-    //                                      COMMENT                                         //
+    //                                      OBJECT                                          //
     // ==================================================================================== //
     
-    
-    Object::Object() noexcept : m_ptr(nullptr), m_patch()
-    {
-        
-    }
-    
-    Object::Object(patch const& patch, void* ptr) noexcept :
-    m_ptr(ptr), m_patch(patch)
+    object::object(patch const* patch, void* ptr) noexcept
     {
         ;
-    }
-    
-    Object::Object(Object const& other) noexcept :
-    m_ptr(other.m_ptr), m_patch(other.m_patch)
-    {
-        ;
-    }
-    
-    Object::Object(Object&& other) noexcept :
-    m_ptr(other.m_ptr), m_patch(other.m_patch)
-    {
-        other.m_ptr   = nullptr;
-        other.m_patch = patch();
-    }
-    
-    Object& Object::operator=(Object const& other) noexcept
-    {
-        m_ptr   = other.m_ptr;
-        m_patch = other.m_patch;
-        return *this;
-    }
-    
-    Object& Object::operator=(Object&& other) noexcept
-    {
-        std::swap(m_ptr, other.m_ptr);
-        std::swap(m_patch, other.m_patch);
-        return *this;
-    }
-    
-    Object::~Object() noexcept
-    {
-        m_ptr = nullptr;
-        m_patch = patch();
-    }
-    
-    bool Object::isValid() const noexcept
-    {
-        return bool(m_ptr) && m_patch.isValid();
-    }
-    
-    std::string Object::getText() const
-    {
-        if(isValid())
-        {
-            char* text = nullptr;
-            int size = 0;
-            cpd_object_get_text(reinterpret_cast<c_object *>(m_ptr), &size, &text);
-            if(text && size)
-            {
-                std::string txt(text, size);
-                free(text);
-                return txt;
-            }
-        }
-        return std::string();
-    }
-    
-    Rectangle<int> Object::getBounds() const noexcept
-    {
-        int x = 0, y = 0, w = 0, h = 0;
-        if(isValid())
-        {
-            cpd_object_get_bounds(reinterpret_cast<c_object *>(m_ptr),
-                                reinterpret_cast<c_patch *>(m_patch.m_ptr),
-                                &x, &y, &w, &h);
-        }
-        return {x, y, w, h};
-    }
-    
-    void* Object::getpatchPtr() const noexcept
-    {
-        return isValid() ? m_patch.m_ptr : nullptr;
-    }
-    
-    void* Object::getPtr() const noexcept
-    {
-        return isValid() ? m_ptr : nullptr;
     }
     
     // ==================================================================================== //
     //                                      GUI                                          //
     // ==================================================================================== //
     
-    Gui::Gui() noexcept : Object(), m_type(Type::Invalid)
-    {
-        
-    }
-    
-    Gui::Gui(patch const& patch, Type type, void* ptr) noexcept :
-    Object(patch, ptr), m_type(type)
+    Gui::Gui(patch const& patch, Type type, void* ptr) noexcept : object(patch, ptr), m_type(type)
     {
         ;
-    }
-    
-    Gui::Gui(Gui const& other) noexcept :
-    Object(other), m_type(other.m_type)
-    {
-        ;
-    }
-    
-    Gui::Gui(Gui&& other) noexcept :
-    Object(std::move(other)), m_type(other.m_type)
-    {
-        other.m_type  = Type::Invalid;
-    }
-    
-    Gui& Gui::operator=(Gui const& other) noexcept
-    {
-        Object::operator=(other);
-        m_type  = other.m_type;
-        return *this;
-    }
-    
-    Gui& Gui::operator=(Gui&& other) noexcept
-    {
-        Object::operator=(std::move(other));
-        std::swap(m_type, other.m_type);
-        return *this;
     }
     
     Gui::~Gui() noexcept

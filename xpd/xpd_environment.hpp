@@ -7,7 +7,8 @@
 #ifndef XPD_ENVIRONMENT_HPP
 #define XPD_ENVIRONMENT_HPP
 
-#include "PdTypes.hpp"
+#include "xpd_mutex.hpp"
+#include <string>
 
 namespace xpd
 {
@@ -39,19 +40,19 @@ namespace xpd
         
     private:
         
-        //! @brief The Pure Data contructor.
+        //! @brief The environment contructor.
         environment() noexcept;
         
-        //! @brief The Pure Data destructor.
+        //! @brief The environment destructor.
         ~environment() noexcept;
         
-        //! @brief Gets the singleton of Pure Data.
+        //! @brief Gets the singleton of the environment.
         static environment& get() noexcept;
         
-        //! @brief Locks Pure Data.
+        //! @brief Locks the environment.
         static void lock() noexcept;
         
-        //! @brief Unlocks Pure Data.
+        //! @brief Unlocks the environment.
         static void unlock() noexcept;
         
         mutex        m_mutex;

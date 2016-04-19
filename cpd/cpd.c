@@ -568,6 +568,7 @@ void cpd_instance_dsp_prepare(c_instance* instance,
                                const int nins, const int nouts,
                                const int samplerate, const int nsamples)
 {
+    cpd_instance_set(instance);
     if(samplerate != instance->c_internal_ptr->c_samplerate || nins != instance->c_internal_ptr->c_ninputs || nouts != instance->c_internal_ptr->c_noutputs)
     {
         sys_setchsr(nins, nouts, samplerate);
@@ -590,6 +591,7 @@ void cpd_instance_dsp_perform(c_instance* instance, int nsamples,
     int i, j;
     t_sample *ins = instance->c_internal_ptr->c_inputs;
     t_sample *outs = instance->c_internal_ptr->c_outputs;
+    cpd_instance_set(instance);
     for(i = 0; i < nsamples; i += DEFDACBLKSIZE)
     {
         for(j = 0; j < nins; j++)
@@ -607,7 +609,7 @@ void cpd_instance_dsp_perform(c_instance* instance, int nsamples,
 
 void cpd_instance_dsp_release(c_instance* instance)
 {
-    
+    cpd_instance_set(instance);
 }
 
 int cpd_instance_get_samplerate(c_instance* instance)
