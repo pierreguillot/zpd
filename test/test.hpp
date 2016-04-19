@@ -7,13 +7,15 @@
 #include "../xpd/xpd.hpp"
 #include <iostream>
 #include <string>
+#include <string.h>
+#include <stdio.h>
 
 using namespace xpd;
 
 #ifndef XPD_TEST_HPP
 #define XPD_TEST_HPP
 
-#define XPD_TEST_NLOOP 1
+#define XPD_TEST_NLOOP 100
 
 class instance_test : private instance
 {
