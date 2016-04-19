@@ -7,26 +7,10 @@
 
 var indexSectionsWithContent =
 {
-  0: "_mtz",
-  1: "_",
-  2: "z",
-  3: "m",
-  4: "z",
-  5: "z",
-  6: "z",
-  7: "t"
 };
 
 var indexSectionNames =
 {
-  0: "all",
-  1: "classes",
-  2: "functions",
-  3: "variables",
-  4: "typedefs",
-  5: "enums",
-  6: "enumvalues",
-  7: "groups"
 };
 
 function convertToId(search)
