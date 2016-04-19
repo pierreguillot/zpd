@@ -15,8 +15,6 @@
 #include "xpd_environment.hpp"
 
 #include <vector>
-#include <set>
-#include <cassert>
 
 namespace xpd
 {
@@ -45,23 +43,6 @@ namespace xpd
         
         //! @brief Gets the sample rate of the instance.
         int samplerate() const xpd_noexcept;
-        
-        //! @brief The instance listener.
-        //! @details The instance listener id notified when a pacth is created or deleted.
-        class listener
-        {
-        public:
-           inline xpd_constexpr listener() {}
-            inline virtual ~listener() {}
-            virtual void patch_loaded(patch* p) = 0;
-            virtual void patch_deleted(patch* p) = 0;
-        };
-        
-        //! @brief Adds a listener to the instance.
-        void listener_add(listener& listener);
-        
-        //! @brief Removes a listener from the instance.
-        void listener_remove(listener& listener);
         
     protected:
         
@@ -111,7 +92,6 @@ namespace xpd
         struct internal;
         
         internal*           m_ptr;
-        std::set<listener*> m_listeners;
     };
 
 }

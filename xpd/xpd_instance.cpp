@@ -212,10 +212,12 @@ namespace xpd
 
         m_ptr = internal::allocate(this);
         environment::unlock();
+#define LCOV_EXCL_START
         if(!m_ptr)
         {
             throw "can't allocate instance.";
         }
+#define LCOV_EXCL_STOP
     }
     
     instance::~instance() xpd_noexcept
@@ -411,16 +413,6 @@ namespace xpd
     void instance::unbind(tie name)
     {
         reinterpret_cast<internal *>(m_ptr)->m_unbind(reinterpret_cast<internal *>(m_ptr), smuggler::gettie(name));
-    }
-    
-    void instance::listener_add(listener& listener)
-    {
-        m_listeners.insert(&listener);
-    }
-    
-    void instance::listener_remove(listener& listener)
-    {
-        m_listeners.erase(&listener);
     }
 }
 

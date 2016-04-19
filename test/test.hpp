@@ -10,6 +10,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <cstdlib>
+#include <cassert>
 
 using namespace xpd;
 
