@@ -9,6 +9,7 @@
 #include <string>
 #include <string.h>
 #include <stdio.h>
+#include <cstdlib>
 
 using namespace xpd;
 
@@ -22,16 +23,12 @@ class instance_test : private instance
 public:
     instance_test(const size_t index) : m_index(index)
     {
-        m_samples = new float*[2];
-        m_samples[0] = new float[128];
-        m_samples[1] = new float[128];
+        ;
     }
     
     ~instance_test()
     {
-        delete [] m_samples[0];
-        delete [] m_samples[1];
-        delete [] m_samples;
+        ;
     }
     
     void receive(console::post post) xpd_final
@@ -120,8 +117,11 @@ public:
         assert("test_message patch" && p);
         sprintf(uid, "%i", int(p->unique_id()));
         tie from(std::string(uid) + "-fromxpd");
-        tie to(std::string(uid) + "-toxpd");
-        inst->bind(to);
+        tie to1(std::string(uid) + "-toxpd1");
+        tie to2(std::string(uid) + "-toxpd2");
+        inst->bind(to1);
+        inst->bind(to1);
+        inst->bind(to2);
         
         inst->m_count_bang = 0;
         inst->m_count_float = 0;
@@ -146,12 +146,13 @@ public:
             vec[0] = zozo;
             inst->send(from, symbol("zaza"), vec);
         }
-        inst->unbind(to);
-        assert("test_message bang" && inst->m_count_bang == XPD_TEST_NLOOP);
-        assert("test_message float" && inst->m_count_float == XPD_TEST_NLOOP);
-        assert("test_message symbol" && inst->m_count_symbol == XPD_TEST_NLOOP);
-        assert("test_message list" && inst->m_count_list == XPD_TEST_NLOOP);
-        assert("test_message anything" && inst->m_count_anything == XPD_TEST_NLOOP);
+        inst->unbind(to1);
+        inst->unbind(to2);
+        assert("test_message bang" && inst->m_count_bang == XPD_TEST_NLOOP * 2);
+        assert("test_message float" && inst->m_count_float == XPD_TEST_NLOOP * 2);
+        assert("test_message symbol" && inst->m_count_symbol == XPD_TEST_NLOOP * 2);
+        assert("test_message list" && inst->m_count_list == XPD_TEST_NLOOP * 2);
+        assert("test_message anything" && inst->m_count_anything == XPD_TEST_NLOOP * 2);
         inst->close(*p);
     }
     
@@ -187,10 +188,57 @@ public:
         inst->close(*p);
     }
     
+    
+    static void test_dsp_int(instance_test* inst, int sr, int blks, int nins, int nouts)
+    {
+        inst->prepare(nins, nouts, sr, blks);
+        assert("test_dsp sample rate" && inst->samplerate() == sr);
+        
+        for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
+        {
+            for(size_t k = 0; k < nins; k++)
+            {
+                for(size_t j = 0; j < blks; j++)
+                {
+                    inst->m_input[k][j] = ((rand() % 4000) - 2000.f) / 2000.f;
+                }
+            }
+            inst->perform(blks, nins, const_cast<float const **>(inst->m_input), nouts, inst->m_output);
+            for(size_t k = 0; k < nouts; k++)
+            {
+                for(size_t j = 0; j < blks; j++)
+                {
+                    assert("test_dsp samples" && inst->m_output[k][j] == inst->m_input[k][j]);
+                }
+            }
+        }
+    }
+    
+    static void test_dsp(instance_test* inst)
+    {
+        patch* p = inst->load("test.pd", "");
+        inst->m_input[0] = new float[256];
+        inst->m_input[1] = new float[256];
+        inst->m_output[0] = new float[256];
+        inst->m_output[1] = new float[256];
+        assert("test_dsp inputs outputs" && inst->m_input[0] && inst->m_input[1] && inst->m_output[0] && inst->m_output[1]);
+        
+        test_dsp_int(inst, 44100, 64, 2, 2);
+        test_dsp_int(inst, 44100, 256, 2, 1);
+        test_dsp_int(inst, 96000, 128, 1, 1);
+        
+        delete [] inst->m_input[0];
+        delete [] inst->m_input[1];
+        delete [] inst->m_output[0];
+        delete [] inst->m_output[1];
+        inst->close(*p);
+    }
+    
 private:
     const size_t m_index;
     size_t  m_ninouts;
-    float** m_samples;
+    float* m_input[2];
+    float* m_output[2];
     
     size_t m_count_fatal;
     size_t m_count_error;

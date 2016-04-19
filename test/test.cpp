@@ -102,37 +102,15 @@ int main(int argc, char** argv)
     }
     std::cout << "ok\n";
     
-    /*
-    p1 = inst1->load("test.pd", "");
-    p2 = inst2->load("test.pd", "");
-    if(p1 && p2)
+    std::cout << "perform tests for dsp...";
     {
-        inst1->prepare(2, 2, 44100, 64);
-        inst2->prepare(1, 1, 44100, 128);
-        
-        for(size_t i = 0; i < 8; ++i)
-        {
-            char truc1[512];
-            sprintf(truc1, "%i", int(p1->unique_id()));
-            std::cout << p1->unique_id() << "\n";
-            inst1->send(tie(std::string(truc1) + "-bang"), symbol("bang"), std::vector<atom>());
-            inst1->perform(64, 2, const_cast<float const **>(inst1->m_vecteurs), 2, inst1->m_vecteurs);
-            char truc2[512];
-            sprintf(truc2, "%i", int(p2->unique_id()));
-            std::cout << truc2 << "\n";
-            inst2->send(tie(std::string(truc2) + "-bang"), symbol("bang"), std::vector<atom>());
-            inst2->perform(128, 1, const_cast<float const **>(inst1->m_vecteurs), 1, inst1->m_vecteurs);
-        }
-     
-        
-        
-        inst1->release();
-        inst2->release();
-        
-        inst1->close(*p1);
-        inst2->close(*p2);
+        synch::Thread t1((test_method)(&instance_test::test_dsp), inst1);
+        synch::Thread t2((test_method)(&instance_test::test_dsp), inst2);
+        t1.join();
+        t2.join();
     }
-     */
+    std::cout << "ok\n";
+    
     delete inst1;
     delete inst2;
     return 0;
