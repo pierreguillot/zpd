@@ -237,7 +237,8 @@ namespace xpd
         
         if(ptr)
         {
-            p = new patch(ptr, name, path, cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(m_ptr)));
+            size_t uid = static_cast<int>(cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(ptr)));
+            p = new patch(ptr, name, path, uid);
         }
         environment::unlock();
         return p;

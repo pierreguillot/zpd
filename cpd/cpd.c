@@ -633,7 +633,6 @@ c_patch* cpd_patch_new(const char* name, const char* path)
         cnv = (t_canvas *)glob_evalfile(NULL, gensym(name), gensym(path));
         if(cnv)
         {
-            cnv->gl_edit = 0;
             return cnv;
         }
     }
@@ -646,7 +645,6 @@ c_patch* cpd_patch_new(const char* name, const char* path)
             cnv = (t_canvas *)glob_evalfile(NULL, gensym(name), gensym(rpath));
             if(cnv)
             {
-                cnv->gl_edit = 0;
                 return cnv;
             }
             i++;
@@ -673,10 +671,9 @@ const char* cpd_patch_get_path(c_patch const* patch)
 int cpd_patch_get_dollarzero(c_patch const* patch)
 {
     int value = 0;
-    t_canvas* current = canvas_getcurrent();
-    canvas_setcurrent((t_glist *)patch);
+    pd_pushsym((t_pd *)patch);
     value = canvas_getdollarzero();
-    canvas_setcurrent(current);
+    pd_popsym((t_pd *)patch);
     return value;
 }
 

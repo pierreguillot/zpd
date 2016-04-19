@@ -1,9 +1,9 @@
 #N canvas 360 233 450 300 12;
-#X obj 181 137 dac~ 1;
-#X obj 181 36 r \$0-value;
-#X obj 249 73 s \$0-patch;
-#X obj 34 160 print frompatch;
-#X obj 181 72 osc~;
+#X obj 37 122 dac~ 1;
+#X obj 37 21 r \$0-value;
+#X obj 105 58 s \$0-patch;
+#X obj 157 112 print frompatch;
+#X obj 37 57 osc~;
 #N canvas 0 23 450 300 (subpatch) 0;
 #X obj 359 74 r \$0-bang;
 #X obj 263 58 inlet~;
@@ -11,11 +11,7 @@
 #X obj 183 69 block~ 2;
 #X connect 0 0 2 0;
 #X connect 1 0 2 0;
-#X restore 285 193 pd;
-#X obj 119 107 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 152 131 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
+#X restore 141 178 pd;
 #X connect 1 0 2 0;
 #X connect 1 0 3 0;
 #X connect 1 0 4 0;

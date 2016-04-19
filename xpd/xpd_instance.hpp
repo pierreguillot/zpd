@@ -59,6 +59,7 @@ namespace xpd
         
         //! @brief Adds a listener to the instance.
         void listener_add(listener& listener);
+        
         //! @brief Removes a listener from the instance.
         void listener_remove(listener& listener);
         

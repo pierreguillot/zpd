@@ -73,6 +73,16 @@ public:
         std::cout << "instace " << m_index << "midi :";
         std::cout << "\n";
     }
+    
+    
+    void test_post()
+    {
+        send(console::post(console::log, "test"));
+        send(console::post(console::normal, "test"));
+        send(console::post(console::error, "test"));
+        send(console::post(console::fatal, "test"));
+    }
+    
     size_t const m_index;
     float** m_vecteurs;
 };
@@ -137,6 +147,9 @@ int main(int argc, char** argv)
     environment::searpath_clear();
     environment::searchpath_add(test_get_patch_folder(argv[0]));
     
+    inst1->test_post();
+    inst2->test_post();
+    
     p1 = inst1->load("test.pd", "");
     p2 = inst2->load("test.pd", "");
     if(p1 && p2)
@@ -148,11 +161,13 @@ int main(int argc, char** argv)
         {
             char truc1[512];
             sprintf(truc1, "%i", int(p1->unique_id()));
+            std::cout << p1->unique_id() << "\n";
             inst1->send(tie(std::string(truc1) + "-bang"), symbol("bang"), std::vector<atom>());
             inst1->perform(64, 2, const_cast<float const **>(inst1->m_vecteurs), 2, inst1->m_vecteurs);
             char truc2[512];
-            sprintf(truc2, "%i", int(p1->unique_id()));
-            inst1->send(tie(std::string(truc2) + "-bang"), symbol("bang"), std::vector<atom>());
+            sprintf(truc2, "%i", int(p2->unique_id()));
+            std::cout << truc2 << "\n";
+            inst2->send(tie(std::string(truc2) + "-bang"), symbol("bang"), std::vector<atom>());
             inst2->perform(128, 1, const_cast<float const **>(inst1->m_vecteurs), 1, inst1->m_vecteurs);
         }
         

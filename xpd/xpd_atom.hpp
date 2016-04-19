@@ -97,11 +97,11 @@ namespace xpd
 #else
         union a_word
         {
-            float_t w_float;
+            float   w_float;
             symbol  w_symbol;
-           inline xpd_constexpr a_word() xpd_noexcept : w_float(0.f) {};
-           inline xpd_constexpr a_word(const float_t value) xpd_noexcept : w_float(value) {}
-           inline xpd_constexpr a_word(symbol& symbol) xpd_noexcept : w_symbol(symbol) {}
+            inline xpd_constexpr a_word() xpd_noexcept : w_float(0.f) {};
+            inline xpd_constexpr a_word(const float value) xpd_noexcept : w_float(value) {}
+            inline xpd_constexpr a_word(symbol& symbol) xpd_noexcept : w_symbol(symbol) {}
             
         };
 #endif
