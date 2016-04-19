@@ -21,37 +21,45 @@ namespace xpd
     
     tie::tie(std::string const& name) : ptr(cpd_tie_create(name.c_str()))
     {
+#define LCOV_EXCL_START
         if(!ptr)
         {
             throw "can't allocate tie.";
         }
+#define LCOV_EXCL_STOP
     }
     
     tie::tie(char const* name) : ptr(cpd_tie_create(name))
     {
         if(!ptr)
+#define LCOV_EXCL_START
         {
             throw "can't allocate tie.";
         }
+#define LCOV_EXCL_STOP
     }
     
     tie& tie::operator=(std::string const& name)
     {
         ptr = cpd_tie_create(name.c_str());
+#define LCOV_EXCL_START
         if(!ptr)
         {
             throw "can't allocate tie.";
         }
+#define LCOV_EXCL_STOP
         return *this;
     }
     
     tie& tie::operator=(char const* name)
     {
         ptr = cpd_tie_create(name);
+#define LCOV_EXCL_START
         if(!ptr)
         {
             throw "can't allocate tie.";
         }
+#define LCOV_EXCL_STOP
         return *this;
     }
     

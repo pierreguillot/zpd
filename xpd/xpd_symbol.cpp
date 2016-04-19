@@ -26,37 +26,45 @@ namespace xpd
     
     symbol::symbol(std::string const& name) : ptr(cpd_tie_create(name.c_str()))
     {
+#define LCOV_EXCL_START
         if(!ptr)
         {
             throw "can't allocate symbol.";
         }
+#define LCOV_EXCL_STOP
     }
     
     symbol::symbol(char const* name) : ptr(cpd_tie_create(name))
     {
+#define LCOV_EXCL_START
         if(!ptr)
         {
             throw "can't allocate symbol.";
         }
+#define LCOV_EXCL_STOP
     }
     
     symbol& symbol::operator=(std::string const& name)
     {
         ptr = cpd_tie_create(name.c_str());
+#define LCOV_EXCL_START
         if(!ptr)
         {
             throw "can't allocate symbol.";
         }
+#define LCOV_EXCL_STOP
         return *this;
     }
     
     symbol& symbol::operator=(char const* name)
     {
         ptr = cpd_tie_create(name);
+#define LCOV_EXCL_START
         if(!ptr)
         {
             throw "can't allocate symbol.";
         }
+#define LCOV_EXCL_STOP
         return *this;
     }
     
