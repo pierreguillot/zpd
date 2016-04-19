@@ -9,7 +9,7 @@
 
 #include "xpd_def.hpp"
 
-#if (__cplusplus <= 199711L)
+#ifdef _XPD_CPP11_NOSUPPORT_
 #ifdef _WIN32
 #include <windows.h>
 #else
@@ -21,7 +21,7 @@
 
 namespace xpd
 {
-#if (__cplusplus <= 199711L)
+#ifdef _XPD_CPP11_NOSUPPORT_
 #ifdef _WIN32
     class mutex
     {

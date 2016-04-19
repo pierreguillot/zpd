@@ -24,21 +24,12 @@ namespace xpd
     public:
         //! @brief The available type of an atom.
         //! @details For the moment it can be null_t, float_t or symbol_t
-#if (__cplusplus <= 199711L)
         enum type_t
         {
             null_t,     //!< @brief The atom is null or undefined.
             float_t,    //!< @brief The atom owns a float value.
             symbol_t    //!< @brief The atom owns a symbol.
         };
-#else
-        enum class type_t
-        {
-            null_t,     //!< @brief The atom is null or undefined.
-            float_t,    //!< @brief The atom owns a float value.
-            symbol_t    //!< @brief The atom owns a symbol.
-        };
-#endif
         
         //! @brief The default constructor.
         //! @details Creates an null atom.
@@ -93,7 +84,7 @@ namespace xpd
         inline xpd_constexpr atom::type_t type() const xpd_noexcept {return m_type;}
     private:
 
-#if (__cplusplus <= 199711L)
+#ifdef _XPD_CPP11_NOSUPPORT_
         struct a_word
         {
             float w_float;

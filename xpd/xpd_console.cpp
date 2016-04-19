@@ -82,7 +82,7 @@ namespace xpd
     
     void console::history::add(post mess) xpd_noexcept
     {
-#if (__cplusplus <= 199711L)
+#ifdef _XPD_CPP11_NOSUPPORT_
         m_posts.push_back(mess);
 #else
         m_posts.push_back(std::move(mess));

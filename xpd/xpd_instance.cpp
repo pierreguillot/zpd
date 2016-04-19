@@ -61,22 +61,22 @@ namespace xpd
         
         static void m_post_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::post(console::level::normal, std::string(s)));
+            instance->ref->receive(console::post(console::normal, std::string(s)));
         }
         
         static void m_log_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::post(console::level::log, std::string(s)));
+            instance->ref->receive(console::post(console::log, std::string(s)));
         }
         
         static void m_error_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::post(console::level::error, std::string(s)));
+            instance->ref->receive(console::post(console::error, std::string(s)));
         }
         
         static void m_fatal_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::post(console::level::fatal, std::string(s)));
+            instance->ref->receive(console::post(console::fatal, std::string(s)));
         }
         
 
@@ -155,7 +155,7 @@ namespace xpd
                     vec[i] = createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
-#if (__cplusplus <= 199711L)
+#ifdef _XPD_CPP11_NOSUPPORT_
             instance->ref->receive(createtie(tie), instance::m_sym_list, vec);
 #else
             instance->ref->receive(createtie(tie), instance::m_sym_list, std::move(vec));
@@ -176,7 +176,7 @@ namespace xpd
                     vec[i] = createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
-#if (__cplusplus <= 199711L)
+#ifdef _XPD_CPP11_NOSUPPORT_
             instance->ref->receive(createtie(tie), createsymbol(s), vec);
 #else
             instance->ref->receive(createtie(tie), createsymbol(s), std::move(vec));
@@ -278,15 +278,15 @@ namespace xpd
         int todo_set_instance;
         environment::lock();
         cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
-        if(post.type == console::level::error)
+        if(post.type == console::error)
         {
             cpd_console_error(post.text.c_str());
         }
-        else if(post.type == console::level::fatal)
+        else if(post.type == console::fatal)
         {
             cpd_console_fatal(post.text.c_str());
         }
-        else if(post.type == console::level::normal)
+        else if(post.type == console::normal)
         {
             cpd_console_post(post.text.c_str());
         }
@@ -305,11 +305,11 @@ namespace xpd
         c_list* list = cpd_list_create(atoms.size());
         for(size_t i = 0; i < atoms.size(); ++i)
         {
-            if(atoms[i].type() == atom::type_t::float_t)
+            if(atoms[i].type() == atom::float_t)
             {
                 cpd_list_set_float(list, i, float_t(atoms[i]));
             }
-            else if(atoms[i].type() == atom::type_t::symbol_t)
+            else if(atoms[i].type() == atom::symbol_t)
             {
                 cpd_list_set_float(list, i, symbol(atoms[i]));
             }
@@ -325,27 +325,27 @@ namespace xpd
         int todo_set_instance;
         environment::lock();
         cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
-        if(event.type() == midi::event::type_t::note_t)
+        if(event.type() == midi::event::note_t)
         {
             cpd_midisend_noteon(event.channel(), event.pitch(), event.velocity());
         }
-        else if(event.type() == midi::event::type_t::control_change_t)
+        else if(event.type() == midi::event::control_change_t)
         {
             cpd_midisend_controlchange(event.channel(), event.controler(), event.value());
         }
-        else if(event.type() == midi::event::type_t::program_change_t)
+        else if(event.type() == midi::event::program_change_t)
         {
             cpd_midisend_programchange(event.channel(), event.program());
         }
-        else if(event.type() == midi::event::type_t::pitch_bend_t)
+        else if(event.type() == midi::event::pitch_bend_t)
         {
             cpd_midisend_pitchbend(event.channel(), event.bend());
         }
-        else if(event.type() == midi::event::type_t::after_touch_t)
+        else if(event.type() == midi::event::after_touch_t)
         {
             cpd_midisend_pitchbend(event.channel(), event.value());
         }
-        else if(event.type() == midi::event::type_t::poly_after_touch_t)
+        else if(event.type() == midi::event::poly_after_touch_t)
         {
             cpd_midisend_polyaftertouch(event.channel(), event.pitch(), event.value());
         }

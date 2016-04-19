@@ -8,6 +8,10 @@
 #define XPD_DEF_HPP
 
 #if (__cplusplus <= 199711L)
+#define _XPD_CPP11_NOSUPPORT_
+#endif
+
+#ifdef _XPD_CPP11_NOSUPPORT_
 #define xpd_noexcept
 #define xpd_nullptr NULL
 #define xpd_constexpr

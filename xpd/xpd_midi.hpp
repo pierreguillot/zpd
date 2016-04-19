@@ -25,7 +25,6 @@ namespace xpd
         public:
             //! @brief The available type of midi events.
             //! @details The type is used .
-#if (__cplusplus <= 199711L)
             enum type_t
             {
                 note_t            = 0,   //!< @brief The note (in or out) event.
@@ -36,18 +35,6 @@ namespace xpd
                 poly_after_touch_t= 5,   //!< @brief The poly after touch event.
                 byte_t            = 6    //!< @brief The byte event.
             };
-#else
-            enum class type_t : int
-            {
-                note_t            = 0,   //!< @brief The note (in or out) event.
-                control_change_t  = 1,   //!< @brief The control change event.
-                program_change_t  = 2,   //!< @brief The program change event.
-                pitch_bend_t      = 3,   //!< @brief The pitch bend event.
-                after_touch_t     = 4,   //!< @brief The after touch event.
-                poly_after_touch_t= 5,   //!< @brief The poly after touch event.
-                byte_t            = 6    //!< @brief The byte event.
-            };
-#endif
             
             //! @brief The event raw constructor.
             inline xpd_constexpr event(type_t t, int v1, int v2, int v3) xpd_noexcept :

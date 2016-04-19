@@ -21,7 +21,6 @@ namespace xpd
     public:
         //! @brief The available level of posts.
         //! @details The level can be used to filters the posts.
-#if (__cplusplus <= 199711L)
         enum level
         {
             all     = 	32767,   //!< @brief All the posts.
@@ -30,16 +29,6 @@ namespace xpd
             normal  = 2,            //!< @brief The normal posts.
             log     = 3             //!< @brief The log posts.
         };
-#else
-        enum class level : size_t
-        {
-            all     = size_t(-1),   //!< @brief All the posts.
-            fatal   = 0,            //!< @brief The fatal error posts.
-            error   = 1,            //!< @brief The error posts.
-            normal  = 2,            //!< @brief The normal posts.
-            log     = 3             //!< @brief The log posts.
-        };
-#endif
             
         
         //! @brief A class that describes a post.
