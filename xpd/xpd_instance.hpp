@@ -62,8 +62,6 @@ namespace xpd
         //! @brief Removes a listener from the instance.
         void listener_remove(listener& listener);
         
-    protected:
-        
         //! @brief Loads a patch.
         patch* load(std::string const& name, std::string const& path);
         

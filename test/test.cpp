@@ -5,19 +5,131 @@
 */
 
 #include "../xpd/xpd.hpp"
+#include <iostream>
+#include <string>
 
 using namespace xpd;
 
 
 class instance_test : public instance
 {
+public:
+    instance_test(const size_t index) : m_index(index) {}
     
+    void receive(console::post post) xpd_final
+    {
+        if(post.type == console::fatal)
+        {
+            std::cout << "instace " << m_index << " (fatal) : " << post.text << "\n";
+        }
+        else if(post.type == console::error)
+        {
+            std::cout << "instace " << m_index << " (error) : " << post.text << "\n";
+        }
+        else if(post.type == console::normal)
+        {
+            std::cout << "instace " << m_index << " (normal) : " << post.text << "\n";
+        }
+        std::cout << "instace " << m_index << " (log) : " << post.text << "\n";
+    }
     
+    void receive(tie tie, symbol s, std::vector<atom> atoms) xpd_final
+    {
+        std::cout << "instace " << m_index << s.name() << " :";
+        for(size_t i = 0; i < atoms.size(); ++i)
+        {
+            if(atoms[i].type() == atom::float_t)
+            {
+                std::cout << " " << float(atoms[i]);
+            }
+            else if(atoms[i].type() == atom::symbol_t)
+            {
+                std::cout << " " << symbol(atoms[i]).name();
+            }
+            else
+            {
+                std::cout << " null";
+            }
+        }
+        std::cout << "\n";
+    }
+    
+    void receive(midi::event event)
+    {
+        std::cout << "instace " << m_index << "midi :";
+        std::cout << "\n";
+    }
+private:
+    size_t const m_index;
 };
 
+static char* test_get_patch_folder(char* location)
+{
+    size_t size, i;
+    if(location)
+    {
+        size = strlen(location);
+        for(i = 0; i < size; ++i)
+        {
+            if(strncmp(location+i, "/build/", 7) == 0)
+            {
+                memset(location+i+7, '\0', size-i);
+                sprintf(location+i+7, "../test/");
+                return location;
+            }
+            if(strncmp(location+i, "/zpd/", 5) == 0)
+            {
+                memset(location+i+5, '\0', size-i);
+                sprintf(location+i+5, "/test/");
+                return location;
+            }
+            if(strncmp(location+i, "/test/", 6) == 0)
+            {
+                memset(location+i+6, '\0', size-i);
+                return location;
+            }
+        }
+    }
+    return NULL;
+}
 
 int main(int argc, char** argv)
 {
-
+    instance_test *inst1, *inst2;
+    patch *p1, *p2;
+    try
+    {
+        inst1 = new instance_test(1);
+    }
+    catch(...)
+    {
+        std::cout << "error can't allocate instance";
+        return -1;
+    }
+    try
+    {
+        inst2 = new instance_test(2);
+    }
+    catch(...)
+    {
+        std::cout << "error can't allocate instance";
+        return -1;
+    }
+    
+    std::cout << "version " << environment::version_major()
+    << "." << environment::version_minor()
+    << "." << environment::version_bug() << "\n";
+    
+    environment::searpath_clear();
+    environment::searchpath_add(test_get_patch_folder(argv[0]));
+    
+    p1 = inst1->load("test.pd", "");
+    p2 = inst2->load("test.pd", "");
+    if(p1 && p2)
+    {
+        
+    }
+    delete inst1;
+    delete inst2;
     return 0;
 }
