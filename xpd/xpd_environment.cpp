@@ -51,14 +51,16 @@ namespace xpd
     
     void environment::searchpath_add(std::string const& path) noexcept
     {
-        std::lock_guard<std::mutex> guard(environment::get().m_mutex);
+        lock();
         cpd_searchpath_add(path.c_str());
+        unlock();
     }
     
     void environment::searpath_clear() noexcept
     {
-        std::lock_guard<std::mutex> guard(environment::get().m_mutex);
+        lock();
         cpd_searchpath_clear();
+        unlock();
     }
     
     void environment::lock() noexcept

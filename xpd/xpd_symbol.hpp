@@ -7,7 +7,7 @@
 #ifndef XPD_SYMBOL_HPP
 #define XPD_SYMBOL_HPP
 
-#include <exception>
+#include "xpd_def.hpp"
 #include <string>
 
 namespace xpd
@@ -41,7 +41,7 @@ namespace xpd
         //! @details Creates an invalid symbol.
         //! @param The name of the symbol.
         inline constexpr symbol(symbol const& other) noexcept : ptr(other.ptr) {}
-        
+
         //! @brief The symbol assignment.
         //! @details Returns a copy of another symbol.
         //! @param other The other symbol.

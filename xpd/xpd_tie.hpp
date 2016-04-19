@@ -7,7 +7,7 @@
 #ifndef XPD_TIE_HPP
 #define XPD_TIE_HPP
 
-#include <exception>
+#include "xpd_def.hpp"
 #include <string>
 
 namespace xpd

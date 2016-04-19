@@ -7,7 +7,7 @@
 #ifndef XPD_CONSOLE_HPP
 #define XPD_CONSOLE_HPP
 
-#include <exception>
+#include "xpd_def.hpp"
 #include <string>
 #include <vector>
 
@@ -21,9 +21,15 @@ namespace xpd
     public:
         //! @brief The available level of posts.
         //! @details The level can be used to filters the posts.
+#if (__cplusplus <= 199711L)
+        enum class level
+        {
+            all     = 	32767,   //!< @brief All the posts.
+#else
         enum class level : size_t
         {
             all     = size_t(-1),   //!< @brief All the posts.
+#endif
             fatal   = 0,            //!< @brief The fatal error posts.
             error   = 1,            //!< @brief The error posts.
             normal  = 2,            //!< @brief The normal posts.
@@ -38,11 +44,14 @@ namespace xpd
         public:
             level       type;   //!< @brief The level of the post.
             std::string text;   //!< @brief The text of the post.
+            
+            inline post(level t, std::string txt) noexcept : type(t), text(txt) {}
         };
         
         //! @brief A class that manages an history of posts.
         //! @details The history record posts and facilitates the retrieving of posts
         //! from a specified level.
+        //! @todo use unary predicated instead of specific methods
         class history
         {
         public:

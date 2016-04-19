@@ -5,6 +5,7 @@
 */
 
 #include "xpd_symbol.hpp"
+#include <exception>
 
 extern "C"
 {
@@ -13,7 +14,7 @@ extern "C"
 
 
 namespace xpd
-{
+{    
     // ==================================================================================== //
     //                                      SYMBOL                                          //
     // ==================================================================================== //
@@ -22,7 +23,7 @@ namespace xpd
     {
         if(!ptr)
         {
-            throw std::runtime_error("can't allocate symbol.");
+            throw "can't allocate symbol.";
         }
     }
     
@@ -30,7 +31,7 @@ namespace xpd
     {
         if(!ptr)
         {
-            throw std::runtime_error("can't allocate symbol.");
+            throw "can't allocate symbol.";
         }
     }
     
@@ -39,7 +40,7 @@ namespace xpd
         ptr = cpd_tie_create(name.c_str());
         if(!ptr)
         {
-            throw std::runtime_error("can't allocate symbol.");
+            throw "can't allocate symbol.";
         }
         return *this;
     }
@@ -49,7 +50,7 @@ namespace xpd
         ptr = cpd_tie_create(name);
         if(!ptr)
         {
-            throw std::runtime_error("can't allocate symbol.");
+            throw "can't allocate symbol.";
         }
         return *this;
     }

@@ -55,7 +55,7 @@ namespace xpd
                 }
             }
         }
-        return post{lvl, std::string()};
+        return post(lvl, std::string());
     }
     
     console::post console::history::get_post_to_level(size_t index, level lvl) const
@@ -71,7 +71,7 @@ namespace xpd
                 }
             }
         }
-        return post{lvl, std::string()};
+        return post(lvl, std::string());
     }
     
     void console::history::clear() noexcept
@@ -82,7 +82,11 @@ namespace xpd
     
     void console::history::add(post mess) noexcept
     {
+#if (__cplusplus <= 199711L)
+        m_posts.push_back(mess);
+#else
         m_posts.push_back(std::move(mess));
+#endif
         if(m_posts[m_posts.size()-1].type == level::all)
         {
             m_counters[3]++;

@@ -61,22 +61,22 @@ namespace xpd
         
         static void m_post_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::post{console::level::normal, std::string(s)});
+            instance->ref->receive(console::post(console::level::normal, std::string(s)));
         }
         
         static void m_log_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::post{console::level::log, std::string(s)});
+            instance->ref->receive(console::post(console::level::log, std::string(s)));
         }
         
         static void m_error_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::post{console::level::error, std::string(s)});
+            instance->ref->receive(console::post(console::level::error, std::string(s)));
         }
         
         static void m_fatal_hook(instance::internal* instance, const char *s)
         {
-            instance->ref->receive(console::post{console::level::fatal, std::string(s)});
+            instance->ref->receive(console::post(console::level::fatal, std::string(s)));
         }
         
 
@@ -122,7 +122,7 @@ namespace xpd
         
         static void m_bang(instance::internal* instance, c_tie* tie)
         {
-            instance->ref->receive(createtie(tie), instance::m_sym_bang, std::vector<atom>{});
+            instance->ref->receive(createtie(tie), instance::m_sym_bang, std::vector<atom>());
         }
         
         static void m_float(instance::internal* instance, c_tie* tie, c_float f)
@@ -155,7 +155,11 @@ namespace xpd
                     vec[i] = createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
+#if (__cplusplus <= 199711L)
+            instance->ref->receive(createtie(tie), instance::m_sym_list, vec);
+#else
             instance->ref->receive(createtie(tie), instance::m_sym_list, std::move(vec));
+#endif
         }
         
         static void m_anything(instance::internal* instance, c_tie* tie, c_symbol *s, c_list *list)
@@ -172,7 +176,11 @@ namespace xpd
                     vec[i] = createsymbol(cpd_list_get_symbol(list, i));
                 }
             }
+#if (__cplusplus <= 199711L)
+            instance->ref->receive(createtie(tie), createsymbol(s), vec);
+#else
             instance->ref->receive(createtie(tie), createsymbol(s), std::move(vec));
+#endif
         }
     };
     
@@ -186,7 +194,7 @@ namespace xpd
     symbol   instance::m_sym_list;
     symbol   instance::m_sym_gpointer;
     
-    instance::instance() noexcept
+    instance::instance()
     {
         environment::lock();
         m_sym_bang      = symbol("bang");
@@ -198,7 +206,7 @@ namespace xpd
         environment::unlock();
         if(!m_ptr)
         {
-            throw std::runtime_error("can't allocate instance.");
+            throw "can't allocate instance.";
         }
     }
     
@@ -223,10 +231,6 @@ namespace xpd
             p = new patch(ptr, name, path, cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(m_ptr)));
         }
         environment::unlock();
-        if(!m_ptr)
-        {
-            throw std::runtime_error("can't load patch.");
-        }
         return p;
     }
     

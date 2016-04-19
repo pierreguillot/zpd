@@ -5,7 +5,7 @@
 */
 
 #include "xpd_patch.hpp"
-#include "PdObject.hpp"
+#include "xpd_object.hpp"
 
 extern "C"
 {
@@ -49,9 +49,10 @@ namespace xpd
         return cpd_patch_get_height(reinterpret_cast<c_patch const *>(m_ptr));
     }
     
-    std::vector<Gui> patch::getGuis() const noexcept
+    std::vector<object *> patch::objects() const noexcept
     {
-        std::vector<Gui> objects;
+        std::vector<object *> objects;
+        /*
         if(isValid())
         {
             c_symbol* hsl = cpd_symbol_create("hsl");
@@ -89,24 +90,7 @@ namespace xpd
                 }
             }
         }
-        return objects;
-    }
-    
-    std::vector<Object> patch::getComments() const noexcept
-    {
-        std::vector<Object> objects;
-        if(isValid())
-        {
-            c_symbol* txt = cpd_symbol_create("text");
-            for(c_object *y = cpd_patch_get_first_object(reinterpret_cast<c_patch *>(m_ptr)); y;
-                y = cpd_patch_get_next_object(reinterpret_cast<c_patch *>(m_ptr), y))
-            {
-                if(cpd_object_get_name(y)== txt)
-                {
-                    objects.push_back(Object(*this, reinterpret_cast<void *>(y)));
-                }
-            }
-        }
+         */
         return objects;
     }
 }

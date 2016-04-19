@@ -33,7 +33,7 @@ namespace xpd
         
         //! @brief The default constructor.
         //! @details Creates an null atom.
-        inline constexpr atom() noexcept {}
+        inline constexpr atom() noexcept : m_type(type_t::null_t), m_word(0.f) {}
         
         //! @brief The float constructor.
         //! @details Creates an float atom.
@@ -83,7 +83,18 @@ namespace xpd
         //! @return The type of the atom.
         inline constexpr type_t type() const noexcept {return m_type;}
     private:
-        friend class vector;
+
+#if (__cplusplus <= 199711L)
+        struct a_word
+        {
+            float_t w_float;
+            symbol  w_symbol;
+            inline constexpr a_word() noexcept : w_float(0.f) {};
+            inline constexpr a_word(const float_t value) noexcept : w_float(value) {}
+            inline constexpr a_word(symbol& symbol) noexcept : w_symbol(symbol) {}
+            
+        };
+#else
         union a_word
         {
             float_t w_float;
@@ -91,9 +102,11 @@ namespace xpd
             inline constexpr a_word() noexcept : w_float(0.f) {};
             inline constexpr a_word(const float_t value) noexcept : w_float(value) {}
             inline constexpr a_word(symbol& symbol) noexcept : w_symbol(symbol) {}
+            
         };
-        type_t m_type = type_t::null_t;
-        a_word m_word = {};
+#endif
+        type_t m_type;
+        a_word m_word;
     };
 }
 

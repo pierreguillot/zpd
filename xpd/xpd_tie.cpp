@@ -14,6 +14,7 @@ extern "C"
 
 namespace xpd
 {
+    
     // ==================================================================================== //
     //                                      TIE                                             //
     // ==================================================================================== //
@@ -22,7 +23,7 @@ namespace xpd
     {
         if(!ptr)
         {
-            throw std::runtime_error("can't allocate tie.");
+            throw "can't allocate tie.";
         }
     }
     
@@ -30,7 +31,7 @@ namespace xpd
     {
         if(!ptr)
         {
-            throw std::runtime_error("can't allocate tie.");
+            throw "can't allocate tie.";
         }
     }
     
@@ -39,7 +40,7 @@ namespace xpd
         ptr = cpd_tie_create(name.c_str());
         if(!ptr)
         {
-            throw std::runtime_error("can't allocate tie.");
+            throw "can't allocate tie.";
         }
         return *this;
     }
@@ -49,7 +50,7 @@ namespace xpd
         ptr = cpd_tie_create(name);
         if(!ptr)
         {
-            throw std::runtime_error("can't allocate tie.");
+            throw "can't allocate tie.";
         }
         return *this;
     }

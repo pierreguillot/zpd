@@ -7,6 +7,7 @@
 #ifndef XPD_MIDI_HPP
 #define XPD_MIDI_HPP
 
+#include "xpd_def.hpp"
 
 namespace xpd
 {
@@ -24,7 +25,11 @@ namespace xpd
         public:
             //! @brief The available type of midi events.
             //! @details The type is used .
+#if (__cplusplus <= 199711L)
+            enum class type
+#else
             enum class type : int
+#endif
             {
                 note             = 0,   //!< @brief The note (in or out) event.
                 control_change   = 1,   //!< @brief The control change event.

@@ -4,14 +4,14 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef Z_PD_PARAMETER_HPP
-#define Z_PD_PARAMETER_HPP
+#ifndef XPD_PARAMETER_HPP
+#define XPD_PARAMETER_HPP
 
-#include "PdObject.hpp"
-#include <iostream>
+#include "xpd_object.hpp"
 
 namespace xpd
 {
+    /*
     //! @brief A class that manages a parameter
     class Parameter
     {
@@ -88,6 +88,68 @@ namespace xpd
         xpd::tie     m_bname;
         int         m_nsteps;
     };
+    
+    // ==================================================================================== //
+    //                                          GUI                                         //
+    // ==================================================================================== //
+    
+    //! @brief The Pure Data GUI.
+    //! @details The instance is a wrapper for the Pure Data's native GUI.
+    //! With the default constructor, the Gui won't be initialized. A valid
+    //! Gui should be created via a patch. The Gui should be used as tempory object,
+    //! because it locks the patch.
+    class gui : public object
+    {
+    public:
+        
+        enum class Type : size_t
+        {
+            Invalid          = 0,
+            HorizontalSlider = 1,
+            VerticalSlider   = 2,
+            Toggle           = 3,
+            Number           = 4,
+            HorizontalRadio  = 5,
+            VerticalRadio    = 6
+        };
+        
+        //! @brief The destructor.
+        //! @details The Object will be destroyed if no other copy exists.
+        virtual ~gui() noexcept;
+        
+        //! @brief The class name of the Object.
+        Type getType() const noexcept;
+        
+        //! @brief The Name of the Object.
+        std::string getName() const;
+        
+        std::string getLabel() const;
+        
+        tie getReceivetie() const;
+        
+        bool isParameter() const noexcept;
+        
+        float getMinimum() const noexcept;
+        
+        float getMaximum() const noexcept;
+        
+        float getValue() const noexcept;
+        
+        size_t getNumberOfSteps() const noexcept;
+        
+        //Point<int> getLabelPosition() const noexcept;
+        
+    private:
+        
+        //! @brief The constructor for a new Object.
+        //! @details Creates a new valid Object. You should never have to use it. Use the
+        //! patch to retrieve an Object.
+        gui(patch const& patch, Type type, void* ptr) noexcept;
+        
+        Type        m_type;
+        friend class patch;
+    };
+     */
 }
 
 #endif

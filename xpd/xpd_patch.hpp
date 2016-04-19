@@ -11,7 +11,6 @@
 
 namespace xpd
 {
-    class gui;
     class object;
     // ==================================================================================== //
     //                                          PATCHER                                     //
@@ -47,11 +46,8 @@ namespace xpd
         //! @brief Gets the patch position.
         int height() const noexcept;
         
-        //! @brief Gets the Gui objects from the patch.
-        std::vector<gui> guis() const noexcept;
-        
-        //! @brief Gets the Comment objects from the patch.
-        std::vector<object> comments() const noexcept;
+        //! @brief Gets the objects from the patch.
+        std::vector<object*> objects() const noexcept;
     private:
         patch(patch const& other) = delete;
         patch& operator=(patch const& other) = delete;

@@ -11,18 +11,38 @@ option(COVERALLS "Build with coveralls" OFF)
 #         The zpd Sources        #
 #---------------------------------------#
 
-set(ZPDSOURCES
-${PROJECT_SOURCE_DIR}/zpd/z_pd.c
-${PROJECT_SOURCE_DIR}/zpd/z_pd.h
+set(CPDSOURCES
+${PROJECT_SOURCE_DIR}/cpd/cpd.c
+${PROJECT_SOURCE_DIR}/cpd/cpd.h
 )
 
 #---------------------------------------#
 #         The xpd Sources        #
 #---------------------------------------#
 
-file(GLOB XPDSOURCES
-	${PROJECT_SOURCE_DIR}/xpd/PdTypes.hpp
-  ${PROJECT_SOURCE_DIR}/xpd/PdTypes.cpp
+set(XPDSOURCES
+	${PROJECT_SOURCE_DIR}/xpd/xpd_def.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_mutex.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_mutex.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_tie.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_tie.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_symbol.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_symbol.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_atom.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_atom.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_midi.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_midi.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_console.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_console.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_environment.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_environment.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_instance.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_instance.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_patch.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_patch.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_object.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_object.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd.hpp
 )
 
 #---------------------------------------#
@@ -125,12 +145,12 @@ ${PROJECT_SOURCE_DIR}/pd/extra/sigmund~/sigmund~.c
 ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 )
 
-source_group(zpd FILES ${ZPDSOURCES})
+source_group(cpd FILES ${CPDSOURCES})
 source_group(xpd FILES ${XPDSOURCES})
 source_group(pd FILES ${PDSOURCES})
 source_group(pdextra FILES ${PDEXTRASOURCES})
 include_directories(${PROJECT_SOURCE_DIR}/zpd)
-include_directories(${PROJECT_SOURCE_DIR}/xpd)
+include_directories(${PROJECT_SOURCE_DIR}/cpd)
 include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
 
 #---------------------------------------#
@@ -154,30 +174,26 @@ else()
     message(STATUS "Build without coveralls")
     if(${APPLE})
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
-      set(CMAKE_MACOSX_RPATH Off)
+      set(CMAKE_MACOSX_RPATH On)
       set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
       #---------------------------------------#
       #             Shared Library            #
       #---------------------------------------#
-      add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+      add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
       set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
       set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
       #---------------------------------------#
       #             Static Library            #
       #---------------------------------------#
-      add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${ZPDSOURCES})
+      add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
       set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
       set_target_properties(zpdstatic PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
       #---------------------------------------#
       #                  Test                 #
       #---------------------------------------#
-      add_executable(zpdtest test/test.c ${ZPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
-      set_target_properties(zpdtest PROPERTIES MACOSX_DEPLOYMENT_TARGET 10.7)
-
-      add_executable(xpdtest test/test.cpp ${XPDSOURCES} ${ZPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
-      #set_target_properties(xpdtest PROPERTIES MACOSX_DEPLOYMENT_TARGET 10.9)
+      add_executable(xpdtest ${PROJECT_SOURCE_DIR}/test/test.cpp ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
     elseif(${UNIX})
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
       find_library(MATH_LIB m)

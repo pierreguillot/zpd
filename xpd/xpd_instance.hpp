@@ -17,14 +17,6 @@
 #include <vector>
 #include <set>
 
-#include <iostream>
-#include <memory>
-#include <cassert>
-#include <cstring>
-#include <cmath>
-#include <exception>
-#include <string>
-
 namespace xpd
 {
     class patch;
@@ -44,7 +36,7 @@ namespace xpd
         //! @brief The constructor for an empty instance.
         //! @details Creates an instance that can be used as an empty reference inside
         //! another class.
-        instance() noexcept;
+        instance();
         
         //! @brief The destructor.
         //! @details The instance will be destroyed if no other copy exists.

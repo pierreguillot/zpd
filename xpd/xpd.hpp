@@ -4,10 +4,9 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef Z_PD_HPP
-#define Z_PD_HPP
+#ifndef XPD_HPP
+#define XPD_HPP
 
-#include "PdObject.hpp"
-#include "PdParameter.hpp"
+#include "xpd_object.hpp"
 
-#endif // Z_PD_HPP
+#endif // XPD_HPP
