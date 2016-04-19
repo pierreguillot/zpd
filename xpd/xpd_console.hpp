@@ -25,16 +25,22 @@ namespace xpd
         enum level
         {
             all     = 	32767,   //!< @brief All the posts.
-#else
-        enum class level : size_t
-        {
-            all     = size_t(-1),   //!< @brief All the posts.
-#endif
             fatal   = 0,            //!< @brief The fatal error posts.
             error   = 1,            //!< @brief The error posts.
             normal  = 2,            //!< @brief The normal posts.
             log     = 3             //!< @brief The log posts.
         };
+#else
+        enum class level : size_t
+        {
+            all     = size_t(-1),   //!< @brief All the posts.
+            fatal   = 0,            //!< @brief The fatal error posts.
+            error   = 1,            //!< @brief The error posts.
+            normal  = 2,            //!< @brief The normal posts.
+            log     = 3             //!< @brief The log posts.
+        };
+#endif
+            
         
         //! @brief A class that describes a post.
         //! @details The post are used by the instance to send and receive post to and
@@ -64,7 +70,7 @@ namespace xpd
             //! computation.
             //! @param lvl The level of the posts (default level::all).
             //! @return The number of posts from this level.
-            size_t get_number_of_posts(level lvl = level::all) const xpd_noexcept;
+            size_t get_number_of_posts(level lvl = all) const xpd_noexcept;
             
             //! @brief Gets the number of all posts to a specified level.
             //! @details The method retrieves the number of posts that are more or equally
@@ -79,7 +85,7 @@ namespace xpd
             //! @param index The index of the post
             //! @param lvl The level of the posts (default level::all).
             //! @return The post.
-            post get_post(size_t index, level lvl = level::all) const;
+            post get_post(size_t index, level lvl = all) const;
             
             //! @brief Gets a post at an index to a specified level.
             //! @details The method takes into account all the posts that are more or
