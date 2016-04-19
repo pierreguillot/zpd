@@ -99,8 +99,8 @@ namespace xpd
         virtual void receive(midi::event event) {}
         
     private:
-        instance(instance const& other)  xpd_delete_f;
-        instance& operator=(instance const& other)  xpd_delete_f;
+        instance(instance const& other) xpd_delete_f;
+        instance& operator=(instance const& other) xpd_delete_f;
         struct internal;
         
         static symbol   m_sym_bang;

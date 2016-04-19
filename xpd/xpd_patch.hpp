@@ -32,7 +32,7 @@ namespace xpd
         inline std::string path() const  {return m_path;}
         
         //! @brief Gets the id of the patch.
-       inline xpd_constexpr size_t unique_id() const xpd_noexcept {return m_unique_id;}
+        inline xpd_constexpr size_t unique_id() const xpd_noexcept {return m_unique_id;}
         
         //! @brief Gets the patch position.
         int x() const xpd_noexcept;
@@ -49,8 +49,8 @@ namespace xpd
         //! @brief Gets the objects from the patch.
         std::vector<object*> objects() const xpd_noexcept;
     private:
-        patch(patch const& other)  xpd_delete_f;
-        patch& operator=(patch const& other)  xpd_delete_f;
+        patch(patch const& other) xpd_delete_f;
+        patch& operator=(patch const& other) xpd_delete_f;
         
         patch(void* ptr, std::string const& name, std::string const& path, size_t uid) xpd_noexcept;
         ~patch() xpd_noexcept;

@@ -17,7 +17,7 @@ namespace xpd
     
     size_t console::history::get_number_of_posts(level lvl) const xpd_noexcept
     {
-        if(lvl == level::all)
+        if(lvl == all)
         {
             return m_posts.size();
         }
@@ -26,7 +26,7 @@ namespace xpd
     
     size_t console::history::get_number_of_posts_to_level(level lvl) const xpd_noexcept
     {
-        if(lvl == level::all)
+        if(lvl == all)
         {
             return m_posts.size();
         }
@@ -40,7 +40,7 @@ namespace xpd
     
     console::post console::history::get_post(size_t index, level lvl) const
     {
-        if(lvl == level::all)
+        if(lvl == all)
         {
              return m_posts[index];
         }
@@ -87,10 +87,10 @@ namespace xpd
 #else
         m_posts.push_back(std::move(mess));
 #endif
-        if(m_posts[m_posts.size()-1].type == level::all)
+        if(m_posts[m_posts.size()-1].type == all)
         {
             m_counters[3]++;
-            m_posts[m_posts.size()-1].type = level::log;
+            m_posts[m_posts.size()-1].type = log;
         }
         else
         {

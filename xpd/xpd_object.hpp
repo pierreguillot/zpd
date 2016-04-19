@@ -37,8 +37,8 @@ namespace xpd
         
     protected:
         
-        object(object const& other)  xpd_delete_f;
-        object& operator=(object const& other)  xpd_delete_f;
+        object(object const& other) xpd_delete_f;
+        object& operator=(object const& other) xpd_delete_f;
         
         object(patch const* patch, void* ptr) xpd_noexcept;
         std::string m_text;
