@@ -173,8 +173,9 @@ public:
             inst->m_atoms.push_back(zozo);
             inst->send(from, inst->m_name, inst->m_atoms);
             
-            inst->m_name = symbol("zaza");
-            inst->m_atoms[0] = zozo;
+            inst->m_name = symbol(std::string("zaza"));
+            inst->m_atoms[0] = "zozo";
+            inst->m_atoms[2] = std::string("zuzu");
             inst->m_atoms.push_back(symbol("zizi"));
             inst->send(from, inst->m_name, inst->m_atoms);
         }
