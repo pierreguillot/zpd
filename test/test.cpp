@@ -68,28 +68,30 @@ int main(int argc, char** argv)
         return -1;
     }
     
-    std::cout << "version " << environment::version_major()
+    std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
     << "." << environment::version_bug() << "\n";
     
     environment::searpath_clear();
     environment::searchpath_add(test_get_patch_folder(argv[0]));
     
-    std::cout << "perform test for posts...\n";
+    std::cout << "perform tests for posts...";
     {
         synch::Thread t1((test_method)(&instance_test::test_post), inst1);
         synch::Thread t2((test_method)(&instance_test::test_post), inst2);
         t1.join();
         t2.join();
     }
+    std::cout << "ok\n";
     
-    std::cout << "perform test for binding and messages...\n";
+    std::cout << "perform tests for binding and messages...";
     {
         synch::Thread t1((test_method)(&instance_test::test_message), inst1);
         synch::Thread t2((test_method)(&instance_test::test_message), inst2);
         t1.join();
         t2.join();
     }
+    std::cout << "ok\n";
     
     /*
     p1 = inst1->load("test.pd", "");

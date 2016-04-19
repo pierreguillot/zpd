@@ -166,7 +166,7 @@ if(${COVERALLS})
     find_library(MATH_LIB m)
     find_package(Threads REQUIRED)
     add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1 -DZPD_TEST_VERBOSE=1)
-    add_executable(xpdtest ${PROJECT_SOURCE_DIR}/test/test.cpp ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+    add_executable(xpdtest ${PROJECT_SOURCE_DIR}/test/test.cpp ${PROJECT_SOURCE_DIR}/test/test.hpp ${PROJECT_SOURCE_DIR}/test/Thread.hpp ${PROJECT_SOURCE_DIR}/test/ThreadPthread.cpp ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
     target_link_libraries(xpdtest ${MATH_LIB})
     target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
     target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
@@ -194,7 +194,7 @@ else()
       #                  Test                 #
       #---------------------------------------#
       add_executable(xpdtest ${PROJECT_SOURCE_DIR}/test/test.cpp ${PROJECT_SOURCE_DIR}/test/test.hpp ${PROJECT_SOURCE_DIR}/test/Thread.hpp ${PROJECT_SOURCE_DIR}/test/ThreadPthread.cpp ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
-			
+
     elseif(${UNIX})
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
       find_library(MATH_LIB m)
