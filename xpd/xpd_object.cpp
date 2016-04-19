@@ -20,7 +20,7 @@ namespace xpd
     //                                      OBJECT                                          //
     // ==================================================================================== //
     
-    object::object(patch const* patch, void* ptr) noexcept
+    object::object(patch const* patch, void* ptr) xpd_noexcept
     {
         ;
     }

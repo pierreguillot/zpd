@@ -35,18 +35,18 @@ namespace xpd
         
         //! @brief The default constructor.
         //! @details Creates an invalid symbol.
-        inline constexpr symbol() noexcept : ptr(nullptr) {}
+       inline xpd_constexpr symbol() xpd_noexcept : ptr(xpd_nullptr) {}
         
         //! @brief The copy constructor.
         //! @details Creates an invalid symbol.
         //! @param The name of the symbol.
-        inline constexpr symbol(symbol const& other) noexcept : ptr(other.ptr) {}
+       inline xpd_constexpr symbol(symbol const& other) xpd_noexcept : ptr(other.ptr) {}
 
         //! @brief The symbol assignment.
         //! @details Returns a copy of another symbol.
         //! @param other The other symbol.
         //! @return The reference of the symbol.
-        inline symbol& operator=(symbol const& other) noexcept {ptr = other.ptr; return *this;}
+        inline symbol& operator=(symbol const& other) xpd_noexcept {ptr = other.ptr; return *this;}
         
         //! @brief The std::string assignment.
         //! @details Change the reference of the symbol. The method should never throw
@@ -66,16 +66,16 @@ namespace xpd
         //! @param other The other symbol.
         //! @return true if the other symbol doesn't shared the same reference, otherwise
         //! false.
-        inline constexpr bool operator!=(symbol const& other)const noexcept {return other.ptr != ptr;}
+       inline xpd_constexpr bool operator!=(symbol const& other)const xpd_noexcept {return other.ptr != ptr;}
         
         //! @bried Compare the symbol with another.
         //! @param other The other symbol.
         //! @return true if the other symbol shared the same reference, otherwise false.
-        inline constexpr bool operator==(symbol const& other) const noexcept{return other.ptr == ptr;}
+       inline xpd_constexpr bool operator==(symbol const& other) const xpd_noexcept{return other.ptr == ptr;}
         
         //! @bried Checks the validity of the symbol.
         //! @return true if the symbol if valid, otherwise false.
-        inline constexpr operator bool() const noexcept {return bool(ptr);}
+       inline xpd_constexpr operator bool() const xpd_noexcept {return bool(ptr);}
         
         //! @bried Gets the name of the symbol.
         //! @return The name of the symbol.
@@ -84,8 +84,8 @@ namespace xpd
     private:
         void* ptr;
         friend class smuggler;
-        inline constexpr void const* get() const noexcept{return ptr;}
-        inline constexpr symbol(void *_ptr) : ptr(_ptr) {}
+       inline xpd_constexpr void const* get() const xpd_noexcept{return ptr;}
+       inline xpd_constexpr symbol(void *_ptr) : ptr(_ptr) {}
     };
 }
 

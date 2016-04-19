@@ -37,18 +37,18 @@ namespace xpd
         
         //! @brief The default constructor.
         //! @details Creates an invalid tie.
-        inline constexpr tie() noexcept : ptr(nullptr) {}
+       inline xpd_constexpr tie() xpd_noexcept : ptr(xpd_nullptr) {}
         
         //! @brief The copy constructor.
         //! @details Creates an invalid tie.
         //! @param The name of the tie.
-        inline constexpr tie(tie const& other) noexcept : ptr(other.ptr) {}
+       inline xpd_constexpr tie(tie const& other) xpd_noexcept : ptr(other.ptr) {}
         
         //! @brief The tie assignment.
         //! @details Returns a copy of another tie.
         //! @param other The other tie.
         //! @return The reference of the tie.
-        inline tie& operator=(tie const& other) noexcept {ptr = other.ptr; return *this;}
+        inline tie& operator=(tie const& other) xpd_noexcept {ptr = other.ptr; return *this;}
         
         //! @brief The std::string assignment.
         //! @details Change the reference of the tie. The method should never throw exceptions
@@ -67,16 +67,16 @@ namespace xpd
         //! @bried Compare the tie with another.
         //! @param other The other tie.
         //! @return true if the other tie doesn't shared the same reference, otherwise false.
-        inline constexpr bool operator!=(tie const& other)const noexcept {return other.ptr != ptr;}
+       inline xpd_constexpr bool operator!=(tie const& other)const xpd_noexcept {return other.ptr != ptr;}
         
         //! @bried Compare the tie with another.
         //! @param other The other tie.
         //! @return true if the other tie shared the same reference, otherwise false.
-        inline constexpr bool operator==(tie const& other) const noexcept {return other.ptr == ptr;}
+       inline xpd_constexpr bool operator==(tie const& other) const xpd_noexcept {return other.ptr == ptr;}
         
         //! @bried Checks the validity of the tie.
         //! @return true if the tie if valid, otherwise false.
-        inline constexpr operator bool() const noexcept {return bool(ptr);}
+       inline xpd_constexpr operator bool() const xpd_noexcept {return bool(ptr);}
         
         //! @bried Gets the name of the tie.
         //! @return The name of the tie.
@@ -85,8 +85,8 @@ namespace xpd
     private:
         void* ptr;
         friend class smuggler;
-        inline constexpr void const* get() const noexcept{return ptr;}
-        inline constexpr tie(void *_ptr) : ptr(_ptr) {}
+       inline xpd_constexpr void const* get() const xpd_noexcept{return ptr;}
+       inline xpd_constexpr tie(void *_ptr) : ptr(_ptr) {}
     };
 }
 

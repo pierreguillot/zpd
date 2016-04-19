@@ -22,7 +22,7 @@ namespace xpd
         //! @brief The available level of posts.
         //! @details The level can be used to filters the posts.
 #if (__cplusplus <= 199711L)
-        enum class level
+        enum level
         {
             all     = 	32767,   //!< @brief All the posts.
 #else
@@ -45,7 +45,7 @@ namespace xpd
             level       type;   //!< @brief The level of the post.
             std::string text;   //!< @brief The text of the post.
             
-            inline post(level t, std::string txt) noexcept : type(t), text(txt) {}
+            inline post(level t, std::string txt) xpd_noexcept : type(t), text(txt) {}
         };
         
         //! @brief A class that manages an history of posts.
@@ -64,14 +64,14 @@ namespace xpd
             //! computation.
             //! @param lvl The level of the posts (default level::all).
             //! @return The number of posts from this level.
-            size_t get_number_of_posts(level lvl = level::all) const noexcept;
+            size_t get_number_of_posts(level lvl = level::all) const xpd_noexcept;
             
             //! @brief Gets the number of all posts to a specified level.
             //! @details The method retrieves the number of posts that are more or equally
             //! important as the specified level.
             //! @param lvl The limit level of the posts (default level::all).
             //! @return The number of posts to this level.
-            size_t get_number_of_posts_to_level(level lvl) const noexcept;
+            size_t get_number_of_posts_to_level(level lvl) const xpd_noexcept;
             
             //! @brief Gets a post at an index.
             //! @details If a level if specified only this level of post will be taken into
@@ -90,10 +90,10 @@ namespace xpd
             post get_post_to_level(size_t index, level lvl) const;
             
             //! @brief Clears the history.
-            void clear() noexcept;
+            void clear() xpd_noexcept;
             
             //! @brief Adds a post in the history.
-            void add(post mess) noexcept;
+            void add(post mess) xpd_noexcept;
             
         private:
             size_t  m_counters[4];

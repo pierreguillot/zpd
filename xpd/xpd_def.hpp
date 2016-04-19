@@ -8,11 +8,19 @@
 #define XPD_DEF_HPP
 
 #if (__cplusplus <= 199711L)
-#define noexcept
-#define nullptr NULL
-#define constexpr
-#define override
-#define final
+#define xpd_noexcept
+#define xpd_nullptr NULL
+#define xpd_constexpr
+#define xpd_override
+#define xpd_final
+#define xpd_delete_f
+#else
+#define xpd_noexcept noexcept
+#define xpd_nullptr nullptr
+#define xpd_constexpr constexpr
+#define xpd_override override
+#define xpd_final final
+#define xpd_delete_f = delete
 #endif
 
 #endif // XPD_DEF_HPP

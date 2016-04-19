@@ -17,12 +17,12 @@ namespace xpd
     class smuggler
     {
     public:
-        ~smuggler() noexcept {}
+        ~smuggler() xpd_noexcept {}
     public:
-        inline static constexpr void const* gettie(tie const& tie) noexcept {return tie.ptr;}
-        inline static constexpr tie createtie(void *ptr) noexcept {return tie(ptr);}
-        inline static constexpr void const* getsymbol(symbol const& symbol) noexcept {return symbol.ptr;}
-        inline static constexpr symbol createsymbol(void *ptr) noexcept {return symbol(ptr);}
+        inline static xpd_constexpr void const* gettie(tie const& tie) xpd_noexcept {return tie.ptr;}
+        inline static xpd_constexpr tie createtie(void *ptr) xpd_noexcept {return tie(ptr);}
+        inline static xpd_constexpr void const* getsymbol(symbol const& symbol) xpd_noexcept {return symbol.ptr;}
+        inline static xpd_constexpr symbol createsymbol(void *ptr) xpd_noexcept {return symbol(ptr);}
     };
     
     struct instance::internal : public smuggler
@@ -210,7 +210,7 @@ namespace xpd
         }
     }
     
-    instance::~instance() noexcept
+    instance::~instance() xpd_noexcept
     {
         release();
         environment::lock();
@@ -245,26 +245,26 @@ namespace xpd
     }
     
     
-    int instance::samplerate() const noexcept
+    int instance::samplerate() const xpd_noexcept
     {
         return cpd_instance_get_samplerate(reinterpret_cast<c_instance *>(m_ptr));
     }
     
-    void instance::prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept
+    void instance::prepare(const int nins, const int nouts, const int samplerate, const int nsamples) xpd_noexcept
     {
         environment::lock();
         cpd_instance_dsp_prepare(reinterpret_cast<c_instance *>(m_ptr), nins, nouts, samplerate, nsamples);
         environment::unlock();
     }
 
-    void instance::perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept
+    void instance::perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) xpd_noexcept
     {
         environment::lock();
         cpd_instance_dsp_perform(reinterpret_cast<c_instance *>(m_ptr), nsamples, nins, inputs, nouts, outputs);
         environment::unlock();
     }
     
-    void instance::release() noexcept
+    void instance::release() xpd_noexcept
     {
         environment::lock();
         cpd_instance_dsp_release(reinterpret_cast<c_instance *>(m_ptr));
@@ -273,7 +273,7 @@ namespace xpd
     
     
     
-    void instance::send(console::post const& post) noexcept
+    void instance::send(console::post const& post) xpd_noexcept
     {
         int todo_set_instance;
         environment::lock();
@@ -325,27 +325,27 @@ namespace xpd
         int todo_set_instance;
         environment::lock();
         cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
-        if(event.type() == midi::event::type::note)
+        if(event.type() == midi::event::type_t::note_t)
         {
             cpd_midisend_noteon(event.channel(), event.pitch(), event.velocity());
         }
-        else if(event.type() == midi::event::type::control_change)
+        else if(event.type() == midi::event::type_t::control_change_t)
         {
             cpd_midisend_controlchange(event.channel(), event.controler(), event.value());
         }
-        else if(event.type() == midi::event::type::program_change)
+        else if(event.type() == midi::event::type_t::program_change_t)
         {
             cpd_midisend_programchange(event.channel(), event.program());
         }
-        else if(event.type() == midi::event::type::pitch_bend)
+        else if(event.type() == midi::event::type_t::pitch_bend_t)
         {
             cpd_midisend_pitchbend(event.channel(), event.bend());
         }
-        else if(event.type() == midi::event::type::after_touch)
+        else if(event.type() == midi::event::type_t::after_touch_t)
         {
             cpd_midisend_pitchbend(event.channel(), event.value());
         }
-        else if(event.type() == midi::event::type::poly_after_touch)
+        else if(event.type() == midi::event::type_t::poly_after_touch_t)
         {
             cpd_midisend_polyaftertouch(event.channel(), event.pitch(), event.value());
         }

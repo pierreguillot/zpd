@@ -32,28 +32,28 @@ namespace xpd
         inline std::string path() const  {return m_path;}
         
         //! @brief Gets the id of the patch.
-        inline constexpr size_t unique_id() const noexcept {return m_unique_id;}
+       inline xpd_constexpr size_t unique_id() const xpd_noexcept {return m_unique_id;}
         
         //! @brief Gets the patch position.
-        int x() const noexcept;
+        int x() const xpd_noexcept;
         
         //! @brief Gets the patch position.
-        int y() const noexcept;
+        int y() const xpd_noexcept;
         
         //! @brief Gets the patch position.
-        int width() const noexcept;
+        int width() const xpd_noexcept;
         
         //! @brief Gets the patch position.
-        int height() const noexcept;
+        int height() const xpd_noexcept;
         
         //! @brief Gets the objects from the patch.
-        std::vector<object*> objects() const noexcept;
+        std::vector<object*> objects() const xpd_noexcept;
     private:
-        patch(patch const& other) = delete;
-        patch& operator=(patch const& other) = delete;
+        patch(patch const& other)  xpd_delete_f;
+        patch& operator=(patch const& other)  xpd_delete_f;
         
-        patch(void* ptr, std::string const& name, std::string const& path, size_t uid) noexcept;
-        ~patch() noexcept;
+        patch(void* ptr, std::string const& name, std::string const& path, size_t uid) xpd_noexcept;
+        ~patch() xpd_noexcept;
         
         void*               m_ptr;
         const std::string   m_name;

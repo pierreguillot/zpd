@@ -26,81 +26,81 @@ namespace xpd
             //! @brief The available type of midi events.
             //! @details The type is used .
 #if (__cplusplus <= 199711L)
-            enum class type
+            enum type_t
 #else
-            enum class type : int
+            enum class type_t : int
 #endif
             {
-                note             = 0,   //!< @brief The note (in or out) event.
-                control_change   = 1,   //!< @brief The control change event.
-                program_change   = 2,   //!< @brief The program change event.
-                pitch_bend       = 3,   //!< @brief The pitch bend event.
-                after_touch      = 4,   //!< @brief The after touch event.
-                poly_after_touch = 5,   //!< @brief The poly after touch event.
-                byte = 6                //!< @brief The byte event.
+                note_t            = 0,   //!< @brief The note (in or out) event.
+                control_change_t  = 1,   //!< @brief The control change event.
+                program_change_t  = 2,   //!< @brief The program change event.
+                pitch_bend_t      = 3,   //!< @brief The pitch bend event.
+                after_touch_t     = 4,   //!< @brief The after touch event.
+                poly_after_touch_t= 5,   //!< @brief The poly after touch event.
+                byte_t            = 6                //!< @brief The byte event.
             };
             
             //! @brief The event raw constructor.
-            inline constexpr event(type t, int v1, int v2, int v3) noexcept :
+            inline xpd_constexpr event(event::type_t t, int v1, int v2, int v3) xpd_noexcept :
             m_type(t), m_val1(v1), m_val2(v2), m_val3(v3) {}
             
             //! @brief The note event constructor.
-            static inline constexpr event note(int channel, int pitch, int velocity) noexcept
-            {return event(type::note, channel, pitch, velocity);}
+            static inline xpd_constexpr event note(int channel, int pitch, int velocity) xpd_noexcept
+            {return event(type_t::note_t, channel, pitch, velocity);}
             
             //! @brief The control change event constructor.
-            static inline constexpr event control_change(int channel, int controler, int value) noexcept
-            {return event(type::control_change, channel, controler, value);}
+            static inline xpd_constexpr event control_change(int channel, int controler, int value) xpd_noexcept
+            {return event(type_t::control_change_t, channel, controler, value);}
             
             //! @brief The program change event constructor.
-            static inline constexpr event program_change(int channel, int program) noexcept
-            {return event(type::control_change, channel, program, 0);}
+            static inline xpd_constexpr event program_change(int channel, int program) xpd_noexcept
+            {return event(type_t::control_change_t, channel, program, 0);}
             
             //! @brief The pitch bend event constructor.
-            static inline constexpr event pitch_bend(int channel, int bend) noexcept
-            {return event(type::pitch_bend, channel, bend, 0);}
+            static inline xpd_constexpr event pitch_bend(int channel, int bend) xpd_noexcept
+            {return event(type_t::pitch_bend_t, channel, bend, 0);}
             
             //! @brief The pitch bend event constructor.
-            static inline constexpr event after_touch(int channel, int value) noexcept
-            {return event(type::after_touch, channel, 0, value);}
+            static inline xpd_constexpr event after_touch(int channel, int value) xpd_noexcept
+            {return event(type_t::after_touch_t, channel, 0, value);}
             
             //! @brief The pitch bend event constructor.
-            static inline constexpr event poly_after_touch(int channel, int pitch, int value) noexcept
-            {return event(type::after_touch, channel, pitch, value);}
+            static inline xpd_constexpr event poly_after_touch(int channel, int pitch, int value) xpd_noexcept
+            {return event(type_t::after_touch_t, channel, pitch, value);}
             
             //! @brief The pitch bend event constructor.
-            static inline constexpr event byte(int value) noexcept
-            {return event(type::after_touch, 0, 0, value);}
+            static inline xpd_constexpr event byte(int value) xpd_noexcept
+            {return event(type_t::after_touch_t, 0, 0, value);}
             
             //! @brief Gets the type of the event.
-            inline constexpr type type() const noexcept {return m_type;}
+           inline xpd_constexpr type_t type() const xpd_noexcept {return m_type;}
             
             //! @brief Gets the channel value.
-            inline constexpr int channel() const noexcept {return m_val1;}
+           inline xpd_constexpr int channel() const xpd_noexcept {return m_val1;}
             
             //! @brief Gets the pitch value.
-            inline constexpr int pitch() const noexcept {return m_val2;}
+           inline xpd_constexpr int pitch() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the velocity value.
-            inline constexpr int velocity() const noexcept {return m_val3;}
+           inline xpd_constexpr int velocity() const xpd_noexcept {return m_val3;}
             
             //! @brief Gets the controler.
-            inline constexpr int controler() const noexcept {return m_val2;}
+           inline xpd_constexpr int controler() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the controler, after touch or poly after touch value.
-            inline constexpr int value() const noexcept {return m_val3;}
+           inline xpd_constexpr int value() const xpd_noexcept {return m_val3;}
             
             //! @brief Gets the program value.
-            inline constexpr int program() const noexcept {return m_val2;}
+           inline xpd_constexpr int program() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the bend value.
-            inline constexpr int bend() const noexcept {return m_val2;}
+           inline xpd_constexpr int bend() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the after touch value.
-            inline constexpr int after_touch() const noexcept {return m_val3;}
+           inline xpd_constexpr int after_touch() const xpd_noexcept {return m_val3;}
             
         private:
-            enum type   m_type;
+            enum type_t m_type;
             int         m_val1;
             int         m_val2;
             int         m_val3;

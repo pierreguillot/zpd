@@ -18,57 +18,57 @@ namespace xpd
     //                                      PD                                              //
     // ==================================================================================== //
     
-    environment::environment() noexcept
+    environment::environment() xpd_noexcept
     {
         cpd_init();
     }
     
-    environment::~environment() noexcept
+    environment::~environment() xpd_noexcept
     {
         cpd_clear();
     }
     
-    environment& environment::get() noexcept
+    environment& environment::get() xpd_noexcept
     {
         static environment pd;
         return pd;
     }
     
-    unsigned int environment::version_major() noexcept
+    unsigned int environment::version_major() xpd_noexcept
     {
         return cpd_version_getmajor();
     }
     
-    unsigned int environment::version_minor() noexcept
+    unsigned int environment::version_minor() xpd_noexcept
     {
         return cpd_version_getminor();
     }
     
-    unsigned int environment::version_bug() noexcept
+    unsigned int environment::version_bug() xpd_noexcept
     {
         return cpd_version_getbug();
     }
     
-    void environment::searchpath_add(std::string const& path) noexcept
+    void environment::searchpath_add(std::string const& path) xpd_noexcept
     {
         lock();
         cpd_searchpath_add(path.c_str());
         unlock();
     }
     
-    void environment::searpath_clear() noexcept
+    void environment::searpath_clear() xpd_noexcept
     {
         lock();
         cpd_searchpath_clear();
         unlock();
     }
     
-    void environment::lock() noexcept
+    void environment::lock() xpd_noexcept
     {
         environment::get().m_mutex.lock();
     }
     
-    void environment::unlock() noexcept
+    void environment::unlock() xpd_noexcept
     {
         environment::get().m_mutex.unlock();
     }

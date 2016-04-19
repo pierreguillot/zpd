@@ -15,7 +15,7 @@ namespace xpd
         m_posts.reserve(512);
     }
     
-    size_t console::history::get_number_of_posts(level lvl) const noexcept
+    size_t console::history::get_number_of_posts(level lvl) const xpd_noexcept
     {
         if(lvl == level::all)
         {
@@ -24,7 +24,7 @@ namespace xpd
         return m_counters[static_cast<size_t>(lvl)];
     }
     
-    size_t console::history::get_number_of_posts_to_level(level lvl) const noexcept
+    size_t console::history::get_number_of_posts_to_level(level lvl) const xpd_noexcept
     {
         if(lvl == level::all)
         {
@@ -74,13 +74,13 @@ namespace xpd
         return post(lvl, std::string());
     }
     
-    void console::history::clear() noexcept
+    void console::history::clear() xpd_noexcept
     {
         m_counters[0] = m_counters[1] = m_counters[2] = m_counters[3] = 0ul;
         return m_posts.clear();
     }
     
-    void console::history::add(post mess) noexcept
+    void console::history::add(post mess) xpd_noexcept
     {
 #if (__cplusplus <= 199711L)
         m_posts.push_back(mess);

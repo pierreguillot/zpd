@@ -7,11 +7,9 @@
 #ifndef XPD_MUTEX_HPP
 #define XPD_MUTEX_HPP
 
+#include "xpd_def.hpp"
+
 #if (__cplusplus <= 199711L)
-#define noexcept
-#define nullptr NULL
-#define constexpr
-#define override
 #ifdef _WIN32
 #include <windows.h>
 #else

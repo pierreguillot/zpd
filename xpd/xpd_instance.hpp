@@ -16,6 +16,7 @@
 
 #include <vector>
 #include <set>
+#include <cassert>
 
 namespace xpd
 {
@@ -40,17 +41,17 @@ namespace xpd
         
         //! @brief The destructor.
         //! @details The instance will be destroyed if no other copy exists.
-        virtual ~instance() noexcept;
+        virtual ~instance() xpd_noexcept;
         
         //! @brief Gets the sample rate of the instance.
-        int samplerate() const noexcept;
+        int samplerate() const xpd_noexcept;
         
         //! @brief The instance listener.
         //! @details The instance listener id notified when a pacth is created or deleted.
         class listener
         {
         public:
-            inline constexpr listener() {}
+           inline xpd_constexpr listener() {}
             inline virtual ~listener() {}
             virtual void patch_loaded(patch* p) = 0;
             virtual void patch_deleted(patch* p) = 0;
@@ -70,17 +71,17 @@ namespace xpd
         void close(patch& p);
         
         //! @brief Prepares the digital signal processing chain of the instance.
-        void prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept;
+        void prepare(const int nins, const int nouts, const int samplerate, const int nsamples) xpd_noexcept;
         
         //! @brief Performs the digital signal processing chain of the instance.
         //! @details You should locks the instance to ensure thread safety.
-        void perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) noexcept;
+        void perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) xpd_noexcept;
         
         //! @brief Releases the digital signal processing chain of the instance.
-        void release() noexcept;
+        void release() xpd_noexcept;
         
         //! @brief Sends a post to the console.
-        void send(console::post const& post) noexcept;
+        void send(console::post const& post) xpd_noexcept;
         
         //! @brief Receives a post from the console.
         virtual void receive(console::post post) {};
@@ -98,8 +99,8 @@ namespace xpd
         virtual void receive(midi::event event) {}
         
     private:
-        instance(instance const& other) = delete;
-        instance& operator=(instance const& other) = delete;
+        instance(instance const& other)  xpd_delete_f;
+        instance& operator=(instance const& other)  xpd_delete_f;
         struct internal;
         
         static symbol   m_sym_bang;

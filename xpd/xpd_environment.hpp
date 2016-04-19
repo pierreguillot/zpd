@@ -24,36 +24,36 @@ namespace xpd
     {
     public:
         //! @brief Gets the major version of Pure Data.
-        static unsigned int version_major() noexcept;
+        static unsigned int version_major() xpd_noexcept;
         
         //! @brief Gets the minor version of Pure Data.
-        static unsigned int version_minor() noexcept;
+        static unsigned int version_minor() xpd_noexcept;
         
         //! @brief Gets the bug version of Pure Data.
-        static unsigned int version_bug() noexcept;
+        static unsigned int version_bug() xpd_noexcept;
         
         //! @brief Adds a path the search path.
-        static void searchpath_add(std::string const& path) noexcept;
+        static void searchpath_add(std::string const& path) xpd_noexcept;
         
         //! @brief Clears all the search path.
-        static void searpath_clear() noexcept;
+        static void searpath_clear() xpd_noexcept;
         
     private:
         
         //! @brief The environment contructor.
-        environment() noexcept;
+        environment() xpd_noexcept;
         
         //! @brief The environment destructor.
-        ~environment() noexcept;
+        ~environment() xpd_noexcept;
         
         //! @brief Gets the singleton of the environment.
-        static environment& get() noexcept;
+        static environment& get() xpd_noexcept;
         
         //! @brief Locks the environment.
-        static void lock() noexcept;
+        static void lock() xpd_noexcept;
         
         //! @brief Unlocks the environment.
-        static void unlock() noexcept;
+        static void unlock() xpd_noexcept;
         
         mutex        m_mutex;
         friend class instance;
