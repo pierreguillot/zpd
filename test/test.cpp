@@ -146,7 +146,13 @@ int main(int argc, char** argv)
         
         for(size_t i = 0; i < 8; ++i)
         {
+            char truc1[512];
+            sprintf(truc1, "%i", int(p1->unique_id()));
+            inst1->send(tie(std::string(truc1) + "-bang"), symbol("bang"), std::vector<atom>());
             inst1->perform(64, 2, const_cast<float const **>(inst1->m_vecteurs), 2, inst1->m_vecteurs);
+            char truc2[512];
+            sprintf(truc2, "%i", int(p1->unique_id()));
+            inst1->send(tie(std::string(truc2) + "-bang"), symbol("bang"), std::vector<atom>());
             inst2->perform(128, 1, const_cast<float const **>(inst1->m_vecteurs), 1, inst1->m_vecteurs);
         }
         
