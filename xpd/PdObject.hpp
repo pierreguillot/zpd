@@ -7,7 +7,7 @@
 #ifndef Z_PD_OBJECT_HPP
 #define Z_PD_OBJECT_HPP
 
-#include "Pdpatch.hpp"
+#include "xpd_patch.hpp"
 
 namespace xpd
 {

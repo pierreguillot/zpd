@@ -17,7 +17,7 @@ namespace xpd
     //                                          PATCHER                                     //
     // ==================================================================================== //
     
-    //! @brief The Pure Data patch.
+    //! @brief The patch.
     //! @details The instance is a wrapper for the Pure Data's native patch.
     //! With the default constructor, the patch won't be initialized. A valid
     //! patch should be created via an instance. The patch has some kind of smart
@@ -26,46 +26,44 @@ namespace xpd
     {
     public:
         
-        //! @brief The constructor for a new patch.
-        //! @details Creates a new valid patch.
-        patch(instance& instance, std::string const& name, std::string const& path) noexcept;
-        
-        //! @brief The destructor.
-        //! @details The patch will be destroyed if no other copy exists.
-        ~patch() noexcept;
-        
         //! @brief Gets the file's name.
-        std::string name() const;
+        inline std::string name() const {return m_name;}
         
         //! @brief Gets the file's path.
-        std::string path() const;
+        inline std::string path() const  {return m_path;}
         
         //! @brief Gets the id of the patch.
-        int unique_id() const noexcept;
+        inline constexpr size_t unique_id() const noexcept {return m_unique_id;}
         
         //! @brief Gets the patch position.
-        int get_x() const noexcept;
+        int x() const noexcept;
         
         //! @brief Gets the patch position.
-        int get_y() const noexcept;
+        int y() const noexcept;
         
         //! @brief Gets the patch position.
-        int get_width() const noexcept;
+        int width() const noexcept;
         
         //! @brief Gets the patch position.
-        int get_height() const noexcept;
+        int height() const noexcept;
         
         //! @brief Gets the Gui objects from the patch.
-        std::vector<gui> get_guis() const noexcept;
+        std::vector<gui> guis() const noexcept;
         
         //! @brief Gets the Comment objects from the patch.
-        std::vector<object> get_comments() const noexcept;
+        std::vector<object> comments() const noexcept;
     private:
         patch(patch const& other) = delete;
         patch& operator=(patch const& other) = delete;
         
-        void*                   m_ptr;
-        friend class Object;
+        patch(void* ptr, std::string const& name, std::string const& path, size_t uid) noexcept;
+        ~patch() noexcept;
+        
+        void*               m_ptr;
+        const std::string   m_name;
+        const std::string   m_path;
+        const size_t        m_unique_id;
+        friend class instance;
     };
 }
 

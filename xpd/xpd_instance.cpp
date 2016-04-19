@@ -5,7 +5,7 @@
 */
 
 #include "xpd_instance.hpp"
-#include "Pdpatch.hpp"
+#include "xpd_patch.hpp"
 
 extern "C"
 {
@@ -180,23 +180,26 @@ namespace xpd
     //                                          INSTANCE                                    //
     // ==================================================================================== //
     
+    symbol   instance::m_sym_bang;
+    symbol   instance::m_sym_float;
+    symbol   instance::m_sym_symbol;
+    symbol   instance::m_sym_list;
+    symbol   instance::m_sym_gpointer;
+    
     instance::instance() noexcept
     {
         environment::lock();
+        m_sym_bang      = symbol("bang");
+        m_sym_float     = symbol("float");
+        m_sym_symbol    = symbol("symbol");
+        m_sym_list      = symbol("list");
+        m_sym_gpointer  = symbol("gpointer");
         m_ptr = internal::allocate(this);
         environment::unlock();
         if(!m_ptr)
         {
             throw std::runtime_error("can't allocate instance.");
         }
-        int todo;
-        /*
-        ptr->s_bang     = symbol("bang");
-        ptr->s_float    = symbol("float");
-        ptr->s_symbol   = symbol("symbol");
-        ptr->s_list     = symbol("list");
-        ptr->s_gpointer = symbol("gpointer");
-         */
     }
     
     instance::~instance() noexcept
@@ -206,6 +209,37 @@ namespace xpd
         cpd_instance_free(reinterpret_cast<c_instance *>(m_ptr));
         environment::unlock();
     }
+    
+    
+    patch* instance::load(std::string const& name, std::string const& path)
+    {
+        int todo;
+        patch* p = NULL;
+        environment::lock();
+        cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
+        void* ptr = cpd_patch_new(name.c_str(), path.c_str());
+        if(ptr)
+        {
+            p = new patch(ptr, name, path, cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(m_ptr)));
+        }
+        environment::unlock();
+        if(!m_ptr)
+        {
+            throw std::runtime_error("can't load patch.");
+        }
+        return p;
+    }
+    
+    void instance::close(patch& p)
+    {
+        int todo;
+        environment::lock();
+        cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
+        cpd_patch_free(reinterpret_cast<c_patch *>(p.m_ptr));
+        delete &p;
+        environment::unlock();
+    }
+    
     
     int instance::samplerate() const noexcept
     {
@@ -239,6 +273,7 @@ namespace xpd
     {
         int todo_set_instance;
         environment::lock();
+        cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
         if(post.type == console::level::error)
         {
             cpd_console_error(post.text.c_str());
@@ -262,6 +297,7 @@ namespace xpd
     {
         int todo_set_instance;
         environment::lock();
+        cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
         c_list* list = cpd_list_create(atoms.size());
         for(size_t i = 0; i < atoms.size(); ++i)
         {
@@ -284,6 +320,7 @@ namespace xpd
     {
         int todo_set_instance;
         environment::lock();
+        cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
         if(event.type() == midi::event::type::note)
         {
             cpd_midisend_noteon(event.channel(), event.pitch(), event.velocity());

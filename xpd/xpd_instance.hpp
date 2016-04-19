@@ -60,7 +60,7 @@ namespace xpd
         public:
             inline constexpr listener() {}
             inline virtual ~listener() {}
-            virtual void patch_created(patch* p) = 0;
+            virtual void patch_loaded(patch* p) = 0;
             virtual void patch_deleted(patch* p) = 0;
         };
         
@@ -70,6 +70,12 @@ namespace xpd
         void listener_remove(listener& listener);
         
     protected:
+        
+        //! @brief Loads a patch.
+        patch* load(std::string const& name, std::string const& path);
+        
+        //! @brief Closes a patch.
+        void close(patch& p);
         
         //! @brief Prepares the digital signal processing chain of the instance.
         void prepare(const int nins, const int nouts, const int samplerate, const int nsamples) noexcept;

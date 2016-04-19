@@ -4,7 +4,7 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#include "Pdpatch.hpp"
+#include "xpd_patch.hpp"
 #include "PdObject.hpp"
 
 extern "C"
@@ -18,55 +18,35 @@ namespace xpd
     //                                          PATCHER                                     //
     // ==================================================================================== //
     
-    patch::patch(instance& instance, std::string const& name, std::string const& path) noexcept :
-    m_ptr(nullptr)
+    patch::patch(void* ptr, std::string const& name, std::string const& path, size_t uid) noexcept :
+    m_ptr(ptr), m_name(name), m_path(path), m_unique_id(uid)
     {
-        m_ptr = cpd_patch_new(name.c_str(), path.c_str());
+        ;
     }
     
     patch::~patch() noexcept
     {
-        m_instance.lock();
-        cpd_patch_free(reinterpret_cast<c_patch *>(m_ptr));
-        m_instance.unlock();
+        ;
     }
     
-    std::string patch::getName() const
+    int patch::x() const noexcept
     {
-        return cpd_patch_get_name(reinterpret_cast<c_patch *>(m_ptr));
+        return cpd_patch_get_x(reinterpret_cast<c_patch const *>(m_ptr));
     }
     
-    std::string patch::getPath() const
+    int patch::y() const noexcept
     {
-        return cpd_patch_get_path(reinterpret_cast<c_patch *>(m_ptr));
+        return cpd_patch_get_y(reinterpret_cast<c_patch const *>(m_ptr));
     }
     
-    int patch::getDollarZero()
+    int patch::width() const noexcept
     {
-        m_instance.lock();
-        int value = cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(m_ptr));
-        m_instance.unlock();
-        return value;
+        return cpd_patch_get_width(reinterpret_cast<c_patch const *>(m_ptr));
     }
     
-    int patch::get_x() const noexcept
+    int patch::height() const noexcept
     {
-        return cpd_patch_get_x(reinterpret_cast<c_patch *>(m_ptr));
-    }
-    
-    int patch::get_y() const noexcept
-    {
-        return cpd_patch_get_y(reinterpret_cast<c_patch *>(m_ptr));
-    }
-    
-    int patch::get_width() const noexcept
-    {
-        return cpd_patch_get_width(reinterpret_cast<c_patch *>(m_ptr));
-    }
-    
-    int patch::get_height() const noexcept
-    {
-        return cpd_patch_get_height(reinterpret_cast<c_patch *>(m_ptr));
+        return cpd_patch_get_height(reinterpret_cast<c_patch const *>(m_ptr));
     }
     
     std::vector<Gui> patch::getGuis() const noexcept
