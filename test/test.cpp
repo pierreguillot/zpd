@@ -47,8 +47,8 @@ typedef void (*test_method)(void *);
 
 int main(int argc, char** argv)
 {
-    instance_test *inst1 = new instance_test(1);
-    instance_test *inst2 = new instance_test(2);
+    instance_test *inst1 = new instance_test();
+    instance_test *inst2 = new instance_test();
     
     assert("test_dsp instance_test" && inst1 && inst2);
     std::cout << "tests xpd version " << environment::version_major()

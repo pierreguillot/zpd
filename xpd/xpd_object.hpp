@@ -40,7 +40,7 @@ namespace xpd
         object(object const& other) xpd_delete_f;
         object& operator=(object const& other) xpd_delete_f;
         
-        object(patch const* patch, void* ptr) xpd_noexcept;
+        object(patch const* patch, void* ptr) xpd_noexcept {};
         std::string m_text;
         int         m_x;
         int         m_y;

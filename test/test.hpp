@@ -22,7 +22,7 @@ using namespace xpd;
 class instance_test : private instance
 {
 public:
-    instance_test(const size_t index) : m_index(index)
+    instance_test()
     {
         ;
     }
@@ -296,8 +296,6 @@ public:
     }
     
 private:
-    const size_t m_index;
-    size_t  m_ninouts;
     float* m_input[2];
     float* m_output[2];
     symbol            m_name;
