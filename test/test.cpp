@@ -7,6 +7,7 @@
 #include "../xpd/xpd.hpp"
 #include <iostream>
 #include <string>
+#include <string.h>
 
 using namespace xpd;
 
@@ -14,7 +15,19 @@ using namespace xpd;
 class instance_test : public instance
 {
 public:
-    instance_test(const size_t index) : m_index(index) {}
+    instance_test(const size_t index) : m_index(index)
+    {
+        m_vecteurs = new float*[2];
+        m_vecteurs[0] = new float[128];
+        m_vecteurs[1] = new float[128];
+    }
+    
+    ~instance_test()
+    {
+        delete [] m_vecteurs[0];
+        delete [] m_vecteurs[1];
+        delete [] m_vecteurs;
+    }
     
     void receive(console::post post) xpd_final
     {
@@ -59,8 +72,8 @@ public:
         std::cout << "instace " << m_index << "midi :";
         std::cout << "\n";
     }
-private:
     size_t const m_index;
+    float** m_vecteurs;
 };
 
 static char* test_get_patch_folder(char* location)
@@ -127,7 +140,21 @@ int main(int argc, char** argv)
     p2 = inst2->load("test.pd", "");
     if(p1 && p2)
     {
+        inst1->prepare(2, 2, 44100, 64);
+        inst2->prepare(1, 1, 44100, 128);
         
+        for(size_t i = 0; i < 8; ++i)
+        {
+            inst1->perform(64, 2, const_cast<float const **>(inst1->m_vecteurs), 2, inst1->m_vecteurs);
+            inst2->perform(128, 1, const_cast<float const **>(inst1->m_vecteurs), 1, inst1->m_vecteurs);
+        }
+        
+        
+        inst1->release();
+        inst2->release();
+        
+        inst1->close(*p1);
+        inst2->close(*p2);
     }
     delete inst1;
     delete inst2;
