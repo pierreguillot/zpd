@@ -202,7 +202,7 @@ public:
     static void test_midi(instance_test* inst)
     {
         patch* p = inst->load("test.pd", "");
-        assert("test_message patch" && p);
+        assert("test_midi patch" && p);
         inst->m_count_note = 0;
         inst->m_count_ctl = 0;
         inst->m_count_pgm = 0;
@@ -261,7 +261,7 @@ public:
     static void test_dsp(instance_test* inst)
     {
         patch* p = inst->load("test.pd", "");
-        assert("test_message patch" && p);
+        assert("test_dsp patch" && p);
         inst->m_input[0] = new float[256];
         inst->m_input[1] = new float[256];
         inst->m_output[0] = new float[256];
@@ -282,10 +282,16 @@ public:
     static void test_patch(instance_test* inst)
     {
         patch* p = inst->load("test.pd", "/home/maison/");
-        assert("test_message patch" && !p);
+        assert("test_patch patch" && !p);
         p = inst->load("test.pd", "");
-        assert("test_message patch" && p);
+        assert("test_patch patch" && p);
+        assert("test_patch patch x" && p->x() == 85);
+        assert("test_patch patch y" && p->y() == 60);
+        assert("test_patch patch w" && p->width() == 100);
+        assert("test_patch patch h" && p->height() == 100);
         
+        int todo;
+        std::vector<object*> objects(p->objects());
         inst->close(*p);
     }
     
