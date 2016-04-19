@@ -19,9 +19,9 @@ namespace xpd
     public:
         ~smuggler() xpd_noexcept {}
     public:
-        inline static xpd_constexpr void const* gettie(tie const& tie) xpd_noexcept {return tie.ptr;}
+        inline static xpd_constexpr c_tie* gettie(tie const& tie) xpd_noexcept {return static_cast<c_tie*>(tie.ptr);}
         inline static xpd_constexpr tie createtie(void *ptr) xpd_noexcept {return tie(ptr);}
-        inline static xpd_constexpr void const* getsymbol(symbol const& symbol) xpd_noexcept {return symbol.ptr;}
+        inline static xpd_constexpr c_symbol* getsymbol(symbol const& symbol) xpd_noexcept {return static_cast<c_symbol*>(symbol.ptr);}
         inline static xpd_constexpr symbol createsymbol(void *ptr) xpd_noexcept {return symbol(ptr);}
     };
     
@@ -30,33 +30,51 @@ namespace xpd
     public:        
         c_instance object;
         instance*  ref;
+        c_hook_console console;
+        c_hook_midi midi;
+        c_hook_message message;
         
         static internal* allocate(instance* _ref)
         {
-            c_hook_console console;
-            console.m_log   = (c_hook_print)instance::internal::m_log_hook;
-            console.m_post  = (c_hook_print)instance::internal::m_post_hook;
-            console.m_error = (c_hook_print)instance::internal::m_error_hook;
-            console.m_fatal = (c_hook_print)instance::internal::m_fatal_hook;
-            
-            c_hook_midi midi;
-            midi.m_noteon           = (c_hook_noteon)instance::internal::m_noteon;
-            midi.m_controlchange    = (c_hook_controlchange)instance::internal::m_controlchange;
-            midi.m_programchange    = (c_hook_programchange)instance::internal::m_programchange;
-            midi.m_pitchbend        = (c_hook_pitchbend)instance::internal::m_pitchbend;
-            midi.m_aftertouch       = (c_hook_aftertouch)instance::internal::m_aftertouch;
-            midi.m_polyaftertouch   = (c_hook_polyaftertouch)instance::internal::m_polyaftertouch;
-            midi.m_byte             = (c_hook_byte)instance::internal::m_byte;
-            
             internal* ptr = (internal *)cpd_instance_new(sizeof(internal));
             if(ptr)
             {
                 ptr->ref = _ref;
-                cpd_instance_set_hook_console(reinterpret_cast<c_instance*>(ptr), &console);
-                cpd_instance_set_hook_midi(reinterpret_cast<c_instance*>(ptr), &midi);
+                ptr->console.m_log   = (c_hook_print)instance::internal::m_log_hook;
+                ptr->console.m_post  = (c_hook_print)instance::internal::m_post_hook;
+                ptr->console.m_error = (c_hook_print)instance::internal::m_error_hook;
+                ptr->console.m_fatal = (c_hook_print)instance::internal::m_fatal_hook;
+                
+                ptr->midi.m_noteon           = (c_hook_noteon)instance::internal::m_noteon;
+                ptr->midi.m_controlchange    = (c_hook_controlchange)instance::internal::m_controlchange;
+                ptr->midi.m_programchange    = (c_hook_programchange)instance::internal::m_programchange;
+                ptr->midi.m_pitchbend        = (c_hook_pitchbend)instance::internal::m_pitchbend;
+                ptr->midi.m_aftertouch       = (c_hook_aftertouch)instance::internal::m_aftertouch;
+                ptr->midi.m_polyaftertouch   = (c_hook_polyaftertouch)instance::internal::m_polyaftertouch;
+                ptr->midi.m_byte             = (c_hook_byte)instance::internal::m_byte;
+                
+                ptr->message.m_bang          = (c_hook_bang)instance::internal::m_bang;
+                ptr->message.m_float         = (c_hook_float)instance::internal::m_float;
+                ptr->message.m_symbol        = (c_hook_symbol)instance::internal::m_symbol;
+                ptr->message.m_gpointer      = (c_hook_gpointer)instance::internal::m_gpointer;
+                ptr->message.m_list          = (c_hook_list)instance::internal::m_list;
+                ptr->message.m_anything      = (c_hook_anything)instance::internal::m_anything;
+                
+                cpd_instance_set_hook_console(reinterpret_cast<c_instance*>(ptr), &ptr->console);
+                cpd_instance_set_hook_midi(reinterpret_cast<c_instance*>(ptr), &ptr->midi);
                 
             }
             return ptr;
+        }
+        
+        static void m_bind(instance::internal* instance, c_tie* tie)
+        {
+            cpd_instance_bind(reinterpret_cast<c_instance *>(instance), tie, &instance->message);
+        }
+        
+        static void m_unbind(instance::internal* instance, c_tie* tie)
+        {
+            cpd_instance_unbind(reinterpret_cast<c_instance *>(instance), tie);
         }
         
         static void m_post_hook(instance::internal* instance, const char *s)
@@ -122,23 +140,23 @@ namespace xpd
         
         static void m_bang(instance::internal* instance, c_tie* tie)
         {
-            instance->ref->receive(createtie(tie), instance::m_sym_bang, std::vector<atom>());
+            instance->ref->receive(createtie(tie), symbol::bang_s, std::vector<atom>());
         }
         
         static void m_float(instance::internal* instance, c_tie* tie, c_float f)
         {
-            instance->ref->receive(createtie(tie), instance::m_sym_float, std::vector<atom>(1, f));
+            instance->ref->receive(createtie(tie), symbol::float_s, std::vector<atom>(1, f));
         }
         
         static void m_symbol(instance::internal* instance, c_tie* tie, c_symbol* s)
         {
             symbol sy(createsymbol(s));
-            instance->ref->receive(createtie(tie), instance::m_sym_symbol, std::vector<atom>(1, sy));
+            instance->ref->receive(createtie(tie), symbol::symbol_s, std::vector<atom>(1, sy));
         }
         
         static void m_gpointer(instance::internal* instance, c_tie* tie, c_gpointer *g)
         {
-            instance->ref->receive(createtie(tie), instance::m_sym_gpointer, std::vector<atom>());
+            ;
         }
         
         static void m_list(instance::internal* instance, c_tie* tie, c_list *list)
@@ -156,7 +174,7 @@ namespace xpd
                 }
             }
 #ifdef _XPD_CPP11_NOSUPPORT_
-            instance->ref->receive(createtie(tie), instance::m_sym_list, vec);
+            instance->ref->receive(createtie(tie), symbol::list_s, vec);
 #else
             instance->ref->receive(createtie(tie), instance::m_sym_list, std::move(vec));
 #endif
@@ -188,20 +206,11 @@ namespace xpd
     //                                          INSTANCE                                    //
     // ==================================================================================== //
     
-    symbol   instance::m_sym_bang;
-    symbol   instance::m_sym_float;
-    symbol   instance::m_sym_symbol;
-    symbol   instance::m_sym_list;
-    symbol   instance::m_sym_gpointer;
-    
     instance::instance()
     {
         environment::lock();
-        m_sym_bang      = symbol("bang");
-        m_sym_float     = symbol("float");
-        m_sym_symbol    = symbol("symbol");
-        m_sym_list      = symbol("list");
-        m_sym_gpointer  = symbol("gpointer");
+        
+
         m_ptr = internal::allocate(this);
         environment::unlock();
         if(!m_ptr)
@@ -312,21 +321,50 @@ namespace xpd
         int todo_set_instance;
         environment::lock();
         cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
-        c_list* list = cpd_list_create(atoms.size());
-        for(size_t i = 0; i < atoms.size(); ++i)
+        if(s == symbol::bang_s)
         {
-            if(atoms[i].type() == atom::float_t)
-            {
-                cpd_list_set_float(list, i, float_t(atoms[i]));
-            }
-            else if(atoms[i].type() == atom::symbol_t)
-            {
-                cpd_list_set_float(list, i, symbol(atoms[i]));
-            }
+            cpd_messagesend_bang(smuggler::gettie(name));
         }
-        cpd_messagesend_anything(reinterpret_cast<c_tie const *>(smuggler::gettie(name)),
-                                 reinterpret_cast<c_symbol const *>(smuggler::getsymbol(s)), list);
-        
+        else if(s == symbol::float_s)
+        {
+            cpd_messagesend_float(smuggler::gettie(name), atoms[0]);
+        }
+        else if(s == symbol::symbol_s)
+        {
+            cpd_messagesend_symbol(smuggler::gettie(name), smuggler::getsymbol(atoms[0]));
+        }
+        else if(s == symbol::list_s)
+        {
+            c_list* list = cpd_list_create(atoms.size());
+            for(size_t i = 0; i < atoms.size(); ++i)
+            {
+                if(atoms[i].type() == atom::float_t)
+                {
+                    cpd_list_set_float(list, i, float_t(atoms[i]));
+                }
+                else if(atoms[i].type() == atom::symbol_t)
+                {
+                    cpd_list_set_symbol(list, i, smuggler::getsymbol(atoms[i]));
+                }
+            }
+            cpd_messagesend_list(smuggler::gettie(name), list);
+        }
+        else
+        {
+            c_list* list = cpd_list_create(atoms.size());
+            for(size_t i = 0; i < atoms.size(); ++i)
+            {
+                if(atoms[i].type() == atom::float_t)
+                {
+                    cpd_list_set_float(list, i, float_t(atoms[i]));
+                }
+                else if(atoms[i].type() == atom::symbol_t)
+                {
+                    cpd_list_set_symbol(list, i, smuggler::getsymbol(atoms[i]));
+                }
+            }
+            cpd_messagesend_anything(smuggler::gettie(name), smuggler::getsymbol(s), list);
+        }
         environment::unlock();
     }
     
@@ -364,6 +402,16 @@ namespace xpd
             cpd_midisend_byte(0, event.value());
         }
         environment::unlock();
+    }
+    
+    void instance::bind(tie name)
+    {
+        reinterpret_cast<internal *>(m_ptr)->m_bind(reinterpret_cast<internal *>(m_ptr), smuggler::gettie(name));
+    }
+    
+    void instance::unbind(tie name)
+    {
+        reinterpret_cast<internal *>(m_ptr)->m_unbind(reinterpret_cast<internal *>(m_ptr), smuggler::gettie(name));
     }
     
     void instance::listener_add(listener& listener)

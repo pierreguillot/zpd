@@ -63,6 +63,8 @@ namespace xpd
         //! @brief Removes a listener from the instance.
         void listener_remove(listener& listener);
         
+    protected:
+        
         //! @brief Loads a patch.
         patch* load(std::string const& name, std::string const& path);
         
@@ -97,16 +99,14 @@ namespace xpd
         //! @brief Receives a midi event.
         virtual void receive(midi::event event) {}
         
+        void bind(tie name);
+        
+        void unbind(tie name);
+        
     private:
         instance(instance const& other) xpd_delete_f;
         instance& operator=(instance const& other) xpd_delete_f;
         struct internal;
-        
-        static symbol   m_sym_bang;
-        static symbol   m_sym_float;
-        static symbol   m_sym_symbol;
-        static symbol   m_sym_list;
-        static symbol   m_sym_gpointer;
         
         internal*           m_ptr;
         std::set<listener*> m_listeners;
