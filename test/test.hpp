@@ -540,6 +540,7 @@ public:
         std::vector<object> objects(p.objects());
         for(size_t i = 0; i < objects.size(); ++i)
         {
+            gui g1;
             assert("test_patch object bool" && bool(objects[i]));
             assert("test_patch object name" && !objects[i].name().empty());
             assert("test_patch object text" && !objects[i].text().empty());
@@ -556,6 +557,17 @@ public:
             if(is_gui)
             {
                 test_gui_int(p, objects[i]);
+            }
+            else
+            {
+                try
+                {
+                    gui g1 = objects[i];
+                }
+                catch(...)
+                {
+                    
+                }
             }
             
         }
