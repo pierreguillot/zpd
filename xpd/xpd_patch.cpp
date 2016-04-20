@@ -18,8 +18,7 @@ namespace xpd
     //                                          PATCHER                                     //
     // ==================================================================================== //
     
-    patch::patch(void* ptr, std::string const& name, std::string const& path, size_t uid) xpd_noexcept :
-    m_ptr(ptr), m_name(name), m_path(path), m_unique_id(uid)
+    patch::patch(void* ptr, size_t uid) xpd_noexcept : m_ptr(ptr), m_unique_id(uid)
     {
         ;
     }
@@ -27,6 +26,16 @@ namespace xpd
     patch::~patch() xpd_noexcept
     {
         ;
+    }
+    
+    std::string patch::name() const
+    {
+        return std::string(cpd_patch_get_name(reinterpret_cast<c_patch const *>(m_ptr)));
+    }
+    
+    std::string patch::path() const
+    {
+        return std::string(cpd_patch_get_path(reinterpret_cast<c_patch const *>(m_ptr)));
     }
     
     int patch::x() const xpd_noexcept

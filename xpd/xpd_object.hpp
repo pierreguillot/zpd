@@ -24,16 +24,16 @@ namespace xpd
         inline std::string text() const {return m_text;}
         
         //! @brief Gets the x position of the object.
-       inline xpd_constexpr int x() const xpd_noexcept {return m_x;}
+        inline xpd_constexpr int x() const xpd_noexcept {return m_x;}
         
         //! @brief Gets the y position of the object.
-       inline xpd_constexpr int y() const xpd_noexcept {return m_y;}
+        inline xpd_constexpr int y() const xpd_noexcept {return m_y;}
         
         //! @brief Gets the width of the object.
-       inline xpd_constexpr int width() const xpd_noexcept {return m_width;}
+        inline xpd_constexpr int width() const xpd_noexcept {return m_width;}
         
         //! @brief Gets the height of the object.
-       inline xpd_constexpr int height() const xpd_noexcept {return m_height;}
+        inline xpd_constexpr int height() const xpd_noexcept {return m_height;}
         
     protected:
         

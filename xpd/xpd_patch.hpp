@@ -26,10 +26,10 @@ namespace xpd
     public:
         
         //! @brief Gets the file's name.
-        inline std::string name() const {return m_name;}
+        std::string name() const;
         
         //! @brief Gets the file's path.
-        inline std::string path() const  {return m_path;}
+        std::string path() const;
         
         //! @brief Gets the id of the patch.
         inline xpd_constexpr size_t unique_id() const xpd_noexcept {return m_unique_id;}
@@ -52,12 +52,10 @@ namespace xpd
         patch(patch const& other) xpd_delete_f;
         patch& operator=(patch const& other) xpd_delete_f;
         
-        patch(void* ptr, std::string const& name, std::string const& path, size_t uid) xpd_noexcept;
+        patch(void* ptr, size_t uid) xpd_noexcept;
         ~patch() xpd_noexcept;
         
         void*               m_ptr;
-        const std::string   m_name;
-        const std::string   m_path;
         const size_t        m_unique_id;
         friend class instance;
     };
