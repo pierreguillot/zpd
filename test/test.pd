@@ -1,28 +1,35 @@
-#N canvas 28 198 862 290 12;
-#X obj 82 103 r \$0-fromxpd;
-#X obj 192 103 notein, f 7;
-#X obj 192 224 noteout;
-#X obj 272 103 ctlin, f 6;
-#X obj 272 223 ctlout;
-#X obj 333 103 pgmin, f 6;
-#X obj 333 223 pgmout;
-#X obj 396 103 bendin, f 7;
-#X obj 475 103 touchin, f 8;
-#X obj 568 102 polytouchin, f 12;
-#X obj 699 101 midiin, f 7;
-#X obj 396 223 bendout;
-#X obj 475 223 touchout;
-#X obj 568 222 polytouchout;
-#X obj 699 221 midiout;
-#X obj 92 254 s \$0-toxpd2;
-#X obj 82 223 s \$0-toxpd1;
-#X obj 21 108 adc~;
-#X obj 21 228 dac~;
-#X obj 92 168 test_s;
-#X obj 29 34 bng 15 250 50 0 bangs bangr bngl 17 7 0 10 -262144 -1
--1;
-#X obj 80 35 tgl 15 0 empty empty tgll 17 7 0 10 -262144 -1 -1 0 1
+#N canvas 28 198 930 431 12;
+#X obj 82 213 r \$0-fromxpd;
+#X obj 192 213 notein, f 7;
+#X obj 192 334 noteout;
+#X obj 272 213 ctlin, f 6;
+#X obj 272 333 ctlout;
+#X obj 333 213 pgmin, f 6;
+#X obj 333 333 pgmout;
+#X obj 396 213 bendin, f 7;
+#X obj 475 213 touchin, f 8;
+#X obj 568 212 polytouchin, f 12;
+#X obj 699 211 midiin, f 7;
+#X obj 396 333 bendout;
+#X obj 475 333 touchout;
+#X obj 568 332 polytouchout;
+#X obj 699 331 midiout;
+#X obj 92 364 s \$0-toxpd2;
+#X obj 82 333 s \$0-toxpd1;
+#X obj 21 218 adc~;
+#X obj 21 338 dac~;
+#X obj 92 278 test_s;
+#X obj 29 34 bng 15 250 50 0 bngs bngr bngl 17 7 0 10 -262144 -1 -1
 ;
+#X obj 80 35 tgl 15 0 tgls tglr tgll 17 7 0 10 -262144 -1 -1 0 1;
+#X obj 144 35 vsl 15 128 0 127 0 0 vsls vslr vsll 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 201 105 hsl 128 15 0 127 0 0 hsls hslr hsll -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 359 40 vradio 15 1 0 8 vradios vradior vradiol 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 209 63 hradio 15 1 0 8 hradios hradior hradiol 0 -8 0 10 -262144
+-1 -1 0;
 #X connect 0 0 16 0;
 #X connect 0 0 19 0;
 #X connect 1 0 2 0;
@@ -45,4 +52,4 @@
 #X connect 17 0 18 0;
 #X connect 17 1 18 1;
 #X connect 19 0 15 0;
-#X coords 0 -1 1 1 85 60 2 20 20;
+#X coords 0 -1 1 1 400 150 2 20 20;

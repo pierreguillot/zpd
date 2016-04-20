@@ -399,6 +399,20 @@ public:
         inst->close(*p);
     }
     
+    static void test_object_int(patch* p, object o)
+    {
+        assert("test_patch object outside" && (o.x() >= p->width() || o.y() >= p->height() || o.x() + o.width() <= 0 || o.y() + o.height() <= 0));
+    }
+    
+    static void test_gui_int(patch* p, object o)
+    {
+        gui g2 = o;
+        assert("test_patch gui receive" && g2.receive_symbol().name() == g2.name() + "r");
+        assert("test_patch gui send" && g2.send_symbol().name() == g2.name() + "s");
+        assert("test_patch gui label" && g2.label() == g2.name() + "l");
+        gui g3 = g2;
+    }
+    
     static void test_patch(instance_test* inst)
     {
         patch* p2 = inst->load("test.pd", "/home/maison");
@@ -411,78 +425,32 @@ public:
         inst->close(*p2);
         assert("test_patch patch x" && p->x() == 20);
         assert("test_patch patch y" && p->y() == 20);
-        assert("test_patch patch w" && p->width() == 85);
-        assert("test_patch patch h" && p->height() == 60);
+        assert("test_patch patch w" && p->width() == 400);
+        assert("test_patch patch h" && p->height() == 150);
         
         int todo;
         std::vector<object> objects(p->objects());
         for(size_t i = 0; i < objects.size(); ++i)
         {
+            gui g;
             assert("test_patch object bool" && bool(objects[i]));
             assert("test_patch object name" && !objects[i].name().empty());
             assert("test_patch object text" && !objects[i].text().empty());
-            if(objects[i].name() == "bng" || objects[i].name() == "tgl")
+            bool is_gui = true;
+            try
             {
-                gui g;
-                bool valid = true;
-                assert("test_patch object inside"
-                       && objects[i].x() >= 0 && objects[i].x() <= p->width()
-                       && objects[i].y() >= 0 && objects[i].y() <= p->height()
-                       && objects[i].x() + objects[i].width() <= p->x() + p->width()
-                       && objects[i].y() + objects[i].height() <= p->y() + p->height());
-                try
-                {
-                    g = objects[i];
-                }
-                catch(...)
-                {
-                    valid = false;
-                }
-                assert("test_patch gui valid" && valid);
-                
-                gui g2 = objects[i];
-                if(g2.name() == "bng")
-                {
-                    assert("test_patch gui receive" && g2.receive_symbol() == "bangr");
-                    assert("test_patch gui send" && g2.send_symbol() == "bangs");
-                }
-                else
-                {
-                    assert("test_patch gui receive" && g2.receive_symbol() == "empty");
-                    assert("test_patch gui send" && g2.send_symbol() == "empty");
-                }
-                assert("test_patch gui label" && g2.label() == g2.name() + "l");
+                g = objects[i];
             }
-            else
+            catch(...)
             {
-                gui g;
-                bool invalid = false;
-                assert("test_patch object outside" &&
-                       (objects[i].x() >= p->width()
-                        || objects[i].y() >= p->height()
-                        || objects[i].x() + objects[i].width() <= 0
-                        || objects[i].y() + objects[i].height() <= 0));
-                try
-                {
-                    g = objects[i];
-                }
-                catch(...)
-                {
-                    invalid = true;
-                }
-                assert("test_patch gui invalid" && invalid);
-                
-                invalid = false;
-                try
-                {
-                    gui g2 = objects[i];
-                }
-                catch(...)
-                {
-                    invalid = true;
-                }
-                assert("test_patch gui invalid" && invalid);
+                is_gui = false;
+                test_object_int(p, objects[i]);
             }
+            if(is_gui)
+            {
+                test_gui_int(p, objects[i]);
+            }
+            
         }
         inst->close(*p);
     }
