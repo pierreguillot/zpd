@@ -433,11 +433,75 @@ public:
         assert("test_patch gui type" &&
                ((g2.name() == "cnv" && g2.type() == gui::panel) || g2.type() != gui::panel));
         
-        assert("test_patch gui receive" && g2.receive_symbol().name() == g2.name() + "r");
-        assert("test_patch gui send" && ((g2.name() == "vu" && g2.send_symbol().name() == "") || g2.send_symbol().name() == g2.name() + "s"));
+        assert("test_patch gui receive" && g2.receive_tie().name() == g2.name() + "r");
+        assert("test_patch gui send" && ((g2.name() == "vu" && g2.send_tie().name() == "") || g2.send_tie().name() == g2.name() + "s"));
         assert("test_patch gui label" && g2.label() == g2.name() + "l");
         gui g3 = g2;
         gui g4 = o;
+        
+        if(g4.type() == gui::bang)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 0);
+            assert("test_patch gui val" && g4.value() == 0);
+            assert("test_patch gui nst" && g4.nsteps() == 0);
+        }
+        else if(g4.type() == gui::slider_horizontal)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 127);
+            assert("test_patch gui val" && g4.value() == 1);
+            assert("test_patch gui nst" && g4.nsteps() == 0);
+        }
+        else if(g4.type() == gui::slider_vertical)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 127);
+            assert("test_patch gui val" && g4.value() == 1);
+            assert("test_patch gui nst" && g4.nsteps() == 0);
+        }
+        else if(g4.type() == gui::toggle)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 1);
+            assert("test_patch gui val" && g4.value() == 1);
+            assert("test_patch gui nst" && g4.nsteps() == 2);
+        }
+        else if(g4.type() == gui::number)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 127);
+            assert("test_patch gui val" && g4.value() == 1);
+            assert("test_patch gui nst" && g4.nsteps() == 0);
+        }
+        else if(g4.type() == gui::radio_horizontal)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 7);
+            assert("test_patch gui val" && g4.value() == 1);
+            assert("test_patch gui nst" && g4.nsteps() == 8);
+        }
+        else if(g4.type() == gui::radio_vertical)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 7);
+            assert("test_patch gui val" && g4.value() == 1);
+            assert("test_patch gui nst" && g4.nsteps() == 8);
+        }
+        else if(g4.type() == gui::vu_meter)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 0);
+            assert("test_patch gui val" && g4.value() == 0);
+            assert("test_patch gui nst" && g4.nsteps() == 0);
+        }
+        else if(g4.type() == gui::panel)
+        {
+            assert("test_patch gui min" && g4.minimum() == 0);
+            assert("test_patch gui max" && g4.maximum() == 0);
+            assert("test_patch gui val" && g4.value() == 0);
+            assert("test_patch gui nst" && g4.nsteps() == 0);
+        }
     }
     
     static void test_patch(instance_test* inst)

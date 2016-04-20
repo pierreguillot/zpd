@@ -324,10 +324,10 @@ CPD_EXTERN char cpd_object_is_gui(c_object const* object);
 CPD_EXTERN c_symbol* cpd_gui_get_label(c_gui const* gui);
 
 //! @brief Gets the receive symbol of a gui.
-CPD_EXTERN c_symbol* cpd_gui_get_receive_symbol(c_gui const* gui);
+CPD_EXTERN c_tie* cpd_gui_get_receive_tie(c_gui const* gui);
 
 //! @brief Gets the send symbol of a gui.
-CPD_EXTERN c_symbol* cpd_gui_get_send_symbol(c_gui const* gui);
+CPD_EXTERN c_tie* cpd_gui_get_send_tie(c_gui const* gui);
 
 //! @brief Gets the send symbol of a gui.
 CPD_EXTERN c_guitype cpd_gui_get_type(c_gui const* gui);

@@ -804,12 +804,12 @@ c_symbol* cpd_gui_get_label(c_gui const* gui)
     return (c_sym_empty != gui->x_lab) ? gui->x_lab : &s_;
 }
 
-c_symbol* cpd_gui_get_receive_symbol(c_gui const* gui)
+c_tie* cpd_gui_get_receive_tie(c_gui const* gui)
 {
     return (c_sym_empty != gui->x_rcv) ? gui->x_rcv : &s_;
 }
 
-c_symbol* cpd_gui_get_send_symbol(c_gui const* gui)
+c_tie* cpd_gui_get_send_tie(c_gui const* gui)
 {
     if(cpd_object_get_name((c_object const*)gui) != c_sym_vu)
     {
@@ -947,11 +947,11 @@ float cpd_gui_get_value(c_gui const* gui)
 {
     if(gui->x_obj.te_g.g_pd->c_name == c_sym_hsl)
     {
-        return ((t_hslider *)gui)->x_val;
+        return ((t_hslider *)gui)->x_fval;
     }
     else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vsl)
     {
-        return ((t_vslider *)gui)->x_val;
+        return ((t_vslider *)gui)->x_fval;
     }
     else if(gui->x_obj.te_g.g_pd->c_name == c_sym_tgl)
     {

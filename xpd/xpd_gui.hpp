@@ -44,13 +44,21 @@ namespace xpd
         //! @brief The destructor.
         inline virtual ~gui() xpd_noexcept {};
         
-        symbol receive_symbol() const xpd_noexcept;
+        type_t type() const xpd_noexcept;
         
-        symbol send_symbol() const xpd_noexcept;
+        symbol receive_tie() const xpd_noexcept;
+        
+        symbol send_tie() const xpd_noexcept;
         
         symbol label() const xpd_noexcept;
         
-        type_t type() const xpd_noexcept;
+        float minimum() const xpd_noexcept;
+        
+        float maximum() const xpd_noexcept;
+        
+        float value() const xpd_noexcept;
+        
+        size_t nsteps() const xpd_noexcept;
     };
 }
 
