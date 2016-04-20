@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['history',['history',['../classxpd_1_1console_1_1history.html',1,'xpd::console']]]
+  ['gui',['gui',['../classxpd_1_1gui.html',1,'xpd']]]
 ];

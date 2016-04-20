@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>zpd: xpd/xpd.hpp Source File</title>
+<title>zpd: xpd/xpd_gui.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">xpd.hpp</div>  </div>
+<div class="title">xpd_gui.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
@@ -96,12 +96,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">// WARRANTIES, see the file, &quot;LICENSE.txt,&quot; in this distribution.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef XPD_HPP</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define XPD_HPP</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef XPD_GUI_HPP</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define XPD_GUI_HPP</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;xpd_gui.hpp&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;xpd_object.hpp&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#endif // XPD_HPP</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>xpd</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classxpd_1_1gui.html">   16</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classxpd_1_1gui.html">gui</a> : <span class="keyword">public</span> <a class="code" href="classxpd_1_1object.html">object</a></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">inline</span> xpd_constexpr <a class="code" href="classxpd_1_1gui.html">gui</a>() xpd_noexcept : <a class="code" href="classxpd_1_1object.html">object</a>() {}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">inline</span> xpd_constexpr <a class="code" href="classxpd_1_1gui.html">gui</a>(<a class="code" href="classxpd_1_1gui.html">gui</a> <span class="keyword">const</span>&amp; other) xpd_noexcept : <a class="code" href="classxpd_1_1object.html">object</a>(other) {}</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="classxpd_1_1gui.html">gui</a>(<span class="keywordtype">object</span> <span class="keyword">const</span>&amp; other);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">inline</span> <a class="code" href="classxpd_1_1gui.html">gui</a>&amp; operator=(<a class="code" href="classxpd_1_1gui.html">gui</a> <span class="keyword">const</span>&amp; other) xpd_noexcept {object::operator=(other); <span class="keywordflow">return</span> *<span class="keyword">this</span>;}</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <a class="code" href="classxpd_1_1gui.html">gui</a>&amp; operator=(<span class="keywordtype">object</span> <span class="keyword">const</span>&amp; other);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classxpd_1_1gui.html#a5cba69bc4701b36d787a39700060e34e">   31</a></span>&#160;        <span class="keyword">inline</span> <span class="keyword">virtual</span> <a class="code" href="classxpd_1_1gui.html#a5cba69bc4701b36d787a39700060e34e">~gui</a>() {};</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    };</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif // XPD_GUI_HPP</span></div>
+<div class="ttc" id="classxpd_1_1gui_html"><div class="ttname"><a href="classxpd_1_1gui.html">xpd::gui</a></div><div class="ttdoc">The hui. </div><div class="ttdef"><b>Definition:</b> xpd_gui.hpp:16</div></div>
+<div class="ttc" id="classxpd_1_1gui_html_a5cba69bc4701b36d787a39700060e34e"><div class="ttname"><a href="classxpd_1_1gui.html#a5cba69bc4701b36d787a39700060e34e">xpd::gui::~gui</a></div><div class="ttdeci">virtual ~gui()</div><div class="ttdoc">The destructor. </div><div class="ttdef"><b>Definition:</b> xpd_gui.hpp:31</div></div>
+<div class="ttc" id="classxpd_1_1object_html"><div class="ttname"><a href="classxpd_1_1object.html">xpd::object</a></div><div class="ttdoc">The object. </div><div class="ttdef"><b>Definition:</b> xpd_object.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

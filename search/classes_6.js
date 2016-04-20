@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['midi',['midi',['../classxpd_1_1midi.html',1,'xpd']]],
-  ['mutex',['mutex',['../classxpd_1_1mutex.html',1,'xpd']]]
+  ['instance',['instance',['../classxpd_1_1instance.html',1,'xpd']]],
+  ['internal',['internal',['../structxpd_1_1instance_1_1internal.html',1,'xpd::instance']]]
 ];
