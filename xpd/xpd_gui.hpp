@@ -27,6 +27,10 @@ namespace xpd
         
         gui& operator=(object const& other);
         
+        symbol receive_symbol() const xpd_noexcept;
+        
+        symbol send_symbol() const xpd_noexcept;
+        
         //! @brief The destructor.
         inline virtual ~gui() {};
     };

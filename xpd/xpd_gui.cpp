@@ -31,6 +31,16 @@ namespace xpd
         }
         return *this;
     }
+    
+    symbol gui::receive_symbol() const xpd_noexcept
+    {
+        return symbol(cpd_symbol_get_name(cpd_gui_get_receive_symbol(reinterpret_cast<c_gui const*>(m_ptr))));
+    }
+    
+    symbol gui::send_symbol() const xpd_noexcept
+    {
+        return symbol(cpd_symbol_get_name(cpd_gui_get_send_symbol(reinterpret_cast<c_gui const*>(m_ptr))));
+    }
 }
 
 

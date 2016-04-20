@@ -439,6 +439,18 @@ public:
                     valid = false;
                 }
                 assert("test_patch gui valid" && valid);
+                
+                gui g2 = objects[i];
+                if(g2.name() == "bng")
+                {
+                    assert("test_patch gui receive" && g2.receive_symbol() == "bangr");
+                    assert("test_patch gui send" && g2.send_symbol() == "bangs");
+                }
+                else
+                {
+                    assert("test_patch gui receive" && g2.receive_symbol() == "empty");
+                    assert("test_patch gui send" && g2.send_symbol() == "empty");
+                }
             }
             else
             {
@@ -452,6 +464,17 @@ public:
                 try
                 {
                     g = objects[i];
+                }
+                catch(...)
+                {
+                    invalid = true;
+                }
+                assert("test_patch gui invalid" && invalid);
+                
+                invalid = false;
+                try
+                {
+                    gui g2 = objects[i];
                 }
                 catch(...)
                 {

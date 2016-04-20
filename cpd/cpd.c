@@ -809,7 +809,7 @@ c_symbol* cpd_gui_get_receive_symbol(c_gui const* gui)
 
 c_symbol* cpd_gui_get_send_symbol(c_gui const* gui)
 {
-    return gui->x_rcv;
+    return gui->x_snd;
 }
 
 float cpd_gui_get_maximum_value(c_gui const* gui)
