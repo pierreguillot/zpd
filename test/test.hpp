@@ -451,6 +451,7 @@ public:
                     assert("test_patch gui receive" && g2.receive_symbol() == "empty");
                     assert("test_patch gui send" && g2.send_symbol() == "empty");
                 }
+                assert("test_patch gui label" && g2.label() == g2.name() + "l");
             }
             else
             {

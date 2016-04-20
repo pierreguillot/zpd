@@ -31,6 +31,8 @@ namespace xpd
         
         symbol send_symbol() const xpd_noexcept;
         
+        symbol label() const xpd_noexcept;
+        
         //! @brief The destructor.
         inline virtual ~gui() {};
     };
