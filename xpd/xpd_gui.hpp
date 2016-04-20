@@ -17,6 +17,20 @@ namespace xpd
     {
     public:
         
+        //! @brief The available type of gui.
+        enum type_t
+        {
+            bang                = 0, //!< @brief The gui is a bang.
+            slider_horizontal   = 1, //!< @brief The gui is an horizontal slider.
+            slider_vertical     = 2, //!< @brief The gui is a vertical slider.
+            toggle              = 3, //!< @brief The gui is a toggle.
+            number              = 4, //!< @brief The gui is a number box.
+            radio_horizontal    = 5, //!< @brief The gui is an horizontal radio.
+            radio_vertical      = 6, //!< @brief The gui is a vertical radio.
+            vu_meter            = 7, //!< @brief The gui is a VU-meter.
+            panel               = 8  //!< @brief The gui is a panel.
+        };
+        
         inline xpd_constexpr gui() xpd_noexcept : object() {}
         
         inline xpd_constexpr gui(gui const& other) xpd_noexcept : object(other) {}
@@ -35,6 +49,8 @@ namespace xpd
         symbol send_symbol() const xpd_noexcept;
         
         symbol label() const xpd_noexcept;
+        
+        type_t type() const xpd_noexcept;
     };
 }
 

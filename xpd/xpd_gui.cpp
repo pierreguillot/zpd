@@ -46,6 +46,11 @@ namespace xpd
     {
         return symbol(cpd_symbol_get_name(cpd_gui_get_label(reinterpret_cast<c_gui const*>(m_ptr))));
     }
+    
+    gui::type_t gui::type() const xpd_noexcept
+    {
+        return type_t(cpd_gui_get_type(reinterpret_cast<c_gui const*>(m_ptr)));
+    }
 }
 
 

@@ -192,6 +192,7 @@ static c_symbol*        c_sym_vradio        = NULL;
 static c_symbol*        c_sym_hradio        = NULL;
 static c_symbol*        c_sym_vu            = NULL;
 static c_symbol*        c_sym_cnv           = NULL;
+static c_symbol*        c_sym_empty         = NULL;
 
 static void cpd_print(const char* s);
 
@@ -244,6 +245,7 @@ void cpd_init()
         c_sym_hradio        = gensym("hradio");
         c_sym_vu            = gensym("vu");
         c_sym_cnv           = gensym("cnv");
+        c_sym_empty         = gensym("empty");
         
         bob_tilde_setup();
         bonk_tilde_setup();
@@ -799,17 +801,59 @@ char cpd_object_is_gui(c_object const* object)
 
 c_symbol* cpd_gui_get_label(c_gui const* gui)
 {
-    return gui->x_lab;
+    return (c_sym_empty != gui->x_lab) ? gui->x_lab : &s_;
 }
 
 c_symbol* cpd_gui_get_receive_symbol(c_gui const* gui)
 {
-    return gui->x_rcv;
+    return (c_sym_empty != gui->x_rcv) ? gui->x_rcv : &s_;
 }
 
 c_symbol* cpd_gui_get_send_symbol(c_gui const* gui)
 {
-    return gui->x_snd;
+    if(cpd_object_get_name((c_object const*)gui) != c_sym_vu)
+    {
+        return (c_sym_empty != gui->x_snd) ? gui->x_snd : &s_;
+    }
+    return &s_;
+}
+
+c_guitype cpd_gui_get_type(c_gui const* gui)
+{
+    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    if(name == c_sym_bng)
+    {
+        return Z_GUI_BANG;
+    }
+    if(name == c_sym_hsl)
+    {
+        return Z_GUI_SLIDERH;
+    }
+    if(name == c_sym_vsl)
+    {
+        return Z_GUI_SLIDERV;
+    }
+    if(name == c_sym_tgl)
+    {
+        return Z_GUI_TOGGLE;
+    }
+    if(name == c_sym_nbx)
+    {
+        return Z_GUI_NUMBER;
+    }
+    if(name == c_sym_vradio)
+    {
+        return Z_GUI_RADIOV;
+    }
+    if(name == c_sym_hradio)
+    {
+        return Z_GUI_RADIOH;
+    }
+    if(name == c_sym_vu)
+    {
+        return Z_GUI_VUMETER;
+    }
+    return Z_GUI_PANEL;
 }
 
 float cpd_gui_get_maximum_value(c_gui const* gui)

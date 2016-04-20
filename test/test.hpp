@@ -414,8 +414,27 @@ public:
     static void test_gui_int(patch p, object o)
     {
         gui g2 = o;
+        assert("test_patch gui type" &&
+               ((g2.name() == "bng" && g2.type() == gui::bang) || g2.type() != gui::bang));
+        assert("test_patch gui type" &&
+               ((g2.name() == "hsl" && g2.type() == gui::slider_horizontal) || g2.type() != gui::slider_horizontal));
+        assert("test_patch gui type" &&
+               ((g2.name() == "vsl" && g2.type() == gui::slider_vertical) || g2.type() != gui::slider_vertical));
+        assert("test_patch gui type" &&
+               ((g2.name() == "tgl" && g2.type() == gui::toggle) || g2.type() != gui::toggle));
+        assert("test_patch gui type" &&
+               ((g2.name() == "nbx" && g2.type() == gui::number) || g2.type() != gui::number));
+        assert("test_patch gui type" &&
+               ((g2.name() == "hradio" && g2.type() == gui::radio_horizontal) || g2.type() != gui::radio_horizontal));
+        assert("test_patch gui type" &&
+               ((g2.name() == "vradio" && g2.type() == gui::radio_vertical) || g2.type() != gui::radio_vertical));
+        assert("test_patch gui type" &&
+               ((g2.name() == "vu" && g2.type() == gui::vu_meter) || g2.type() != gui::vu_meter));
+        assert("test_patch gui type" &&
+               ((g2.name() == "cnv" && g2.type() == gui::panel) || g2.type() != gui::panel));
+        
         assert("test_patch gui receive" && g2.receive_symbol().name() == g2.name() + "r");
-        assert("test_patch gui send" && g2.send_symbol().name() == g2.name() + "s");
+        assert("test_patch gui send" && ((g2.name() == "vu" && g2.send_symbol().name() == "") || g2.send_symbol().name() == g2.name() + "s"));
         assert("test_patch gui label" && g2.label() == g2.name() + "l");
         gui g3 = g2;
         gui g4 = o;

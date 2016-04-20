@@ -79,6 +79,19 @@ typedef enum
     Z_POINTER   //!< @brief Graphical pointer
 } c_atomtype;
 
+typedef enum
+{
+    Z_GUI_BANG          = 0,
+    Z_GUI_SLIDERH       = 1,
+    Z_GUI_SLIDERV       = 2,
+    Z_GUI_TOGGLE        = 3,
+    Z_GUI_NUMBER        = 4,
+    Z_GUI_RADIOH        = 5,
+    Z_GUI_RADIOV        = 6,
+    Z_GUI_VUMETER       = 7,
+    Z_GUI_PANEL         = 8
+} c_guitype;
+
 
 
 typedef void (*c_hook_bang)(struct _instance* instance, c_tie* tie);
@@ -315,6 +328,9 @@ CPD_EXTERN c_symbol* cpd_gui_get_receive_symbol(c_gui const* gui);
 
 //! @brief Gets the send symbol of a gui.
 CPD_EXTERN c_symbol* cpd_gui_get_send_symbol(c_gui const* gui);
+
+//! @brief Gets the send symbol of a gui.
+CPD_EXTERN c_guitype cpd_gui_get_type(c_gui const* gui);
 
 //! @brief Gets the maximum value of a gui.
 CPD_EXTERN float cpd_gui_get_maximum_value(c_gui const* gui);
