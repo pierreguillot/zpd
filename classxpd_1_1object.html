@@ -110,17 +110,22 @@ Inheritance diagram for xpd::object:</div>
  <div class="center">
   <img src="classxpd_1_1object.png" usemap="#xpd::object_map" alt=""/>
   <map id="xpd::object_map" name="xpd::object_map">
-<area href="classxpd_1_1gui.html" title="The hui. " alt="xpd::gui" shape="rect" coords="0,56,72,80"/>
+<area href="classxpd_1_1gui.html" title="The gui. " alt="xpd::gui" shape="rect" coords="0,56,72,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ac6e19795efa28d4bf4e2a08efa14a8c8"><td class="memItemLeft" align="right" valign="top">xpd_constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1object.html#ac6e19795efa28d4bf4e2a08efa14a8c8">object</a> () xpd_noexcept</td></tr>
+<tr class="memdesc:ac6e19795efa28d4bf4e2a08efa14a8c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#ac6e19795efa28d4bf4e2a08efa14a8c8">More...</a><br/></td></tr>
+<tr class="separator:ac6e19795efa28d4bf4e2a08efa14a8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6e4d70274abd0cc1913a70c17369572"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6e4d70274abd0cc1913a70c17369572"></a>
-xpd_constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>object</b> (<a class="el" href="classxpd_1_1object.html">object</a> const &amp;other) xpd_noexcept</td></tr>
+xpd_constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1object.html#af6e4d70274abd0cc1913a70c17369572">object</a> (<a class="el" href="classxpd_1_1object.html">object</a> const &amp;other) xpd_noexcept</td></tr>
+<tr class="memdesc:af6e4d70274abd0cc1913a70c17369572"><td class="mdescLeft">&#160;</td><td class="mdescRight">The copy constructor. <br/></td></tr>
 <tr class="separator:af6e4d70274abd0cc1913a70c17369572"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b6f975f2d3f05e563dabbed10dd149e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b6f975f2d3f05e563dabbed10dd149e"></a>
-<a class="el" href="classxpd_1_1object.html">object</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classxpd_1_1object.html">object</a> const &amp;other) xpd_noexcept</td></tr>
+<a class="el" href="classxpd_1_1object.html">object</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1object.html#a9b6f975f2d3f05e563dabbed10dd149e">operator=</a> (<a class="el" href="classxpd_1_1object.html">object</a> const &amp;other) xpd_noexcept</td></tr>
+<tr class="memdesc:a9b6f975f2d3f05e563dabbed10dd149e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The copy operator. <br/></td></tr>
 <tr class="separator:a9b6f975f2d3f05e563dabbed10dd149e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71ada28f374684ed11ba8103783015ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71ada28f374684ed11ba8103783015ec"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1object.html#a71ada28f374684ed11ba8103783015ec">~object</a> ()</td></tr>
@@ -176,8 +181,35 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>patch</b></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The object. </p>
-<p>In fact this just a description of an object. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<p>The object is can only be valid if it has been created by a patch. The interactions with an object are limited, you can only retrieve some basic informations. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ac6e19795efa28d4bf4e2a08efa14a8c8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">xpd_constexpr xpd::object::object </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default constructor. </p>
+<p>Allocates an invalid object. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a2c31e0f8ed6fd0218eeab27d00c74e02"></a>
 <div class="memitem">
 <div class="memproto">
@@ -198,8 +230,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>patch</b></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Checks the validity of the symbol. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if the symbol if valid, otherwise false. </dd></dl>
+<p>Checks the validity of the object. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the object if valid, otherwise false. </dd></dl>
 
 </div>
 </div>

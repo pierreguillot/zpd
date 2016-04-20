@@ -13,7 +13,7 @@ var indexSectionsWithContent =
   3: "mt",
   4: "c",
   5: "clt",
-  6: "abceflnpsz",
+  6: "abceflnprstvz",
   7: "et",
   8: "t"
 };

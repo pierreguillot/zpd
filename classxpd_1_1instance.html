@@ -124,10 +124,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a0fcf6e6cab4cba33bb29e032652845df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fcf6e6cab4cba33bb29e032652845df"></a>
-<a class="el" href="classxpd_1_1patch.html">patch</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#a0fcf6e6cab4cba33bb29e032652845df">load</a> (std::string const &amp;name, std::string const &amp;path)</td></tr>
-<tr class="memdesc:a0fcf6e6cab4cba33bb29e032652845df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a patch. <br/></td></tr>
-<tr class="separator:a0fcf6e6cab4cba33bb29e032652845df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8511d82adc81c27131ece0fc55a131f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8511d82adc81c27131ece0fc55a131f5"></a>
+<a class="el" href="classxpd_1_1patch.html">patch</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#a8511d82adc81c27131ece0fc55a131f5">load</a> (std::string const &amp;name, std::string const &amp;path)</td></tr>
+<tr class="memdesc:a8511d82adc81c27131ece0fc55a131f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a patch. <br/></td></tr>
+<tr class="separator:a8511d82adc81c27131ece0fc55a131f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a044f6a097236eb5a41ad00a1bfb6d36c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a044f6a097236eb5a41ad00a1bfb6d36c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#a044f6a097236eb5a41ad00a1bfb6d36c">close</a> (<a class="el" href="classxpd_1_1patch.html">patch</a> &amp;p)</td></tr>
 <tr class="memdesc:a044f6a097236eb5a41ad00a1bfb6d36c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a patch. <br/></td></tr>
@@ -168,15 +168,17 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:abaadf34fb94e960d613874f746dd6d2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a post from the console. <br/></td></tr>
 <tr class="separator:abaadf34fb94e960d613874f746dd6d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6eefe86ab601c4b060add8b6acca74b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6eefe86ab601c4b060add8b6acca74b2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>bind</b> (<a class="el" href="classxpd_1_1tie.html">tie</a> name)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#a6eefe86ab601c4b060add8b6acca74b2">bind</a> (<a class="el" href="classxpd_1_1tie.html">tie</a> name)</td></tr>
+<tr class="memdesc:a6eefe86ab601c4b060add8b6acca74b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds the instance to a tie. <br/></td></tr>
 <tr class="separator:a6eefe86ab601c4b060add8b6acca74b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27d25139a5e9dce583ee9c8fa1f7ad08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27d25139a5e9dce583ee9c8fa1f7ad08"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>unbind</b> (<a class="el" href="classxpd_1_1tie.html">tie</a> name)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#a27d25139a5e9dce583ee9c8fa1f7ad08">unbind</a> (<a class="el" href="classxpd_1_1tie.html">tie</a> name)</td></tr>
+<tr class="memdesc:a27d25139a5e9dce583ee9c8fa1f7ad08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unbinds the instance from a tie. <br/></td></tr>
 <tr class="separator:a27d25139a5e9dce583ee9c8fa1f7ad08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The instance is the main interface to communicate within the xpd environment. </p>
-<p>The instance manages the posts to the console, the midi events, the messages through tie and the digital signal processing. It is also the interface to load and delete patches. </p>
+<p>The instance manages the posts to the console, the midi events, the messages and the digital signal processing. It is also the interface to load and delete patches. </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>set the instance at each call of method </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a46e9063946092a3064227afa28805246"></a>

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['panel',['panel',['../classxpd_1_1gui.html#a8648cac572222534d9d866723e3b6014a54f4e5264f15b9ca48333c55bc980fcb',1,'xpd::gui']]],
+  ['patch',['patch',['../classxpd_1_1patch.html#a0ed27d6d1d0382971a3cca6673f435ed',1,'xpd::patch::patch() xpd_noexcept'],['../classxpd_1_1patch.html#a1b0bf8389c5cbf17fde9fe85b5bec71d',1,'xpd::patch::patch(patch const &amp;other) xpd_noexcept']]],
   ['patch',['patch',['../classxpd_1_1patch.html',1,'xpd']]],
   ['path',['path',['../classxpd_1_1patch.html#a12f9bd12dee9c5740825a38f7f691b2e',1,'xpd::patch']]],
   ['perform',['perform',['../classxpd_1_1instance.html#aa58c9dd26ace88323dd85330a9964f5a',1,'xpd::instance']]],

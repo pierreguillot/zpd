@@ -224,6 +224,21 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga342e7755d31ab129c17d1ea05c9ffe2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of messages in a list.  <a href="group__cpd.html#ga342e7755d31ab129c17d1ea05c9ffe2a">More...</a><br/></td></tr>
 <tr class="separator:ga342e7755d31ab129c17d1ea05c9ffe2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga178a249e9ab438531bc925436532a216"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>c_guitype</b> { <br/>
+&#160;&#160;<b>Z_GUI_BANG</b> = 0, 
+<b>Z_GUI_SLIDERH</b> = 1, 
+<b>Z_GUI_SLIDERV</b> = 2, 
+<b>Z_GUI_TOGGLE</b> = 3, 
+<br/>
+&#160;&#160;<b>Z_GUI_NUMBER</b> = 4, 
+<b>Z_GUI_RADIOH</b> = 5, 
+<b>Z_GUI_RADIOV</b> = 6, 
+<b>Z_GUI_VUMETER</b> = 7, 
+<br/>
+&#160;&#160;<b>Z_GUI_PANEL</b> = 8
+<br/>
+ }</td></tr>
+<tr class="separator:ga178a249e9ab438531bc925436532a216"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -349,14 +364,18 @@ CPD_EXTERN char&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 CPD_EXTERN <a class="el" href="group__cpd.html#gaa6979587377aae73aee5ece0274142e1">c_symbol</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#gaa3085b9c99edfc94502bd89ba37f578d">cpd_gui_get_label</a> (c_gui const *gui)</td></tr>
 <tr class="memdesc:gaa3085b9c99edfc94502bd89ba37f578d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of a gui. <br/></td></tr>
 <tr class="separator:gaa3085b9c99edfc94502bd89ba37f578d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab62feecb7ca6725fb92c9b7b057618c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaab62feecb7ca6725fb92c9b7b057618c"></a>
-CPD_EXTERN <a class="el" href="group__cpd.html#gaa6979587377aae73aee5ece0274142e1">c_symbol</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#gaab62feecb7ca6725fb92c9b7b057618c">cpd_gui_get_receive_symbol</a> (c_gui const *gui)</td></tr>
-<tr class="memdesc:gaab62feecb7ca6725fb92c9b7b057618c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the receive symbol of a gui. <br/></td></tr>
-<tr class="separator:gaab62feecb7ca6725fb92c9b7b057618c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f6c3d69d295ca81414b966c41c12f7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8f6c3d69d295ca81414b966c41c12f7d"></a>
-CPD_EXTERN <a class="el" href="group__cpd.html#gaa6979587377aae73aee5ece0274142e1">c_symbol</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#ga8f6c3d69d295ca81414b966c41c12f7d">cpd_gui_get_send_symbol</a> (c_gui const *gui)</td></tr>
-<tr class="memdesc:ga8f6c3d69d295ca81414b966c41c12f7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the send symbol of a gui. <br/></td></tr>
-<tr class="separator:ga8f6c3d69d295ca81414b966c41c12f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00d48a54b800fbb150defa3aa8c0c086"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga00d48a54b800fbb150defa3aa8c0c086"></a>
+CPD_EXTERN <a class="el" href="group__cpd.html#gaa4ec68b01e8186ffce7d9df6372b8772">c_tie</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#ga00d48a54b800fbb150defa3aa8c0c086">cpd_gui_get_receive_tie</a> (c_gui const *gui)</td></tr>
+<tr class="memdesc:ga00d48a54b800fbb150defa3aa8c0c086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the receive symbol of a gui. <br/></td></tr>
+<tr class="separator:ga00d48a54b800fbb150defa3aa8c0c086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba78152553c5cd0fd37ffdcde715dd8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaba78152553c5cd0fd37ffdcde715dd8f"></a>
+CPD_EXTERN <a class="el" href="group__cpd.html#gaa4ec68b01e8186ffce7d9df6372b8772">c_tie</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#gaba78152553c5cd0fd37ffdcde715dd8f">cpd_gui_get_send_tie</a> (c_gui const *gui)</td></tr>
+<tr class="memdesc:gaba78152553c5cd0fd37ffdcde715dd8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the send symbol of a gui. <br/></td></tr>
+<tr class="separator:gaba78152553c5cd0fd37ffdcde715dd8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54d7824cdde84215ee91d9f862a8710c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga54d7824cdde84215ee91d9f862a8710c"></a>
+CPD_EXTERN c_guitype&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#ga54d7824cdde84215ee91d9f862a8710c">cpd_gui_get_type</a> (c_gui const *gui)</td></tr>
+<tr class="memdesc:ga54d7824cdde84215ee91d9f862a8710c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the send symbol of a gui. <br/></td></tr>
+<tr class="separator:ga54d7824cdde84215ee91d9f862a8710c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2902f5c5e1f3e0b3beb16208eec0bbe6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2902f5c5e1f3e0b3beb16208eec0bbe6"></a>
 CPD_EXTERN float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#ga2902f5c5e1f3e0b3beb16208eec0bbe6">cpd_gui_get_maximum_value</a> (c_gui const *gui)</td></tr>
 <tr class="memdesc:ga2902f5c5e1f3e0b3beb16208eec0bbe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the maximum value of a gui. <br/></td></tr>
@@ -373,10 +392,14 @@ CPD_EXTERN int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 CPD_EXTERN float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#gaa6315a53bcad9451cc7b2321eea14f91">cpd_gui_get_value</a> (c_gui const *gui)</td></tr>
 <tr class="memdesc:gaa6315a53bcad9451cc7b2321eea14f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of steps of a gui. <br/></td></tr>
 <tr class="separator:gaa6315a53bcad9451cc7b2321eea14f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8e1ea0b1d46619334dfb5b20769be58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf8e1ea0b1d46619334dfb5b20769be58"></a>
-CPD_EXTERN void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#gaf8e1ea0b1d46619334dfb5b20769be58">cpd_gui_get_label_position</a> (c_gui const *gui, c_patch const *patch, int *x, int *y)</td></tr>
-<tr class="memdesc:gaf8e1ea0b1d46619334dfb5b20769be58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the bounds of a gui. <br/></td></tr>
-<tr class="separator:gaf8e1ea0b1d46619334dfb5b20769be58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59571a748ee3ae9695b1510993c7b152"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga59571a748ee3ae9695b1510993c7b152"></a>
+CPD_EXTERN int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#ga59571a748ee3ae9695b1510993c7b152">cpd_gui_get_label_x</a> (c_gui const *gui, c_patch const *patch)</td></tr>
+<tr class="memdesc:ga59571a748ee3ae9695b1510993c7b152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the x position of the label of a gui. <br/></td></tr>
+<tr class="separator:ga59571a748ee3ae9695b1510993c7b152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fcf4da6373117fd834fac4d1b8ceaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga31fcf4da6373117fd834fac4d1b8ceaa"></a>
+CPD_EXTERN int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#ga31fcf4da6373117fd834fac4d1b8ceaa">cpd_gui_get_label_y</a> (c_gui const *gui, c_patch const *patch)</td></tr>
+<tr class="memdesc:ga31fcf4da6373117fd834fac4d1b8ceaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the y position of the label of a gui. <br/></td></tr>
+<tr class="separator:ga31fcf4da6373117fd834fac4d1b8ceaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf61baf4edac7c138bd0507a2a0772969"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf61baf4edac7c138bd0507a2a0772969"></a>
 CPD_EXTERN <a class="el" href="group__cpd.html#gaa4ec68b01e8186ffce7d9df6372b8772">c_tie</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpd.html#gaf61baf4edac7c138bd0507a2a0772969">cpd_tie_create</a> (const char *name)</td></tr>
 <tr class="memdesc:gaf61baf4edac7c138bd0507a2a0772969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an opaque tie that can be understood by Pure Data. <br/></td></tr>

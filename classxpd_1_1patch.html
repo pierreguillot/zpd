@@ -98,13 +98,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>The patch.  
+<p>The patch is the interface that manages objects.  
  <a href="classxpd_1_1patch.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="xpd__patch_8hpp_source.html">xpd_patch.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a0ed27d6d1d0382971a3cca6673f435ed"><td class="memItemLeft" align="right" valign="top">xpd_constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1patch.html#a0ed27d6d1d0382971a3cca6673f435ed">patch</a> () xpd_noexcept</td></tr>
+<tr class="memdesc:a0ed27d6d1d0382971a3cca6673f435ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#a0ed27d6d1d0382971a3cca6673f435ed">More...</a><br/></td></tr>
+<tr class="separator:a0ed27d6d1d0382971a3cca6673f435ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b0bf8389c5cbf17fde9fe85b5bec71d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b0bf8389c5cbf17fde9fe85b5bec71d"></a>
+xpd_constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1patch.html#a1b0bf8389c5cbf17fde9fe85b5bec71d">patch</a> (<a class="el" href="classxpd_1_1patch.html">patch</a> const &amp;other) xpd_noexcept</td></tr>
+<tr class="memdesc:a1b0bf8389c5cbf17fde9fe85b5bec71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The copy constructor. <br/></td></tr>
+<tr class="separator:a1b0bf8389c5cbf17fde9fe85b5bec71d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d218ee0a3541a0209c8870471656ca1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d218ee0a3541a0209c8870471656ca1"></a>
+<a class="el" href="classxpd_1_1patch.html">patch</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1patch.html#a9d218ee0a3541a0209c8870471656ca1">operator=</a> (<a class="el" href="classxpd_1_1patch.html">patch</a> const &amp;other) xpd_noexcept</td></tr>
+<tr class="memdesc:a9d218ee0a3541a0209c8870471656ca1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The copy operator. <br/></td></tr>
+<tr class="separator:a9d218ee0a3541a0209c8870471656ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64840110010f232c5e2f473fa7bc9772"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64840110010f232c5e2f473fa7bc9772"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1patch.html#a64840110010f232c5e2f473fa7bc9772">~patch</a> () xpd_noexcept</td></tr>
+<tr class="memdesc:a64840110010f232c5e2f473fa7bc9772"><td class="mdescLeft">&#160;</td><td class="mdescRight">The destructor. <br/></td></tr>
+<tr class="separator:a64840110010f232c5e2f473fa7bc9772"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afab6a149850ea13868ec2639a85a68ca"><td class="memItemLeft" align="right" valign="top">xpd_constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1patch.html#afab6a149850ea13868ec2639a85a68ca">operator bool</a> () const xpd_noexcept</td></tr>
+<tr class="separator:afab6a149850ea13868ec2639a85a68ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a273deea51383ba07401ff3a596843a58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a273deea51383ba07401ff3a596843a58"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1patch.html#a273deea51383ba07401ff3a596843a58">name</a> () const </td></tr>
 <tr class="memdesc:a273deea51383ba07401ff3a596843a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the file's name. <br/></td></tr>
@@ -145,9 +162,62 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>instance</b></td></t
 <tr class="separator:a4be882f1f7adb23031cabee74d6d1699"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The patch. </p>
-<p>The instance is a wrapper for the Pure Data's native patch. With the default constructor, the patch won't be initialized. A valid patch should be created via an instance. The patch has some kind of smart pointer behavior so when an patch object is no more useful the object is deleted. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>The patch is the interface that manages objects. </p>
+<p>The patch is can only be valid if it has been created by an instance. The interactions with a patch are limited to its retrieve some basic information. Nevertheless, the patch allows to retrieve its objects. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a0ed27d6d1d0382971a3cca6673f435ed"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">xpd_constexpr xpd::patch::patch </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default constructor. </p>
+<p>Allocates an invalid patch. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="afab6a149850ea13868ec2639a85a68ca"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">xpd_constexpr xpd::patch::operator bool </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Checks the validity of the patch. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the patch if valid, otherwise false. </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>xpd/<a class="el" href="xpd__patch_8hpp_source.html">xpd_patch.hpp</a></li>
 <li>xpd/xpd_patch.cpp</li>
 </ul>

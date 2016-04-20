@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['symbol_5ft',['symbol_t',['../classxpd_1_1atom.html#ae31c41d85b1f4800dc44cfdf43ad6ec2a5841eeeaac55a0cdfdb21f16cef88181',1,'xpd::atom']]]
+  ['radio_5fhorizontal',['radio_horizontal',['../classxpd_1_1gui.html#a8648cac572222534d9d866723e3b6014af0407a778949bf3ce8dfdd29d71402fb',1,'xpd::gui']]],
+  ['radio_5fvertical',['radio_vertical',['../classxpd_1_1gui.html#a8648cac572222534d9d866723e3b6014ac4572a6874a8b36729d09795a173317a',1,'xpd::gui']]]
 ];
