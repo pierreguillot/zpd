@@ -272,10 +272,10 @@ CPD_EXTERN int cpd_patch_get_width(c_patch const* patch);
 CPD_EXTERN int cpd_patch_get_height(c_patch const* patch);
 
 //! @brief Gets the first object of a patch.
-CPD_EXTERN c_object* cpd_patch_get_first_object(c_patch* patch);
+CPD_EXTERN c_object* cpd_patch_get_first_object(c_patch const* patch);
 
 //! @brief Gets the next object of a patch.
-CPD_EXTERN c_object* cpd_patch_get_next_object(c_patch* patch, c_object* previous);
+CPD_EXTERN c_object* cpd_patch_get_next_object(c_patch const* patch, c_object const* previous);
 
 
 

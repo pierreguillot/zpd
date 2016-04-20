@@ -58,48 +58,14 @@ namespace xpd
         return cpd_patch_get_height(reinterpret_cast<c_patch const *>(m_ptr));
     }
     
-    std::vector<object *> patch::objects() const xpd_noexcept
+    std::vector<object> patch::objects() const xpd_noexcept
     {
-        std::vector<object *> objects;
-        /*
-        if(isValid())
+        std::vector<object> objects;
+        for(c_object *y = cpd_patch_get_first_object(reinterpret_cast<c_patch *>(m_ptr)); y;
+            y = cpd_patch_get_next_object(reinterpret_cast<c_patch *>(m_ptr), y))
         {
-            c_symbol* hsl = cpd_symbol_create("hsl");
-            c_symbol* vsl = cpd_symbol_create("vsl");
-            c_symbol* tgl = cpd_symbol_create("tgl");
-            c_symbol* nbx = cpd_symbol_create("nbx");
-            c_symbol* vra = cpd_symbol_create("vradio");
-            c_symbol* hra = cpd_symbol_create("hradio");
-            for(c_object *y = cpd_patch_get_first_object(reinterpret_cast<c_patch *>(m_ptr)); y;
-                y = cpd_patch_get_next_object(reinterpret_cast<c_patch *>(m_ptr), y))
-            {
-                if(cpd_object_get_name(y) == hsl)
-                {
-                    objects.push_back(Gui(*this, Gui::Type::HorizontalSlider, reinterpret_cast<void *>(y)));
-                }
-                else if(cpd_object_get_name(y) == vsl)
-                {
-                    objects.push_back(Gui(*this, Gui::Type::VerticalSlider, reinterpret_cast<void *>(y)));
-                }
-                else if(cpd_object_get_name(y) == tgl)
-                {
-                    objects.push_back(Gui(*this, Gui::Type::Toggle, reinterpret_cast<void *>(y)));
-                }
-                else if(cpd_object_get_name(y) == nbx)
-                {
-                    objects.push_back(Gui(*this, Gui::Type::Number, reinterpret_cast<void *>(y)));
-                }
-                else if(cpd_object_get_name(y) == vra)
-                {
-                    objects.push_back(Gui(*this, Gui::Type::VerticalRadio, reinterpret_cast<void *>(y)));
-                }
-                else if(cpd_object_get_name(y) == hra)
-                {
-                    objects.push_back(Gui(*this, Gui::Type::HorizontalRadio, reinterpret_cast<void *>(y)));
-                }
-            }
+            objects.push_back(object(m_ptr, y));
         }
-         */
         return objects;
     }
 }

@@ -401,17 +401,27 @@ public:
     
     static void test_patch(instance_test* inst)
     {
-        patch* p = inst->load("test.pd", "/home/maison");
-        assert("test_patch patch" && !p);
-        p = inst->load("test.pd", "");
+        patch* p2 = inst->load("test.pd", "/home/maison");
+        assert("test_patch patch" && !p2);
+        patch* p = inst->load("test.pd", "");
+        p2 = inst->load("test.pd", "");
         assert("test_patch patch" && p);
+        assert("test_patch name" && p->name() == "test.pd");
+        assert("test_patch path" && !p->path().empty() && p->path() == p2->path());
+        inst->close(*p2);
         assert("test_patch patch x" && p->x() == 100);
         assert("test_patch patch y" && p->y() == 100);
         assert("test_patch patch w" && p->width() == 85);
         assert("test_patch patch h" && p->height() == 60);
         
         int todo;
-        std::vector<object*> objects(p->objects());
+        std::vector<object> objects(p->objects());
+        for(size_t i = 0; i < objects.size(); ++i)
+        {
+            assert("test_patch object bool" && bool(objects[i]));
+            assert("test_patch object name" && !objects[i].name().empty());
+            assert("test_patch object text" && !objects[i].text().empty());
+        }
         inst->close(*p);
     }
     

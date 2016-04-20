@@ -47,7 +47,7 @@ namespace xpd
         int height() const xpd_noexcept;
         
         //! @brief Gets the objects from the patch.
-        std::vector<object*> objects() const xpd_noexcept;
+        std::vector<object> objects() const xpd_noexcept;
     private:
         patch(patch const& other) xpd_delete_f;
         patch& operator=(patch const& other) xpd_delete_f;

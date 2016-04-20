@@ -695,12 +695,12 @@ int cpd_patch_get_height(c_patch const* patch)
     return patch->gl_pixheight;
 }
 
-c_object* cpd_patch_get_first_object(c_patch* patch)
+c_object* cpd_patch_get_first_object(c_patch const* patch)
 {
     return (c_object *)patch->gl_list;
 }
 
-c_object* cpd_patch_get_next_object(c_patch* patch, c_object* previous)
+c_object* cpd_patch_get_next_object(c_patch const* patch, c_object const* previous)
 {
     return (c_object *)((t_gobj *)previous)->g_next;
 }

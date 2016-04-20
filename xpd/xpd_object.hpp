@@ -17,35 +17,43 @@ namespace xpd
     {
     public:
         
+        inline xpd_constexpr object() xpd_noexcept : m_patch(xpd_nullptr), m_ptr(xpd_nullptr) {}
+        
+        inline xpd_constexpr object(object const& other) xpd_noexcept : m_patch(other.m_patch), m_ptr(other.m_ptr) {}
+        
+        inline object& operator=(object const& other) xpd_noexcept {m_patch = other.m_patch; m_ptr = other.m_ptr; return *this;}
+        
         //! @brief The destructor.
         inline virtual ~object() {};
         
+        //! @bried Checks the validity of the symbol.
+        //! @return true if the symbol if valid, otherwise false.
+        inline xpd_constexpr operator bool() const xpd_noexcept {return bool(m_patch) && bool(m_ptr);}
+        
+        //! @brief Gets the name of the object.
+        std::string name() const;
+        
         //! @brief Gets the text of the object.
-        inline std::string text() const {return m_text;}
+        std::string text() const;
         
         //! @brief Gets the x position of the object.
-        inline xpd_constexpr int x() const xpd_noexcept {return m_x;}
+        int x() const xpd_noexcept;
         
         //! @brief Gets the y position of the object.
-        inline xpd_constexpr int y() const xpd_noexcept {return m_y;}
+        int y() const xpd_noexcept;
         
         //! @brief Gets the width of the object.
-        inline xpd_constexpr int width() const xpd_noexcept {return m_width;}
+        int width() const xpd_noexcept;
         
         //! @brief Gets the height of the object.
-        inline xpd_constexpr int height() const xpd_noexcept {return m_height;}
+        int height() const xpd_noexcept;
         
     protected:
         
-        object(object const& other) xpd_delete_f;
-        object& operator=(object const& other) xpd_delete_f;
+        inline xpd_constexpr object(void const* patch, void* ptr) xpd_noexcept : m_patch(patch), m_ptr(ptr) {}
         
-        object(patch const* patch, void* ptr) xpd_noexcept {};
-        std::string m_text;
-        int         m_x;
-        int         m_y;
-        int         m_width;
-        int         m_height;
+        void const* m_patch;
+        void*       m_ptr;
         friend class patch;
     };
 }
