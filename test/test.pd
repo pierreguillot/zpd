@@ -1,34 +1,35 @@
-#N canvas 28 198 930 431 12;
-#X obj 82 213 r \$0-fromxpd;
-#X obj 192 213 notein, f 7;
-#X obj 192 334 noteout;
-#X obj 272 213 ctlin, f 6;
-#X obj 272 333 ctlout;
-#X obj 333 213 pgmin, f 6;
-#X obj 333 333 pgmout;
-#X obj 396 213 bendin, f 7;
-#X obj 475 213 touchin, f 8;
-#X obj 568 212 polytouchin, f 12;
-#X obj 699 211 midiin, f 7;
-#X obj 396 333 bendout;
-#X obj 475 333 touchout;
-#X obj 568 332 polytouchout;
-#X obj 699 331 midiout;
-#X obj 92 364 s \$0-toxpd2;
-#X obj 82 333 s \$0-toxpd1;
-#X obj 21 218 adc~;
-#X obj 21 338 dac~;
-#X obj 92 278 test_s;
-#X obj 29 34 bng 15 250 50 0 bngs bngr bngl 17 7 0 10 -262144 -1 -1
+#N canvas 28 198 707 391 12;
+#X obj 541 87 r \$0-fromxpd;
+#X obj 137 10 notein, f 7;
+#X obj 137 61 noteout;
+#X obj 217 10 ctlin, f 6;
+#X obj 217 60 ctlout;
+#X obj 278 10 pgmin, f 6;
+#X obj 278 60 pgmout;
+#X obj 341 10 bendin, f 7;
+#X obj 420 10 touchin, f 8;
+#X obj 219 281 polytouchin, f 12;
+#X obj 350 280 midiin, f 7;
+#X obj 341 60 bendout;
+#X obj 420 60 touchout;
+#X obj 219 331 polytouchout;
+#X obj 350 330 midiout;
+#X obj 551 238 s \$0-toxpd2;
+#X obj 541 207 s \$0-toxpd1;
+#X obj 29 103 adc~;
+#X obj 29 223 dac~;
+#X obj 551 152 test_s;
+#X obj 110 114 bng 15 250 50 0 bngs bngr bngl 17 7 0 10 -262144 -1
+-1;
+#X obj 161 115 tgl 15 0 tgls tglr tgll 17 7 0 10 -262144 -1 -1 0 1
 ;
-#X obj 80 35 tgl 15 0 tgls tglr tgll 17 7 0 10 -262144 -1 -1 0 1;
-#X obj 144 35 vsl 15 128 0 127 0 0 vsls vslr vsll 0 -9 0 10 -262144
+#X obj 225 115 vsl 15 128 0 127 0 0 vsls vslr vsll 0 -9 0 10 -262144
 -1 -1 0 1;
-#X obj 201 105 hsl 128 15 0 127 0 0 hsls hslr hsll -2 -8 0 10 -262144
+#X obj 282 185 hsl 128 15 0 127 0 0 hsls hslr hsll -2 -8 0 10 -262144
 -1 -1 0 1;
-#X obj 359 40 vradio 15 1 0 8 vradios vradior vradiol 0 -8 0 10 -262144
+#X obj 440 120 vradio 15 1 0 8 vradios vradior vradiol 0 -8 0 10 -262144
 -1 -1 0;
-#X obj 209 63 hradio 15 1 0 8 hradios hradior hradiol 0 -8 0 10 -262144
+#X obj 290 143 hradio 15 1 0 8 hradios hradior hradiol 0 -8 0 10 -262144
 -1 -1 0;
 #X connect 0 0 16 0;
 #X connect 0 0 19 0;
@@ -52,4 +53,4 @@
 #X connect 17 0 18 0;
 #X connect 17 1 18 1;
 #X connect 19 0 15 0;
-#X coords 0 -1 1 1 400 150 2 20 20;
+#X coords 0 -1 1 1 400 150 2 100 100;

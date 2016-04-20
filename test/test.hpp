@@ -411,6 +411,7 @@ public:
         assert("test_patch gui send" && g2.send_symbol().name() == g2.name() + "s");
         assert("test_patch gui label" && g2.label() == g2.name() + "l");
         gui g3 = g2;
+        gui g4 = o;
     }
     
     static void test_patch(instance_test* inst)
@@ -423,8 +424,8 @@ public:
         assert("test_patch name" && p->name() == "test.pd");
         assert("test_patch path" && !p->path().empty() && p->path() == p2->path());
         inst->close(*p2);
-        assert("test_patch patch x" && p->x() == 20);
-        assert("test_patch patch y" && p->y() == 20);
+        assert("test_patch patch x" && p->x() == 100);
+        assert("test_patch patch y" && p->y() == 100);
         assert("test_patch patch w" && p->width() == 400);
         assert("test_patch patch h" && p->height() == 150);
         
@@ -432,14 +433,13 @@ public:
         std::vector<object> objects(p->objects());
         for(size_t i = 0; i < objects.size(); ++i)
         {
-            gui g;
             assert("test_patch object bool" && bool(objects[i]));
             assert("test_patch object name" && !objects[i].name().empty());
             assert("test_patch object text" && !objects[i].text().empty());
             bool is_gui = true;
             try
             {
-                g = objects[i];
+                gui g = objects[i];
             }
             catch(...)
             {
