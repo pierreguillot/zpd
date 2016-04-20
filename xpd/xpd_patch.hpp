@@ -13,17 +13,32 @@ namespace xpd
 {
     class object;
     // ==================================================================================== //
-    //                                          PATCHER                                     //
+    //                                          PATCH                                       //
     // ==================================================================================== //
     
-    //! @brief The patch.
-    //! @details The instance is a wrapper for the Pure Data's native patch.
-    //! With the default constructor, the patch won't be initialized. A valid
-    //! patch should be created via an instance. The patch has some kind of smart
-    //! pointer behavior so when an patch object is no more useful the object is deleted.
+    //! @brief The patch is the interface that manages objects.
+    //! @details The patch is can only be valid if it has been created by an instance. The
+    //! interactions with a patch are limited to its retrieve some basic information.
+    //! Nevertheless, the patch allows to retrieve its objects.
     class patch
     {
     public:
+        //! @brief The default constructor.
+        //! @details Allocates an invalid patch.
+        inline xpd_constexpr patch() xpd_noexcept : m_ptr(xpd_nullptr), m_unique_id(0ul) {};
+        
+        //! @brief The copy constructor.
+        inline xpd_constexpr patch(patch const& other) xpd_noexcept : m_ptr(other.m_ptr), m_unique_id(other.m_unique_id) {}
+        
+        //! @brief The copy operator.
+        inline patch& operator=(patch const& other) xpd_noexcept {m_ptr = other.m_ptr; m_unique_id = other.m_unique_id; return *this;}
+        
+        //! @brief The destructor.
+        inline ~patch() xpd_noexcept {};
+        
+        //! @bried Checks the validity of the patch.
+        //! @return true if the patch if valid, otherwise false.
+        inline xpd_constexpr operator bool() const xpd_noexcept {return bool(m_ptr);}
         
         //! @brief Gets the file's name.
         std::string name() const;
@@ -49,14 +64,11 @@ namespace xpd
         //! @brief Gets the objects from the patch.
         std::vector<object> objects() const xpd_noexcept;
     private:
-        patch(patch const& other) xpd_delete_f;
-        patch& operator=(patch const& other) xpd_delete_f;
         
-        patch(void* ptr, size_t uid) xpd_noexcept;
-        ~patch() xpd_noexcept;
+        inline xpd_constexpr patch(void* ptr, size_t uid) xpd_noexcept : m_ptr(ptr), m_unique_id(uid) {}
         
-        void*               m_ptr;
-        const size_t        m_unique_id;
+        void*  m_ptr;
+        size_t m_unique_id;
         friend class instance;
     };
 }

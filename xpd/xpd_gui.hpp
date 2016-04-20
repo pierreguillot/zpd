@@ -11,8 +11,8 @@
 
 namespace xpd
 {
-    //! @brief The hui.
-    //! @details In fact this just a description of an gui.
+    //! @brief The gui.
+    //! @details The gui is a specification of an object.
     class gui : public object
     {
     public:
@@ -27,14 +27,14 @@ namespace xpd
         
         gui& operator=(object const& other);
         
+        //! @brief The destructor.
+        inline virtual ~gui() xpd_noexcept {};
+        
         symbol receive_symbol() const xpd_noexcept;
         
         symbol send_symbol() const xpd_noexcept;
         
         symbol label() const xpd_noexcept;
-        
-        //! @brief The destructor.
-        inline virtual ~gui() {};
     };
 }
 

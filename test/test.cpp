@@ -47,10 +47,9 @@ typedef void (*test_method)(void *);
 
 int main(int argc, char** argv)
 {
-    instance_test *inst1 = new instance_test();
-    instance_test *inst2 = new instance_test();
+    instance_test inst1;
+    instance_test inst2;
     
-    assert("test_dsp instance_test" && inst1 && inst2);
     std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
     << "." << environment::version_bug() << "\n";
@@ -58,13 +57,18 @@ int main(int argc, char** argv)
     environment::searpath_clear();
     environment::searchpath_add(test_get_patch_folder(argv[0]));
     
-    type_test::test_tie();
-    type_test::test_symbol();
+    std::cout << "perform tie, symbol and atom...";
+    {
+        type_test::test_tie();
+        type_test::test_symbol();
+        type_test::test_atom();
+    }
+    std::cout << "ok\n";
     
     std::cout << "perform tests for console posts...";
     {
-        synch::Thread t1((test_method)(&instance_test::test_post), inst1);
-        synch::Thread t2((test_method)(&instance_test::test_post), inst2);
+        synch::Thread t1((test_method)(&instance_test::test_post), &inst1);
+        synch::Thread t2((test_method)(&instance_test::test_post), &inst2);
         t1.join();
         t2.join();
     }
@@ -72,8 +76,8 @@ int main(int argc, char** argv)
     
     std::cout << "perform tests for binding and atoms...";
     {
-        synch::Thread t1((test_method)(&instance_test::test_message), inst1);
-        synch::Thread t2((test_method)(&instance_test::test_message), inst2);
+        synch::Thread t1((test_method)(&instance_test::test_message), &inst1);
+        synch::Thread t2((test_method)(&instance_test::test_message), &inst2);
         t1.join();
         t2.join();
     }
@@ -81,8 +85,8 @@ int main(int argc, char** argv)
     
     std::cout << "perform tests for midi events...";
     {
-        synch::Thread t1((test_method)(&instance_test::test_midi), inst1);
-        synch::Thread t2((test_method)(&instance_test::test_midi), inst2);
+        synch::Thread t1((test_method)(&instance_test::test_midi), &inst1);
+        synch::Thread t2((test_method)(&instance_test::test_midi), &inst2);
         t1.join();
         t2.join();
     }
@@ -90,8 +94,8 @@ int main(int argc, char** argv)
     
     std::cout << "perform tests for dsp...";
     {
-        synch::Thread t1((test_method)(&instance_test::test_dsp), inst1);
-        synch::Thread t2((test_method)(&instance_test::test_dsp), inst2);
+        synch::Thread t1((test_method)(&instance_test::test_dsp), &inst1);
+        synch::Thread t2((test_method)(&instance_test::test_dsp), &inst2);
         t1.join();
         t2.join();
     }
@@ -99,14 +103,12 @@ int main(int argc, char** argv)
     
     std::cout << "perform tests for patchs...";
     {
-        synch::Thread t1((test_method)(&instance_test::test_patch), inst1);
-        synch::Thread t2((test_method)(&instance_test::test_patch), inst2);
+        synch::Thread t1((test_method)(&instance_test::test_patch), &inst1);
+        synch::Thread t2((test_method)(&instance_test::test_patch), &inst2);
         t1.join();
         t2.join();
     }
     std::cout << "ok\n";
     
-    delete inst1;
-    delete inst2;
     return 0;
 }

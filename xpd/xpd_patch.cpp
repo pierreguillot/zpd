@@ -15,18 +15,8 @@ extern "C"
 namespace xpd
 {    
     // ==================================================================================== //
-    //                                          PATCHER                                     //
+    //                                          PATCH                                       //
     // ==================================================================================== //
-    
-    patch::patch(void* ptr, size_t uid) xpd_noexcept : m_ptr(ptr), m_unique_id(uid)
-    {
-        ;
-    }
-    
-    patch::~patch() xpd_noexcept
-    {
-        ;
-    }
     
     std::string patch::name() const
     {

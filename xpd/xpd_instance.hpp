@@ -25,8 +25,7 @@ namespace xpd
     
     //! @brief The instance is the main interface to communicate within the xpd environment.
     //! @details The instance manages the posts to the console, the midi events, the messages
-    //! through tie and the digital signal processing. It is also the interface to load and
-    //! delete patches.
+    //! and the digital signal processing. It is also the interface to load and delete patches.
     //! @todo set the instance at each call of method
     class instance
     {
@@ -47,7 +46,7 @@ namespace xpd
     protected:
         
         //! @brief Loads a patch.
-        patch* load(std::string const& name, std::string const& path);
+        patch load(std::string const& name, std::string const& path);
         
         //! @brief Closes a patch.
         void close(patch& p);
@@ -82,16 +81,17 @@ namespace xpd
         virtual void receive(console::post const& post) {};
 #define LCOV_EXCL_STOP
         
+        //! @brief Binds the instance to a tie.
         void bind(tie name);
         
+        //! @brief Unbinds the instance from a tie.
         void unbind(tie name);
         
     private:
         instance(instance const& other) xpd_delete_f;
         instance& operator=(instance const& other) xpd_delete_f;
         struct internal;
-        
-        internal*           m_ptr;
+        internal* m_ptr;
     };
 
 }

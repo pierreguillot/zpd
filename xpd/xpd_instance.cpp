@@ -221,10 +221,10 @@ namespace xpd
     }
     
     
-    patch* instance::load(std::string const& name, std::string const& path)
+    patch instance::load(std::string const& name, std::string const& path)
     {
         int todo;
-        patch* p = xpd_nullptr;
+        patch p;
         void* ptr = xpd_nullptr;
         environment::lock();
         cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
@@ -239,8 +239,7 @@ namespace xpd
         
         if(ptr)
         {
-            p = new patch(ptr,
-                          size_t(cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(ptr))));
+            p = patch(ptr, size_t(cpd_patch_get_dollarzero(reinterpret_cast<c_patch *>(ptr))));
         }
         environment::unlock();
         return p;
@@ -252,7 +251,6 @@ namespace xpd
         environment::lock();
         cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
         cpd_patch_free(reinterpret_cast<c_patch *>(p.m_ptr));
-        delete &p;
         environment::unlock();
     }
     

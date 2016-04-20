@@ -12,22 +12,26 @@
 namespace xpd
 {
     //! @brief The object.
-    //! @details In fact this just a description of an object.
+    //! @details The object is can only be valid if it has been created by a patch. The
+    //! interactions with an object are limited, you can only retrieve some basic informations.
     class object
     {
     public:
-        
+        //! @brief The default constructor.
+        //! @details Allocates an invalid object.
         inline xpd_constexpr object() xpd_noexcept : m_patch(xpd_nullptr), m_ptr(xpd_nullptr) {}
         
+        //! @brief The copy constructor.
         inline xpd_constexpr object(object const& other) xpd_noexcept : m_patch(other.m_patch), m_ptr(other.m_ptr) {}
         
+        //! @brief The copy operator.
         inline object& operator=(object const& other) xpd_noexcept {m_patch = other.m_patch; m_ptr = other.m_ptr; return *this;}
         
         //! @brief The destructor.
         inline virtual ~object() {};
         
-        //! @bried Checks the validity of the symbol.
-        //! @return true if the symbol if valid, otherwise false.
+        //! @bried Checks the validity of the object.
+        //! @return true if the object if valid, otherwise false.
         inline xpd_constexpr operator bool() const xpd_noexcept {return bool(m_patch) && bool(m_ptr);}
         
         //! @brief Gets the name of the object.

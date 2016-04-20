@@ -59,6 +59,17 @@ public:
         assert("test_tie 4" && t0.name() == "zozo" && t1.name() == "blab" && t2.name() == "zozo" && t3.name() == "zaza");
     }
     
+    static void test_atom()
+    {
+        atom a0;
+        assert("test_atom 1" && a0.type() == atom::null_t);
+        atom a1(1.f);
+        assert("test_atom 2" && a1.type() == atom::float_t && float(a1) == 1.f);
+        atom a2(symbol("zozo"));
+        assert("test_atom 3" && a2.type() == atom::symbol_t && symbol(a2) == symbol("zozo"));
+        
+    }
+    
 };
 
 class instance_test : private instance, public console::history
@@ -101,8 +112,6 @@ public:
         assert("receive atoms s" && s == m_name);
         assert("receive atoms size" && atoms.size() == temp.size());
         
-        int to_check_strange;
-        /*
         for(size_t i = 0; i < atoms.size(); ++i)
         {
             assert("receive atoms type" && atoms[i].type() == temp[i].type());
@@ -115,7 +124,6 @@ public:
                 assert("receive atoms type" && symbol(atoms[i]) == symbol(temp[i]));
             }
         }
-         */
     }
     
     void receive(midi::event const& event)
@@ -253,9 +261,9 @@ public:
     static void test_message(instance_test* inst)
     {
         char uid[512];
-        patch* p = inst->load("test.pd", "");
+        patch p = inst->load("test.pd", "");
         assert("test_message patch" && p);
-        sprintf(uid, "%i", int(p->unique_id()));
+        sprintf(uid, "%i", int(p.unique_id()));
         
         tie from(std::string(uid) + "-fromxpd");
         tie to1(std::string(uid) + "-toxpd1");
@@ -305,8 +313,7 @@ public:
             inst->m_atoms[2] = "zuzu";
             assert("test_message symbol" && inst->m_atoms[2].type() == atom::symbol_t && symbol(inst->m_atoms[2]).name() == "zuzu");
             inst->m_atoms.push_back(symbol("zizi"));
-            int to_see;
-            //assert("test_message symbol" && inst->m_atoms[3].type() == atom::symbol_t && symbol(inst->m_atoms[3]).name() == "zizi");
+            assert("test_message symbol" && inst->m_atoms[3].type() == atom::symbol_t && symbol(inst->m_atoms[3]).name() == "zizi");
             inst->send(from, inst->m_name, inst->m_atoms);
         }
         inst->unbind(to1);
@@ -316,12 +323,12 @@ public:
         assert("test_message symbol" && inst->m_count_symbol == XPD_TEST_NLOOP * 2);
         assert("test_message list" && inst->m_count_list == XPD_TEST_NLOOP * 2);
         assert("test_message anything" && inst->m_count_anything == XPD_TEST_NLOOP * 2);
-        inst->close(*p);
+        inst->close(p);
     }
     
     static void test_midi(instance_test* inst)
     {
-        patch* p = inst->load("test.pd", "");
+        patch p = inst->load("test.pd", "");
         assert("test_midi patch" && p);
         inst->m_count_note = 0;
         inst->m_count_ctl = 0;
@@ -349,7 +356,7 @@ public:
         assert("test_midi after" && inst->m_count_after == XPD_TEST_NLOOP);
         assert("test_midi poly" && inst->m_count_poly == XPD_TEST_NLOOP);
         assert("test_midi byte" && inst->m_count_byte == XPD_TEST_NLOOP);
-        inst->close(*p);
+        inst->close(p);
     }
     
     
@@ -380,7 +387,7 @@ public:
     
     static void test_dsp(instance_test* inst)
     {
-        patch* p = inst->load("test.pd", "");
+        patch p = inst->load("test.pd", "");
         assert("test_dsp patch" && p);
         inst->m_input[0] = new float[256];
         inst->m_input[1] = new float[256];
@@ -396,15 +403,15 @@ public:
         delete [] inst->m_input[1];
         delete [] inst->m_output[0];
         delete [] inst->m_output[1];
-        inst->close(*p);
+        inst->close(p);
     }
     
-    static void test_object_int(patch* p, object o)
+    static void test_object_int(patch p, object o)
     {
-        assert("test_patch object outside" && (o.x() >= p->width() || o.y() >= p->height() || o.x() + o.width() <= 0 || o.y() + o.height() <= 0));
+        assert("test_patch object outside" && (o.x() >= p.width() || o.y() >= p.height() || o.x() + o.width() <= 0 || o.y() + o.height() <= 0));
     }
     
-    static void test_gui_int(patch* p, object o)
+    static void test_gui_int(patch p, object o)
     {
         gui g2 = o;
         assert("test_patch gui receive" && g2.receive_symbol().name() == g2.name() + "r");
@@ -416,21 +423,21 @@ public:
     
     static void test_patch(instance_test* inst)
     {
-        patch* p2 = inst->load("test.pd", "/home/maison");
+        patch p2 = inst->load("test.pd", "/home/maison");
         assert("test_patch patch" && !p2);
-        patch* p = inst->load("test.pd", "");
+        patch p = inst->load("test.pd", "");
         p2 = inst->load("test.pd", "");
         assert("test_patch patch" && p);
-        assert("test_patch name" && p->name() == "test.pd");
-        assert("test_patch path" && !p->path().empty() && p->path() == p2->path());
-        inst->close(*p2);
-        assert("test_patch patch x" && p->x() == 100);
-        assert("test_patch patch y" && p->y() == 100);
-        assert("test_patch patch w" && p->width() == 400);
-        assert("test_patch patch h" && p->height() == 150);
+        assert("test_patch name" && p.name() == "test.pd");
+        assert("test_patch path" && !p.path().empty() && p.path() == p2.path());
+        inst->close(p2);
+        assert("test_patch patch x" && p.x() == 100);
+        assert("test_patch patch y" && p.y() == 100);
+        assert("test_patch patch w" && p.width() == 400);
+        assert("test_patch patch h" && p.height() == 150);
         
         int todo;
-        std::vector<object> objects(p->objects());
+        std::vector<object> objects(p.objects());
         for(size_t i = 0; i < objects.size(); ++i)
         {
             assert("test_patch object bool" && bool(objects[i]));
@@ -452,7 +459,7 @@ public:
             }
             
         }
-        inst->close(*p);
+        inst->close(p);
     }
     
 private:
