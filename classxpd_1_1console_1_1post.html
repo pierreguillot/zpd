@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>zpd: Main Page</title>
+<title>zpd: xpd::console::post Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -38,10 +38,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -61,7 +61,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-</div><!-- top -->
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -76,11 +82,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>xpd</b></li><li class="navelem"><a class="el" href="classxpd_1_1console.html">console</a></li><li class="navelem"><a class="el" href="classxpd_1_1console_1_1post.html">post</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classxpd_1_1console_1_1post-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">zpd Documentation</div>  </div>
+<div class="title">xpd::console::post Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class that describes a post.  
+ <a href="classxpd_1_1console_1_1post.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="xpd__console_8hpp_source.html">xpd_console.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ace76bdf254c41d4cf2728f3fb6bac1f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace76bdf254c41d4cf2728f3fb6bac1f8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>post</b> (<a class="el" href="classxpd_1_1console.html#a05c83b1be7e6aefc62db9e473efaca2e">level</a> t, std::string txt) xpd_noexcept</td></tr>
+<tr class="separator:ace76bdf254c41d4cf2728f3fb6bac1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:adcf5b9534237a061841dcdd2ded85237"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcf5b9534237a061841dcdd2ded85237"></a>
+<a class="el" href="classxpd_1_1console.html#a05c83b1be7e6aefc62db9e473efaca2e">level</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1console_1_1post.html#adcf5b9534237a061841dcdd2ded85237">type</a></td></tr>
+<tr class="memdesc:adcf5b9534237a061841dcdd2ded85237"><td class="mdescLeft">&#160;</td><td class="mdescRight">The level of the post. <br/></td></tr>
+<tr class="separator:adcf5b9534237a061841dcdd2ded85237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a619893d07949609c25af34b55d1612f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a619893d07949609c25af34b55d1612f3"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1console_1_1post.html#a619893d07949609c25af34b55d1612f3">text</a></td></tr>
+<tr class="memdesc:a619893d07949609c25af34b55d1612f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The text of the post. <br/></td></tr>
+<tr class="separator:a619893d07949609c25af34b55d1612f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class that describes a post. </p>
+<p>The post are used by the instance to send and receive post to and from the console. </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
+<li>xpd/<a class="el" href="xpd__console_8hpp_source.html">xpd_console.hpp</a></li>
+</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
