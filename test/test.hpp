@@ -409,8 +409,8 @@ public:
         assert("test_patch name" && p->name() == "test.pd");
         assert("test_patch path" && !p->path().empty() && p->path() == p2->path());
         inst->close(*p2);
-        assert("test_patch patch x" && p->x() == 100);
-        assert("test_patch patch y" && p->y() == 100);
+        assert("test_patch patch x" && p->x() == 20);
+        assert("test_patch patch y" && p->y() == 20);
         assert("test_patch patch w" && p->width() == 85);
         assert("test_patch patch h" && p->height() == 60);
         
@@ -421,6 +421,15 @@ public:
             assert("test_patch object bool" && bool(objects[i]));
             assert("test_patch object name" && !objects[i].name().empty());
             assert("test_patch object text" && !objects[i].text().empty());
+            if(objects[i].name() == "bng" || objects[i].name() == "tgl")
+            {
+                assert("test_patch object inside" && objects[i].x() >= 0 && objects[i].x() <= p->width()
+                && objects[i].y() >= 0 && objects[i].y() <= p->height());
+            }
+            else
+            {
+                assert("test_patch object outside" && (objects[i].x() <= 0 || objects[i].x() >= p->width() ||objects[i].y() <= 0 || objects[i].y() >= p->height()));
+            }
         }
         inst->close(*p);
     }

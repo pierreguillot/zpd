@@ -286,9 +286,19 @@ CPD_EXTERN c_symbol* cpd_object_get_name(c_object const* object);
 //! @brief Gets the name of an object.
 CPD_EXTERN void cpd_object_get_text(c_object const* object, int* size, char** text);
 
-//! @brief Gets the bounds of an object.
-CPD_EXTERN void cpd_object_get_bounds(c_object const* object, c_patch const* patch,
-                                        int* x, int* y, int* width, int* height);
+CPD_EXTERN void cpd_object_get_bounds(c_object const* object, c_patch const* patch, int* x, int* y, int* width, int* height);
+
+//! @brief Gets the x position of an object.
+CPD_EXTERN int cpd_object_get_x(c_object const* object, c_patch const* patch);
+
+//! @brief Gets the x position of an object.
+CPD_EXTERN int cpd_object_get_y(c_object const* object, c_patch const* patch);
+
+//! @brief Gets the width of an object.
+CPD_EXTERN int cpd_object_get_width(c_object const* object, c_patch const* patch);
+
+//! @brief Gets the height of an object.
+CPD_EXTERN int cpd_object_get_height(c_object const* object, c_patch const* patch);
 
 
 

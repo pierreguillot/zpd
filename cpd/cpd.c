@@ -31,6 +31,7 @@ void lrshift_tilde_setup();
 void pique_setup();
 void sigmund_tilde_setup();
 void stdout_setup();
+int sys_startgui(const char *libdir);
 
 #define LCOV_EXCL_START
 void sys_get_midi_apis(char *buf) {}
@@ -182,6 +183,7 @@ static t_pdinstance*    c_first_instance    = NULL;
 static c_instance*      c_current_instance  = NULL;
 static t_symbol*        c_sym_pd            = NULL;
 static t_symbol*        c_sym_dsp           = NULL;
+static c_symbol*        c_sym_bng           = NULL;
 static c_symbol*        c_sym_hsl           = NULL;
 static c_symbol*        c_sym_vsl           = NULL;
 static c_symbol*        c_sym_tgl           = NULL;
@@ -215,6 +217,7 @@ void cpd_init()
         sys_nmidiin = 0;
         sys_nmidiout = 0;
         sys_init_fdpoll();
+        sys_startgui(NULL);
         pd_init();
         sys_set_audio_api(API_DUMMY);
         sys_searchpath = NULL;
@@ -230,6 +233,7 @@ void cpd_init()
      
         c_sym_pd            = gensym("pd");
         c_sym_dsp           = gensym("dsp");
+        c_sym_bng           = gensym("bng");
         c_sym_hsl           = gensym("hsl");
         c_sym_vsl           = gensym("vsl");
         c_sym_tgl           = gensym("tgl");
@@ -718,6 +722,14 @@ static struct _widgetbehavior* cpd_object_get_widget(c_object const* object)
     return object->te_g.g_pd->c_wb;
 }
 
+/*
+static char cpd_object_is_gui(c_object const* object)
+{
+    t_symbol const* name = cpd_object_get_name(object);
+    return name == c_sym_bng || name == c_sym_hsl || name == c_sym_vsl || name == c_sym_tgl || name == c_sym_nbx || name == c_sym_vradio || name == c_sym_hradio;
+}
+ */
+
 
 c_symbol* cpd_object_get_name(c_object const* object)
 {
@@ -727,6 +739,34 @@ c_symbol* cpd_object_get_name(c_object const* object)
 void cpd_object_get_text(c_object const* object, int* size, char** text)
 {
     binbuf_gettext(((t_text *)(object))->te_binbuf, text, size);
+}
+
+int cpd_object_get_x(c_object const* object, c_patch const* patch)
+{
+    int bounds[4];
+    cpd_object_get_bounds(object, patch, bounds, bounds+1, bounds+2, bounds+3);
+    return bounds[0];
+}
+
+int cpd_object_get_y(c_object const* object, c_patch const* patch)
+{
+    int bounds[4];
+    cpd_object_get_bounds(object, patch, bounds, bounds+1, bounds+2, bounds+3);
+    return bounds[1];
+}
+
+int cpd_object_get_width(c_object const* object, c_patch const* patch)
+{
+    int bounds[4];
+    cpd_object_get_bounds(object, patch, bounds, bounds+1, bounds+2, bounds+3);
+    return bounds[2];
+}
+
+int cpd_object_get_height(c_object const* object, c_patch const* patch)
+{
+    int bounds[4];
+    cpd_object_get_bounds(object, patch, bounds, bounds+1, bounds+2, bounds+3);
+    return bounds[3];
 }
 
 void cpd_object_get_bounds(c_object const* object, c_patch const* patch, int* x, int* y, int* width, int* height)

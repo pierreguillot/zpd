@@ -56,7 +56,9 @@ namespace xpd
                 }
             }
         }
+#define LCOV_EXCL_START
         assert("The post index is out of bounds" && 0);
+#define LCOV_EXCL_STOP
     }
     
     console::post console::history::get_post_to_level(size_t index, level lvl) const
@@ -72,7 +74,9 @@ namespace xpd
                 }
             }
         }
+#define LCOV_EXCL_START
         assert("The post index is out of bounds" && 0);
+#define LCOV_EXCL_STOP
     }
     
     void console::history::clear() xpd_noexcept

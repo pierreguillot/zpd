@@ -36,34 +36,22 @@ namespace xpd
     
     int object::x() const xpd_noexcept
     {
-        int bounds[4];
-        cpd_object_get_bounds(reinterpret_cast<c_object *>(m_ptr), reinterpret_cast<c_patch const*>(m_patch),
-                              bounds, bounds+1, bounds+2, bounds+3);
-        return bounds[0];
+        return cpd_object_get_x(reinterpret_cast<c_object const *>(m_ptr), reinterpret_cast<c_patch const*>(m_patch));
     }
     
     int object::y() const xpd_noexcept
     {
-        int bounds[4];
-        cpd_object_get_bounds(reinterpret_cast<c_object *>(m_ptr), reinterpret_cast<c_patch const*>(m_patch),
-                              bounds, bounds+1, bounds+2, bounds+3);
-        return bounds[1];
+        return cpd_object_get_y(reinterpret_cast<c_object const *>(m_ptr), reinterpret_cast<c_patch const*>(m_patch));
     }
     
     int object::width() const xpd_noexcept
     {
-        int bounds[4];
-        cpd_object_get_bounds(reinterpret_cast<c_object *>(m_ptr), reinterpret_cast<c_patch const*>(m_patch),
-                              bounds, bounds+1, bounds+2, bounds+3);
-        return bounds[2];
+        return cpd_object_get_width(reinterpret_cast<c_object const *>(m_ptr), reinterpret_cast<c_patch const*>(m_patch));
     }
     
     int object::height() const xpd_noexcept
     {
-        int bounds[4];
-        cpd_object_get_bounds(reinterpret_cast<c_object *>(m_ptr), reinterpret_cast<c_patch const*>(m_patch),
-                              bounds, bounds+1, bounds+2, bounds+3);
-        return bounds[3];
+        return cpd_object_get_height(reinterpret_cast<c_object const *>(m_ptr), reinterpret_cast<c_patch const*>(m_patch));
     }
 }
 
