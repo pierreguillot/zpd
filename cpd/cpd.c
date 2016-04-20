@@ -190,6 +190,8 @@ static c_symbol*        c_sym_tgl           = NULL;
 static c_symbol*        c_sym_nbx           = NULL;
 static c_symbol*        c_sym_vradio        = NULL;
 static c_symbol*        c_sym_hradio        = NULL;
+static c_symbol*        c_sym_vu            = NULL;
+static c_symbol*        c_sym_cnv           = NULL;
 
 static void cpd_print(const char* s);
 
@@ -240,6 +242,8 @@ void cpd_init()
         c_sym_nbx           = gensym("nbx");
         c_sym_vradio        = gensym("vradio");
         c_sym_hradio        = gensym("hradio");
+        c_sym_vu            = gensym("vu");
+        c_sym_cnv           = gensym("cnv");
         
         bob_tilde_setup();
         bonk_tilde_setup();
@@ -725,6 +729,7 @@ static struct _widgetbehavior* cpd_object_get_widget(c_object const* object)
 
 
 
+
 c_symbol* cpd_object_get_name(c_object const* object)
 {
     return object->te_g.g_pd->c_name;
@@ -786,6 +791,11 @@ void cpd_object_get_bounds(c_object const* object, c_patch const* patch, int* x,
 
 
 
+char cpd_object_is_gui(c_object const* object)
+{
+    t_symbol const* name = cpd_object_get_name(object);
+    return name == c_sym_bng || name == c_sym_hsl || name == c_sym_vsl || name == c_sym_tgl || name == c_sym_nbx || name == c_sym_vradio || name == c_sym_hradio || name == c_sym_vu || name == c_sym_cnv;
+}
 
 c_symbol* cpd_gui_get_label(c_gui const* gui)
 {

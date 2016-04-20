@@ -31,7 +31,9 @@ namespace xpd
             free(text);
             return txt;
         }
+#define LCOV_EXCL_START
         return std::string();
+#define LCOV_EXCL_STOP
     }
     
     int object::x() const xpd_noexcept

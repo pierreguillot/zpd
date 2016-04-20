@@ -7,6 +7,6 @@
 #ifndef XPD_HPP
 #define XPD_HPP
 
-#include "xpd_object.hpp"
+#include "xpd_gui.hpp"
 
 #endif // XPD_HPP

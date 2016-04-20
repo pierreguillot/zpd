@@ -42,6 +42,8 @@ set(XPDSOURCES
 	${PROJECT_SOURCE_DIR}/xpd/xpd_patch.cpp
 	${PROJECT_SOURCE_DIR}/xpd/xpd_object.hpp
 	${PROJECT_SOURCE_DIR}/xpd/xpd_object.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_gui.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_gui.cpp
 	${PROJECT_SOURCE_DIR}/xpd/xpd.hpp
 )
 

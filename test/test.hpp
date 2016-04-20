@@ -423,19 +423,41 @@ public:
             assert("test_patch object text" && !objects[i].text().empty());
             if(objects[i].name() == "bng" || objects[i].name() == "tgl")
             {
+                gui g;
+                bool valid = true;
                 assert("test_patch object inside"
                        && objects[i].x() >= 0 && objects[i].x() <= p->width()
                        && objects[i].y() >= 0 && objects[i].y() <= p->height()
                        && objects[i].x() + objects[i].width() <= p->x() + p->width()
                        && objects[i].y() + objects[i].height() <= p->y() + p->height());
+                try
+                {
+                    g = objects[i];
+                }
+                catch(...)
+                {
+                    valid = false;
+                }
+                assert("test_patch gui valid" && valid);
             }
             else
             {
+                gui g;
+                bool invalid = false;
                 assert("test_patch object outside" &&
                        (objects[i].x() >= p->width()
                         || objects[i].y() >= p->height()
                         || objects[i].x() + objects[i].width() <= 0
                         || objects[i].y() + objects[i].height() <= 0));
+                try
+                {
+                    g = objects[i];
+                }
+                catch(...)
+                {
+                    invalid = true;
+                }
+                assert("test_patch gui invalid" && invalid);
             }
         }
         inst->close(*p);

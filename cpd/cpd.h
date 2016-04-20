@@ -300,8 +300,8 @@ CPD_EXTERN int cpd_object_get_width(c_object const* object, c_patch const* patch
 //! @brief Gets the height of an object.
 CPD_EXTERN int cpd_object_get_height(c_object const* object, c_patch const* patch);
 
-
-
+//! @brief Gets the if an object is a gui.
+CPD_EXTERN char cpd_object_is_gui(c_object const* object);
 
 
 
