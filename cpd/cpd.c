@@ -89,13 +89,15 @@ static void receiver_symbol(c_receiver *x, t_symbol *s)
     }
 }
 
-static void receiver_pointer(c_receiver *x, t_gpointer *gp)
+#define LCOV_EXCL_START
+static void receiver_gpointer(c_receiver *x, t_gpointer *gp)
 {
     if(x->c_m_gpointer)
     {
         x->c_m_gpointer(x->c_owner, x->c_sym, gp);
     }
 }
+#define LCOV_EXCL_STOP
 
 struct _list
 {
@@ -141,7 +143,7 @@ void receiver_setup(void)
         class_addbang(c, receiver_bang);
         class_addfloat(c, receiver_float);
         class_addsymbol(c, receiver_symbol);
-        class_addpointer(c, receiver_pointer);
+        class_addpointer(c, receiver_gpointer);
         class_addlist(c, receiver_list);
         class_addanything(c, receiver_anything);
     }
@@ -369,10 +371,6 @@ static void cpd_print(const char* s)
     {
         level = atoi(s+8);
         s+=12;
-    }
-    else if(strncmp(s, "tried", 5) == 0 || strncmp(s, "input", 5))
-    {
-        level = 3;
     }
     
     if(level == 0 && c_current_instance->c_internal_ptr->c_m_fatal)
@@ -956,56 +954,6 @@ void cpd_list_free(c_list *list)
     free(list);
 }
 
-char cpd_list_resize(c_list *list, size_t size)
-{
-    t_atom* temp = NULL;
-    if(list->l_vec && list->l_n)
-    {
-        temp = realloc(list->l_vec, size * sizeof(t_atom));
-        if(temp)
-        {
-            list->l_vec = temp;
-            list->l_n   = size;
-            return 0;
-        }
-    }
-    else
-    {
-        list->l_vec = (t_atom *)malloc(size * sizeof(t_atom));
-        if(list->l_vec)
-        {
-            list->l_n = size;
-            return 0;
-        }
-        else
-        {
-            list->l_n = 0;
-        }
-    }
-    return -1;
-}
-
-c_list* cpd_list_create_copy(c_list const* list)
-{
-    c_list* x = cpd_list_create(list->l_n);
-    if(x)
-    {
-        memcpy(x->l_vec, list->l_vec, list->l_n * sizeof(t_atom));
-        x->l_n = list->l_n;
-    }
-    return x;
-}
-
-char cpd_list_copy(c_list* list1, c_list const* list2)
-{
-    if(!cpd_list_resize(list1, list2->l_n))
-    {
-        memcpy(list1->l_vec, list2->l_vec, list2->l_n * sizeof(t_atom));
-        return 0;
-    }
-    return -1;
-}
-
 size_t cpd_list_get_size(c_list const* list)
 {
     return list->l_n;
@@ -1032,10 +980,12 @@ c_symbol* cpd_list_get_symbol(c_list const* list, size_t index)
     return (list->l_vec+index)->a_w.w_symbol;
 }
 
+#define LCOV_EXCL_START
 c_gpointer* cpd_list_get_gpointer(c_list const* list, size_t index)
 {
     return (list->l_vec+index)->a_w.w_gpointer;
 }
+#define LCOV_EXCL_STOP
 
 void cpd_list_set_float(c_list *list, size_t index, c_float value)
 {
@@ -1049,16 +999,13 @@ void cpd_list_set_symbol(c_list *list, size_t index, c_symbol* symbol)
     (list->l_vec+index)->a_w.w_symbol = symbol;
 }
 
+#define LCOV_EXCL_START
 void cpd_list_set_gpointer(c_list *list, size_t index, c_gpointer* pointer)
 {
     (list->l_vec+index)->a_type = A_POINTER;
     (list->l_vec+index)->a_w.w_gpointer = pointer;
 }
-
-void* cpd_list_get_atoms(c_list* list, size_t index)
-{
-    return (void *)list->l_vec+index;
-}
+#define LCOV_EXCL_STOP
 
 
 
@@ -1082,6 +1029,7 @@ void cpd_messagesend_float(c_tie const* tie, c_float value)
     }
 }
 
+#define LCOV_EXCL_START
 void cpd_messagesend_gpointer(c_tie const* tie, c_gpointer const* pointer)
 {
     t_symbol const* sym = (t_symbol const *)tie;
@@ -1090,6 +1038,7 @@ void cpd_messagesend_gpointer(c_tie const* tie, c_gpointer const* pointer)
         pd_pointer((t_pd *)sym->s_thing, (t_gpointer *)pointer);
     }
 }
+#define LCOV_EXCL_STOP
 
 void cpd_messagesend_symbol(c_tie const* tie, c_symbol const* symbol)
 {

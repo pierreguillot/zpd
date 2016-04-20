@@ -346,15 +346,6 @@ CPD_EXTERN c_list* cpd_list_create(size_t size);
 //! @brief Clears a list.
 CPD_EXTERN void cpd_list_free(c_list *list);
 
-//! @brief Resizes a list.
-CPD_EXTERN char cpd_list_resize(c_list *list, size_t size);
-
-//! @brief Creates a copy of a list.
-CPD_EXTERN c_list* cpd_list_create_copy(c_list const* list);
-
-//! @brief Copy of a list into another.
-CPD_EXTERN char cpd_list_copy(c_list* list1, c_list const* list2);
-
 //! @brief Gets the size of a list.
 CPD_EXTERN size_t cpd_list_get_size(c_list const* list);
 

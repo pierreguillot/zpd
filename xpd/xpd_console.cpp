@@ -5,6 +5,7 @@
  */
 
 #include "xpd_console.hpp"
+#include <cassert>
 
 namespace xpd
 {
@@ -55,7 +56,7 @@ namespace xpd
                 }
             }
         }
-        return post(lvl, std::string());
+        assert("The post index is out of bounds" && 0);
     }
     
     console::post console::history::get_post_to_level(size_t index, level lvl) const
@@ -71,7 +72,7 @@ namespace xpd
                 }
             }
         }
-        return post(lvl, std::string());
+        assert("The post index is out of bounds" && 0);
     }
     
     void console::history::clear() xpd_noexcept
@@ -83,15 +84,7 @@ namespace xpd
     void console::history::add(post const& mess) xpd_noexcept
     {
         m_posts.push_back(mess);
-        if(m_posts[m_posts.size()-1].type == all)
-        {
-            m_counters[3]++;
-            m_posts[m_posts.size()-1].type = log;
-        }
-        else
-        {
-            m_counters[static_cast<size_t>(m_posts[m_posts.size()-1].type)]++;
-        }
-        
+        assert("The post type can only be fatal, error, normal or log" && mess.type <= log);
+        m_counters[static_cast<size_t>(mess.type)]++;
     }
 }
