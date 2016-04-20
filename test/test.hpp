@@ -562,7 +562,7 @@ public:
             {
                 try
                 {
-                    gui g1 = objects[i];
+                    g1 = objects[i];
                 }
                 catch(...)
                 {

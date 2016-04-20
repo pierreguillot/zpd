@@ -1033,11 +1033,19 @@ size_t cpd_list_get_size(c_list const* list)
 c_atomtype cpd_list_get_type(c_list const* list, size_t index)
 {
     if((list->l_vec+index)->a_type == A_FLOAT)
+    {
         return Z_FLOAT;
+    }
     if((list->l_vec+index)->a_type == A_SYMBOL)
+    {
         return Z_SYMBOL;
+    }
+#define LCOV_EXCL_START
     if((list->l_vec+index)->a_type == A_POINTER)
+    {
         return Z_POINTER;
+    }
+#define LCOV_EXCL_STOP
     return Z_NULL;
 }
 
@@ -1224,11 +1232,7 @@ void outmidi_noteon(int port, int channel, int pitch, int velo)
 {
     if(c_current_instance && c_current_instance->c_internal_ptr->c_m_noteon)
     {
-        c_current_instance->c_internal_ptr->c_m_noteon(c_current_instance,
-                                                       Z_PD_MIDI_CLIP12BIT(port),
-                                                       Z_PD_MIDI_CLIPCHANNEL(channel),
-                                                       Z_PD_MIDI_CLIP7BIT(pitch),
-                                                       Z_PD_MIDI_CLIP7BIT(velo));
+        c_current_instance->c_internal_ptr->c_m_noteon(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(pitch), Z_PD_MIDI_CLIP7BIT(velo));
     }
 }
 
@@ -1236,11 +1240,7 @@ void outmidi_controlchange(int port, int channel, int ctl, int value)
 {
     if(c_current_instance && c_current_instance->c_internal_ptr->c_m_controlchange)
     {
-        c_current_instance->c_internal_ptr->c_m_controlchange(c_current_instance,
-                                                              Z_PD_MIDI_CLIP12BIT(port),
-                                                              Z_PD_MIDI_CLIPCHANNEL(channel),
-                                                              Z_PD_MIDI_CLIP7BIT(ctl),
-                                                              Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->c_internal_ptr->c_m_controlchange(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(ctl), Z_PD_MIDI_CLIP7BIT(value));
     }
 }
 
@@ -1248,10 +1248,7 @@ void outmidi_programchange(int port, int channel, int value)
 {
     if(c_current_instance && c_current_instance->c_internal_ptr->c_m_programchange)
     {
-        c_current_instance->c_internal_ptr->c_m_programchange(c_current_instance,
-                                                              Z_PD_MIDI_CLIP12BIT(port),
-                                                              Z_PD_MIDI_CLIPCHANNEL(channel),
-                                                              Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->c_internal_ptr->c_m_programchange(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(value));
     }
 }
 
@@ -1259,10 +1256,7 @@ void outmidi_pitchbend(int port, int channel, int value)
 {
     if(c_current_instance && c_current_instance->c_internal_ptr->c_m_pitchbend)
     {
-        c_current_instance->c_internal_ptr->c_m_pitchbend(c_current_instance,
-                                                          Z_PD_MIDI_CLIP12BIT(port),
-                                                          Z_PD_MIDI_CLIPCHANNEL(channel),
-                                                          Z_PD_MIDI_CLIP14BIT(value) - 8192);
+        c_current_instance->c_internal_ptr->c_m_pitchbend(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP14BIT(value) - 8192);
     }
 }
 
@@ -1270,10 +1264,7 @@ void outmidi_aftertouch(int port, int channel, int value)
 {
     if(c_current_instance && c_current_instance->c_internal_ptr->c_m_aftertouch)
     {
-        c_current_instance->c_internal_ptr->c_m_aftertouch(c_current_instance,
-                                                           Z_PD_MIDI_CLIP12BIT(port),
-                                                           Z_PD_MIDI_CLIPCHANNEL(channel),
-                                                           Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->c_internal_ptr->c_m_aftertouch(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(value));
     }
 }
 
@@ -1281,11 +1272,7 @@ void outmidi_polyaftertouch(int port, int channel, int pitch, int value)
 {
     if(c_current_instance && c_current_instance->c_internal_ptr->c_m_polyaftertouch)
     {
-        c_current_instance->c_internal_ptr->c_m_polyaftertouch(c_current_instance,
-                                                               Z_PD_MIDI_CLIP12BIT(port),
-                                                               Z_PD_MIDI_CLIPCHANNEL(channel),
-                                                               Z_PD_MIDI_CLIP7BIT(pitch),
-                                                               Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->c_internal_ptr->c_m_polyaftertouch(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(pitch), Z_PD_MIDI_CLIP7BIT(value));
     }
 }
 
@@ -1293,9 +1280,7 @@ void outmidi_byte(int port, int value)
 {
     if(c_current_instance && c_current_instance->c_internal_ptr->c_m_byte)
     {
-        c_current_instance->c_internal_ptr->c_m_byte(c_current_instance,
-                                                     Z_PD_MIDI_CLIP12BIT(port),
-                                                     Z_PD_MIDI_CLIP8BIT(value));
+        c_current_instance->c_internal_ptr->c_m_byte(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIP8BIT(value));
     }
 }
 
