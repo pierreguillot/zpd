@@ -45,10 +45,75 @@ static char* test_get_patch_folder(char* location)
 
 typedef void (*test_method)(void *);
 
-int main(int argc, char** argv)
+struct dual_instance
 {
     instance_test inst1;
     instance_test inst2;
+};
+
+void test_post(dual_instance* ins)
+{
+    std::cout << "perform tests for console posts...";
+    {
+        synch::Thread t1((test_method)(&instance_test::test_post), &ins->inst1);
+        synch::Thread t2((test_method)(&instance_test::test_post), &ins->inst2);
+        t1.join();
+        t2.join();
+    }
+    std::cout << "ok\n";
+}
+
+void test_binding(dual_instance* ins)
+{
+    std::cout << "perform tests for binding and atoms...";
+    {
+        synch::Thread t1((test_method)(&instance_test::test_message), &ins->inst1);
+        synch::Thread t2((test_method)(&instance_test::test_message), &ins->inst2);
+        t1.join();
+        t2.join();
+    }
+    std::cout << "ok\n";
+}
+
+void test_midi(dual_instance* ins)
+{
+    std::cout << "perform tests for midi events...";
+    {
+        synch::Thread t1((test_method)(&instance_test::test_midi), &ins->inst1);
+        synch::Thread t2((test_method)(&instance_test::test_midi), &ins->inst2);
+        t1.join();
+        t2.join();
+    }
+    std::cout << "ok\n";
+}
+
+void test_dsp(dual_instance* ins)
+{
+    std::cout << "perform tests for dsp...";
+    {
+        synch::Thread t1((test_method)(&instance_test::test_dsp), &ins->inst1);
+        synch::Thread t2((test_method)(&instance_test::test_dsp), &ins->inst2);
+        t1.join();
+        t2.join();
+    }
+    std::cout << "ok\n";
+}
+
+void test_patch(dual_instance* ins)
+{
+    std::cout << "perform tests for patch, object & gui...";
+    {
+        synch::Thread t1((test_method)(&instance_test::test_patch), &ins->inst1);
+        synch::Thread t2((test_method)(&instance_test::test_patch), &ins->inst2);
+        t1.join();
+        t2.join();
+    }
+    std::cout << "ok\n";
+}
+
+int main(int argc, char** argv)
+{
+    dual_instance is;
     
     std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
@@ -65,50 +130,16 @@ int main(int argc, char** argv)
     }
     std::cout << "ok\n";
     
-    std::cout << "perform tests for console posts...";
-    {
-        synch::Thread t1((test_method)(&instance_test::test_post), &inst1);
-        synch::Thread t2((test_method)(&instance_test::test_post), &inst2);
-        t1.join();
-        t2.join();
-    }
-    std::cout << "ok\n";
-    
-    std::cout << "perform tests for binding and atoms...";
-    {
-        synch::Thread t1((test_method)(&instance_test::test_message), &inst1);
-        synch::Thread t2((test_method)(&instance_test::test_message), &inst2);
-        t1.join();
-        t2.join();
-    }
-    std::cout << "ok\n";
-    
-    std::cout << "perform tests for midi events...";
-    {
-        synch::Thread t1((test_method)(&instance_test::test_midi), &inst1);
-        synch::Thread t2((test_method)(&instance_test::test_midi), &inst2);
-        t1.join();
-        t2.join();
-    }
-    std::cout << "ok\n";
-    
-    std::cout << "perform tests for dsp...";
-    {
-        synch::Thread t1((test_method)(&instance_test::test_dsp), &inst1);
-        synch::Thread t2((test_method)(&instance_test::test_dsp), &inst2);
-        t1.join();
-        t2.join();
-    }
-    std::cout << "ok\n";
-    
-    std::cout << "perform tests for patchs...";
-    {
-        synch::Thread t1((test_method)(&instance_test::test_patch), &inst1);
-        synch::Thread t2((test_method)(&instance_test::test_patch), &inst2);
-        t1.join();
-        t2.join();
-    }
-    std::cout << "ok\n";
+    synch::Thread ta((test_method)(test_post), &is);
+    ta.join();
+    synch::Thread tb((test_method)(test_binding), &is);
+    tb.join();
+    synch::Thread tc((test_method)(test_midi), &is);
+    tc.join();
+    synch::Thread td((test_method)(test_dsp), &is);
+    td.join();
+    synch::Thread te((test_method)(test_patch), &is);
+    te.join();
     
     return 0;
 }

@@ -502,6 +502,23 @@ public:
             assert("test_patch gui val" && g4.value() == 0);
             assert("test_patch gui nst" && g4.nsteps() == 0);
         }
+        
+        
+        if(g3.type() == gui::bang || g3.type() == gui::toggle)
+        {
+            assert("test_patch gui label x" && g3.label_x() == g3.x() + 17);
+            assert("test_patch gui label y" && g3.label_y() == g3.y() + 7);
+        }
+        else if(g3.type() == gui::panel)
+        {
+            assert("test_patch gui label x" && g3.label_x() == g3.x() + 20);
+            assert("test_patch gui label y" && g3.label_y() == g3.y() + 12);
+        }
+        else
+        {
+            assert("test_patch gui label x" && g3.label_x() == g3.x());
+            assert("test_patch gui label y" && g3.label_y() == g3.y() - 8);
+        }
     }
     
     static void test_patch(instance_test* inst)
@@ -519,7 +536,6 @@ public:
         assert("test_patch patch w" && p.width() == 400);
         assert("test_patch patch h" && p.height() == 150);
         
-        int todo;
         std::vector<object> objects(p.objects());
         for(size_t i = 0; i < objects.size(); ++i)
         {

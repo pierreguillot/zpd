@@ -32,6 +32,11 @@ namespace xpd
         return *this;
     }
     
+    gui::type_t gui::type() const xpd_noexcept
+    {
+        return type_t(cpd_gui_get_type(reinterpret_cast<c_gui const*>(m_ptr)));
+    }
+    
     symbol gui::receive_tie() const xpd_noexcept
     {
         return symbol(cpd_tie_get_name(cpd_gui_get_receive_tie(reinterpret_cast<c_gui const*>(m_ptr))));
@@ -47,9 +52,14 @@ namespace xpd
         return symbol(cpd_symbol_get_name(cpd_gui_get_label(reinterpret_cast<c_gui const*>(m_ptr))));
     }
     
-    gui::type_t gui::type() const xpd_noexcept
+    int gui::label_x() const xpd_noexcept
     {
-        return type_t(cpd_gui_get_type(reinterpret_cast<c_gui const*>(m_ptr)));
+        return cpd_gui_get_label_x(reinterpret_cast<c_gui const*>(m_ptr), reinterpret_cast<c_patch const*>(m_patch));
+    }
+    
+    int gui::label_y() const xpd_noexcept
+    {
+        return cpd_gui_get_label_y(reinterpret_cast<c_gui const*>(m_ptr), reinterpret_cast<c_patch const*>(m_patch));
     }
     
     float gui::minimum() const xpd_noexcept

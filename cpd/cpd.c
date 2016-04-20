@@ -858,27 +858,28 @@ c_guitype cpd_gui_get_type(c_gui const* gui)
 
 float cpd_gui_get_maximum_value(c_gui const* gui)
 {
-    if(gui->x_obj.te_g.g_pd->c_name == c_sym_hsl)
+    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    if(name == c_sym_hsl)
     {
         return ((t_hslider *)gui)->x_max;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vsl)
+    else if(name == c_sym_vsl)
     {
         return ((t_vslider *)gui)->x_max;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_tgl)
+    else if(name == c_sym_tgl)
     {
         return 1.f;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_nbx)
+    else if(name == c_sym_nbx)
     {
         return ((t_my_numbox *)gui)->x_max;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vradio)
+    else if(name == c_sym_vradio)
     {
         return ((t_hdial *)gui)->x_number - 1;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_hradio)
+    else if(name == c_sym_hradio)
     {
         return ((t_vdial *)gui)->x_number - 1;
     }
@@ -887,97 +888,79 @@ float cpd_gui_get_maximum_value(c_gui const* gui)
 
 float cpd_gui_get_minimum_value(c_gui const* gui)
 {
-    if(gui->x_obj.te_g.g_pd->c_name == c_sym_hsl)
+    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    if(name == c_sym_hsl)
     {
         return ((t_hslider *)gui)->x_min;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vsl)
+    else if(name == c_sym_vsl)
     {
         return ((t_vslider *)gui)->x_min;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_tgl)
-    {
-        return 0.f;
-    }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_nbx)
+    else if(name == c_sym_nbx)
     {
         return ((t_my_numbox *)gui)->x_min;
-    }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vradio)
-    {
-        return 0.f;
-    }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_hradio)
-    {
-        return 0.f;
     }
     return 0.f;
 }
 
 int cpd_gui_get_number_of_steps(c_gui const* gui)
 {
-    if(gui->x_obj.te_g.g_pd->c_name == c_sym_hsl)
-    {
-        return 0;
-    }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vsl)
-    {
-        return 0;
-    }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_tgl)
+    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    if(name == c_sym_tgl)
     {
         return 2;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_nbx)
-    {
-        return 0;
-    }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vradio)
+    else if(name == c_sym_vradio)
     {
         return ((t_hdial *)gui)->x_number;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_hradio)
+    else if(name == c_sym_hradio)
     {
         return ((t_vdial *)gui)->x_number;
     }
-    return 0.f;
+    return 0;
 }
 
 float cpd_gui_get_value(c_gui const* gui)
 {
-    if(gui->x_obj.te_g.g_pd->c_name == c_sym_hsl)
+    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    if(name == c_sym_hsl)
     {
         return ((t_hslider *)gui)->x_fval;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vsl)
+    else if(name == c_sym_vsl)
     {
         return ((t_vslider *)gui)->x_fval;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_tgl)
+    else if(name == c_sym_tgl)
     {
         return ((t_toggle *)gui)->x_on;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_nbx)
+    else if(name == c_sym_nbx)
     {
         return ((t_my_numbox *)gui)->x_val;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_vradio)
+    else if(name == c_sym_vradio)
     {
         return ((t_hdial *)gui)->x_on;
     }
-    else if(gui->x_obj.te_g.g_pd->c_name == c_sym_hradio)
+    else if(name == c_sym_hradio)
     {
         return ((t_vdial *)gui)->x_on;
     }
     return 0.f;
 }
 
-void cpd_gui_get_label_position(c_gui const* gui, c_patch const* patch, int* x, int* y)
+int cpd_gui_get_label_x(c_gui const* gui, c_patch const* patch)
 {
-    *x = ((t_object *)gui)->te_xpix - cpd_patch_get_x(patch) + gui->x_ldx;
-    *y = ((t_object *)gui)->te_ypix - cpd_patch_get_y(patch) + gui->x_ldy;
+    return cpd_object_get_x((c_object const*)gui, patch) + gui->x_ldx;
 }
 
+int cpd_gui_get_label_y(c_gui const* gui, c_patch const* patch)
+{
+    return cpd_object_get_y((c_object const*)gui, patch) + gui->x_ldy;
+}
 
 
 

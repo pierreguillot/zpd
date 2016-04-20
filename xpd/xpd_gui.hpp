@@ -52,6 +52,10 @@ namespace xpd
         
         symbol label() const xpd_noexcept;
         
+        int label_x() const xpd_noexcept;
+        
+        int label_y() const xpd_noexcept;
+        
         float minimum() const xpd_noexcept;
         
         float maximum() const xpd_noexcept;

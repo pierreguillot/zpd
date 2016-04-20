@@ -344,8 +344,11 @@ CPD_EXTERN int cpd_gui_get_number_of_steps(c_gui const* gui);
 //! @brief Gets the number of steps of a gui.
 CPD_EXTERN float cpd_gui_get_value(c_gui const* gui);
 
-//! @brief Gets the bounds of a gui.
-CPD_EXTERN void cpd_gui_get_label_position(c_gui const* gui, c_patch const* patch, int* x, int* y);
+//! @brief Gets the x position of the label of a gui.
+CPD_EXTERN int cpd_gui_get_label_x(c_gui const* gui, c_patch const* patch);
+
+//! @brief Gets the y position of the label of a gui.
+CPD_EXTERN int cpd_gui_get_label_y(c_gui const* gui, c_patch const* patch);
 
 
 
