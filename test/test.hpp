@@ -423,12 +423,19 @@ public:
             assert("test_patch object text" && !objects[i].text().empty());
             if(objects[i].name() == "bng" || objects[i].name() == "tgl")
             {
-                assert("test_patch object inside" && objects[i].x() >= 0 && objects[i].x() <= p->width()
-                && objects[i].y() >= 0 && objects[i].y() <= p->height());
+                assert("test_patch object inside"
+                       && objects[i].x() >= 0 && objects[i].x() <= p->width()
+                       && objects[i].y() >= 0 && objects[i].y() <= p->height()
+                       && objects[i].x() + objects[i].width() <= p->x() + p->width()
+                       && objects[i].y() + objects[i].height() <= p->y() + p->height());
             }
             else
             {
-                assert("test_patch object outside" && (objects[i].x() <= 0 || objects[i].x() >= p->width() ||objects[i].y() <= 0 || objects[i].y() >= p->height()));
+                assert("test_patch object outside" &&
+                       (objects[i].x() >= p->width()
+                        || objects[i].y() >= p->height()
+                        || objects[i].x() + objects[i].width() <= 0
+                        || objects[i].y() + objects[i].height() <= 0));
             }
         }
         inst->close(*p);

@@ -722,13 +722,7 @@ static struct _widgetbehavior* cpd_object_get_widget(c_object const* object)
     return object->te_g.g_pd->c_wb;
 }
 
-/*
-static char cpd_object_is_gui(c_object const* object)
-{
-    t_symbol const* name = cpd_object_get_name(object);
-    return name == c_sym_bng || name == c_sym_hsl || name == c_sym_vsl || name == c_sym_tgl || name == c_sym_nbx || name == c_sym_vradio || name == c_sym_hradio;
-}
- */
+
 
 
 c_symbol* cpd_object_get_name(c_object const* object)
