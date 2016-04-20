@@ -413,6 +413,7 @@ public:
     
     static void test_gui_int(patch p, object o)
     {
+        gui g4;
         gui g2 = o;
         assert("test_patch gui type" &&
                ((g2.name() == "bng" && g2.type() == gui::bang) || g2.type() != gui::bang));
@@ -437,7 +438,7 @@ public:
         assert("test_patch gui send" && ((g2.name() == "vu" && g2.send_tie().name() == "") || g2.send_tie().name() == g2.name() + "s"));
         assert("test_patch gui label" && g2.label() == g2.name() + "l");
         gui g3 = g2;
-        gui g4 = o;
+        g4 = o;
         
         if(g4.type() == gui::bang)
         {
