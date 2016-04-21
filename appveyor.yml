@@ -22,7 +22,8 @@ build_script:
     - cmake --build .
 
 test_script:
-    - cmd xpdtest.exe
+    - dir
+#    - cmd xpdtest.exe
 
 #---------------------------------#
 #         notifications           #
