@@ -293,11 +293,11 @@ else()
 			#set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
 
 # kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib pthread_lib.lib ws2_32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/projects/zpd/build/Debug/xpdtest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/projects/zpd/build/Debug/xpdtest.lib" /MACHINE:X86 /SAFESEH  /machine:X86
-
+			find_package(Threads)
 			add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
 			target_link_libraries(xpdtest pthread_lib)
 			target_link_libraries(xpdtest ws2_32)
-			set_target_properties(zpdshared PROPERTIES LINK_FLAGS_DEBUG /MTd /NODEFAULTLIB)
-			set_target_properties(zpdshared PROPERTIES LINK_FLAGS_RELEASE /LTCG /MT)
+			#set_target_properties(zpdshared PROPERTIES LINK_FLAGS_DEBUG /MTd /NODEFAULTLIB)
+			#set_target_properties(zpdshared PROPERTIES LINK_FLAGS_RELEASE /LTCG /MT)
     endif()
 endif()
