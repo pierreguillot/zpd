@@ -40,10 +40,10 @@ namespace xpd
             if(ptr)
             {
                 ptr->ref = _ref;
-                ptr->console.m_log   = (cpd_hook_print)instance::internal::m_log_hook;
-                ptr->console.m_post  = (cpd_hook_print)instance::internal::m_post_hook;
-                ptr->console.m_error = (cpd_hook_print)instance::internal::m_error_hook;
-                ptr->console.m_fatal = (cpd_hook_print)instance::internal::m_fatal_hook;
+                ptr->console.m_log   = (cpd_hook_post)instance::internal::m_log_hook;
+                ptr->console.m_normal= (cpd_hook_post)instance::internal::m_normal_hook;
+                ptr->console.m_error = (cpd_hook_post)instance::internal::m_error_hook;
+                ptr->console.m_fatal = (cpd_hook_post)instance::internal::m_fatal_hook;
                 
                 ptr->midi.m_noteon           = (cpd_hook_noteon)instance::internal::m_noteon;
                 ptr->midi.m_controlchange    = (cpd_hook_controlchange)instance::internal::m_controlchange;
@@ -77,7 +77,7 @@ namespace xpd
             cpd_instance_unbind(reinterpret_cast<cpd_instance *>(instance), tie);
         }
         
-        static void m_post_hook(instance::internal* instance, const char *s)
+        static void m_normal_hook(instance::internal* instance, const char *s)
         {
             instance->ref->receive(console::post(console::normal, std::string(s)));
         }
@@ -285,44 +285,40 @@ namespace xpd
     
     void instance::send(console::post const& post) const
     {
-        int todo_set_instance;
         environment::lock();
-        cpd_instance_set(reinterpret_cast<cpd_instance *>(m_ptr));
         if(post.type == console::error)
         {
-            cpd_console_error(post.text.c_str());
+            cpd_instance_post_error(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
         }
         else if(post.type == console::fatal)
         {
-            cpd_console_fatal(post.text.c_str());
+            cpd_instance_post_fatal(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
         }
         else if(post.type == console::normal)
         {
-            cpd_console_post(post.text.c_str());
+            cpd_instance_post_normal(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
         }
         else
         {
-            cpd_console_log(post.text.c_str());
+            cpd_instance_post_log(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
         }
         environment::unlock();
     }
     
     void instance::send(tie name, symbol selector, std::vector<atom> const& atoms) const
     {
-        int todo_set_instance;
         environment::lock();
-        cpd_instance_set(reinterpret_cast<cpd_instance *>(m_ptr));
         if(selector == symbol::bang_s)
         {
-            cpd_messagesend_bang(smuggler::gettie(name));
+            cpd_instance_send_bang(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name));
         }
         else if(selector == symbol::float_s)
         {
-            cpd_messagesend_float(smuggler::gettie(name), atoms[0]);
+            cpd_instance_send_float(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name), atoms[0]);
         }
         else if(selector == symbol::symbol_s)
         {
-            cpd_messagesend_symbol(smuggler::gettie(name), smuggler::getsymbol(atoms[0]));
+            cpd_instance_send_symbol(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name), smuggler::getsymbol(atoms[0]));
         }
         else if(selector == symbol::list_s)
         {
@@ -338,7 +334,7 @@ namespace xpd
                     cpd_list_set_symbol(list, i, smuggler::getsymbol(atoms[i]));
                 }
             }
-            cpd_messagesend_list(smuggler::gettie(name), list);
+            cpd_instance_send_list(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name), list);
             cpd_list_free(list);
         }
         else
@@ -355,7 +351,7 @@ namespace xpd
                     cpd_list_set_symbol(list, i, smuggler::getsymbol(atoms[i]));
                 }
             }
-            cpd_messagesend_anything(smuggler::gettie(name), smuggler::getsymbol(selector), list);
+            cpd_instance_send_anything(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name), smuggler::getsymbol(selector), list);
             cpd_list_free(list);
         }
         environment::unlock();
@@ -363,36 +359,34 @@ namespace xpd
     
     void instance::send(midi::event const& event) const
     {
-        int todo_set_instance;
         environment::lock();
-        cpd_instance_set(reinterpret_cast<cpd_instance *>(m_ptr));
         if(event.type() == midi::event::note_t)
         {
-            cpd_midisend_noteon(event.channel(), event.pitch(), event.velocity());
+            cpd_instance_midi_noteon(reinterpret_cast<cpd_instance *>(m_ptr), event.channel(), event.pitch(), event.velocity());
         }
         else if(event.type() == midi::event::control_change_t)
         {
-            cpd_midisend_controlchange(event.channel(), event.controler(), event.value());
+            cpd_instance_midi_controlchange(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.controler(), event.value());
         }
         else if(event.type() == midi::event::program_change_t)
         {
-            cpd_midisend_programchange(event.channel(), event.program());
+            cpd_instance_midi_programchange(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.program());
         }
         else if(event.type() == midi::event::pitch_bend_t)
         {
-            cpd_midisend_pitchbend(event.channel(), event.bend());
+            cpd_instance_midi_pitchbend(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.bend());
         }
         else if(event.type() == midi::event::after_touch_t)
         {
-            cpd_midisend_aftertouch(event.channel(), event.value());
+            cpd_instance_midi_aftertouch(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.value());
         }
         else if(event.type() == midi::event::poly_after_touch_t)
         {
-            cpd_midisend_polyaftertouch(event.channel(), event.pitch(), event.value());
+            cpd_instance_midi_polyaftertouch(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.pitch(), event.value());
         }
         else
         {
-            cpd_midisend_byte(0, event.value());
+            cpd_instance_midi_byte(reinterpret_cast<cpd_instance *>(m_ptr), 0, event.value());
         }
         environment::unlock();
     }

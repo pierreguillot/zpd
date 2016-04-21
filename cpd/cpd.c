@@ -163,10 +163,10 @@ struct _internal
     int                     c_ninputs;
     int                     c_noutputs;
     int                     cpd_samplerate;
-    cpd_hook_print            c_m_post;
-    cpd_hook_print            c_m_log;
-    cpd_hook_print            c_m_error;
-    cpd_hook_print            c_m_fatal;
+    cpd_hook_post            c_m_normal;
+    cpd_hook_post            c_m_log;
+    cpd_hook_post            c_m_error;
+    cpd_hook_post            c_m_fatal;
     cpd_hook_noteon           c_m_noteon;
     cpd_hook_controlchange    c_m_controlchange;
     cpd_hook_programchange    c_m_programchange;
@@ -315,45 +315,6 @@ void cpd_searchpath_add(const char* path)
 
 
 
-void cpd_console_fatal(char const* message, ...)
-{
-    char buf[MAXPDSTRING];
-    va_list ap;
-    va_start(ap, message);
-    vsnprintf(buf, MAXPDSTRING-1, message, ap);
-    va_end(ap);
-    verbose(-3, "%s", buf);
-}
-
-void cpd_console_error(char const* message, ...)
-{
-    char buf[MAXPDSTRING];
-    va_list ap;
-    va_start(ap, message);
-    vsnprintf(buf, MAXPDSTRING-1, message, ap);
-    va_end(ap);
-    verbose(-2, "%s", buf);
-}
-
-void cpd_console_post(char const* message, ...)
-{
-    char buf[MAXPDSTRING];
-    va_list ap;
-    va_start(ap, message);
-    vsnprintf(buf, MAXPDSTRING-1, message, ap);
-    va_end(ap);
-    verbose(-1, "%s", buf);
-}
-
-void cpd_console_log(char const* message, ...)
-{
-    char buf[MAXPDSTRING];
-    va_list ap;
-    va_start(ap, message);
-    vsnprintf(buf, MAXPDSTRING-1, message, ap);
-    va_end(ap);
-    verbose(0, "%s", buf);
-}
 
 
 
@@ -391,9 +352,9 @@ static void cpd_print(const char* s)
     {
         c_current_instance->cpd_internal_ptr->c_m_error(c_current_instance, s);
     }
-    else if(level == 2 && c_current_instance->cpd_internal_ptr->c_m_post)
+    else if(level == 2 && c_current_instance->cpd_internal_ptr->c_m_normal)
     {
-        c_current_instance->cpd_internal_ptr->c_m_post(c_current_instance, s);
+        c_current_instance->cpd_internal_ptr->c_m_normal(c_current_instance, s);
     }
     else if(c_current_instance->cpd_internal_ptr->c_m_log)
     {
@@ -415,7 +376,7 @@ cpd_instance* cpd_instance_new(size_t size)
         internal->c_noutputs    = 0;
         
         
-        internal->c_m_post      = NULL;
+        internal->c_m_normal      = NULL;
         internal->c_m_log       = NULL;
         internal->c_m_error     = NULL;
         internal->c_m_fatal     = NULL;
@@ -483,7 +444,7 @@ void cpd_instance_set(cpd_instance* instance)
 
 void cpd_instance_set_hook_console(cpd_instance* instance, cpd_hook_console* consolehook)
 {
-    instance->cpd_internal_ptr->c_m_post  = consolehook->m_post;
+    instance->cpd_internal_ptr->c_m_normal  = consolehook->m_normal;
     instance->cpd_internal_ptr->c_m_log   = consolehook->m_log;
     instance->cpd_internal_ptr->c_m_error = consolehook->m_error;
     instance->cpd_internal_ptr->c_m_fatal = consolehook->m_fatal;
@@ -624,6 +585,186 @@ int cpd_instance_get_samplerate(cpd_instance* instance)
 {
     return instance->cpd_internal_ptr->cpd_samplerate;
 }
+
+void cpd_instance_post_fatal(cpd_instance* instance, char const* message, ...)
+{
+    cpd_instance_set(instance);
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    verbose(-3, "%s", buf);
+}
+
+void cpd_instance_post_error(cpd_instance* instance, char const* message, ...)
+{
+    cpd_instance_set(instance);
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    verbose(-2, "%s", buf);
+}
+
+void cpd_instance_post_normal(cpd_instance* instance, char const* message, ...)
+{
+    cpd_instance_set(instance);
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    verbose(-1, "%s", buf);
+}
+
+void cpd_instance_post_log(cpd_instance* instance, char const* message, ...)
+{
+    cpd_instance_set(instance);
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    verbose(0, "%s", buf);
+}
+
+void cpd_instance_send_bang(cpd_instance* instance, cpd_tie const* tie)
+{
+    cpd_instance_set(instance);
+    t_symbol const* sym = (t_symbol const *)tie;
+    if(sym && sym->s_thing)
+    {
+        pd_bang((t_pd *)sym->s_thing);
+    }
+}
+
+void cpd_instance_send_float(cpd_instance* instance, cpd_tie const* tie, cpd_float value)
+{
+    cpd_instance_set(instance);
+    t_symbol const* sym = (t_symbol const *)tie;
+    if(sym && sym->s_thing)
+    {
+        pd_float((t_pd *)sym->s_thing, value);
+    }
+}
+
+#define LCOV_EXCL_START
+void cpd_instance_send_gpointer(cpd_instance* instance, cpd_tie const* tie, cpd_gpointer const* pointer)
+{
+    cpd_instance_set(instance);
+    t_symbol const* sym = (t_symbol const *)tie;
+    if(sym && sym->s_thing)
+    {
+        pd_pointer((t_pd *)sym->s_thing, (t_gpointer *)pointer);
+    }
+}
+#define LCOV_EXCL_STOP
+
+void cpd_instance_send_symbol(cpd_instance* instance, cpd_tie const* tie, cpd_symbol const* symbol)
+{
+    cpd_instance_set(instance);
+    t_symbol const* sym = (t_symbol const *)tie;
+    if(sym && sym->s_thing)
+    {
+        pd_symbol((t_pd *)sym->s_thing, (t_symbol *)symbol);
+    }
+}
+
+void cpd_instance_send_list(cpd_instance* instance, cpd_tie const* tie, cpd_list const* list)
+{
+    cpd_instance_set(instance);
+    t_symbol const* sym = (t_symbol const *)tie;
+    if(sym && sym->s_thing)
+    {
+        pd_list((t_pd *)sym->s_thing, &s_list, list->l_n, list->l_vec);
+    }
+}
+
+void cpd_instance_send_anything(cpd_instance* instance, cpd_tie const* tie, cpd_symbol const* symbol, cpd_list const* list)
+{
+    cpd_instance_set(instance);
+    t_symbol const* sym = (t_symbol const *)tie;
+    if(sym && sym->s_thing)
+    {
+        pd_typedmess((t_pd *)sym->s_thing, (t_symbol *)symbol, list->l_n, list->l_vec);
+    }
+}
+
+#define CPD_PD_MIDI_CHECK_CHANNEL(channel) if (channel < 0 || channel > 16) return;
+#define CPD_PD_MIDI_CHECK_PORT(port) if (port < 0 || port > 0x0fff) return;
+#define CPD_PD_MIDI_CHECK_RANGE_7BIT(v) if (v < 0 || v > 0x7f) return;
+#define CPD_PD_MIDI_CHECK_RANGE_8BIT(v) if (v < 0 || v > 0xff) return;
+#define CPD_PD_MIDI_WRAP_PORT(channel) (channel >> 4)
+#define CPD_PD_MIDI_WRAP_CHANNEL(channel) (channel & 0x0f)
+
+void cpd_instance_midi_noteon(cpd_instance* instance, int channel, int pitch, int velocity)
+{
+    cpd_instance_set(instance);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(pitch)
+    CPD_PD_MIDI_CHECK_RANGE_8BIT(velocity)
+    inmidi_noteon(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), pitch, velocity);
+}
+
+void cpd_instance_midi_controlchange(cpd_instance* instance, int channel, int controller, int value)
+{
+    cpd_instance_set(instance);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(controller)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
+    inmidi_controlchange(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), controller, value);
+}
+
+void cpd_instance_midi_programchange(cpd_instance* instance, int channel, int value)
+{
+    cpd_instance_set(instance);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
+    inmidi_programchange(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value);
+}
+
+void cpd_instance_midi_pitchbend(cpd_instance* instance, int channel, int value)
+{
+    cpd_instance_set(instance);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    if (value < -8192 || value > 8191) return;
+    inmidi_pitchbend(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value + 8192);
+}
+
+void cpd_instance_midi_aftertouch(cpd_instance* instance, int channel, int value)
+{
+    cpd_instance_set(instance);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
+    inmidi_aftertouch(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value);
+}
+
+void cpd_instance_midi_polyaftertouch(cpd_instance* instance, int channel, int pitch, int value)
+{
+    cpd_instance_set(instance);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(pitch)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
+    inmidi_polyaftertouch(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), pitch, value);
+}
+
+void cpd_instance_midi_byte(cpd_instance* instance, int port, int byte)
+{
+    cpd_instance_set(instance);
+    CPD_PD_MIDI_CHECK_PORT(port)
+    CPD_PD_MIDI_CHECK_RANGE_8BIT(byte)
+    inmidi_byte(port, byte);
+}
+
+#undef CPD_PD_MIDI_CHECK_CHANNEL
+#undef CPD_PD_MIDI_CHECK_PORT
+#undef CPD_PD_MIDI_CHECK_RANGE_7BIT
+#undef CPD_PD_MIDI_CHECK_RANGE_8BIT
+#undef CPD_PD_MIDI_WRAP_PORT
+#undef CPD_PD_MIDI_WRAP_CHANNEL
+
 
 
 
@@ -1090,134 +1231,9 @@ void cpd_list_set_gpointer(cpd_list *list, size_t index, cpd_gpointer* pointer)
 
 
 
-void cpd_messagesend_bang(cpd_tie const* tie)
-{
-    t_symbol const* sym = (t_symbol const *)tie;
-    if(sym && sym->s_thing)
-    {
-        pd_bang((t_pd *)sym->s_thing);
-    }
-}
-
-void cpd_messagesend_float(cpd_tie const* tie, cpd_float value)
-{
-    t_symbol const* sym = (t_symbol const *)tie;
-    if(sym && sym->s_thing)
-    {
-        pd_float((t_pd *)sym->s_thing, value);
-    }
-}
-
-#define LCOV_EXCL_START
-void cpd_messagesend_gpointer(cpd_tie const* tie, cpd_gpointer const* pointer)
-{
-    t_symbol const* sym = (t_symbol const *)tie;
-    if(sym && sym->s_thing)
-    {
-        pd_pointer((t_pd *)sym->s_thing, (t_gpointer *)pointer);
-    }
-}
-#define LCOV_EXCL_STOP
-
-void cpd_messagesend_symbol(cpd_tie const* tie, cpd_symbol const* symbol)
-{
-    t_symbol const* sym = (t_symbol const *)tie;
-    if(sym && sym->s_thing)
-    {
-        pd_symbol((t_pd *)sym->s_thing, (t_symbol *)symbol);
-    }
-}
-
-void cpd_messagesend_list(cpd_tie const* tie, cpd_list const* list)
-{
-    t_symbol const* sym = (t_symbol const *)tie;
-    if(sym && sym->s_thing)
-    {
-        pd_list((t_pd *)sym->s_thing, &s_list, list->l_n, list->l_vec);
-    }
-}
-
-void cpd_messagesend_anything(cpd_tie const* tie, cpd_symbol const* symbol, cpd_list const* list)
-{
-    t_symbol const* sym = (t_symbol const *)tie;
-    if(sym && sym->s_thing)
-    {
-        pd_typedmess((t_pd *)sym->s_thing, (t_symbol *)symbol, list->l_n, list->l_vec);
-    }
-}
 
 
 
-
-
-
-
-
-#define CPD_PD_MIDI_CHECK_CHANNEL(channel) if (channel < 0 || channel > 16) return;
-#define CPD_PD_MIDI_CHECK_PORT(port) if (port < 0 || port > 0x0fff) return;
-#define CPD_PD_MIDI_CHECK_RANGE_7BIT(v) if (v < 0 || v > 0x7f) return;
-#define CPD_PD_MIDI_CHECK_RANGE_8BIT(v) if (v < 0 || v > 0xff) return;
-#define CPD_PD_MIDI_WRAP_PORT(channel) (channel >> 4)
-#define CPD_PD_MIDI_WRAP_CHANNEL(channel) (channel & 0x0f)
-
-void cpd_midisend_noteon(int channel, int pitch, int velocity)
-{
-    CPD_PD_MIDI_CHECK_CHANNEL(channel)
-    CPD_PD_MIDI_CHECK_RANGE_7BIT(pitch)
-    CPD_PD_MIDI_CHECK_RANGE_8BIT(velocity)
-    inmidi_noteon(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), pitch, velocity);
-}
-
-void cpd_midisend_controlchange(int channel, int controller, int value)
-{
-    CPD_PD_MIDI_CHECK_CHANNEL(channel)
-    CPD_PD_MIDI_CHECK_RANGE_7BIT(controller)
-    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
-    inmidi_controlchange(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), controller, value);
-}
-
-void cpd_midisend_programchange(int channel, int value)
-{
-    CPD_PD_MIDI_CHECK_CHANNEL(channel)
-    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
-    inmidi_programchange(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value);
-}
-
-void cpd_midisend_pitchbend(int channel, int value)
-{
-    CPD_PD_MIDI_CHECK_CHANNEL(channel)
-    if (value < -8192 || value > 8191) return;
-    inmidi_pitchbend(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value + 8192);
-}
-
-void cpd_midisend_aftertouch(int channel, int value)
-{
-    CPD_PD_MIDI_CHECK_CHANNEL(channel)
-    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
-    inmidi_aftertouch(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value);
-}
-
-void cpd_midisend_polyaftertouch(int channel, int pitch, int value)
-{
-    CPD_PD_MIDI_CHECK_CHANNEL(channel)
-    CPD_PD_MIDI_CHECK_RANGE_7BIT(pitch)
-    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
-    inmidi_polyaftertouch(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), pitch, value);
-}
-
-void cpd_midisend_byte(int port, int byte)
-{
-    CPD_PD_MIDI_CHECK_PORT(port)
-    CPD_PD_MIDI_CHECK_RANGE_8BIT(byte)
-    inmidi_byte(port, byte);
-}
-
-#undef CPD_PD_MIDI_CHECK_CHANNEL
-#undef CPD_PD_MIDI_CHECK_PORT
-#undef CPD_PD_MIDI_CHECK_RANGE_7BIT
-#undef CPD_PD_MIDI_CHECK_RANGE_8BIT
-#undef CPD_PD_MIDI_WRAP_PORT
-#undef CPD_PD_MIDI_WRAP_CHANNEL
 
 
 #define CPD_PD_MIDI_CLIP(x, low, high) ((x > high) ? high : ((x < low) ? low : x))
