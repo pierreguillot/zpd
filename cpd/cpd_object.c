@@ -8,17 +8,13 @@
 // directly copied. None of the authors of Pure Data and libPD is responsible for these
 // experiments but you must be aware of their unintended contribution.
 
-#include <ctype.h>
-#include <stdarg.h>
-#include <assert.h>
-
-#include "cpd.h"
+#include "cpd_object.h"
 #include "../pd/src/m_pd.h"
 #include "../pd/src/g_canvas.h"
 #include "../pd/src/s_stuff.h"
 #include "../pd/src/m_imp.h"
 #include "../pd/src/g_all_guis.h"
-
+#include <stdlib.h>
 
 extern cpd_symbol*        c_sym_bng;
 extern cpd_symbol*        c_sym_hsl;
