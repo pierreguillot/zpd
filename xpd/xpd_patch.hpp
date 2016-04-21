@@ -38,7 +38,7 @@ namespace xpd
         
         //! @brief Checks the validity of the patch.
         //! @return true if the patch if valid, otherwise false.
-        inline xpd_constexpr operator bool() const xpd_noexcept {return static_cast<bool>(m_ptr);}
+        inline xpd_constexpr operator bool() const xpd_noexcept {return (m_ptr != xpd_nullptr);}
         
         //! @brief Gets the file's name.
         std::string name() const;
