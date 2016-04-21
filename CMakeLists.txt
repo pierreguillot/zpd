@@ -284,5 +284,6 @@ else()
 			#set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
 
 			add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+			target_link_libraries(xpdtest ws2_32)
     endif()
 endif()
