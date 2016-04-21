@@ -7,14 +7,15 @@
 
 var indexSectionsWithContent =
 {
-  0: "_cm",
+  0: "_cdegilmopst",
   1: "_c",
   2: "c",
   3: "m",
   4: "c",
   5: "c",
   6: "c",
-  7: "c"
+  7: "degilmopst",
+  8: "t"
 };
 
 var indexSectionNames =
@@ -26,7 +27,8 @@ var indexSectionNames =
   4: "typedefs",
   5: "enums",
   6: "enumvalues",
-  7: "groups"
+  7: "groups",
+  8: "pages"
 };
 
 function convertToId(search)
