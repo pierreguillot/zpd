@@ -26,7 +26,7 @@ namespace xpd
     class mutex
     {
     public:
-        mutex() {InitializeCriticalSection(&m_mutex, NULL);}
+        mutex() {InitializeCriticalSection(&m_mutex);}
         ~mutex() {DeleteCriticalSection(&m_mutex);}
         void lock() {EnterCriticalSection(&m_mutex);}
         void unlock() {LeaveCriticalSection(&m_mutex);}

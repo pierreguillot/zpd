@@ -5,7 +5,7 @@
  * An implementation of the Thread class using
  * the Win32 API.
  */
-#include "Thread.hh"
+#include "Thread.hpp"
 #include <windows.h>
 
 namespace synch {
