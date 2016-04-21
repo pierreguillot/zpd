@@ -82,7 +82,7 @@ namespace xpd
         
         //! @brief Checks the validity of the symbol.
         //! @return true if the symbol if valid, otherwise false.
-       inline xpd_constexpr operator bool() const xpd_noexcept {return bool(ptr);}
+       inline xpd_constexpr operator bool() const xpd_noexcept {return static_cast<bool>(ptr);}
         
         //! @brief Gets the name of the symbol.
         //! @return The name of the symbol.

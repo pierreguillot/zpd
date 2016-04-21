@@ -264,7 +264,7 @@ else()
       target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
       target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
     elseif(${WIN32})
-      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_STRUCT_TIMESPEC=1 -DPTW32_STATIC_LIB=1)
+      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DPTW32_STATIC_LIB=1)
       include_directories(${PROJECT_SOURCE_DIR}/pthread/include)
 
 			FOREACH(flag

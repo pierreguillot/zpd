@@ -77,7 +77,7 @@ namespace xpd
         
         //! @brief Checks the validity of the tie.
         //! @return true if the tie if valid, otherwise false.
-       inline xpd_constexpr operator bool() const xpd_noexcept {return bool(ptr);}
+       inline xpd_constexpr operator bool() const xpd_noexcept {return static_cast<bool>(ptr);}
         
         //! @brief Gets the name of the tie.
         //! @return The name of the tie.
