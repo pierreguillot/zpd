@@ -268,7 +268,7 @@ else()
       target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
       target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
     elseif(${WIN32})
-      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -THREAD_LOCKING=0)
+      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DTHREAD_LOCKING=0)
 
       if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
 				add_definitions(-DPD_LONGINTTYPE="long long")
