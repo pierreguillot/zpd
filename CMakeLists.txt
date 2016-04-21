@@ -275,14 +275,14 @@ else()
 				STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
 				SET("${flag}" "${${flag}} /EHsc")
 			ENDFOREACH()
-			
+
       if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
       	link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x64)
 				add_definitions(-DPD_LONGINTTYPE="long long")
       else(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
       	link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x86)
       endif()
-      add_definitions("/D_CRT_SECURE_NO_WARNINGS /wd4091 /wd4996 /wd4800")
+      add_definitions("/D_CRT_SECURE_NO_WARNINGS /wd4091 /wd4996")
 
 			#add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
       #target_link_libraries(zpdshared pthread_lib)
@@ -294,5 +294,6 @@ else()
 
 			add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
 			target_link_libraries(xpdtest pthread_lib)
+			target_link_libraries(xpdtest ws2_32)
     endif()
 endif()
