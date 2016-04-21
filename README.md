@@ -15,4 +15,5 @@ cd ../
 ```
 
 doc:
-https://pierreguillot.github.io/zpd/index.html
+https://pierreguillot.github.io/zpd/cpd/index.html
+https://pierreguillot.github.io/zpd/xpd/index.html
