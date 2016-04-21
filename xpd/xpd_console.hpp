@@ -47,7 +47,6 @@ namespace xpd
         //! @brief A class that manages an history of posts.
         //! @details The history record posts and facilitates the retrieving of posts
         //! from a specified level.
-        //! @todo use unary predicated instead of specific methods
         class history
         {
         public:

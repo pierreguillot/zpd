@@ -18,7 +18,7 @@
 
 namespace xpd
 {
-    class patch;
+    class patch;    
     // ==================================================================================== //
     //                                          INSTANCE                                    //
     // ==================================================================================== //
@@ -64,7 +64,7 @@ namespace xpd
         //! @param inputs The input matrix.
         //! @param nouts The number of outputs.
         //! @param outputs The output matrix.
-        void perform(int nsamples, const int nins, const float** inputs, const int nouts, float** outputs) xpd_noexcept;
+        void perform(int nsamples, const int nins, const sample** inputs, const int nouts, sample** outputs) xpd_noexcept;
         
         //! @brief Releases the digital signal processing chain of the instance.
         void release() xpd_noexcept;

@@ -27,4 +27,16 @@
 #define xpd_delete_f = delete
 #endif
 
+namespace xpd
+{
+#ifdef _ZPD_DOUBLE_PRECISION_
+    //! @brief The type used for samples during digital signal processing.
+    typedef double sample;
+#else
+    //! @brief The type used for samples during digital signal processing.
+    typedef float sample;
+#endif
+}
+
+
 #endif // XPD_DEF_HPP

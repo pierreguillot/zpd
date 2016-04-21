@@ -71,7 +71,7 @@ namespace xpd
     
     std::string symbol::name() const
     {
-        return cpd_symbol_get_name(reinterpret_cast<c_tie const *>(ptr));
+        return cpd_symbol_get_name(reinterpret_cast<cpd_tie const *>(ptr));
     }
 }
 

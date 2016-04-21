@@ -50,25 +50,33 @@ CPD_EXTERN_STRUCT _atom;
 //! @{
 
 //! @brief The type used for samples during digital signal processing.
-typedef float c_sample;
+typedef float cpd_sample;
 //! @brief The type used for floating point numbers.
-typedef float c_float;
-//! @brief The type used to bind and unbind c_instance with string characters.
-typedef struct _symbol      c_tie;
-//! @brief The type used for fast comparaison of string characters.
-typedef struct _symbol      c_symbol;
-typedef struct _list        c_list;
-typedef struct _internal    c_internal;
-typedef struct _gpointer    c_gpointer;
-typedef struct _array       c_array;
-typedef struct _glist       c_patch;
-typedef struct _text        c_object;
-typedef struct _iemgui      c_gui;
-
+typedef float cpd_float;
+//! @brief The opaque type used to bind and unbind cpd_instance with string characters.
+typedef struct _symbol      cpd_tie;
+//! @brief The opaque type used for fast comparaison of string characters.
+typedef struct _symbol      cpd_symbol;
+//! @brief The opaque type used for internal messages.
+typedef struct _list        cpd_list;
+//! @brief The opaque type used for internal instance management.
+typedef struct _internal    cpd_internal;
+//! @brief The opaque type used for graphical pointer (not implemented).
+typedef struct _gpointer    cpd_gpointer;
+//! @brief The opaque type used for a patch.
+typedef struct _glist       cpd_patch;
+//! @brief The opaque type used for an object.
+typedef struct _text        cpd_object;
+//! @brief The opaque type used for a iem gui object.
+typedef struct _iemgui      cpd_gui;
+//! @brief The instance is the main interface to communicate within the cpd environment
+//! @details The instance manages the posts to the console, the midi events, the messages
+//! and the digital signal processing. It is also the interface to load and delete patches.
 typedef struct _instance
 {
-    c_internal* c_internal_ptr;
-}c_instance;
+    cpd_internal* cpd_internal_ptr;
+}cpd_instance;
+
 
 //! @brief The type of messages in a list.
 typedef enum
@@ -90,16 +98,16 @@ typedef enum
     Z_GUI_RADIOV        = 6,
     Z_GUI_VUMETER       = 7,
     Z_GUI_PANEL         = 8
-} c_guitype;
+} cpd_guitype;
 
 
 
-typedef void (*c_hook_bang)(struct _instance* instance, c_tie* tie);
-typedef void (*c_hook_float)(struct _instance* instance, c_tie* tie, c_float f);
-typedef void (*c_hook_symbol)(struct _instance* instance, c_tie* tie, c_symbol* s);
-typedef void (*c_hook_gpointer)(struct _instance* instance, c_tie* tie, c_gpointer *gp);
-typedef void (*c_hook_list)(struct _instance* instance, c_tie* tie, c_list *list);
-typedef void (*c_hook_anything)(struct _instance* instance, c_tie* tie, c_symbol *s, c_list *list);
+typedef void (*c_hook_bang)(struct _instance* instance, cpd_tie* tie);
+typedef void (*c_hook_float)(struct _instance* instance, cpd_tie* tie, cpd_float f);
+typedef void (*c_hook_symbol)(struct _instance* instance, cpd_tie* tie, cpd_symbol* s);
+typedef void (*c_hook_gpointer)(struct _instance* instance, cpd_tie* tie, cpd_gpointer *gp);
+typedef void (*c_hook_list)(struct _instance* instance, cpd_tie* tie, cpd_list *list);
+typedef void (*c_hook_anything)(struct _instance* instance, cpd_tie* tie, cpd_symbol *s, cpd_list *list);
 
 
 //! @brief The method prototype to receive messages from the console.
@@ -209,41 +217,41 @@ CPD_EXTERN void cpd_console_fatal(char const* message, ...);
 
 //! @brief Creates a new instance.
 //! @param The size of memory to allocate in bytes.
-CPD_EXTERN c_instance* cpd_instance_new(size_t size);
+CPD_EXTERN cpd_instance* cpd_instance_new(size_t size);
 
 //! @brief Deletes an instance.
-CPD_EXTERN void cpd_instance_free(c_instance* instance);
+CPD_EXTERN void cpd_instance_free(cpd_instance* instance);
 
 //! @brief Sets the current instance.
-CPD_EXTERN void cpd_instance_set(c_instance* instance);
+CPD_EXTERN void cpd_instance_set(cpd_instance* instance);
 
 //! @brief Sets the print methods of an instance.
-CPD_EXTERN void cpd_instance_set_hook_console(c_instance* instance, c_hook_console* consolehook);
+CPD_EXTERN void cpd_instance_set_hook_console(cpd_instance* instance, c_hook_console* consolehook);
 
 //! @brief Sets the midi methods of an instance.
-CPD_EXTERN void cpd_instance_set_hook_midi(c_instance* instance, c_hook_midi* midihook);
+CPD_EXTERN void cpd_instance_set_hook_midi(cpd_instance* instance, c_hook_midi* midihook);
 
 //! @brief Binds an instance to a tie.
-CPD_EXTERN void cpd_instance_bind(c_instance* instance, c_tie* tie, c_hook_message* messagehook);
+CPD_EXTERN void cpd_instance_bind(cpd_instance* instance, cpd_tie* tie, c_hook_message* messagehook);
 
 //! @brief Unbinds an instance to a tie.
-CPD_EXTERN void cpd_instance_unbind(c_instance* instance, c_tie* tie);
+CPD_EXTERN void cpd_instance_unbind(cpd_instance* instance, cpd_tie* tie);
 
 //! @brief Prepares the DSP for an instance.
-CPD_EXTERN void cpd_instance_dsp_prepare(c_instance* instance,
+CPD_EXTERN void cpd_instance_dsp_prepare(cpd_instance* instance,
                                            const int nins, const int nouts,
                                            const int samplerate, const int nsamples);
 
 //! @brief Performs the DSP for an instance.
-CPD_EXTERN void cpd_instance_dsp_perform(c_instance* instance, int nsamples,
-                                           const int nins, const c_sample** inputs,
-                                           const int nouts, c_sample** outputs);
+CPD_EXTERN void cpd_instance_dsp_perform(cpd_instance* instance, int nsamples,
+                                           const int nins, const cpd_sample** inputs,
+                                           const int nouts, cpd_sample** outputs);
 
 //! @brief Releases the DSP for an instance.
-CPD_EXTERN void cpd_instance_dsp_release(c_instance* instance);
+CPD_EXTERN void cpd_instance_dsp_release(cpd_instance* instance);
 
 //! @brief Gets the sample rate of an instance.
-CPD_EXTERN int cpd_instance_get_samplerate(c_instance* instance);
+CPD_EXTERN int cpd_instance_get_samplerate(cpd_instance* instance);
 
 
 
@@ -253,97 +261,97 @@ CPD_EXTERN int cpd_instance_get_samplerate(c_instance* instance);
 
 
 //! @brief Creates a new patch.
-CPD_EXTERN c_patch* cpd_patch_new(const char* name, const char* path);
+CPD_EXTERN cpd_patch* cpd_patch_new(const char* name, const char* path);
 
 //! @brief Frees a patch.
-CPD_EXTERN void cpd_patch_free(c_patch* patch);
+CPD_EXTERN void cpd_patch_free(cpd_patch* patch);
 
 //! @brief Gets the name of a patch.
-CPD_EXTERN const char* cpd_patch_get_name(c_patch const* patch);
+CPD_EXTERN const char* cpd_patch_get_name(cpd_patch const* patch);
 
 //! @brief Gets the path of a patch.
-CPD_EXTERN const char* cpd_patch_get_path(c_patch const* patch);
+CPD_EXTERN const char* cpd_patch_get_path(cpd_patch const* patch);
 
 //! @brief Gets the dollar zero of a patch.
-CPD_EXTERN int cpd_patch_get_dollarzero(c_patch const* patch);
+CPD_EXTERN int cpd_patch_get_dollarzero(cpd_patch const* patch);
 
 //! @brief Gets the x margin of a patch.
-CPD_EXTERN int cpd_patch_get_x(c_patch const* patch);
+CPD_EXTERN int cpd_patch_get_x(cpd_patch const* patch);
 
 //! @brief Gets the x margin of a patch.
-CPD_EXTERN int cpd_patch_get_y(c_patch const* patch);
+CPD_EXTERN int cpd_patch_get_y(cpd_patch const* patch);
 
 //! @brief Gets the width of a patch.
-CPD_EXTERN int cpd_patch_get_width(c_patch const* patch);
+CPD_EXTERN int cpd_patch_get_width(cpd_patch const* patch);
 
 //! @brief Gets the height of a patch.
-CPD_EXTERN int cpd_patch_get_height(c_patch const* patch);
+CPD_EXTERN int cpd_patch_get_height(cpd_patch const* patch);
 
 //! @brief Gets the first object of a patch.
-CPD_EXTERN c_object* cpd_patch_get_first_object(c_patch const* patch);
+CPD_EXTERN cpd_object* cpd_patch_get_first_object(cpd_patch const* patch);
 
 //! @brief Gets the next object of a patch.
-CPD_EXTERN c_object* cpd_patch_get_next_object(c_patch const* patch, c_object const* previous);
+CPD_EXTERN cpd_object* cpd_patch_get_next_object(cpd_patch const* patch, cpd_object const* previous);
 
 
 
 
 //! @brief Gets the name of an object.
-CPD_EXTERN c_symbol* cpd_object_get_name(c_object const* object);
+CPD_EXTERN cpd_symbol* cpd_object_get_name(cpd_object const* object);
 
 //! @brief Gets the name of an object.
-CPD_EXTERN void cpd_object_get_text(c_object const* object, int* size, char** text);
+CPD_EXTERN void cpd_object_get_text(cpd_object const* object, int* size, char** text);
 
-CPD_EXTERN void cpd_object_get_bounds(c_object const* object, c_patch const* patch, int* x, int* y, int* width, int* height);
-
-//! @brief Gets the x position of an object.
-CPD_EXTERN int cpd_object_get_x(c_object const* object, c_patch const* patch);
+CPD_EXTERN void cpd_object_get_bounds(cpd_object const* object, cpd_patch const* patch, int* x, int* y, int* width, int* height);
 
 //! @brief Gets the x position of an object.
-CPD_EXTERN int cpd_object_get_y(c_object const* object, c_patch const* patch);
+CPD_EXTERN int cpd_object_get_x(cpd_object const* object, cpd_patch const* patch);
+
+//! @brief Gets the x position of an object.
+CPD_EXTERN int cpd_object_get_y(cpd_object const* object, cpd_patch const* patch);
 
 //! @brief Gets the width of an object.
-CPD_EXTERN int cpd_object_get_width(c_object const* object, c_patch const* patch);
+CPD_EXTERN int cpd_object_get_width(cpd_object const* object, cpd_patch const* patch);
 
 //! @brief Gets the height of an object.
-CPD_EXTERN int cpd_object_get_height(c_object const* object, c_patch const* patch);
+CPD_EXTERN int cpd_object_get_height(cpd_object const* object, cpd_patch const* patch);
 
 //! @brief Gets the if an object is a gui.
-CPD_EXTERN char cpd_object_is_gui(c_object const* object);
+CPD_EXTERN char cpd_object_is_gui(cpd_object const* object);
 
 
 
 
 
 //! @brief Gets the label of a gui.
-CPD_EXTERN c_symbol* cpd_gui_get_label(c_gui const* gui);
+CPD_EXTERN cpd_symbol* cpd_gui_get_label(cpd_gui const* gui);
 
 //! @brief Gets the receive symbol of a gui.
-CPD_EXTERN c_tie* cpd_gui_get_receive_tie(c_gui const* gui);
+CPD_EXTERN cpd_tie* cpd_gui_get_receive_tie(cpd_gui const* gui);
 
 //! @brief Gets the send symbol of a gui.
-CPD_EXTERN c_tie* cpd_gui_get_send_tie(c_gui const* gui);
+CPD_EXTERN cpd_tie* cpd_gui_get_send_tie(cpd_gui const* gui);
 
 //! @brief Gets the send symbol of a gui.
-CPD_EXTERN c_guitype cpd_gui_get_type(c_gui const* gui);
+CPD_EXTERN cpd_guitype cpd_gui_get_type(cpd_gui const* gui);
 
 //! @brief Gets the maximum value of a gui.
-CPD_EXTERN float cpd_gui_get_maximum_value(c_gui const* gui);
+CPD_EXTERN float cpd_gui_get_maximum_value(cpd_gui const* gui);
 
 //! @brief Gets the maximum value of a gui.
-CPD_EXTERN float cpd_gui_get_minimum_value(c_gui const* gui);
+CPD_EXTERN float cpd_gui_get_minimum_value(cpd_gui const* gui);
 
 //! @brief Gets the number of steps of a gui.
-CPD_EXTERN int cpd_gui_get_number_of_steps(c_gui const* gui);
+CPD_EXTERN int cpd_gui_get_number_of_steps(cpd_gui const* gui);
 
 //! @brief Gets the number of steps of a gui.
-CPD_EXTERN float cpd_gui_get_value(c_gui const* gui);
+CPD_EXTERN float cpd_gui_get_value(cpd_gui const* gui);
 
 //! @brief Gets the x position of the label of a gui.
-CPD_EXTERN int cpd_gui_get_label_x(c_gui const* gui, c_patch const* patch);
+CPD_EXTERN int cpd_gui_get_label_x(cpd_gui const* gui, cpd_patch const* patch);
 
 //! @brief Gets the y position of the label of a gui.
-CPD_EXTERN int cpd_gui_get_label_y(c_gui const* gui, c_patch const* patch);
+CPD_EXTERN int cpd_gui_get_label_y(cpd_gui const* gui, cpd_patch const* patch);
 
 
 
@@ -351,50 +359,50 @@ CPD_EXTERN int cpd_gui_get_label_y(c_gui const* gui, c_patch const* patch);
 
 
 //! @brief Creates an opaque tie that can be understood by Pure Data.
-CPD_EXTERN c_tie* cpd_tie_create(const char* name);
+CPD_EXTERN cpd_tie* cpd_tie_create(const char* name);
 
 //! @brief Gets an opaque symbol that can be understood by Pure Data.
-CPD_EXTERN char const* cpd_tie_get_name(c_tie const* tie);
+CPD_EXTERN char const* cpd_tie_get_name(cpd_tie const* tie);
 
 //! @brief Creates an opaque symbol that can be understood by Pure Data.
-CPD_EXTERN c_symbol* cpd_symbol_create(const char* symbol);
+CPD_EXTERN cpd_symbol* cpd_symbol_create(const char* symbol);
 
 //! @brief Gets an opaque symbol that can be understood by Pure Data.
-CPD_EXTERN char const* cpd_symbol_get_name(c_symbol const* symbol);
+CPD_EXTERN char const* cpd_symbol_get_name(cpd_symbol const* symbol);
 
 
 
 //! @brief Creates an opaque list that can be understood by Pure Data.
-CPD_EXTERN c_list* cpd_list_create(size_t size);
+CPD_EXTERN cpd_list* cpd_list_create(size_t size);
 
 //! @brief Clears a list.
-CPD_EXTERN void cpd_list_free(c_list *list);
+CPD_EXTERN void cpd_list_free(cpd_list *list);
 
 //! @brief Gets the size of a list.
-CPD_EXTERN size_t cpd_list_get_size(c_list const* list);
+CPD_EXTERN size_t cpd_list_get_size(cpd_list const* list);
 
 //! @brief Gets the type of a data of the list.
-CPD_EXTERN c_atomtype cpd_list_get_type(c_list const* list, size_t index);
+CPD_EXTERN c_atomtype cpd_list_get_type(cpd_list const* list, size_t index);
 
 //! @brief Gets the float value of a data of the list.
-CPD_EXTERN c_float cpd_list_get_float(c_list const* list, size_t index);
+CPD_EXTERN cpd_float cpd_list_get_float(cpd_list const* list, size_t index);
 
 //! @brief Gets the symbol of a data of the list.
-CPD_EXTERN c_symbol* cpd_list_get_symbol(c_list const* list, size_t index);
+CPD_EXTERN cpd_symbol* cpd_list_get_symbol(cpd_list const* list, size_t index);
 
 //! @brief Gets the gpointer of a data of the list.
-CPD_EXTERN c_gpointer* cpd_list_get_gpointer(c_list const* list, size_t index);
+CPD_EXTERN cpd_gpointer* cpd_list_get_gpointer(cpd_list const* list, size_t index);
 
 //! @brief Sets the float value of a data of the list.
-CPD_EXTERN void cpd_list_set_float(c_list *list, size_t index, c_float value);
+CPD_EXTERN void cpd_list_set_float(cpd_list *list, size_t index, cpd_float value);
 
 //! @brief Sets the symbol of a data of the list.
-CPD_EXTERN void cpd_list_set_symbol(c_list *list, size_t index, c_symbol* symbol);
+CPD_EXTERN void cpd_list_set_symbol(cpd_list *list, size_t index, cpd_symbol* symbol);
 
 //! @brief Sets the gpointer of a data of the list.
-CPD_EXTERN void cpd_list_set_gpointer(c_list *list, size_t index, c_gpointer* pointer);
+CPD_EXTERN void cpd_list_set_gpointer(cpd_list *list, size_t index, cpd_gpointer* pointer);
 
-CPD_EXTERN void* cpd_list_get_atom(c_list* list, size_t index);
+CPD_EXTERN void* cpd_list_get_atom(cpd_list* list, size_t index);
 
 
 
@@ -407,22 +415,22 @@ CPD_EXTERN void* cpd_list_get_atom(c_list* list, size_t index);
 
 
 //! @brief Sends a bang to Pure Data.
-CPD_EXTERN void cpd_messagesend_bang(c_tie const* tie);
+CPD_EXTERN void cpd_messagesend_bang(cpd_tie const* tie);
 
 //! @brief Sends a float to Pure Data.
-CPD_EXTERN void cpd_messagesend_float(c_tie const* tie, c_float value);
+CPD_EXTERN void cpd_messagesend_float(cpd_tie const* tie, cpd_float value);
 
 //! @brief Sends a gpointer to Pure Data.
-CPD_EXTERN void cpd_messagesend_gpointer(c_tie const* tie, c_gpointer const* pointer);
+CPD_EXTERN void cpd_messagesend_gpointer(cpd_tie const* tie, cpd_gpointer const* pointer);
 
 //! @brief Sends a symbol to Pure Data.
-CPD_EXTERN void cpd_messagesend_symbol(c_tie const* tie, c_symbol const* symbol);
+CPD_EXTERN void cpd_messagesend_symbol(cpd_tie const* tie, cpd_symbol const* symbol);
 
 //! @brief Sends a list to Pure Data.
-CPD_EXTERN void cpd_messagesend_list(c_tie const* tie, c_list const* list);
+CPD_EXTERN void cpd_messagesend_list(cpd_tie const* tie, cpd_list const* list);
 
 //! @brief Sends a anything to Pure Data.
-CPD_EXTERN void cpd_messagesend_anything(c_tie const* tie, c_symbol const* symbol, c_list const* list);
+CPD_EXTERN void cpd_messagesend_anything(cpd_tie const* tie, cpd_symbol const* symbol, cpd_list const* list);
 
 
 

@@ -110,7 +110,7 @@ static void receiver_list(c_receiver *x, t_symbol *s, int argc, t_atom *argv)
 {
     if(x->c_m_list)
     {
-        c_list b;
+        cpd_list b;
         b.l_n = argc;
         b.l_vec = argv;
         x->c_m_list(x->c_owner, x->c_sym, &b);
@@ -121,7 +121,7 @@ static void receiver_anything(c_receiver *x, t_symbol *s, int argc, t_atom *argv
 {
     if(x->c_m_anything)
     {
-        c_list b;
+        cpd_list b;
         b.l_n = argc;
         b.l_vec = argv;
         x->c_m_anything(x->c_owner, x->c_sym, s, &b);
@@ -162,7 +162,7 @@ struct _internal
     t_sample*               c_outputs;
     int                     c_ninputs;
     int                     c_noutputs;
-    int                     c_samplerate;
+    int                     cpd_samplerate;
     c_hook_print            c_m_post;
     c_hook_print            c_m_log;
     c_hook_print            c_m_error;
@@ -177,22 +177,22 @@ struct _internal
     c_receiver*             c_receiver_list;
 };
 
-static t_sample*        c_sample_ins        = NULL;
-static t_sample*        c_sample_outs       = NULL;
+static t_sample*        cpd_sample_ins        = NULL;
+static t_sample*        cpd_sample_outs       = NULL;
 static t_pdinstance*    c_first_instance    = NULL;
-static c_instance*      c_current_instance  = NULL;
+static cpd_instance*      c_current_instance  = NULL;
 static t_symbol*        c_sym_pd            = NULL;
 static t_symbol*        c_sym_dsp           = NULL;
-static c_symbol*        c_sym_bng           = NULL;
-static c_symbol*        c_sym_hsl           = NULL;
-static c_symbol*        c_sym_vsl           = NULL;
-static c_symbol*        c_sym_tgl           = NULL;
-static c_symbol*        c_sym_nbx           = NULL;
-static c_symbol*        c_sym_vradio        = NULL;
-static c_symbol*        c_sym_hradio        = NULL;
-static c_symbol*        c_sym_vu            = NULL;
-static c_symbol*        c_sym_cnv           = NULL;
-static c_symbol*        c_sym_empty         = NULL;
+static cpd_symbol*        c_sym_bng           = NULL;
+static cpd_symbol*        c_sym_hsl           = NULL;
+static cpd_symbol*        c_sym_vsl           = NULL;
+static cpd_symbol*        c_sym_tgl           = NULL;
+static cpd_symbol*        c_sym_nbx           = NULL;
+static cpd_symbol*        c_sym_vradio        = NULL;
+static cpd_symbol*        c_sym_hradio        = NULL;
+static cpd_symbol*        c_sym_vu            = NULL;
+static cpd_symbol*        c_sym_cnv           = NULL;
+static cpd_symbol*        c_sym_empty         = NULL;
 
 static void cpd_print(const char* s);
 
@@ -227,8 +227,8 @@ void cpd_init()
         sys_set_audio_settings(1, &devices, 1, &ioputs, 1, &devices, 1, &ioputs, 44100, -1, 1, DEFDACBLKSIZE);
         sched_set_using_audio(SCHED_AUDIO_CALLBACK);
         sys_reopen_audio();
-        c_sample_ins    = sys_soundin;
-        c_sample_outs   = sys_soundout;
+        cpd_sample_ins    = sys_soundin;
+        cpd_sample_outs   = sys_soundout;
         c_first_instance= pd_this;
         sys_soundin         = NULL;
         sys_soundout        = NULL;
@@ -265,13 +265,13 @@ void cpd_init()
 
 void cpd_clear()
 {
-    if(c_sample_ins)
+    if(cpd_sample_ins)
     {
-        freebytes(c_sample_ins, (sys_inchannels ? sys_inchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
+        freebytes(cpd_sample_ins, (sys_inchannels ? sys_inchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
     }
-    if(c_sample_outs)
+    if(cpd_sample_outs)
     {
-        freebytes(c_sample_outs, (sys_outchannels ? sys_outchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
+        freebytes(cpd_sample_outs, (sys_outchannels ? sys_outchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
     }
     if(c_first_instance)
     {
@@ -383,34 +383,34 @@ static void cpd_print(const char* s)
         s+=12;
     }
     
-    if(level == 0 && c_current_instance->c_internal_ptr->c_m_fatal)
+    if(level == 0 && c_current_instance->cpd_internal_ptr->c_m_fatal)
     {
-        c_current_instance->c_internal_ptr->c_m_fatal(c_current_instance, s);
+        c_current_instance->cpd_internal_ptr->c_m_fatal(c_current_instance, s);
     }
-    else if(level == 1 && c_current_instance->c_internal_ptr->c_m_error)
+    else if(level == 1 && c_current_instance->cpd_internal_ptr->c_m_error)
     {
-        c_current_instance->c_internal_ptr->c_m_error(c_current_instance, s);
+        c_current_instance->cpd_internal_ptr->c_m_error(c_current_instance, s);
     }
-    else if(level == 2 && c_current_instance->c_internal_ptr->c_m_post)
+    else if(level == 2 && c_current_instance->cpd_internal_ptr->c_m_post)
     {
-        c_current_instance->c_internal_ptr->c_m_post(c_current_instance, s);
+        c_current_instance->cpd_internal_ptr->c_m_post(c_current_instance, s);
     }
-    else if(c_current_instance->c_internal_ptr->c_m_log)
+    else if(c_current_instance->cpd_internal_ptr->c_m_log)
     {
-        c_current_instance->c_internal_ptr->c_m_log(c_current_instance, s);
+        c_current_instance->cpd_internal_ptr->c_m_log(c_current_instance, s);
     }
 }
 
 
-c_instance* cpd_instance_new(size_t size)
+cpd_instance* cpd_instance_new(size_t size)
 {
-    c_instance* instance = NULL;
-    c_internal* internal = (c_internal *)malloc(sizeof(c_internal));
+    cpd_instance* instance = NULL;
+    cpd_internal* internal = (cpd_internal *)malloc(sizeof(cpd_internal));
     if(internal)
     {
         internal->c_inputs      = NULL;
         internal->c_outputs     = NULL;
-        internal->c_samplerate  = 0;
+        internal->cpd_samplerate  = 0;
         internal->c_ninputs     = 0;
         internal->c_noutputs    = 0;
         
@@ -435,10 +435,10 @@ c_instance* cpd_instance_new(size_t size)
             free(internal);
             return NULL;
         }
-        instance = (c_instance *)malloc(size);
+        instance = (cpd_instance *)malloc(size);
         if(instance)
         {
-            instance->c_internal_ptr = internal;
+            instance->cpd_internal_ptr = internal;
         }
         else
         {
@@ -450,62 +450,62 @@ c_instance* cpd_instance_new(size_t size)
     return instance;
 }
 
-void cpd_instance_free(c_instance* instance)
+void cpd_instance_free(cpd_instance* instance)
 {
     c_receiver* next = NULL;
     if(c_current_instance == instance)
     {
         c_current_instance = NULL;
     }
-    while(instance->c_internal_ptr->c_receiver_list)
+    while(instance->cpd_internal_ptr->c_receiver_list)
     {
-        next = instance->c_internal_ptr->c_receiver_list->c_next;
-        pd_free((t_pd *)instance->c_internal_ptr->c_receiver_list);
-        instance->c_internal_ptr->c_receiver_list = next;
+        next = instance->cpd_internal_ptr->c_receiver_list->c_next;
+        pd_free((t_pd *)instance->cpd_internal_ptr->c_receiver_list);
+        instance->cpd_internal_ptr->c_receiver_list = next;
     }
-    pdinstance_free(instance->c_internal_ptr->c_intance);
-    instance->c_internal_ptr->c_intance = NULL;
-    free(instance->c_internal_ptr);
-    instance->c_internal_ptr = NULL;
+    pdinstance_free(instance->cpd_internal_ptr->c_intance);
+    instance->cpd_internal_ptr->c_intance = NULL;
+    free(instance->cpd_internal_ptr);
+    instance->cpd_internal_ptr = NULL;
     free(instance);
 }
 
-void cpd_instance_set(c_instance* instance)
+void cpd_instance_set(cpd_instance* instance)
 {
-    pd_setinstance(instance->c_internal_ptr->c_intance);
-    sys_soundin     = instance->c_internal_ptr->c_inputs;
-    sys_soundout    = instance->c_internal_ptr->c_outputs;
-    sys_inchannels  = instance->c_internal_ptr->c_ninputs;
-    sys_outchannels = instance->c_internal_ptr->c_noutputs;
-    sys_dacsr       = instance->c_internal_ptr->c_samplerate;
+    pd_setinstance(instance->cpd_internal_ptr->c_intance);
+    sys_soundin     = instance->cpd_internal_ptr->c_inputs;
+    sys_soundout    = instance->cpd_internal_ptr->c_outputs;
+    sys_inchannels  = instance->cpd_internal_ptr->c_ninputs;
+    sys_outchannels = instance->cpd_internal_ptr->c_noutputs;
+    sys_dacsr       = instance->cpd_internal_ptr->cpd_samplerate;
     c_current_instance = instance;
 }
 
-void cpd_instance_set_hook_console(c_instance* instance, c_hook_console* consolehook)
+void cpd_instance_set_hook_console(cpd_instance* instance, c_hook_console* consolehook)
 {
-    instance->c_internal_ptr->c_m_post  = consolehook->m_post;
-    instance->c_internal_ptr->c_m_log   = consolehook->m_log;
-    instance->c_internal_ptr->c_m_error = consolehook->m_error;
-    instance->c_internal_ptr->c_m_fatal = consolehook->m_fatal;
+    instance->cpd_internal_ptr->c_m_post  = consolehook->m_post;
+    instance->cpd_internal_ptr->c_m_log   = consolehook->m_log;
+    instance->cpd_internal_ptr->c_m_error = consolehook->m_error;
+    instance->cpd_internal_ptr->c_m_fatal = consolehook->m_fatal;
 }
 
-void cpd_instance_set_hook_midi(c_instance* instance, c_hook_midi* midihook)
+void cpd_instance_set_hook_midi(cpd_instance* instance, c_hook_midi* midihook)
 {
-    instance->c_internal_ptr->c_m_noteon = midihook->m_noteon;
-    instance->c_internal_ptr->c_m_controlchange = midihook->m_controlchange;
-    instance->c_internal_ptr->c_m_programchange = midihook->m_programchange;
-    instance->c_internal_ptr->c_m_pitchbend = midihook->m_pitchbend;
-    instance->c_internal_ptr->c_m_aftertouch = midihook->m_aftertouch;
-    instance->c_internal_ptr->c_m_polyaftertouch = midihook->m_polyaftertouch;
-    instance->c_internal_ptr->c_m_byte = midihook->m_byte;
+    instance->cpd_internal_ptr->c_m_noteon = midihook->m_noteon;
+    instance->cpd_internal_ptr->c_m_controlchange = midihook->m_controlchange;
+    instance->cpd_internal_ptr->c_m_programchange = midihook->m_programchange;
+    instance->cpd_internal_ptr->c_m_pitchbend = midihook->m_pitchbend;
+    instance->cpd_internal_ptr->c_m_aftertouch = midihook->m_aftertouch;
+    instance->cpd_internal_ptr->c_m_polyaftertouch = midihook->m_polyaftertouch;
+    instance->cpd_internal_ptr->c_m_byte = midihook->m_byte;
 }
 
-static c_receiver* cpd_instance_getreceiver(c_instance* instance, c_tie* tie)
+static c_receiver* cpd_instance_getreceiver(cpd_instance* instance, cpd_tie* tie)
 {
     c_receiver* recv = NULL;
-    if(instance->c_internal_ptr->c_receiver_list)
+    if(instance->cpd_internal_ptr->c_receiver_list)
     {
-        recv = instance->c_internal_ptr->c_receiver_list;
+        recv = instance->cpd_internal_ptr->c_receiver_list;
         while(recv)
         {
             if(recv->c_sym == tie)
@@ -518,7 +518,7 @@ static c_receiver* cpd_instance_getreceiver(c_instance* instance, c_tie* tie)
     return NULL;
 }
 
-void cpd_instance_bind(c_instance* instance, c_tie* tie, c_hook_message* messagehook)
+void cpd_instance_bind(cpd_instance* instance, cpd_tie* tie, c_hook_message* messagehook)
 {
     c_receiver *x = cpd_instance_getreceiver(instance, tie);
     if(x)
@@ -543,25 +543,25 @@ void cpd_instance_bind(c_instance* instance, c_tie* tie, c_hook_message* message
             x->c_m_gpointer = messagehook->m_gpointer;
             x->c_m_list = messagehook->m_list;
             x->c_m_anything = messagehook->m_anything;
-            x->c_next = instance->c_internal_ptr->c_receiver_list;
-            instance->c_internal_ptr->c_receiver_list = x;
+            x->c_next = instance->cpd_internal_ptr->c_receiver_list;
+            instance->cpd_internal_ptr->c_receiver_list = x;
             pd_bind((t_pd *)x, x->c_sym);
         }
     }
 }
 
-void cpd_instance_unbind(c_instance* instance, c_tie* tie)
+void cpd_instance_unbind(cpd_instance* instance, cpd_tie* tie)
 {
     c_receiver *x = cpd_instance_getreceiver(instance, tie), *temp = NULL;
     if(x)
     {
-        if(instance->c_internal_ptr->c_receiver_list == x)
+        if(instance->cpd_internal_ptr->c_receiver_list == x)
         {
-            instance->c_internal_ptr->c_receiver_list = x->c_next;
+            instance->cpd_internal_ptr->c_receiver_list = x->c_next;
         }
         else
         {
-            temp = instance->c_internal_ptr->c_receiver_list;
+            temp = instance->cpd_internal_ptr->c_receiver_list;
             while(temp->c_next != x)
             {
                 temp = temp->c_next;
@@ -572,19 +572,19 @@ void cpd_instance_unbind(c_instance* instance, c_tie* tie)
     }
 }
 
-void cpd_instance_dsp_prepare(c_instance* instance,
+void cpd_instance_dsp_prepare(cpd_instance* instance,
                                const int nins, const int nouts,
                                const int samplerate, const int nsamples)
 {
     cpd_instance_set(instance);
-    if(samplerate != instance->c_internal_ptr->c_samplerate || nins != instance->c_internal_ptr->c_ninputs || nouts != instance->c_internal_ptr->c_noutputs)
+    if(samplerate != instance->cpd_internal_ptr->cpd_samplerate || nins != instance->cpd_internal_ptr->c_ninputs || nouts != instance->cpd_internal_ptr->c_noutputs)
     {
         sys_setchsr(nins, nouts, samplerate);
-        instance->c_internal_ptr->c_inputs      = sys_soundin;
-        instance->c_internal_ptr->c_outputs     = sys_soundout;
-        instance->c_internal_ptr->c_ninputs     = sys_inchannels;
-        instance->c_internal_ptr->c_noutputs    = sys_outchannels;
-        instance->c_internal_ptr->c_samplerate  = sys_getsr();
+        instance->cpd_internal_ptr->c_inputs      = sys_soundin;
+        instance->cpd_internal_ptr->c_outputs     = sys_soundout;
+        instance->cpd_internal_ptr->c_ninputs     = sys_inchannels;
+        instance->cpd_internal_ptr->c_noutputs    = sys_outchannels;
+        instance->cpd_internal_ptr->cpd_samplerate  = sys_getsr();
     }
     t_atom av;
     av.a_type = A_FLOAT;
@@ -592,13 +592,13 @@ void cpd_instance_dsp_prepare(c_instance* instance,
     pd_typedmess((t_pd *)c_sym_pd->s_thing, c_sym_dsp, 1, &av);
 }
 
-void cpd_instance_dsp_perform(c_instance* instance, int nsamples,
-                               const int nins, const c_sample** inputs,
-                               const int nouts, c_sample** outputs)
+void cpd_instance_dsp_perform(cpd_instance* instance, int nsamples,
+                               const int nins, const cpd_sample** inputs,
+                               const int nouts, cpd_sample** outputs)
 {
     int i, j;
-    t_sample *ins = instance->c_internal_ptr->c_inputs;
-    t_sample *outs = instance->c_internal_ptr->c_outputs;
+    t_sample *ins = instance->cpd_internal_ptr->c_inputs;
+    t_sample *outs = instance->cpd_internal_ptr->c_outputs;
     cpd_instance_set(instance);
     for(i = 0; i < nsamples; i += DEFDACBLKSIZE)
     {
@@ -615,14 +615,14 @@ void cpd_instance_dsp_perform(c_instance* instance, int nsamples,
     }
 }
 
-void cpd_instance_dsp_release(c_instance* instance)
+void cpd_instance_dsp_release(cpd_instance* instance)
 {
     cpd_instance_set(instance);
 }
 
-int cpd_instance_get_samplerate(c_instance* instance)
+int cpd_instance_get_samplerate(cpd_instance* instance)
 {
-    return instance->c_internal_ptr->c_samplerate;
+    return instance->cpd_internal_ptr->cpd_samplerate;
 }
 
 
@@ -631,7 +631,7 @@ int cpd_instance_get_samplerate(c_instance* instance)
 
 
 
-c_patch* cpd_patch_new(const char* name, const char* path)
+cpd_patch* cpd_patch_new(const char* name, const char* path)
 {
     int i;
     char* rpath;
@@ -661,22 +661,22 @@ c_patch* cpd_patch_new(const char* name, const char* path)
     return NULL;
 }
 
-void cpd_patch_free(c_patch* patch)
+void cpd_patch_free(cpd_patch* patch)
 {
     canvas_free(patch);
 }
 
-const char* cpd_patch_get_name(c_patch const* patch)
+const char* cpd_patch_get_name(cpd_patch const* patch)
 {
     return patch->gl_name->s_name;
 }
 
-const char* cpd_patch_get_path(c_patch const* patch)
+const char* cpd_patch_get_path(cpd_patch const* patch)
 {
     return canvas_getdir((t_glist *)patch)->s_name;
 }
 
-int cpd_patch_get_dollarzero(c_patch const* patch)
+int cpd_patch_get_dollarzero(cpd_patch const* patch)
 {
     int value = 0;
     pd_pushsym((t_pd *)patch);
@@ -685,45 +685,45 @@ int cpd_patch_get_dollarzero(c_patch const* patch)
     return value;
 }
 
-int cpd_patch_get_x(c_patch const* patch)
+int cpd_patch_get_x(cpd_patch const* patch)
 {
     return patch->gl_xmargin;
 }
 
-int cpd_patch_get_y(c_patch const* patch)
+int cpd_patch_get_y(cpd_patch const* patch)
 {
     return patch->gl_ymargin;
 }
 
-int cpd_patch_get_width(c_patch const* patch)
+int cpd_patch_get_width(cpd_patch const* patch)
 {
     return patch->gl_pixwidth;
 }
 
-int cpd_patch_get_height(c_patch const* patch)
+int cpd_patch_get_height(cpd_patch const* patch)
 {
     return patch->gl_pixheight;
 }
 
-c_object* cpd_patch_get_first_object(c_patch const* patch)
+cpd_object* cpd_patch_get_first_object(cpd_patch const* patch)
 {
-    return (c_object *)patch->gl_list;
+    return (cpd_object *)patch->gl_list;
 }
 
-c_object* cpd_patch_get_next_object(c_patch const* patch, c_object const* previous)
+cpd_object* cpd_patch_get_next_object(cpd_patch const* patch, cpd_object const* previous)
 {
-    return (c_object *)((t_gobj *)previous)->g_next;
+    return (cpd_object *)((t_gobj *)previous)->g_next;
 }
 
 
 
 
-static char cpd_object_is_patchable(c_object const* object)
+static char cpd_object_is_patchable(cpd_object const* object)
 {
     return object->te_g.g_pd->c_patchable;
 }
 
-static struct _widgetbehavior* cpd_object_get_widget(c_object const* object)
+static struct _widgetbehavior* cpd_object_get_widget(cpd_object const* object)
 {
     return object->te_g.g_pd->c_wb;
 }
@@ -732,45 +732,45 @@ static struct _widgetbehavior* cpd_object_get_widget(c_object const* object)
 
 
 
-c_symbol* cpd_object_get_name(c_object const* object)
+cpd_symbol* cpd_object_get_name(cpd_object const* object)
 {
     return object->te_g.g_pd->c_name;
 }
 
-void cpd_object_get_text(c_object const* object, int* size, char** text)
+void cpd_object_get_text(cpd_object const* object, int* size, char** text)
 {
     binbuf_gettext(((t_text *)(object))->te_binbuf, text, size);
 }
 
-int cpd_object_get_x(c_object const* object, c_patch const* patch)
+int cpd_object_get_x(cpd_object const* object, cpd_patch const* patch)
 {
     int bounds[4];
     cpd_object_get_bounds(object, patch, bounds, bounds+1, bounds+2, bounds+3);
     return bounds[0];
 }
 
-int cpd_object_get_y(c_object const* object, c_patch const* patch)
+int cpd_object_get_y(cpd_object const* object, cpd_patch const* patch)
 {
     int bounds[4];
     cpd_object_get_bounds(object, patch, bounds, bounds+1, bounds+2, bounds+3);
     return bounds[1];
 }
 
-int cpd_object_get_width(c_object const* object, c_patch const* patch)
+int cpd_object_get_width(cpd_object const* object, cpd_patch const* patch)
 {
     int bounds[4];
     cpd_object_get_bounds(object, patch, bounds, bounds+1, bounds+2, bounds+3);
     return bounds[2];
 }
 
-int cpd_object_get_height(c_object const* object, c_patch const* patch)
+int cpd_object_get_height(cpd_object const* object, cpd_patch const* patch)
 {
     int bounds[4];
     cpd_object_get_bounds(object, patch, bounds, bounds+1, bounds+2, bounds+3);
     return bounds[3];
 }
 
-void cpd_object_get_bounds(c_object const* object, c_patch const* patch, int* x, int* y, int* width, int* height)
+void cpd_object_get_bounds(cpd_object const* object, cpd_patch const* patch, int* x, int* y, int* width, int* height)
 {
     struct _widgetbehavior const* wb = cpd_object_get_widget(object);
     if(cpd_object_is_patchable(object) && wb && wb->w_getrectfn)
@@ -793,34 +793,34 @@ void cpd_object_get_bounds(c_object const* object, c_patch const* patch, int* x,
 
 
 
-char cpd_object_is_gui(c_object const* object)
+char cpd_object_is_gui(cpd_object const* object)
 {
     t_symbol const* name = cpd_object_get_name(object);
     return name == c_sym_bng || name == c_sym_hsl || name == c_sym_vsl || name == c_sym_tgl || name == c_sym_nbx || name == c_sym_vradio || name == c_sym_hradio || name == c_sym_vu || name == c_sym_cnv;
 }
 
-c_symbol* cpd_gui_get_label(c_gui const* gui)
+cpd_symbol* cpd_gui_get_label(cpd_gui const* gui)
 {
     return (c_sym_empty != gui->x_lab) ? gui->x_lab : &s_;
 }
 
-c_tie* cpd_gui_get_receive_tie(c_gui const* gui)
+cpd_tie* cpd_gui_get_receive_tie(cpd_gui const* gui)
 {
     return (c_sym_empty != gui->x_rcv) ? gui->x_rcv : &s_;
 }
 
-c_tie* cpd_gui_get_send_tie(c_gui const* gui)
+cpd_tie* cpd_gui_get_send_tie(cpd_gui const* gui)
 {
-    if(cpd_object_get_name((c_object const*)gui) != c_sym_vu)
+    if(cpd_object_get_name((cpd_object const*)gui) != c_sym_vu)
     {
         return (c_sym_empty != gui->x_snd) ? gui->x_snd : &s_;
     }
     return &s_;
 }
 
-c_guitype cpd_gui_get_type(c_gui const* gui)
+cpd_guitype cpd_gui_get_type(cpd_gui const* gui)
 {
-    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    t_symbol const* name = cpd_object_get_name((cpd_object const*)gui);
     if(name == c_sym_bng)
     {
         return Z_GUI_BANG;
@@ -856,9 +856,9 @@ c_guitype cpd_gui_get_type(c_gui const* gui)
     return Z_GUI_PANEL;
 }
 
-float cpd_gui_get_maximum_value(c_gui const* gui)
+float cpd_gui_get_maximum_value(cpd_gui const* gui)
 {
-    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    t_symbol const* name = cpd_object_get_name((cpd_object const*)gui);
     if(name == c_sym_hsl)
     {
         return ((t_hslider *)gui)->x_max;
@@ -886,9 +886,9 @@ float cpd_gui_get_maximum_value(c_gui const* gui)
     return 0.f;
 }
 
-float cpd_gui_get_minimum_value(c_gui const* gui)
+float cpd_gui_get_minimum_value(cpd_gui const* gui)
 {
-    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    t_symbol const* name = cpd_object_get_name((cpd_object const*)gui);
     if(name == c_sym_hsl)
     {
         return ((t_hslider *)gui)->x_min;
@@ -904,9 +904,9 @@ float cpd_gui_get_minimum_value(c_gui const* gui)
     return 0.f;
 }
 
-int cpd_gui_get_number_of_steps(c_gui const* gui)
+int cpd_gui_get_number_of_steps(cpd_gui const* gui)
 {
-    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    t_symbol const* name = cpd_object_get_name((cpd_object const*)gui);
     if(name == c_sym_tgl)
     {
         return 2;
@@ -922,9 +922,9 @@ int cpd_gui_get_number_of_steps(c_gui const* gui)
     return 0;
 }
 
-float cpd_gui_get_value(c_gui const* gui)
+float cpd_gui_get_value(cpd_gui const* gui)
 {
-    t_symbol const* name = cpd_object_get_name((c_object const*)gui);
+    t_symbol const* name = cpd_object_get_name((cpd_object const*)gui);
     if(name == c_sym_hsl)
     {
         return ((t_hslider *)gui)->x_fval;
@@ -952,45 +952,45 @@ float cpd_gui_get_value(c_gui const* gui)
     return 0.f;
 }
 
-int cpd_gui_get_label_x(c_gui const* gui, c_patch const* patch)
+int cpd_gui_get_label_x(cpd_gui const* gui, cpd_patch const* patch)
 {
-    return cpd_object_get_x((c_object const*)gui, patch) + gui->x_ldx;
+    return cpd_object_get_x((cpd_object const*)gui, patch) + gui->x_ldx;
 }
 
-int cpd_gui_get_label_y(c_gui const* gui, c_patch const* patch)
+int cpd_gui_get_label_y(cpd_gui const* gui, cpd_patch const* patch)
 {
-    return cpd_object_get_y((c_object const*)gui, patch) + gui->x_ldy;
+    return cpd_object_get_y((cpd_object const*)gui, patch) + gui->x_ldy;
 }
 
 
 
 
 
-c_tie* cpd_tie_create(const char* name)
+cpd_tie* cpd_tie_create(const char* name)
 {
-    return (c_tie *)gensym(name);
+    return (cpd_tie *)gensym(name);
 }
 
-char const* cpd_tie_get_name(c_tie const* tie)
+char const* cpd_tie_get_name(cpd_tie const* tie)
 {
     return tie->s_name;
 }
 
-c_symbol* cpd_symbol_create(const char* symbol)
+cpd_symbol* cpd_symbol_create(const char* symbol)
 {
-    return (c_symbol *)gensym(symbol);
+    return (cpd_symbol *)gensym(symbol);
 }
 
-char const* cpd_symbol_get_name(c_symbol const* symbol)
+char const* cpd_symbol_get_name(cpd_symbol const* symbol)
 {
     return symbol->s_name;
 }
 
 
 
-c_list* cpd_list_create(size_t size)
+cpd_list* cpd_list_create(size_t size)
 {
-    c_list *x   = (c_list *)malloc(sizeof(c_list));
+    cpd_list *x   = (cpd_list *)malloc(sizeof(cpd_list));
     if(x)
     {
         if(size)
@@ -1014,7 +1014,7 @@ c_list* cpd_list_create(size_t size)
     return x;
 }
 
-void cpd_list_free(c_list *list)
+void cpd_list_free(cpd_list *list)
 {
     if(list->l_vec && list->l_n)
     {
@@ -1025,12 +1025,12 @@ void cpd_list_free(c_list *list)
     free(list);
 }
 
-size_t cpd_list_get_size(c_list const* list)
+size_t cpd_list_get_size(cpd_list const* list)
 {
     return list->l_n;
 }
 
-c_atomtype cpd_list_get_type(c_list const* list, size_t index)
+c_atomtype cpd_list_get_type(cpd_list const* list, size_t index)
 {
     if((list->l_vec+index)->a_type == A_FLOAT)
     {
@@ -1049,37 +1049,37 @@ c_atomtype cpd_list_get_type(c_list const* list, size_t index)
     return Z_NULL;
 }
 
-c_float cpd_list_get_float(c_list const* list, size_t index)
+cpd_float cpd_list_get_float(cpd_list const* list, size_t index)
 {
     return (list->l_vec+index)->a_w.w_float;
 }
 
-c_symbol* cpd_list_get_symbol(c_list const* list, size_t index)
+cpd_symbol* cpd_list_get_symbol(cpd_list const* list, size_t index)
 {
     return (list->l_vec+index)->a_w.w_symbol;
 }
 
 #define LCOV_EXCL_START
-c_gpointer* cpd_list_get_gpointer(c_list const* list, size_t index)
+cpd_gpointer* cpd_list_get_gpointer(cpd_list const* list, size_t index)
 {
     return (list->l_vec+index)->a_w.w_gpointer;
 }
 #define LCOV_EXCL_STOP
 
-void cpd_list_set_float(c_list *list, size_t index, c_float value)
+void cpd_list_set_float(cpd_list *list, size_t index, cpd_float value)
 {
     (list->l_vec+index)->a_type = A_FLOAT;
     (list->l_vec+index)->a_w.w_float = value;
 }
 
-void cpd_list_set_symbol(c_list *list, size_t index, c_symbol* symbol)
+void cpd_list_set_symbol(cpd_list *list, size_t index, cpd_symbol* symbol)
 {
     (list->l_vec+index)->a_type = A_SYMBOL;
     (list->l_vec+index)->a_w.w_symbol = symbol;
 }
 
 #define LCOV_EXCL_START
-void cpd_list_set_gpointer(c_list *list, size_t index, c_gpointer* pointer)
+void cpd_list_set_gpointer(cpd_list *list, size_t index, cpd_gpointer* pointer)
 {
     (list->l_vec+index)->a_type = A_POINTER;
     (list->l_vec+index)->a_w.w_gpointer = pointer;
@@ -1090,7 +1090,7 @@ void cpd_list_set_gpointer(c_list *list, size_t index, c_gpointer* pointer)
 
 
 
-void cpd_messagesend_bang(c_tie const* tie)
+void cpd_messagesend_bang(cpd_tie const* tie)
 {
     t_symbol const* sym = (t_symbol const *)tie;
     if(sym && sym->s_thing)
@@ -1099,7 +1099,7 @@ void cpd_messagesend_bang(c_tie const* tie)
     }
 }
 
-void cpd_messagesend_float(c_tie const* tie, c_float value)
+void cpd_messagesend_float(cpd_tie const* tie, cpd_float value)
 {
     t_symbol const* sym = (t_symbol const *)tie;
     if(sym && sym->s_thing)
@@ -1109,7 +1109,7 @@ void cpd_messagesend_float(c_tie const* tie, c_float value)
 }
 
 #define LCOV_EXCL_START
-void cpd_messagesend_gpointer(c_tie const* tie, c_gpointer const* pointer)
+void cpd_messagesend_gpointer(cpd_tie const* tie, cpd_gpointer const* pointer)
 {
     t_symbol const* sym = (t_symbol const *)tie;
     if(sym && sym->s_thing)
@@ -1119,7 +1119,7 @@ void cpd_messagesend_gpointer(c_tie const* tie, c_gpointer const* pointer)
 }
 #define LCOV_EXCL_STOP
 
-void cpd_messagesend_symbol(c_tie const* tie, c_symbol const* symbol)
+void cpd_messagesend_symbol(cpd_tie const* tie, cpd_symbol const* symbol)
 {
     t_symbol const* sym = (t_symbol const *)tie;
     if(sym && sym->s_thing)
@@ -1128,7 +1128,7 @@ void cpd_messagesend_symbol(c_tie const* tie, c_symbol const* symbol)
     }
 }
 
-void cpd_messagesend_list(c_tie const* tie, c_list const* list)
+void cpd_messagesend_list(cpd_tie const* tie, cpd_list const* list)
 {
     t_symbol const* sym = (t_symbol const *)tie;
     if(sym && sym->s_thing)
@@ -1137,7 +1137,7 @@ void cpd_messagesend_list(c_tie const* tie, c_list const* list)
     }
 }
 
-void cpd_messagesend_anything(c_tie const* tie, c_symbol const* symbol, c_list const* list)
+void cpd_messagesend_anything(cpd_tie const* tie, cpd_symbol const* symbol, cpd_list const* list)
 {
     t_symbol const* sym = (t_symbol const *)tie;
     if(sym && sym->s_thing)
@@ -1230,57 +1230,57 @@ void cpd_midisend_byte(int port, int byte)
 
 void outmidi_noteon(int port, int channel, int pitch, int velo)
 {
-    if(c_current_instance && c_current_instance->c_internal_ptr->c_m_noteon)
+    if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_noteon)
     {
-        c_current_instance->c_internal_ptr->c_m_noteon(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(pitch), Z_PD_MIDI_CLIP7BIT(velo));
+        c_current_instance->cpd_internal_ptr->c_m_noteon(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(pitch), Z_PD_MIDI_CLIP7BIT(velo));
     }
 }
 
 void outmidi_controlchange(int port, int channel, int ctl, int value)
 {
-    if(c_current_instance && c_current_instance->c_internal_ptr->c_m_controlchange)
+    if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_controlchange)
     {
-        c_current_instance->c_internal_ptr->c_m_controlchange(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(ctl), Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_controlchange(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(ctl), Z_PD_MIDI_CLIP7BIT(value));
     }
 }
 
 void outmidi_programchange(int port, int channel, int value)
 {
-    if(c_current_instance && c_current_instance->c_internal_ptr->c_m_programchange)
+    if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_programchange)
     {
-        c_current_instance->c_internal_ptr->c_m_programchange(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_programchange(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(value));
     }
 }
 
 void outmidi_pitchbend(int port, int channel, int value)
 {
-    if(c_current_instance && c_current_instance->c_internal_ptr->c_m_pitchbend)
+    if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_pitchbend)
     {
-        c_current_instance->c_internal_ptr->c_m_pitchbend(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP14BIT(value) - 8192);
+        c_current_instance->cpd_internal_ptr->c_m_pitchbend(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP14BIT(value) - 8192);
     }
 }
 
 void outmidi_aftertouch(int port, int channel, int value)
 {
-    if(c_current_instance && c_current_instance->c_internal_ptr->c_m_aftertouch)
+    if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_aftertouch)
     {
-        c_current_instance->c_internal_ptr->c_m_aftertouch(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_aftertouch(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(value));
     }
 }
 
 void outmidi_polyaftertouch(int port, int channel, int pitch, int value)
 {
-    if(c_current_instance && c_current_instance->c_internal_ptr->c_m_polyaftertouch)
+    if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_polyaftertouch)
     {
-        c_current_instance->c_internal_ptr->c_m_polyaftertouch(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(pitch), Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_polyaftertouch(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(pitch), Z_PD_MIDI_CLIP7BIT(value));
     }
 }
 
 void outmidi_byte(int port, int value)
 {
-    if(c_current_instance && c_current_instance->c_internal_ptr->c_m_byte)
+    if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_byte)
     {
-        c_current_instance->c_internal_ptr->c_m_byte(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIP8BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_byte(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIP8BIT(value));
     }
 }
 

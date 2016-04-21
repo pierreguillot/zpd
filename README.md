@@ -11,7 +11,7 @@ mkdir build && cd build
 cmake ..  
 cmake --build .  
 cd ../  
-./build/zpdtest pwd    
+./build/xpdtest pwd    
 ```
 
 doc:
