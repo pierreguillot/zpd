@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['level',['level',['../classxpd_1_1console.html#a05c83b1be7e6aefc62db9e473efaca2e',1,'xpd::console']]]
+  ['level',['level',['../classxpd_1_1console.html#afde8e18a788ccc92fc61cab298bca7e3',1,'xpd::console']]]
 ];

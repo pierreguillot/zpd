@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x',['x',['../classxpd_1_1object.html#a5d45471ea6cbae69a1f8b292214e8110',1,'xpd::object::x()'],['../classxpd_1_1patch.html#a39215e0c32cc9b476a5c5b0d46949a87',1,'xpd::patch::x()']]]
+  ['x',['x',['../classxpd_1_1object.html#a75732d397d6787e8ce8fd436d540e9b4',1,'xpd::object::x()'],['../classxpd_1_1patch.html#a75732d397d6787e8ce8fd436d540e9b4',1,'xpd::patch::x()']]],
+  ['xpd',['xpd',['../namespacexpd.html',1,'xpd'],['../group__xpd.html',1,'(Global Namespace)']]]
 ];

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['_7egui',['~gui',['../classxpd_1_1gui.html#a92b30d56e46c09d0cada2ddb40487549',1,'xpd::gui']]],
-  ['_7einstance',['~instance',['../classxpd_1_1instance.html#aa5e66f76eb514b7c7cb3cf5e13ea7aeb',1,'xpd::instance']]],
-  ['_7eobject',['~object',['../classxpd_1_1object.html#a71ada28f374684ed11ba8103783015ec',1,'xpd::object']]],
-  ['_7epatch',['~patch',['../classxpd_1_1patch.html#a64840110010f232c5e2f473fa7bc9772',1,'xpd::patch']]]
+  ['_7egui',['~gui',['../classxpd_1_1gui.html#a1cfab7fdc5057c30e91de5e0e55aab4c',1,'xpd::gui']]],
+  ['_7einstance',['~instance',['../classxpd_1_1instance.html#a1fb75202209935be3cb0e99748011607',1,'xpd::instance']]],
+  ['_7eobject',['~object',['../classxpd_1_1object.html#a3237a7bf8c13551bc75293881095a285',1,'xpd::object']]],
+  ['_7epatch',['~patch',['../classxpd_1_1patch.html#a0930f631dbeff44a2540682d201edb4a',1,'xpd::patch']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['toggle',['toggle',['../classxpd_1_1gui.html#a8648cac572222534d9d866723e3b6014a90e8d1296142394638b7b035d0077adc',1,'xpd::gui']]]
+  ['toggle',['toggle',['../classxpd_1_1gui.html#adee610a3c7375031538811d29f6a4124a092819a2032e8d9810e80313491acd21',1,'xpd::gui']]]
 ];

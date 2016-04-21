@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>zpd: xpd::midi::event Class Reference</title>
+<title>zpd: midi::event Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -42,7 +42,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -74,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,124 +84,133 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>xpd</b></li><li class="navelem"><a class="el" href="classxpd_1_1midi.html">midi</a></li><li class="navelem"><a class="el" href="classxpd_1_1midi_1_1event.html">event</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacexpd.html">xpd</a></li><li class="navelem"><a class="el" href="classxpd_1_1midi.html">midi</a></li><li class="navelem"><a class="el" href="classxpd_1_1midi_1_1event.html">event</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#events">Events</a> &#124;
 <a href="classxpd_1_1midi_1_1event-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">xpd::midi::event Class Reference</div>  </div>
+<div class="title">midi::event Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The class stores the informations of a midi event.  The class acts like a namespace for event.  
+<p>The class stores the informations of a midi event.  
  <a href="classxpd_1_1midi_1_1event.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="xpd__midi_8hpp_source.html">xpd_midi.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a8a5ba8efb82ff13f5d67812e219f4336"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336">type_t</a> { <br/>
-&#160;&#160;<a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336acadfe6b06ec8c293742540ddcd851761">note_t</a> = 0, 
-<a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336af1c29243285989ba20a239ed676b834a">control_change_t</a> = 1, 
-<a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336af68d79b0f82bebe5b5dd6af0bc6d5d9b">program_change_t</a> = 2, 
-<a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336a2b580457bd146286b640299f0655474f">pitch_bend_t</a> = 3, 
+<tr class="memitem:adee610a3c7375031538811d29f6a4124"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124">type_t</a> { <br/>
+&#160;&#160;<a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124a677a9f4f566f4f915fd9ca42f6db501a">note_t</a> = 0, 
+<a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124ab41794ba15c6ccd1d2bb40027dc1039f">control_change_t</a> = 1, 
+<a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124a9194984da4e5902f1f92c93d1d9d844a">program_change_t</a> = 2, 
+<a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124aa702714e4eb76531ef26f16fae6ad5cd">pitch_bend_t</a> = 3, 
 <br/>
-&#160;&#160;<a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336af084a798cf72da385076ea1206c170fc">after_touch_t</a> = 4, 
-<a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336a846d7a5217f66131845c572a18043f52">poly_after_touch_t</a> = 5, 
-<a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336a78e2f06bbc34a85a688328e124b48ee8">byte_t</a> = 6
+&#160;&#160;<a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124a9ca92ce8386f71bcb74e1079d1024d66">after_touch_t</a> = 4, 
+<a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124a451a0be73d160039f7d91f7426a29ad0">poly_after_touch_t</a> = 5, 
+<a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124aaf74ee2657fd941c2a95b3f7a6b5ab7a">byte_t</a> = 6
 <br/>
  }</td></tr>
-<tr class="memdesc:a8a5ba8efb82ff13f5d67812e219f4336"><td class="mdescLeft">&#160;</td><td class="mdescRight">The available type of midi events.  <a href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336">More...</a><br/></td></tr>
-<tr class="separator:a8a5ba8efb82ff13f5d67812e219f4336"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:adee610a3c7375031538811d29f6a4124"><td class="mdescLeft">&#160;</td><td class="mdescRight">The available type of midi events.  <a href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124">More...</a><br/></td></tr>
+<tr class="separator:adee610a3c7375031538811d29f6a4124"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3feffb1a2e9607ff58b37c963bbd3be8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3feffb1a2e9607ff58b37c963bbd3be8"></a>
-xpd_constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a3feffb1a2e9607ff58b37c963bbd3be8">event</a> (<a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336">type_t</a> t, int v1, int v2, int v3) xpd_noexcept</td></tr>
-<tr class="memdesc:a3feffb1a2e9607ff58b37c963bbd3be8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The event raw constructor. <br/></td></tr>
-<tr class="separator:a3feffb1a2e9607ff58b37c963bbd3be8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb8f45e7c1506f8cde2d3f466b92fa94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb8f45e7c1506f8cde2d3f466b92fa94"></a>
-xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336">type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#afb8f45e7c1506f8cde2d3f466b92fa94">type</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:afb8f45e7c1506f8cde2d3f466b92fa94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the type of the event. <br/></td></tr>
-<tr class="separator:afb8f45e7c1506f8cde2d3f466b92fa94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae88ebaa9ad907b0ca4d66c7fad55f61b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae88ebaa9ad907b0ca4d66c7fad55f61b"></a>
-xpd_constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#ae88ebaa9ad907b0ca4d66c7fad55f61b">channel</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:ae88ebaa9ad907b0ca4d66c7fad55f61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the channel value. <br/></td></tr>
-<tr class="separator:ae88ebaa9ad907b0ca4d66c7fad55f61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7abcef330dbcb43dda5a2cd11d033e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7abcef330dbcb43dda5a2cd11d033e1"></a>
-xpd_constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#ad7abcef330dbcb43dda5a2cd11d033e1">pitch</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:ad7abcef330dbcb43dda5a2cd11d033e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pitch value. <br/></td></tr>
-<tr class="separator:ad7abcef330dbcb43dda5a2cd11d033e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae487d047b4056d7a76e623d64350b8c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae487d047b4056d7a76e623d64350b8c5"></a>
-xpd_constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#ae487d047b4056d7a76e623d64350b8c5">velocity</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:ae487d047b4056d7a76e623d64350b8c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the velocity value. <br/></td></tr>
-<tr class="separator:ae487d047b4056d7a76e623d64350b8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a365d85b0183c6887f0beda5350feef6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a365d85b0183c6887f0beda5350feef6a"></a>
-xpd_constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a365d85b0183c6887f0beda5350feef6a">controler</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:a365d85b0183c6887f0beda5350feef6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the controler. <br/></td></tr>
-<tr class="separator:a365d85b0183c6887f0beda5350feef6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc1b9fb285e78c72fc03233ce1332c9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc1b9fb285e78c72fc03233ce1332c9c"></a>
-xpd_constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#adc1b9fb285e78c72fc03233ce1332c9c">value</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:adc1b9fb285e78c72fc03233ce1332c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the controler, after touch or poly after touch value. <br/></td></tr>
-<tr class="separator:adc1b9fb285e78c72fc03233ce1332c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a176e48cb07284e0368fce53370d5955f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a176e48cb07284e0368fce53370d5955f"></a>
-xpd_constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a176e48cb07284e0368fce53370d5955f">program</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:a176e48cb07284e0368fce53370d5955f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the program value. <br/></td></tr>
-<tr class="separator:a176e48cb07284e0368fce53370d5955f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86762ef8a4ea22c47955dd2569ddf6a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86762ef8a4ea22c47955dd2569ddf6a2"></a>
-xpd_constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a86762ef8a4ea22c47955dd2569ddf6a2">bend</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:a86762ef8a4ea22c47955dd2569ddf6a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the bend value. <br/></td></tr>
-<tr class="separator:a86762ef8a4ea22c47955dd2569ddf6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a253876a8a26afb3296e83c9236fb12af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a253876a8a26afb3296e83c9236fb12af"></a>
-xpd_constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a253876a8a26afb3296e83c9236fb12af">after_touch</a> () const xpd_noexcept</td></tr>
-<tr class="memdesc:a253876a8a26afb3296e83c9236fb12af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the after touch value. <br/></td></tr>
-<tr class="separator:a253876a8a26afb3296e83c9236fb12af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9a1732978477b55bb249e0e1f194997"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9a1732978477b55bb249e0e1f194997"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#ad9a1732978477b55bb249e0e1f194997">event</a> (<a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124">type_t</a> t, int v1, int v2, int v3) <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:ad9a1732978477b55bb249e0e1f194997"><td class="mdescLeft">&#160;</td><td class="mdescRight">The event raw constructor. <br/></td></tr>
+<tr class="separator:ad9a1732978477b55bb249e0e1f194997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a841267605175727e0aa50d08c40f5f0a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a841267605175727e0aa50d08c40f5f0a"></a>
+constexpr <a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124">type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a841267605175727e0aa50d08c40f5f0a">type</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:a841267605175727e0aa50d08c40f5f0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the type of the event. <br/></td></tr>
+<tr class="separator:a841267605175727e0aa50d08c40f5f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4b1b74924c3cfa0ce7ec83c3413a94b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4b1b74924c3cfa0ce7ec83c3413a94b"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#af4b1b74924c3cfa0ce7ec83c3413a94b">channel</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:af4b1b74924c3cfa0ce7ec83c3413a94b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the channel value. <br/></td></tr>
+<tr class="separator:af4b1b74924c3cfa0ce7ec83c3413a94b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ece96cec09b785f32e82f322ce2a398"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ece96cec09b785f32e82f322ce2a398"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a0ece96cec09b785f32e82f322ce2a398">pitch</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:a0ece96cec09b785f32e82f322ce2a398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pitch value. <br/></td></tr>
+<tr class="separator:a0ece96cec09b785f32e82f322ce2a398"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06f023830e39574ac8dfce9dcd76b65d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06f023830e39574ac8dfce9dcd76b65d"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a06f023830e39574ac8dfce9dcd76b65d">velocity</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:a06f023830e39574ac8dfce9dcd76b65d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the velocity value. <br/></td></tr>
+<tr class="separator:a06f023830e39574ac8dfce9dcd76b65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6da2a4b0c759d5b7c3a670daec8287f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6da2a4b0c759d5b7c3a670daec8287f"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#ad6da2a4b0c759d5b7c3a670daec8287f">controler</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:ad6da2a4b0c759d5b7c3a670daec8287f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the controler. <br/></td></tr>
+<tr class="separator:ad6da2a4b0c759d5b7c3a670daec8287f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d1294aaf83f6ce8cbf571a2728e0514"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d1294aaf83f6ce8cbf571a2728e0514"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a3d1294aaf83f6ce8cbf571a2728e0514">value</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:a3d1294aaf83f6ce8cbf571a2728e0514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the controler, after touch or poly after touch value. <br/></td></tr>
+<tr class="separator:a3d1294aaf83f6ce8cbf571a2728e0514"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24871d446a872bd53e2a5b7a4835df2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24871d446a872bd53e2a5b7a4835df2e"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a24871d446a872bd53e2a5b7a4835df2e">program</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:a24871d446a872bd53e2a5b7a4835df2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the program value. <br/></td></tr>
+<tr class="separator:a24871d446a872bd53e2a5b7a4835df2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7525d292cc8ec724d1bc017bf133f1d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7525d292cc8ec724d1bc017bf133f1d1"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a7525d292cc8ec724d1bc017bf133f1d1">bend</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:a7525d292cc8ec724d1bc017bf133f1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the bend value. <br/></td></tr>
+<tr class="separator:a7525d292cc8ec724d1bc017bf133f1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bcf253b31cf495ec0b07f4d8fec030b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1bcf253b31cf495ec0b07f4d8fec030b"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a1bcf253b31cf495ec0b07f4d8fec030b">after_touch</a> () const <a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:a1bcf253b31cf495ec0b07f4d8fec030b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the after touch value. <br/></td></tr>
+<tr class="separator:a1bcf253b31cf495ec0b07f4d8fec030b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a07fc3e57a3574a7131898dcafd271297"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07fc3e57a3574a7131898dcafd271297"></a>
-static xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a07fc3e57a3574a7131898dcafd271297">note</a> (int <a class="el" href="classxpd_1_1midi_1_1event.html#ae88ebaa9ad907b0ca4d66c7fad55f61b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#ad7abcef330dbcb43dda5a2cd11d033e1">pitch</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#ae487d047b4056d7a76e623d64350b8c5">velocity</a>) xpd_noexcept</td></tr>
-<tr class="memdesc:a07fc3e57a3574a7131898dcafd271297"><td class="mdescLeft">&#160;</td><td class="mdescRight">The note event constructor. <br/></td></tr>
-<tr class="separator:a07fc3e57a3574a7131898dcafd271297"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9f526d974cb9d1b2098ac384c6df28b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9f526d974cb9d1b2098ac384c6df28b"></a>
-static xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#ae9f526d974cb9d1b2098ac384c6df28b">control_change</a> (int <a class="el" href="classxpd_1_1midi_1_1event.html#ae88ebaa9ad907b0ca4d66c7fad55f61b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#a365d85b0183c6887f0beda5350feef6a">controler</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#adc1b9fb285e78c72fc03233ce1332c9c">value</a>) xpd_noexcept</td></tr>
-<tr class="memdesc:ae9f526d974cb9d1b2098ac384c6df28b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The control change event constructor. <br/></td></tr>
-<tr class="separator:ae9f526d974cb9d1b2098ac384c6df28b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa71a94f761ad0474e8bce6ae0116ec2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa71a94f761ad0474e8bce6ae0116ec2c"></a>
-static xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#aa71a94f761ad0474e8bce6ae0116ec2c">program_change</a> (int <a class="el" href="classxpd_1_1midi_1_1event.html#ae88ebaa9ad907b0ca4d66c7fad55f61b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#a176e48cb07284e0368fce53370d5955f">program</a>) xpd_noexcept</td></tr>
-<tr class="memdesc:aa71a94f761ad0474e8bce6ae0116ec2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The program change event constructor. <br/></td></tr>
-<tr class="separator:aa71a94f761ad0474e8bce6ae0116ec2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cd9e88b71ddb138749f89c58155e155"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2cd9e88b71ddb138749f89c58155e155"></a>
-static xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a2cd9e88b71ddb138749f89c58155e155">pitch_bend</a> (int <a class="el" href="classxpd_1_1midi_1_1event.html#ae88ebaa9ad907b0ca4d66c7fad55f61b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#a86762ef8a4ea22c47955dd2569ddf6a2">bend</a>) xpd_noexcept</td></tr>
-<tr class="memdesc:a2cd9e88b71ddb138749f89c58155e155"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pitch bend event constructor. <br/></td></tr>
-<tr class="separator:a2cd9e88b71ddb138749f89c58155e155"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86a5e5bbcb1eb756bedc8a71c7f4b8d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86a5e5bbcb1eb756bedc8a71c7f4b8d6"></a>
-static xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a86a5e5bbcb1eb756bedc8a71c7f4b8d6">after_touch</a> (int <a class="el" href="classxpd_1_1midi_1_1event.html#ae88ebaa9ad907b0ca4d66c7fad55f61b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#adc1b9fb285e78c72fc03233ce1332c9c">value</a>) xpd_noexcept</td></tr>
-<tr class="memdesc:a86a5e5bbcb1eb756bedc8a71c7f4b8d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pitch bend event constructor. <br/></td></tr>
-<tr class="separator:a86a5e5bbcb1eb756bedc8a71c7f4b8d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2622150a3b9bc5516d04b7862f85e9f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2622150a3b9bc5516d04b7862f85e9f0"></a>
-static xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a2622150a3b9bc5516d04b7862f85e9f0">poly_after_touch</a> (int <a class="el" href="classxpd_1_1midi_1_1event.html#ae88ebaa9ad907b0ca4d66c7fad55f61b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#ad7abcef330dbcb43dda5a2cd11d033e1">pitch</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#adc1b9fb285e78c72fc03233ce1332c9c">value</a>) xpd_noexcept</td></tr>
-<tr class="memdesc:a2622150a3b9bc5516d04b7862f85e9f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pitch bend event constructor. <br/></td></tr>
-<tr class="separator:a2622150a3b9bc5516d04b7862f85e9f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa259203d430e9bfa9b6401f266fd06cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa259203d430e9bfa9b6401f266fd06cd"></a>
-static xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#aa259203d430e9bfa9b6401f266fd06cd">byte</a> (int <a class="el" href="classxpd_1_1midi_1_1event.html#adc1b9fb285e78c72fc03233ce1332c9c">value</a>) xpd_noexcept</td></tr>
-<tr class="memdesc:aa259203d430e9bfa9b6401f266fd06cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pitch bend event constructor. <br/></td></tr>
-<tr class="separator:aa259203d430e9bfa9b6401f266fd06cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
+Events</h2></td></tr>
+<tr class="memitem:ac18069517e983e82d303738eb3a4568a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac18069517e983e82d303738eb3a4568a"></a>
+static constexpr note(int <br class="typebreak"/>
+<a class="el" href="classxpd_1_1midi_1_1event.html#af4b1b74924c3cfa0ce7ec83c3413a94b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#a0ece96cec09b785f32e82f322ce2a398">pitch</a>, int <br class="typebreak"/>
+<a class="el" href="classxpd_1_1midi_1_1event.html#a06f023830e39574ac8dfce9dcd76b65d">velocity</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a">noexcept</a></td></tr>
+<tr class="memdesc:ac18069517e983e82d303738eb3a4568a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The note event constructor. <br/></td></tr>
+<tr class="separator:ac18069517e983e82d303738eb3a4568a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9768a1b585264c7e240968ed65028190"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9768a1b585264c7e240968ed65028190"></a>
+static constexpr <br class="typebreak"/>
+control_change(int <a class="el" href="classxpd_1_1midi_1_1event.html#af4b1b74924c3cfa0ce7ec83c3413a94b">channel</a>, <br class="typebreak"/>
+int <a class="el" href="classxpd_1_1midi_1_1event.html#ad6da2a4b0c759d5b7c3a670daec8287f">controler</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#a3d1294aaf83f6ce8cbf571a2728e0514">value</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a9768a1b585264c7e240968ed65028190">noexcept</a></td></tr>
+<tr class="memdesc:a9768a1b585264c7e240968ed65028190"><td class="mdescLeft">&#160;</td><td class="mdescRight">The control change event constructor. <br/></td></tr>
+<tr class="separator:a9768a1b585264c7e240968ed65028190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaec70858050122e36fb10ccab54f3b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adaec70858050122e36fb10ccab54f3b5"></a>
+static constexpr <br class="typebreak"/>
+program_change(int <a class="el" href="classxpd_1_1midi_1_1event.html#af4b1b74924c3cfa0ce7ec83c3413a94b">channel</a>, <br class="typebreak"/>
+int <a class="el" href="classxpd_1_1midi_1_1event.html#a24871d446a872bd53e2a5b7a4835df2e">program</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#adaec70858050122e36fb10ccab54f3b5">noexcept</a></td></tr>
+<tr class="memdesc:adaec70858050122e36fb10ccab54f3b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The program change event constructor. <br/></td></tr>
+<tr class="separator:adaec70858050122e36fb10ccab54f3b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e890aa76ba0d35907909fcf3525d48a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e890aa76ba0d35907909fcf3525d48a"></a>
+static constexpr pitch_bend(int <br class="typebreak"/>
+<a class="el" href="classxpd_1_1midi_1_1event.html#af4b1b74924c3cfa0ce7ec83c3413a94b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#a7525d292cc8ec724d1bc017bf133f1d1">bend</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a5e890aa76ba0d35907909fcf3525d48a">noexcept</a></td></tr>
+<tr class="memdesc:a5e890aa76ba0d35907909fcf3525d48a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pitch bend event constructor. <br/></td></tr>
+<tr class="separator:a5e890aa76ba0d35907909fcf3525d48a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4163b250fb0903b9b611b25b5ff94ef2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4163b250fb0903b9b611b25b5ff94ef2"></a>
+static constexpr <a class="el" href="classxpd_1_1midi_1_1event.html#a1bcf253b31cf495ec0b07f4d8fec030b">after_touch</a>(int <br class="typebreak"/>
+<a class="el" href="classxpd_1_1midi_1_1event.html#af4b1b74924c3cfa0ce7ec83c3413a94b">channel</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#a3d1294aaf83f6ce8cbf571a2728e0514">value</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a4163b250fb0903b9b611b25b5ff94ef2">noexcept</a></td></tr>
+<tr class="memdesc:a4163b250fb0903b9b611b25b5ff94ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pitch bend event constructor. <br/></td></tr>
+<tr class="separator:a4163b250fb0903b9b611b25b5ff94ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb592703bcc6ff60cea850582d067904"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb592703bcc6ff60cea850582d067904"></a>
+static constexpr <br class="typebreak"/>
+poly_after_touch(int <a class="el" href="classxpd_1_1midi_1_1event.html#af4b1b74924c3cfa0ce7ec83c3413a94b">channel</a>, <br class="typebreak"/>
+int <a class="el" href="classxpd_1_1midi_1_1event.html#a0ece96cec09b785f32e82f322ce2a398">pitch</a>, int <a class="el" href="classxpd_1_1midi_1_1event.html#a3d1294aaf83f6ce8cbf571a2728e0514">value</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#afb592703bcc6ff60cea850582d067904">noexcept</a></td></tr>
+<tr class="memdesc:afb592703bcc6ff60cea850582d067904"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pitch bend event constructor. <br/></td></tr>
+<tr class="separator:afb592703bcc6ff60cea850582d067904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a982c4d644d4854ccc82906e6773cf005"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a982c4d644d4854ccc82906e6773cf005"></a>
+static constexpr byte(int <a class="el" href="classxpd_1_1midi_1_1event.html#a3d1294aaf83f6ce8cbf571a2728e0514">value</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1midi_1_1event.html#a982c4d644d4854ccc82906e6773cf005">noexcept</a></td></tr>
+<tr class="memdesc:a982c4d644d4854ccc82906e6773cf005"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pitch bend event constructor. <br/></td></tr>
+<tr class="separator:a982c4d644d4854ccc82906e6773cf005"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The class stores the informations of a midi event.  The class acts like a namespace for event. </p>
+<div class="textblock"><p>The class stores the informations of a midi event. </p>
+<p>The class acts like a namespace for event. </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a class="anchor" id="a8a5ba8efb82ff13f5d67812e219f4336"></a>
+<a class="anchor" id="adee610a3c7375031538811d29f6a4124"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336">xpd::midi::event::type_t</a></td>
+          <td class="memname">enum <a class="el" href="classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124">type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -210,34 +218,31 @@ static xpd_constexpr <a class="el" href="classxpd_1_1midi_1_1event.html">event</
 <p>The available type of midi events. </p>
 <p>The type is used . </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a8a5ba8efb82ff13f5d67812e219f4336acadfe6b06ec8c293742540ddcd851761"></a>note_t</em>&#160;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="adee610a3c7375031538811d29f6a4124a677a9f4f566f4f915fd9ca42f6db501a"></a>note_t</em>&#160;</td><td class="fielddoc">
 <p>The note (in or out) event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8a5ba8efb82ff13f5d67812e219f4336af1c29243285989ba20a239ed676b834a"></a>control_change_t</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="adee610a3c7375031538811d29f6a4124ab41794ba15c6ccd1d2bb40027dc1039f"></a>control_change_t</em>&#160;</td><td class="fielddoc">
 <p>The control change event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8a5ba8efb82ff13f5d67812e219f4336af68d79b0f82bebe5b5dd6af0bc6d5d9b"></a>program_change_t</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="adee610a3c7375031538811d29f6a4124a9194984da4e5902f1f92c93d1d9d844a"></a>program_change_t</em>&#160;</td><td class="fielddoc">
 <p>The program change event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8a5ba8efb82ff13f5d67812e219f4336a2b580457bd146286b640299f0655474f"></a>pitch_bend_t</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="adee610a3c7375031538811d29f6a4124aa702714e4eb76531ef26f16fae6ad5cd"></a>pitch_bend_t</em>&#160;</td><td class="fielddoc">
 <p>The pitch bend event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8a5ba8efb82ff13f5d67812e219f4336af084a798cf72da385076ea1206c170fc"></a>after_touch_t</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="adee610a3c7375031538811d29f6a4124a9ca92ce8386f71bcb74e1079d1024d66"></a>after_touch_t</em>&#160;</td><td class="fielddoc">
 <p>The after touch event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8a5ba8efb82ff13f5d67812e219f4336a846d7a5217f66131845c572a18043f52"></a>poly_after_touch_t</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="adee610a3c7375031538811d29f6a4124a451a0be73d160039f7d91f7426a29ad0"></a>poly_after_touch_t</em>&#160;</td><td class="fielddoc">
 <p>The poly after touch event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8a5ba8efb82ff13f5d67812e219f4336a78e2f06bbc34a85a688328e124b48ee8"></a>byte_t</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="adee610a3c7375031538811d29f6a4124aaf74ee2657fd941c2a95b3f7a6b5ab7a"></a>byte_t</em>&#160;</td><td class="fielddoc">
 <p>The byte event. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>xpd/<a class="el" href="xpd__midi_8hpp_source.html">xpd_midi.hpp</a></li>
-</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

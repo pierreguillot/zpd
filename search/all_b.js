@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['name',['name',['../classxpd_1_1object.html#a4175792451d770970ba4e079da27683f',1,'xpd::object::name()'],['../classxpd_1_1patch.html#a273deea51383ba07401ff3a596843a58',1,'xpd::patch::name()'],['../classxpd_1_1symbol.html#a6f8dc7fec04ac3af3230b98f9d3b5c43',1,'xpd::symbol::name()'],['../classxpd_1_1tie.html#aa7e2f5a94e550ced677096070f152749',1,'xpd::tie::name()']]],
-  ['normal',['normal',['../classxpd_1_1console.html#a05c83b1be7e6aefc62db9e473efaca2eaed29b2bb53e8120b4c5e8172a5040641',1,'xpd::console']]],
-  ['note',['note',['../classxpd_1_1midi_1_1event.html#a07fc3e57a3574a7131898dcafd271297',1,'xpd::midi::event']]],
-  ['note_5ft',['note_t',['../classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336acadfe6b06ec8c293742540ddcd851761',1,'xpd::midi::event']]],
-  ['null_5ft',['null_t',['../classxpd_1_1atom.html#ae31c41d85b1f4800dc44cfdf43ad6ec2a0eca107ee5fab76150f604a98ccc60ef',1,'xpd::atom']]],
-  ['number',['number',['../classxpd_1_1gui.html#a8648cac572222534d9d866723e3b6014af6ab71cb20a24c94bd3fb91d45bec297',1,'xpd::gui']]]
+  ['name',['name',['../classxpd_1_1object.html#a37627d5d5bba7f4a8690c71c2ab3cb07',1,'xpd::object::name()'],['../classxpd_1_1patch.html#a37627d5d5bba7f4a8690c71c2ab3cb07',1,'xpd::patch::name()'],['../classxpd_1_1symbol.html#a37627d5d5bba7f4a8690c71c2ab3cb07',1,'xpd::symbol::name()'],['../classxpd_1_1tie.html#a37627d5d5bba7f4a8690c71c2ab3cb07',1,'xpd::tie::name()']]],
+  ['noexcept',['noexcept',['../classxpd_1_1midi_1_1event.html#ac18069517e983e82d303738eb3a4568a',1,'xpd::midi::event::noexcept()'],['../classxpd_1_1midi_1_1event.html#a9768a1b585264c7e240968ed65028190',1,'xpd::midi::event::noexcept()'],['../classxpd_1_1midi_1_1event.html#adaec70858050122e36fb10ccab54f3b5',1,'xpd::midi::event::noexcept()'],['../classxpd_1_1midi_1_1event.html#a5e890aa76ba0d35907909fcf3525d48a',1,'xpd::midi::event::noexcept()'],['../classxpd_1_1midi_1_1event.html#a4163b250fb0903b9b611b25b5ff94ef2',1,'xpd::midi::event::noexcept()'],['../classxpd_1_1midi_1_1event.html#afb592703bcc6ff60cea850582d067904',1,'xpd::midi::event::noexcept()'],['../classxpd_1_1midi_1_1event.html#a982c4d644d4854ccc82906e6773cf005',1,'xpd::midi::event::noexcept()']]],
+  ['normal',['normal',['../classxpd_1_1console.html#afde8e18a788ccc92fc61cab298bca7e3aebc81705969b8c5ae986b0b2ec08d1d5',1,'xpd::console']]],
+  ['note_5ft',['note_t',['../classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124a677a9f4f566f4f915fd9ca42f6db501a',1,'xpd::midi::event']]],
+  ['null_5ft',['null_t',['../classxpd_1_1atom.html#adee610a3c7375031538811d29f6a4124a201232df89f089d76fa8b6bf351c8d6d',1,'xpd::atom']]],
+  ['number',['number',['../classxpd_1_1gui.html#adee610a3c7375031538811d29f6a4124afcd7df4b0a5d1b09723e22742d8a60a3',1,'xpd::gui']]]
 ];

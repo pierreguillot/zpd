@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['bang',['bang',['../classxpd_1_1gui.html#a8648cac572222534d9d866723e3b6014a259c6359a36ba3b531481a81dac99469',1,'xpd::gui']]],
-  ['bend',['bend',['../classxpd_1_1midi_1_1event.html#a86762ef8a4ea22c47955dd2569ddf6a2',1,'xpd::midi::event']]],
-  ['bind',['bind',['../classxpd_1_1instance.html#a6eefe86ab601c4b060add8b6acca74b2',1,'xpd::instance']]],
-  ['byte',['byte',['../classxpd_1_1midi_1_1event.html#aa259203d430e9bfa9b6401f266fd06cd',1,'xpd::midi::event']]],
-  ['byte_5ft',['byte_t',['../classxpd_1_1midi_1_1event.html#a8a5ba8efb82ff13f5d67812e219f4336a78e2f06bbc34a85a688328e124b48ee8',1,'xpd::midi::event']]]
+  ['bang',['bang',['../classxpd_1_1gui.html#adee610a3c7375031538811d29f6a4124a92e0a3f7bd2ae58dc7c2b2e66c68c09e',1,'xpd::gui']]],
+  ['bang_5fs',['bang_s',['../classxpd_1_1symbol.html#aa66a6bdf545739000d0bc5a5141f1fa1',1,'xpd::symbol']]],
+  ['bend',['bend',['../classxpd_1_1midi_1_1event.html#a7525d292cc8ec724d1bc017bf133f1d1',1,'xpd::midi::event']]],
+  ['bind',['bind',['../classxpd_1_1instance.html#ac62709c0efcbad9b77034627b5c506f3',1,'xpd::instance']]],
+  ['byte_5ft',['byte_t',['../classxpd_1_1midi_1_1event.html#adee610a3c7375031538811d29f6a4124aaf74ee2657fd941c2a95b3f7a6b5ab7a',1,'xpd::midi::event']]]
 ];

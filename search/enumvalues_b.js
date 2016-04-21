@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vu_5fmeter',['vu_meter',['../classxpd_1_1gui.html#a8648cac572222534d9d866723e3b6014a0a7488fef13f1a4b01c8e142d44b929f',1,'xpd::gui']]]
+  ['vu_5fmeter',['vu_meter',['../classxpd_1_1gui.html#adee610a3c7375031538811d29f6a4124aaef1ea129befd6f5e53c490a05f9327f',1,'xpd::gui']]]
 ];

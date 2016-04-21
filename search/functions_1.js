@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['bend',['bend',['../classxpd_1_1midi_1_1event.html#a86762ef8a4ea22c47955dd2569ddf6a2',1,'xpd::midi::event']]],
-  ['bind',['bind',['../classxpd_1_1instance.html#a6eefe86ab601c4b060add8b6acca74b2',1,'xpd::instance']]],
-  ['byte',['byte',['../classxpd_1_1midi_1_1event.html#aa259203d430e9bfa9b6401f266fd06cd',1,'xpd::midi::event']]]
+  ['bend',['bend',['../classxpd_1_1midi_1_1event.html#a7525d292cc8ec724d1bc017bf133f1d1',1,'xpd::midi::event']]],
+  ['bind',['bind',['../classxpd_1_1instance.html#ac62709c0efcbad9b77034627b5c506f3',1,'xpd::instance']]]
 ];
