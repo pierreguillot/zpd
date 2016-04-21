@@ -13,13 +13,13 @@ namespace xpd
 {
 
     //! @brief A class that manages midi messages.
-    //! @detail The class acts like a namespace for event.
+    //! @details The class acts like a namespace for event.
     class midi
     {
     public:
         
         //! @brief The class stores the informations of a midi event.
-        //! @detail The class acts like a namespace for event.
+        //! @details The class acts like a namespace for event.
         class event
         {
         public:

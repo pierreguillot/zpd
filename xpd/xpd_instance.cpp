@@ -283,7 +283,7 @@ namespace xpd
     
     
     
-    void instance::send(console::post const& post) xpd_noexcept
+    void instance::send(console::post const& post) const
     {
         int todo_set_instance;
         environment::lock();
@@ -307,31 +307,31 @@ namespace xpd
         environment::unlock();
     }
     
-    void instance::send(tie name, symbol s, std::vector<atom> const& atoms) const
+    void instance::send(tie name, symbol selector, std::vector<atom> const& atoms) const
     {
         int todo_set_instance;
         environment::lock();
         cpd_instance_set(reinterpret_cast<c_instance *>(m_ptr));
-        if(s == symbol::bang_s)
+        if(selector == symbol::bang_s)
         {
             cpd_messagesend_bang(smuggler::gettie(name));
         }
-        else if(s == symbol::float_s)
+        else if(selector == symbol::float_s)
         {
             cpd_messagesend_float(smuggler::gettie(name), atoms[0]);
         }
-        else if(s == symbol::symbol_s)
+        else if(selector == symbol::symbol_s)
         {
             cpd_messagesend_symbol(smuggler::gettie(name), smuggler::getsymbol(atoms[0]));
         }
-        else if(s == symbol::list_s)
+        else if(selector == symbol::list_s)
         {
             c_list* list = cpd_list_create(atoms.size());
             for(size_t i = 0; i < atoms.size(); ++i)
             {
                 if(atoms[i].type() == atom::float_t)
                 {
-                    cpd_list_set_float(list, i, float_t(atoms[i]));
+                    cpd_list_set_float(list, i, float(atoms[i]));
                 }
                 else if(atoms[i].type() == atom::symbol_t)
                 {
@@ -348,14 +348,14 @@ namespace xpd
             {
                 if(atoms[i].type() == atom::float_t)
                 {
-                    cpd_list_set_float(list, i, float_t(atoms[i]));
+                    cpd_list_set_float(list, i, float(atoms[i]));
                 }
                 else if(atoms[i].type() == atom::symbol_t)
                 {
                     cpd_list_set_symbol(list, i, smuggler::getsymbol(atoms[i]));
                 }
             }
-            cpd_messagesend_anything(smuggler::gettie(name), smuggler::getsymbol(s), list);
+            cpd_messagesend_anything(smuggler::gettie(name), smuggler::getsymbol(selector), list);
             cpd_list_free(list);
         }
         environment::unlock();

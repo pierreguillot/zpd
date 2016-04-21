@@ -15,6 +15,7 @@ namespace xpd
     // ==================================================================================== //
     //                                      SYMBOL                                          //
     // ==================================================================================== //
+    
     //! @brief A symbol is used as for fast comparaison of string.
     //! @details A symbol is bound to a sting. The symbol on is global to all the xpd
     //! environment. At the creation, the method looks for the sting in a global table and
@@ -23,10 +24,11 @@ namespace xpd
     class symbol
     {
     public:
-        static const symbol bang_s;
-        static const symbol float_s;
-        static const symbol symbol_s;
-        static const symbol list_s;
+        static const symbol _s;         //!< @brief The predefined empty symbol.
+        static const symbol bang_s;     //!< @brief The predefined bang symbol.
+        static const symbol float_s;    //!< @brief The predefined float symbol.
+        static const symbol symbol_s;   //!< @brief The predefined symbol symbol.
+        static const symbol list_s;     //!< @brief The predefined list symbol.
         
         //! @brief The std::string constructor.
         //! @details The method should never throw exceptions except if the insertion failed.
@@ -44,7 +46,7 @@ namespace xpd
         
         //! @brief The copy constructor.
         //! @details Creates an invalid symbol.
-        //! @param The name of the symbol.
+        //! @param other The other symbol.
        inline xpd_constexpr symbol(symbol const& other) xpd_noexcept : ptr(other.ptr) {}
 
         //! @brief The symbol assignment.
@@ -56,42 +58,44 @@ namespace xpd
         //! @brief The std::string assignment.
         //! @details Change the reference of the symbol. The method should never throw
         //! exceptions except if the insertion failed.
-        //! @param The new name of the symbol.
+        //! @param name The new name of the symbol.
         //! @return The reference of the symbol.
         symbol& operator=(std::string const& name);
         
         //! @brief The c-string assignment.
         //! @details Change the reference of the symbol. The method should never throw
         //! exceptions except if the insertion failed.
-        //! @param The new name of the symbol.
+        //! @param name The new name of the symbol.
         //! @return The reference of the symbol.
         symbol& operator=(char const* name);
         
-        //! @bried Compare the symbol with another.
+        //! @brief Compare the symbol with another.
         //! @param other The other symbol.
         //! @return true if the other symbol doesn't shared the same reference, otherwise
         //! false.
        inline xpd_constexpr bool operator!=(symbol const& other)const xpd_noexcept {return other.ptr != ptr;}
         
-        //! @bried Compare the symbol with another.
+        //! @brief Compare the symbol with another.
         //! @param other The other symbol.
         //! @return true if the other symbol shared the same reference, otherwise false.
        inline xpd_constexpr bool operator==(symbol const& other) const xpd_noexcept{return other.ptr == ptr;}
         
-        //! @bried Checks the validity of the symbol.
+        //! @brief Checks the validity of the symbol.
         //! @return true if the symbol if valid, otherwise false.
        inline xpd_constexpr operator bool() const xpd_noexcept {return bool(ptr);}
         
-        //! @bried Gets the name of the symbol.
+        //! @brief Gets the name of the symbol.
         //! @return The name of the symbol.
         std::string name() const;
         
     private:
         void* ptr;
         friend class smuggler;
-       inline xpd_constexpr void const* get() const xpd_noexcept{return ptr;}
-       inline xpd_constexpr symbol(void *_ptr) : ptr(_ptr) {}
+        inline xpd_constexpr void const* get() const xpd_noexcept{return ptr;}
+        inline xpd_constexpr symbol(void *_ptr) : ptr(_ptr) {}
     };
 }
+
+
 
 #endif // XPD_SYMBOL_HPP

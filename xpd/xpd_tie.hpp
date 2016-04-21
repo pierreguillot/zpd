@@ -15,6 +15,7 @@ namespace xpd
     // ==================================================================================== //
     //                                      TIE                                             //
     // ==================================================================================== //
+    
     //! @brief A tie is used as a connection to send and receive messages.
     //! @details A tie is bound to a sting so it can be used to communicate with other objects
     //! that use this string. The tie on is global to all the xpd environment. At the
@@ -41,44 +42,44 @@ namespace xpd
         
         //! @brief The copy constructor.
         //! @details Creates an invalid tie.
-        //! @param The name of the tie.
+        //! @param other The name of the tie.
        inline xpd_constexpr tie(tie const& other) xpd_noexcept : ptr(other.ptr) {}
         
         //! @brief The tie assignment.
         //! @details Returns a copy of another tie.
         //! @param other The other tie.
-        //! @return The reference of the tie.
+        //! @return other The reference of the tie.
         inline tie& operator=(tie const& other) xpd_noexcept {ptr = other.ptr; return *this;}
         
         //! @brief The std::string assignment.
         //! @details Change the reference of the tie. The method should never throw exceptions
         //! except if the insertion failed.
-        //! @param The new name of the tie.
+        //! @param name The new name of the tie.
         //! @return The reference of the tie.
         tie& operator=(std::string const& name);
         
         //! @brief The c-string assignment.
         //! @details Change the reference of the tie. The method should never throw exceptions
         //! except if the insertion failed.
-        //! @param The new name of the tie.
+        //! @param name The new name of the tie.
         //! @return The reference of the tie.
         tie& operator=(char const* name);
         
-        //! @bried Compare the tie with another.
+        //! @brief Compare the tie with another.
         //! @param other The other tie.
         //! @return true if the other tie doesn't shared the same reference, otherwise false.
        inline xpd_constexpr bool operator!=(tie const& other)const xpd_noexcept {return other.ptr != ptr;}
         
-        //! @bried Compare the tie with another.
+        //! @brief Compare the tie with another.
         //! @param other The other tie.
         //! @return true if the other tie shared the same reference, otherwise false.
        inline xpd_constexpr bool operator==(tie const& other) const xpd_noexcept {return other.ptr == ptr;}
         
-        //! @bried Checks the validity of the tie.
+        //! @brief Checks the validity of the tie.
         //! @return true if the tie if valid, otherwise false.
        inline xpd_constexpr operator bool() const xpd_noexcept {return bool(ptr);}
         
-        //! @bried Gets the name of the tie.
+        //! @brief Gets the name of the tie.
         //! @return The name of the tie.
         std::string name() const;
         
@@ -89,5 +90,6 @@ namespace xpd
        inline xpd_constexpr tie(void *_ptr) : ptr(_ptr) {}
     };
 }
+
 
 #endif // XPD_TIE_HPP

@@ -30,7 +30,7 @@ namespace xpd
         //! @brief The destructor.
         inline virtual ~object() {};
         
-        //! @bried Checks the validity of the object.
+        //! @brief Checks the validity of the object.
         //! @return true if the object if valid, otherwise false.
         inline xpd_constexpr operator bool() const xpd_noexcept {return bool(m_patch) && bool(m_ptr);}
         

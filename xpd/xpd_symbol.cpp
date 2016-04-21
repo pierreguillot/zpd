@@ -23,6 +23,7 @@ namespace xpd
     symbol const symbol::float_s  = symbol("float");
     symbol const symbol::symbol_s = symbol("symbol");
     symbol const symbol::list_s   = symbol("list");
+    symbol const symbol::_s       = symbol("");
     
     symbol::symbol(std::string const& name) : ptr(cpd_symbol_create(name.c_str()))
     {

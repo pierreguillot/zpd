@@ -11,8 +11,6 @@
 
 namespace xpd
 {
-    typedef float float_t;
-    
     // ==================================================================================== //
     //                                      ATOM                                            //
     // ==================================================================================== //
@@ -37,15 +35,18 @@ namespace xpd
         
         //! @brief The float constructor.
         //! @details Creates an float atom.
-       inline xpd_constexpr atom(float value) xpd_noexcept : m_type(float_t), m_float(value), m_symbol(){}
+        //! @param value The float value.
+        inline xpd_constexpr atom(float value) xpd_noexcept : m_type(float_t), m_float(value), m_symbol(){}
         
         //! @brief The symbol constructor.
         //! @details Creates an symbol atom.
-       inline xpd_constexpr atom(symbol const& symbol) xpd_noexcept : m_type(symbol_t), m_float(0.f), m_symbol(symbol) {}
+        //! @param sym The symbol.
+        inline xpd_constexpr atom(symbol const& sym) xpd_noexcept : m_type(symbol_t), m_float(0.f), m_symbol(sym) {}
         
         //! @brief The copy constructor.
         //! @details Creates an copy of another atom.
-       inline xpd_constexpr atom(atom const& other) xpd_noexcept : m_type(other.m_type), m_float(other.m_float), m_symbol(other.m_symbol) {}
+        //! @param other The other atom.
+        inline xpd_constexpr atom(atom const& other) xpd_noexcept : m_type(other.m_type), m_float(other.m_float), m_symbol(other.m_symbol) {}
         
         //! @brief The float assignment.
         //! @details Sets the atom to a new float value.
@@ -55,9 +56,9 @@ namespace xpd
         
         //! @brief The symbol assignment.
         //! @details Sets the atom to a new symbol.
-        //! @param symbol The symbol value.
+        //! @param sym The symbol.
         //! @return The reference of the atom.
-        inline atom& operator=(symbol const& symbol) xpd_noexcept {m_type = symbol_t; m_float = 0.f; m_symbol = symbol; return *this;}
+        inline atom& operator=(symbol const& sym) xpd_noexcept {m_type = symbol_t; m_float = 0.f; m_symbol = sym; return *this;}
         
         //! @brief The copy assignment.
         //! @details Returns a copy of another atom.
@@ -88,5 +89,6 @@ namespace xpd
         symbol m_symbol;
     };
 }
+
 
 #endif // XPD_ATOM_HPP

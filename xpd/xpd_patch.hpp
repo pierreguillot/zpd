@@ -36,7 +36,7 @@ namespace xpd
         //! @brief The destructor.
         inline ~patch() xpd_noexcept {};
         
-        //! @bried Checks the validity of the patch.
+        //! @brief Checks the validity of the patch.
         //! @return true if the patch if valid, otherwise false.
         inline xpd_constexpr operator bool() const xpd_noexcept {return bool(m_ptr);}
         

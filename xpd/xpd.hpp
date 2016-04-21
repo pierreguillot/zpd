@@ -7,6 +7,18 @@
 #ifndef XPD_HPP
 #define XPD_HPP
 
+//! @defgroup xpd xpd
+//! @brief The object-oriented c++ interface of zpd.
+//! @details The xpd interface is
+
+//! @addtogroup xpd
+//! @{
+
+//! @brief The c++ interface of of zpd.
+namespace xpd {}
+
+//! @}
+
 #include "xpd_gui.hpp"
 
 #endif // XPD_HPP

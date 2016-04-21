@@ -42,18 +42,18 @@ CPD_EXTERN_STRUCT _text;
 CPD_EXTERN_STRUCT _iemgui;
 CPD_EXTERN_STRUCT _atom;
 
-//! @defgroup cpd The c interface od zpd.
-//! @brief The low level c methods of the Pure Data wrapper
+//! @defgroup cpd cpd
+//! @brief The low level c interface of zpd.
+//! @details The cpd interface is
 
 //! @addtogroup cpd
 //! @{
-//!
 
-//! @brief The type used for samples during DSP.
+//! @brief The type used for samples during digital signal processing.
 typedef float c_sample;
-//! @brief The type used to .
+//! @brief The type used for floating point numbers.
 typedef float c_float;
-//! @brief The tie type.
+//! @brief The type used to bind and unbind c_instance with string characters.
 typedef struct _symbol      c_tie;
 //! @brief The type used for fast comparaison of string characters.
 typedef struct _symbol      c_symbol;
@@ -153,10 +153,6 @@ typedef struct _hook_message
 }c_hook_message;
 
 
-//! @addtogroup enviroment
-//! @{
-//!
-
 //! @brief Initializes the Pure Data environment.
 //! @details The method should be called only one time at the initialization, before
 //! everything else.
@@ -208,7 +204,6 @@ CPD_EXTERN void cpd_console_error(char const* message, ...);
 CPD_EXTERN void cpd_console_fatal(char const* message, ...);
 
 
-//! @}
 
 
 

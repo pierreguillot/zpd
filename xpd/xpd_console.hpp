@@ -14,11 +14,12 @@
 namespace xpd
 {
     //! @brief A class that manages console posts and an historic.
-    //! @detail The class acts like a namespace, its owns three subclasses the level, the
+    //! @details The class acts like a namespace, its owns three subclasses the level, the
     //! post and an history.
     class console
     {
     public:
+        
         //! @brief The available level of posts.
         //! @details The level can be used to filters the posts.
         enum level
