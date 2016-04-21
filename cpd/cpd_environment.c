@@ -46,6 +46,9 @@ void glob_midi_properties(t_pd *dummy, t_floatarg flongform) {}
 void glob_midi_dialog(t_pd *dummy, t_symbol *s, int argc, t_atom *argv) {}
 int sys_mididevnametonumber(int output, const char *name) { return 0; }
 void sys_mididevnumbertoname(int output, int devno, char *name, int namesize) {}
+#ifdef _WIN32
+void d_soundfile_setup(void) {}
+#endif
 #define LCOV_EXCL_STOP
 
 static t_sample*          cpd_sample_ins    = NULL;

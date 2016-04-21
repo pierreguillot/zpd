@@ -62,6 +62,11 @@ set(XPDSOURCES
 #---------------------------------------#
 #        The Pure Data Sources          #
 #---------------------------------------#
+if(${WIN32})
+	set(PDSOURCES2)
+else()
+	set(PDSOURCES2 ${PROJECT_SOURCE_DIR}/pd/src/d_soundfile.c)
+endif()
 set(PDSOURCES
   ${PROJECT_SOURCE_DIR}/pd/src/d_arithmetic.c
   ${PROJECT_SOURCE_DIR}/pd/src/d_array.c
@@ -76,7 +81,6 @@ set(PDSOURCES
   ${PROJECT_SOURCE_DIR}/pd/src/d_misc.c
   ${PROJECT_SOURCE_DIR}/pd/src/d_osc.c
   ${PROJECT_SOURCE_DIR}/pd/src/d_resample.c
-  ${PROJECT_SOURCE_DIR}/pd/src/d_soundfile.c
   ${PROJECT_SOURCE_DIR}/pd/src/d_ugen.c
   ${PROJECT_SOURCE_DIR}/pd/src/g_all_guis.c
   ${PROJECT_SOURCE_DIR}/pd/src/g_all_guis.h
@@ -182,7 +186,7 @@ endif()
 source_group(test FILES ${TESTSOURCES})
 source_group(cpd FILES ${CPDSOURCES})
 source_group(xpd FILES ${XPDSOURCES})
-source_group(pd FILES ${PDSOURCES})
+source_group(pd FILES ${PDSOURCES} ${PDSOURCES2})
 source_group(pdextra FILES ${PDEXTRASOURCES})
 include_directories(${PROJECT_SOURCE_DIR}/test)
 include_directories(${PROJECT_SOURCE_DIR}/zpd)
@@ -202,7 +206,7 @@ if(${COVERALLS})
     find_library(MATH_LIB m)
     find_package(Threads REQUIRED)
     add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1 -DZPD_TEST_VERBOSE=1)
-    add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+    add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDSOURCES2} ${PDEXTRASOURCES})
     target_link_libraries(xpdtest ${MATH_LIB})
     target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
     target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
@@ -215,21 +219,21 @@ else()
       #---------------------------------------#
       #             Shared Library            #
       #---------------------------------------#
-      add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
+      add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2})
       set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
       set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
       #---------------------------------------#
       #             Static Library            #
       #---------------------------------------#
-      add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
+      add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2} )
       set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
       set_target_properties(zpdstatic PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
 
       #---------------------------------------#
       #                  Test                 #
       #---------------------------------------#
-      add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+      add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDSOURCES2} ${PDEXTRASOURCES})
 
     elseif(${UNIX})
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
@@ -239,7 +243,7 @@ else()
       #---------------------------------------#
       #             Shared Library            #
       #---------------------------------------#
-      add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
+      add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2} )
       target_link_libraries(zpdshared ${MATH_LIB})
       target_link_libraries(zpdshared ${CMAKE_THREAD_LIBS_INIT})
       target_link_libraries(zpdshared ${CMAKE_DL_LIBS})
@@ -249,7 +253,7 @@ else()
       #---------------------------------------#
       #             Static Library            #
       #---------------------------------------#
-      add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
+      add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2} )
       target_link_libraries(zpdstatic ${MATH_LIB})
       target_link_libraries(zpdstatic ${CMAKE_THREAD_LIBS_INIT})
       target_link_libraries(zpdstatic ${CMAKE_DL_LIBS})
@@ -259,28 +263,15 @@ else()
       #---------------------------------------#
       #                  Test                 #
       #---------------------------------------#
-      add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+      add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDSOURCES2} ${PDEXTRASOURCES})
       target_link_libraries(xpdtest ${MATH_LIB})
       target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
       target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
     elseif(${WIN32})
-      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DPTW32_STATIC_LIB=1)
-      include_directories(${PROJECT_SOURCE_DIR}/pthread/include)
-
-			FOREACH(flag
-				CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
-				CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
-				CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
-				CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
-				STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
-				SET("${flag}" "${${flag}} /EHsc")
-			ENDFOREACH()
+      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1)
 
       if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-      	link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x64)
 				add_definitions(-DPD_LONGINTTYPE="long long")
-      else(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-      	link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x86)
       endif()
       add_definitions("/D_CRT_SECURE_NO_WARNINGS /wd4091 /wd4996")
 
@@ -292,12 +283,6 @@ else()
       #target_link_libraries(zpdstatic pthread_lib)
 			#set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
 
-# kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib pthread_lib.lib ws2_32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/projects/zpd/build/Debug/xpdtest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/projects/zpd/build/Debug/xpdtest.lib" /MACHINE:X86 /SAFESEH  /machine:X86
-			find_package(Threads)
 			add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
-			target_link_libraries(xpdtest pthread_lib)
-			target_link_libraries(xpdtest ws2_32)
-			#set_target_properties(zpdshared PROPERTIES LINK_FLAGS_DEBUG /MTd /NODEFAULTLIB)
-			#set_target_properties(zpdshared PROPERTIES LINK_FLAGS_RELEASE /LTCG /MT)
     endif()
 endif()
