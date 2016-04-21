@@ -367,17 +367,17 @@ public:
         
         for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
         {
-            for(size_t k = 0; k < nins; k++)
+            for(size_t k = 0; k < size_t(nins); k++)
             {
-                for(size_t j = 0; j < blks; j++)
+                for(size_t j = 0; j < size_t(blks); j++)
                 {
                     inst->m_input[k][j] = ((rand() % 4000) - 2000.f) / 2000.f;
                 }
             }
             inst->perform(blks, nins, const_cast<float const **>(inst->m_input), nouts, inst->m_output);
-            for(size_t k = 0; k < nouts; k++)
+            for(size_t k = 0; k < size_t(nouts); k++)
             {
-                for(size_t j = 0; j < blks; j++)
+                for(size_t j = 0; j < size_t(blks); j++)
                 {
                     assert("test_dsp samples" && inst->m_output[k][j] == inst->m_input[k][j]);
                 }

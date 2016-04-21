@@ -267,6 +267,15 @@ else()
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_STRUCT_TIMESPEC=1 -DPTW32_STATIC_LIB=1)
       include_directories(${PROJECT_SOURCE_DIR}/pthread/include)
 
+			FOREACH(flag
+				CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
+				CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
+				CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
+				CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
+				STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
+				SET("${flag}" "${${flag}} /EHsc")
+			ENDFOREACH()
+			
       if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
       	link_directories(${PROJECT_SOURCE_DIR}/pthread/lib/x64)
 				add_definitions(-DPD_LONGINTTYPE="long long")
@@ -276,7 +285,7 @@ else()
       add_definitions("/D_CRT_SECURE_NO_WARNINGS /wd4091 /wd4996 /wd4800")
 
 			#add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
-      #target_link_libraries(zpdshared pthread_li‡b)
+      #target_link_libraries(zpdshared pthread_lib)
 			#set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
 
 			#add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
