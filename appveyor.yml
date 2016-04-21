@@ -22,7 +22,7 @@ build_script:
     - cmake --build .
 
 test_script:
-    - xpdtest.exe
+    - start xpdtest.exe
 
 #---------------------------------#
 #         notifications           #
