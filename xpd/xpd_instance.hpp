@@ -26,7 +26,6 @@ namespace xpd
     //! @brief The instance is the main interface to communicate within the xpd environment.
     //! @details The instance manages the posts to the console, the midi events, the messages
     //! and the digital signal processing. It is also the interface to load and delete patches.
-    //! @todo set the instance at each call of method
     class instance
     {
     public:

@@ -12,7 +12,19 @@ option(COVERALLS "Build with coveralls" OFF)
 #---------------------------------------#
 
 set(CPDSOURCES
-${PROJECT_SOURCE_DIR}/cpd/cpd.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_def.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_types.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_types.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_environment.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_environment.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_instance.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_instance.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_patch.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_patch.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_object.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_object.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_gui.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_gui.h
 ${PROJECT_SOURCE_DIR}/cpd/cpd.h
 )
 

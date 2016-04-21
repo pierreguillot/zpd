@@ -143,7 +143,7 @@ namespace xpd
             instance->ref->receive(smuggler::createtie(tie), symbol::bang_s, std::vector<atom>());
         }
         
-        static void m_float(instance::internal* instance, cpd_tie* tie, cpd_float f)
+        static void m_float(instance::internal* instance, cpd_tie* tie, float f)
         {
             instance->ref->receive(smuggler::createtie(tie), symbol::float_s, std::vector<atom>(1, f));
         }
@@ -153,12 +153,12 @@ namespace xpd
             instance->ref->receive(smuggler::createtie(tie), symbol::symbol_s, std::vector<atom>(1, smuggler::createsymbol(s)));
         }
         
-        static void m_gpointer(instance::internal* instance, cpd_tie* tie, cpd_gpointer *g)
+        static void m_gpointer(instance::internal* instance, cpd_tie* tie, cpd_gpointer const* g)
         {
             ;
         }
         
-        static void m_list(instance::internal* instance, cpd_tie* tie, cpd_list *list)
+        static void m_list(instance::internal* instance, cpd_tie* tie, cpd_list const* list)
         {
             std::vector<atom> vec(cpd_list_get_size(list));
             for(size_t i = 0; i < vec.size(); ++i)
@@ -175,7 +175,7 @@ namespace xpd
             instance->ref->receive(smuggler::createtie(tie), symbol::list_s, vec);
         }
         
-        static void m_anything(instance::internal* instance, cpd_tie* tie, cpd_symbol *s, cpd_list *list)
+        static void m_anything(instance::internal* instance, cpd_tie* tie, cpd_symbol* s, cpd_list const* list)
         {
             std::vector<atom> vec(cpd_list_get_size(list));
             for(size_t i = 0; i < vec.size(); ++i)
@@ -223,22 +223,21 @@ namespace xpd
     
     patch instance::load(std::string const& name, std::string const& path)
     {
-        int todo;
         patch p;
         void* ptr = xpd_nullptr;
         environment::lock();
-        cpd_instance_set(reinterpret_cast<cpd_instance *>(m_ptr));
         if(path.empty())
         {
-            ptr = cpd_patch_new(name.c_str(), xpd_nullptr);
+            ptr = cpd_instance_patch_load(reinterpret_cast<cpd_instance *>(m_ptr), name.c_str(), xpd_nullptr);
         }
         else
         {
-            ptr = cpd_patch_new(name.c_str(), path.c_str());
+            ptr = cpd_instance_patch_load(reinterpret_cast<cpd_instance *>(m_ptr), name.c_str(), path.c_str());
         }
         
         if(ptr)
         {
+            int todo;
             p = patch(ptr, size_t(cpd_patch_get_dollarzero(reinterpret_cast<cpd_patch *>(ptr))));
         }
         environment::unlock();
@@ -247,10 +246,8 @@ namespace xpd
     
     void instance::close(patch& p)
     {
-        int todo;
         environment::lock();
-        cpd_instance_set(reinterpret_cast<cpd_instance *>(m_ptr));
-        cpd_patch_free(reinterpret_cast<cpd_patch *>(p.m_ptr));
+        cpd_instance_patch_close(reinterpret_cast<cpd_instance *>(m_ptr), reinterpret_cast<cpd_patch *>(p.m_ptr));
         environment::unlock();
     }
     
