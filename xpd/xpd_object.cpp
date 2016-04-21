@@ -10,6 +10,7 @@
 extern "C"
 {
 #include "../cpd/cpd.h"
+#include <stdlib.h>
 }
 
 
