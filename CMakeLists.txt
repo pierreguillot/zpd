@@ -159,10 +159,32 @@ ${PROJECT_SOURCE_DIR}/pd/extra/sigmund~/sigmund~.c
 ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 )
 
+#---------------------------------------#
+#        The Test Sources    #
+#---------------------------------------#
+
+if(${WIN32})
+	set(TESTSOURCES
+	${PROJECT_SOURCE_DIR}/test/test.cpp
+	${PROJECT_SOURCE_DIR}/test/test.hpp
+	${PROJECT_SOURCE_DIR}/test/ThreadWin32.cpp
+	${PROJECT_SOURCE_DIR}/test/Thread.hpp
+	)
+else()
+	set(TESTSOURCES
+	${PROJECT_SOURCE_DIR}/test/test.cpp
+	${PROJECT_SOURCE_DIR}/test/test.hpp
+	${PROJECT_SOURCE_DIR}/test/ThreadPthread.cpp
+	${PROJECT_SOURCE_DIR}/test/Thread.hpp
+	)
+endif()
+
+source_group(test FILES ${TESTSOURCES})
 source_group(cpd FILES ${CPDSOURCES})
 source_group(xpd FILES ${XPDSOURCES})
 source_group(pd FILES ${PDSOURCES})
 source_group(pdextra FILES ${PDEXTRASOURCES})
+include_directories(${PROJECT_SOURCE_DIR}/test)
 include_directories(${PROJECT_SOURCE_DIR}/zpd)
 include_directories(${PROJECT_SOURCE_DIR}/cpd)
 include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
@@ -180,7 +202,7 @@ if(${COVERALLS})
     find_library(MATH_LIB m)
     find_package(Threads REQUIRED)
     add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1 -DZPD_TEST_VERBOSE=1)
-    add_executable(xpdtest ${PROJECT_SOURCE_DIR}/test/test.cpp ${PROJECT_SOURCE_DIR}/test/test.hpp ${PROJECT_SOURCE_DIR}/test/Thread.hpp ${PROJECT_SOURCE_DIR}/test/ThreadPthread.cpp ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+    add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
     target_link_libraries(xpdtest ${MATH_LIB})
     target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
     target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
@@ -207,7 +229,7 @@ else()
       #---------------------------------------#
       #                  Test                 #
       #---------------------------------------#
-      add_executable(xpdtest ${PROJECT_SOURCE_DIR}/test/test.cpp ${PROJECT_SOURCE_DIR}/test/test.hpp ${PROJECT_SOURCE_DIR}/test/Thread.hpp ${PROJECT_SOURCE_DIR}/test/ThreadPthread.cpp ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+      add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
 
     elseif(${UNIX})
       add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
@@ -237,7 +259,7 @@ else()
       #---------------------------------------#
       #                  Test                 #
       #---------------------------------------#
-      add_executable(xpdtest ${PROJECT_SOURCE_DIR}/test/test.cpp ${PROJECT_SOURCE_DIR}/test/test.hpp ${PROJECT_SOURCE_DIR}/test/Thread.hpp ${PROJECT_SOURCE_DIR}/test/ThreadPthread.cpp ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
+      add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
       target_link_libraries(xpdtest ${MATH_LIB})
       target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
       target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
@@ -256,5 +278,6 @@ else()
       target_link_libraries(zpdstatic pthread_lib)
       #set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
       set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
+			add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
     endif()
 endif()
