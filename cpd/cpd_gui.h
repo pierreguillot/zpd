@@ -39,33 +39,55 @@ typedef enum
 
 
 //! @brief Gets the label of a gui.
+//! @param gui The gui.
+//! @return The label of the gui.
 CPD_EXTERN cpd_symbol* cpd_gui_get_label(cpd_gui const* gui);
 
-//! @brief Gets the receive symbol of a gui.
+//! @brief Gets the receive tie of a gui.
+//! @param gui The gui.
+//! @return The receive tie of the gui.
 CPD_EXTERN cpd_tie* cpd_gui_get_receive_tie(cpd_gui const* gui);
 
-//! @brief Gets the send symbol of a gui.
+//! @brief Gets the send tie of a gui.
+//! @param gui The gui.
+//! @return The send tie of the gui.
 CPD_EXTERN cpd_tie* cpd_gui_get_send_tie(cpd_gui const* gui);
 
-//! @brief Gets the send symbol of a gui.
+//! @brief Gets the type of a gui.
+//! @param gui The gui.
+//! @return The type of the gui.
 CPD_EXTERN cpd_guitype cpd_gui_get_type(cpd_gui const* gui);
 
 //! @brief Gets the maximum value of a gui.
+//! @param gui The gui.
+//! @return The maximum value if it has one, otherwise 0.
 CPD_EXTERN float cpd_gui_get_maximum_value(cpd_gui const* gui);
 
 //! @brief Gets the maximum value of a gui.
+//! @param gui The gui.
+//! @return The minimum value if it has one, otherwise 0.
 CPD_EXTERN float cpd_gui_get_minimum_value(cpd_gui const* gui);
 
 //! @brief Gets the number of steps of a gui.
+//! @param gui The gui.
+//! @return The number of steps of the values if it has one, otherwise 0.
 CPD_EXTERN int cpd_gui_get_number_of_steps(cpd_gui const* gui);
 
 //! @brief Gets the number of steps of a gui.
+//! @param gui The gui.
+//! @return The current value of the gui if it has one, otherwise 0.
 CPD_EXTERN float cpd_gui_get_value(cpd_gui const* gui);
 
 //! @brief Gets the x position of the label of a gui.
+//! @param gui The gui.
+//! @param patch The patch.
+//! @return The x position of the label of the gui.
 CPD_EXTERN int cpd_gui_get_label_x(cpd_gui const* gui, cpd_patch const* patch);
 
 //! @brief Gets the y position of the label of a gui.
+//! @param gui The gui.
+//! @param patch The patch.
+//! @return The y position of the label of the gui.
 CPD_EXTERN int cpd_gui_get_label_y(cpd_gui const* gui, cpd_patch const* patch);
 
 //! @}

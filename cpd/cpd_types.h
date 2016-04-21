@@ -12,7 +12,7 @@
 #define cpd_tie_h
 
 #include "cpd_def.h"
-#include <ctype.h>
+#include <stddef.h>
 
 //! @defgroup types types
 //! @brief The basic types of cpd.
