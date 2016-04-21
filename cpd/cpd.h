@@ -77,88 +77,89 @@ typedef struct _instance
     cpd_internal* cpd_internal_ptr;
 }cpd_instance;
 
-
 //! @brief The type of messages in a list.
 typedef enum
 {
-    Z_NULL,     //!< @brief Undefined or null
-    Z_FLOAT,    //!< @brief Floating point number
-    Z_SYMBOL,   //!< @brief Symbol
-    Z_POINTER   //!< @brief Graphical pointer
-} c_atomtype;
+    CPD_NULL,     //!< @brief The element is undefined or null.
+    CPD_FLOAT,    //!< @brief The element is a floating point number.
+    CPD_SYMBOL,   //!< @brief The element is a symbol.
+    CPD_POINTER   //!< @brief The element is a graphical pointer.
+} cpd_atomtype;
 
+//! @brief The available types of gui object.
 typedef enum
 {
-    Z_GUI_BANG          = 0,
-    Z_GUI_SLIDERH       = 1,
-    Z_GUI_SLIDERV       = 2,
-    Z_GUI_TOGGLE        = 3,
-    Z_GUI_NUMBER        = 4,
-    Z_GUI_RADIOH        = 5,
-    Z_GUI_RADIOV        = 6,
-    Z_GUI_VUMETER       = 7,
-    Z_GUI_PANEL         = 8
+    CPD_GUI_BANG          = 0, //!< @brief The gui is a bang.
+    CPD_GUI_SLIDERH       = 1, //!< @brief The gui is an horizontal slider.
+    CPD_GUI_SLIDERV       = 2, //!< @brief The gui is a vertical slider.
+    CPD_GUI_TOGGLE        = 3, //!< @brief The gui is a toggle.
+    CPD_GUI_NUMBER        = 4, //!< @brief The gui is a number box.
+    CPD_GUI_RADIOH        = 5, //!< @brief The gui is an horizontal radio.
+    CPD_GUI_RADIOV        = 6, //!< @brief The gui is an horizontal radio.
+    CPD_GUI_VUMETER       = 7, //!< @brief The gui is a VU-meter.
+    CPD_GUI_PANEL         = 8  //!< @brief The gui is a panel.
 } cpd_guitype;
 
-
-
-typedef void (*c_hook_bang)(struct _instance* instance, cpd_tie* tie);
-typedef void (*c_hook_float)(struct _instance* instance, cpd_tie* tie, cpd_float f);
-typedef void (*c_hook_symbol)(struct _instance* instance, cpd_tie* tie, cpd_symbol* s);
-typedef void (*c_hook_gpointer)(struct _instance* instance, cpd_tie* tie, cpd_gpointer *gp);
-typedef void (*c_hook_list)(struct _instance* instance, cpd_tie* tie, cpd_list *list);
-typedef void (*c_hook_anything)(struct _instance* instance, cpd_tie* tie, cpd_symbol *s, cpd_list *list);
-
-
+//! @brief The bang method prototype.
+typedef void (*cpd_hook_bang)(struct _instance* instance, cpd_tie* tie);
+//! @brief The float method prototype.
+typedef void (*cpd_hook_float)(struct _instance* instance, cpd_tie* tie, cpd_float f);
+//! @brief The symbol method prototype.
+typedef void (*cpd_hook_symbol)(struct _instance* instance, cpd_tie* tie, cpd_symbol* s);
+//! @brief The gpointer method prototype.
+typedef void (*cpd_hook_gpointer)(struct _instance* instance, cpd_tie* tie, cpd_gpointer *gp);
+//! @brief The list method prototype.
+typedef void (*cpd_hook_list)(struct _instance* instance, cpd_tie* tie, cpd_list *list);
+//! @brief The anything method prototype.
+typedef void (*cpd_hook_anything)(struct _instance* instance, cpd_tie* tie, cpd_symbol *s, cpd_list *list);
 //! @brief The method prototype to receive messages from the console.
-typedef void (*c_hook_print)(struct _instance* instance, const char *s);
+typedef void (*cpd_hook_print)(struct _instance* instance, const char *s);
+//! @brief The midi note on method prototype.
+typedef void (*cpd_hook_noteon)(struct _instance* instance, int port, int channel, int pitch, int velocity);
+//! @brief The midi control change method prototype.
+typedef void (*cpd_hook_controlchange)(struct _instance* instance, int port, int channel, int control, int value);
+//! @brief The midi progam change method prototype.
+typedef void (*cpd_hook_programchange)(struct _instance* instance, int port, int channel, int value);
+//! @brief The midi pitch bend method prototype.
+typedef void (*cpd_hook_pitchbend)(struct _instance* instance, int port, int channel, int value);
+//! @brief The midi after touch method prototype.
+typedef void (*cpd_hook_aftertouch)(struct _instance* instance, int port, int channel, int value);
+//! @brief The midi poly after touch method prototype.
+typedef void (*cpd_hook_polyaftertouch)(struct _instance* instance, int port, int channel, int pitch, int value);
+//! @brief The midi byte method prototype.
+typedef void (*cpd_hook_byte)(struct _instance* instance, int port, int value);
 
 //! @brief The console methods.
 typedef struct _hook_console
 {
-    c_hook_print  m_post;   //!< @brief The post method
-    c_hook_print  m_log;    //!< @brief The log method
-    c_hook_print  m_error;  //!< @brief The error method
-    c_hook_print  m_fatal;  //!< @brief The fatal method
-}c_hook_console;
-
-//! @brief The midi note on method prototype.
-typedef void (*c_hook_noteon)(struct _instance* instance, int port, int channel, int pitch, int velocity);
-//! @brief The midi control change method prototype.
-typedef void (*c_hook_controlchange)(struct _instance* instance, int port, int channel, int control, int value);
-//! @brief The midi progam change method prototype.
-typedef void (*c_hook_programchange)(struct _instance* instance, int port, int channel, int value);
-//! @brief The midi pitch bend method prototype.
-typedef void (*c_hook_pitchbend)(struct _instance* instance, int port, int channel, int value);
-//! @brief The midi after touch method prototype.
-typedef void (*c_hook_aftertouch)(struct _instance* instance, int port, int channel, int value);
-//! @brief The midi poly after touch method prototype.
-typedef void (*c_hook_polyaftertouch)(struct _instance* instance, int port, int channel, int pitch, int value);
-//! @brief The midi byte method prototype.
-typedef void (*c_hook_byte)(struct _instance* instance, int port, int value);
+    cpd_hook_print  m_post;   //!< @brief The post method
+    cpd_hook_print  m_log;    //!< @brief The log method
+    cpd_hook_print  m_error;  //!< @brief The error method
+    cpd_hook_print  m_fatal;  //!< @brief The fatal method
+}cpd_hook_console;
 
 //! @brief The midi methods.
 typedef struct _hook_midi
 {
-    c_hook_noteon           m_noteon;           //!< brief The note on method
-    c_hook_controlchange    m_controlchange;    //!< brief The control change method
-    c_hook_programchange    m_programchange;    //!< brief The program change method
-    c_hook_pitchbend        m_pitchbend;        //!< brief The pitch bend method
-    c_hook_aftertouch       m_aftertouch;       //!< brief The after touch method
-    c_hook_polyaftertouch   m_polyaftertouch;   //!< brief The poly after touch method
-    c_hook_byte             m_byte;             //!< brief The byte method
-}c_hook_midi;
+    cpd_hook_noteon           m_noteon;           //!< brief The note on method
+    cpd_hook_controlchange    m_controlchange;    //!< brief The control change method
+    cpd_hook_programchange    m_programchange;    //!< brief The program change method
+    cpd_hook_pitchbend        m_pitchbend;        //!< brief The pitch bend method
+    cpd_hook_aftertouch       m_aftertouch;       //!< brief The after touch method
+    cpd_hook_polyaftertouch   m_polyaftertouch;   //!< brief The poly after touch method
+    cpd_hook_byte             m_byte;             //!< brief The byte method
+}cpd_hook_midi;
 
-//! \brief The messages methods.
+//! @brief The messages methods.
 typedef struct _hook_message
 {
-    c_hook_bang     m_bang;
-    c_hook_float    m_float;
-    c_hook_symbol   m_symbol;
-    c_hook_gpointer m_gpointer;
-    c_hook_list     m_list;
-    c_hook_anything m_anything;
-}c_hook_message;
+    cpd_hook_bang     m_bang;     //!< @brief The bang method
+    cpd_hook_float    m_float;    //!< @brief The float method
+    cpd_hook_symbol   m_symbol;   //!< @brief The symbol method
+    cpd_hook_gpointer m_gpointer; //!< @brief The gpointer method
+    cpd_hook_list     m_list;     //!< @brief The list method
+    cpd_hook_anything m_anything; //!< @brief The anything method
+}cpd_hook_message;
 
 
 //! @brief Initializes the Pure Data environment.
@@ -194,10 +195,56 @@ CPD_EXTERN void cpd_searchpath_clear();
 //! @brief Adds a path to the search path of Pure Data.
 //! @details Adds a path to the search path for all the environment. The path will be used
 //! when you try to open a patch, to load an abstraction or an external.
+//! @param path The path to add.
 CPD_EXTERN void cpd_searchpath_add(const char* path);
 
 
 
+
+
+
+
+
+//! @brief Creates a new instance.
+//! @details If you want to implement your own instance, the first memeber of the structure
+//! must be a cpd_instance, after this you can add everything you want. You should allocate
+//! your instance with this function using sizeof(myinstance).
+//! @code{.c}
+//! struct myinstance
+//! {
+//!     cpd_instance instance;
+//!     int* values;
+//! };
+//! ...
+//! myinstance* inst = cpd_instance_new(sizeof(myinstance));
+//! if(inst)
+//!     inst->value = (float *)malloc(512 * sizeof(float));
+//! ...
+//! @endcode
+//! @param size The size of memory to allocate in bytes.
+CPD_EXTERN cpd_instance* cpd_instance_new(size_t size);
+
+//! @brief Deletes an instance.
+//! @details You must first delete the members of your instance if need and therefater call
+//! this method to free the instance.
+//! @code{.c}
+//! struct myinstance
+//! {
+//!     cpd_instance instance;
+//!     int* values;
+//! };
+//! ...
+//! myinstance* inst;
+//! ..
+//! free(inst->value);
+//! cpd_instance_free(inst);
+//! ...
+//! @endcode
+//! @param instance The pointer to the instance.
+CPD_EXTERN void cpd_instance_free(cpd_instance* instance);
+
+//! @brief Sets the current instance.
+CPD_EXTERN void cpd_instance_set(cpd_instance* instance);
 
 //! @brief Sends a normal post to the current instance.
 CPD_EXTERN void cpd_console_post(char const* message, ...);
@@ -211,28 +258,14 @@ CPD_EXTERN void cpd_console_error(char const* message, ...);
 //! @brief Sends a fatal error to the current instance.
 CPD_EXTERN void cpd_console_fatal(char const* message, ...);
 
-
-
-
-
-//! @brief Creates a new instance.
-//! @param The size of memory to allocate in bytes.
-CPD_EXTERN cpd_instance* cpd_instance_new(size_t size);
-
-//! @brief Deletes an instance.
-CPD_EXTERN void cpd_instance_free(cpd_instance* instance);
-
-//! @brief Sets the current instance.
-CPD_EXTERN void cpd_instance_set(cpd_instance* instance);
-
 //! @brief Sets the print methods of an instance.
-CPD_EXTERN void cpd_instance_set_hook_console(cpd_instance* instance, c_hook_console* consolehook);
+CPD_EXTERN void cpd_instance_set_hook_console(cpd_instance* instance, cpd_hook_console* consolehook);
 
 //! @brief Sets the midi methods of an instance.
-CPD_EXTERN void cpd_instance_set_hook_midi(cpd_instance* instance, c_hook_midi* midihook);
+CPD_EXTERN void cpd_instance_set_hook_midi(cpd_instance* instance, cpd_hook_midi* midihook);
 
 //! @brief Binds an instance to a tie.
-CPD_EXTERN void cpd_instance_bind(cpd_instance* instance, cpd_tie* tie, c_hook_message* messagehook);
+CPD_EXTERN void cpd_instance_bind(cpd_instance* instance, cpd_tie* tie, cpd_hook_message* messagehook);
 
 //! @brief Unbinds an instance to a tie.
 CPD_EXTERN void cpd_instance_unbind(cpd_instance* instance, cpd_tie* tie);
@@ -382,7 +415,7 @@ CPD_EXTERN void cpd_list_free(cpd_list *list);
 CPD_EXTERN size_t cpd_list_get_size(cpd_list const* list);
 
 //! @brief Gets the type of a data of the list.
-CPD_EXTERN c_atomtype cpd_list_get_type(cpd_list const* list, size_t index);
+CPD_EXTERN cpd_atomtype cpd_list_get_type(cpd_list const* list, size_t index);
 
 //! @brief Gets the float value of a data of the list.
 CPD_EXTERN cpd_float cpd_list_get_float(cpd_list const* list, size_t index);
@@ -459,7 +492,9 @@ CPD_EXTERN void cpd_midisend_polyaftertouch(int channel, int pitch, int value);
 //! @brief Sends a midi byte event to Pure Data.
 CPD_EXTERN void cpd_midisend_byte(int port, int byte);
 
+
 //! @}
+
 
 #undef CPD_EXTERN
 #undef CPD_EXTERN_STRUCT

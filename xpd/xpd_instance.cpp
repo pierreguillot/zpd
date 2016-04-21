@@ -30,9 +30,9 @@ namespace xpd
     public:        
         cpd_instance object;
         instance*  ref;
-        c_hook_console console;
-        c_hook_midi midi;
-        c_hook_message message;
+        cpd_hook_console console;
+        cpd_hook_midi midi;
+        cpd_hook_message message;
         
         static internal* allocate(instance* _ref)
         {
@@ -40,25 +40,25 @@ namespace xpd
             if(ptr)
             {
                 ptr->ref = _ref;
-                ptr->console.m_log   = (c_hook_print)instance::internal::m_log_hook;
-                ptr->console.m_post  = (c_hook_print)instance::internal::m_post_hook;
-                ptr->console.m_error = (c_hook_print)instance::internal::m_error_hook;
-                ptr->console.m_fatal = (c_hook_print)instance::internal::m_fatal_hook;
+                ptr->console.m_log   = (cpd_hook_print)instance::internal::m_log_hook;
+                ptr->console.m_post  = (cpd_hook_print)instance::internal::m_post_hook;
+                ptr->console.m_error = (cpd_hook_print)instance::internal::m_error_hook;
+                ptr->console.m_fatal = (cpd_hook_print)instance::internal::m_fatal_hook;
                 
-                ptr->midi.m_noteon           = (c_hook_noteon)instance::internal::m_noteon;
-                ptr->midi.m_controlchange    = (c_hook_controlchange)instance::internal::m_controlchange;
-                ptr->midi.m_programchange    = (c_hook_programchange)instance::internal::m_programchange;
-                ptr->midi.m_pitchbend        = (c_hook_pitchbend)instance::internal::m_pitchbend;
-                ptr->midi.m_aftertouch       = (c_hook_aftertouch)instance::internal::m_aftertouch;
-                ptr->midi.m_polyaftertouch   = (c_hook_polyaftertouch)instance::internal::m_polyaftertouch;
-                ptr->midi.m_byte             = (c_hook_byte)instance::internal::m_byte;
+                ptr->midi.m_noteon           = (cpd_hook_noteon)instance::internal::m_noteon;
+                ptr->midi.m_controlchange    = (cpd_hook_controlchange)instance::internal::m_controlchange;
+                ptr->midi.m_programchange    = (cpd_hook_programchange)instance::internal::m_programchange;
+                ptr->midi.m_pitchbend        = (cpd_hook_pitchbend)instance::internal::m_pitchbend;
+                ptr->midi.m_aftertouch       = (cpd_hook_aftertouch)instance::internal::m_aftertouch;
+                ptr->midi.m_polyaftertouch   = (cpd_hook_polyaftertouch)instance::internal::m_polyaftertouch;
+                ptr->midi.m_byte             = (cpd_hook_byte)instance::internal::m_byte;
                 
-                ptr->message.m_bang          = (c_hook_bang)instance::internal::m_bang;
-                ptr->message.m_float         = (c_hook_float)instance::internal::m_float;
-                ptr->message.m_symbol        = (c_hook_symbol)instance::internal::m_symbol;
-                ptr->message.m_gpointer      = (c_hook_gpointer)instance::internal::m_gpointer;
-                ptr->message.m_list          = (c_hook_list)instance::internal::m_list;
-                ptr->message.m_anything      = (c_hook_anything)instance::internal::m_anything;
+                ptr->message.m_bang          = (cpd_hook_bang)instance::internal::m_bang;
+                ptr->message.m_float         = (cpd_hook_float)instance::internal::m_float;
+                ptr->message.m_symbol        = (cpd_hook_symbol)instance::internal::m_symbol;
+                ptr->message.m_gpointer      = (cpd_hook_gpointer)instance::internal::m_gpointer;
+                ptr->message.m_list          = (cpd_hook_list)instance::internal::m_list;
+                ptr->message.m_anything      = (cpd_hook_anything)instance::internal::m_anything;
                 
                 cpd_instance_set_hook_console(reinterpret_cast<cpd_instance*>(ptr), &ptr->console);
                 cpd_instance_set_hook_midi(reinterpret_cast<cpd_instance*>(ptr), &ptr->midi);
@@ -163,11 +163,11 @@ namespace xpd
             std::vector<atom> vec(cpd_list_get_size(list));
             for(size_t i = 0; i < vec.size(); ++i)
             {
-                if(cpd_list_get_type(list, i) == Z_FLOAT)
+                if(cpd_list_get_type(list, i) == CPD_FLOAT)
                 {
                     vec[i] = cpd_list_get_float(list, i);
                 }
-                else if(cpd_list_get_type(list, i) == Z_SYMBOL)
+                else if(cpd_list_get_type(list, i) == CPD_SYMBOL)
                 {
                     vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
                 }
@@ -180,11 +180,11 @@ namespace xpd
             std::vector<atom> vec(cpd_list_get_size(list));
             for(size_t i = 0; i < vec.size(); ++i)
             {
-                if(cpd_list_get_type(list, i) == Z_FLOAT)
+                if(cpd_list_get_type(list, i) == CPD_FLOAT)
                 {
                     vec[i] = cpd_list_get_float(list, i);
                 }
-                else if(cpd_list_get_type(list, i) == Z_SYMBOL)
+                else if(cpd_list_get_type(list, i) == CPD_SYMBOL)
                 {
                     vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
                 }

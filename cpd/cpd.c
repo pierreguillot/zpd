@@ -57,12 +57,12 @@ typedef struct _receiver
     t_object            c_obj;
     struct _instance*   c_owner;
     t_symbol*           c_sym;
-    c_hook_bang         c_m_bang;
-    c_hook_float        c_m_float;
-    c_hook_symbol       c_m_symbol;
-    c_hook_gpointer     c_m_gpointer;
-    c_hook_list         c_m_list;
-    c_hook_anything     c_m_anything;
+    cpd_hook_bang         c_m_bang;
+    cpd_hook_float        c_m_float;
+    cpd_hook_symbol       c_m_symbol;
+    cpd_hook_gpointer     c_m_gpointer;
+    cpd_hook_list         c_m_list;
+    cpd_hook_anything     c_m_anything;
     struct _receiver* c_next;
 } c_receiver;
 
@@ -163,17 +163,17 @@ struct _internal
     int                     c_ninputs;
     int                     c_noutputs;
     int                     cpd_samplerate;
-    c_hook_print            c_m_post;
-    c_hook_print            c_m_log;
-    c_hook_print            c_m_error;
-    c_hook_print            c_m_fatal;
-    c_hook_noteon           c_m_noteon;
-    c_hook_controlchange    c_m_controlchange;
-    c_hook_programchange    c_m_programchange;
-    c_hook_pitchbend        c_m_pitchbend;
-    c_hook_aftertouch       c_m_aftertouch;
-    c_hook_polyaftertouch   c_m_polyaftertouch;
-    c_hook_byte             c_m_byte;
+    cpd_hook_print            c_m_post;
+    cpd_hook_print            c_m_log;
+    cpd_hook_print            c_m_error;
+    cpd_hook_print            c_m_fatal;
+    cpd_hook_noteon           c_m_noteon;
+    cpd_hook_controlchange    c_m_controlchange;
+    cpd_hook_programchange    c_m_programchange;
+    cpd_hook_pitchbend        c_m_pitchbend;
+    cpd_hook_aftertouch       c_m_aftertouch;
+    cpd_hook_polyaftertouch   c_m_polyaftertouch;
+    cpd_hook_byte             c_m_byte;
     c_receiver*             c_receiver_list;
 };
 
@@ -481,7 +481,7 @@ void cpd_instance_set(cpd_instance* instance)
     c_current_instance = instance;
 }
 
-void cpd_instance_set_hook_console(cpd_instance* instance, c_hook_console* consolehook)
+void cpd_instance_set_hook_console(cpd_instance* instance, cpd_hook_console* consolehook)
 {
     instance->cpd_internal_ptr->c_m_post  = consolehook->m_post;
     instance->cpd_internal_ptr->c_m_log   = consolehook->m_log;
@@ -489,7 +489,7 @@ void cpd_instance_set_hook_console(cpd_instance* instance, c_hook_console* conso
     instance->cpd_internal_ptr->c_m_fatal = consolehook->m_fatal;
 }
 
-void cpd_instance_set_hook_midi(cpd_instance* instance, c_hook_midi* midihook)
+void cpd_instance_set_hook_midi(cpd_instance* instance, cpd_hook_midi* midihook)
 {
     instance->cpd_internal_ptr->c_m_noteon = midihook->m_noteon;
     instance->cpd_internal_ptr->c_m_controlchange = midihook->m_controlchange;
@@ -518,7 +518,7 @@ static c_receiver* cpd_instance_getreceiver(cpd_instance* instance, cpd_tie* tie
     return NULL;
 }
 
-void cpd_instance_bind(cpd_instance* instance, cpd_tie* tie, c_hook_message* messagehook)
+void cpd_instance_bind(cpd_instance* instance, cpd_tie* tie, cpd_hook_message* messagehook)
 {
     c_receiver *x = cpd_instance_getreceiver(instance, tie);
     if(x)
@@ -823,37 +823,37 @@ cpd_guitype cpd_gui_get_type(cpd_gui const* gui)
     t_symbol const* name = cpd_object_get_name((cpd_object const*)gui);
     if(name == c_sym_bng)
     {
-        return Z_GUI_BANG;
+        return CPD_GUI_BANG;
     }
     if(name == c_sym_hsl)
     {
-        return Z_GUI_SLIDERH;
+        return CPD_GUI_SLIDERH;
     }
     if(name == c_sym_vsl)
     {
-        return Z_GUI_SLIDERV;
+        return CPD_GUI_SLIDERV;
     }
     if(name == c_sym_tgl)
     {
-        return Z_GUI_TOGGLE;
+        return CPD_GUI_TOGGLE;
     }
     if(name == c_sym_nbx)
     {
-        return Z_GUI_NUMBER;
+        return CPD_GUI_NUMBER;
     }
     if(name == c_sym_vradio)
     {
-        return Z_GUI_RADIOV;
+        return CPD_GUI_RADIOV;
     }
     if(name == c_sym_hradio)
     {
-        return Z_GUI_RADIOH;
+        return CPD_GUI_RADIOH;
     }
     if(name == c_sym_vu)
     {
-        return Z_GUI_VUMETER;
+        return CPD_GUI_VUMETER;
     }
-    return Z_GUI_PANEL;
+    return CPD_GUI_PANEL;
 }
 
 float cpd_gui_get_maximum_value(cpd_gui const* gui)
@@ -1030,23 +1030,23 @@ size_t cpd_list_get_size(cpd_list const* list)
     return list->l_n;
 }
 
-c_atomtype cpd_list_get_type(cpd_list const* list, size_t index)
+cpd_atomtype cpd_list_get_type(cpd_list const* list, size_t index)
 {
     if((list->l_vec+index)->a_type == A_FLOAT)
     {
-        return Z_FLOAT;
+        return CPD_FLOAT;
     }
     if((list->l_vec+index)->a_type == A_SYMBOL)
     {
-        return Z_SYMBOL;
+        return CPD_SYMBOL;
     }
 #define LCOV_EXCL_START
     if((list->l_vec+index)->a_type == A_POINTER)
     {
-        return Z_POINTER;
+        return CPD_POINTER;
     }
 #define LCOV_EXCL_STOP
-    return Z_NULL;
+    return CPD_NULL;
 }
 
 cpd_float cpd_list_get_float(cpd_list const* list, size_t index)
@@ -1153,86 +1153,86 @@ void cpd_messagesend_anything(cpd_tie const* tie, cpd_symbol const* symbol, cpd_
 
 
 
-#define Z_PD_MIDI_CHECK_CHANNEL(channel) if (channel < 0 || channel > 16) return;
-#define Z_PD_MIDI_CHECK_PORT(port) if (port < 0 || port > 0x0fff) return;
-#define Z_PD_MIDI_CHECK_RANGE_7BIT(v) if (v < 0 || v > 0x7f) return;
-#define Z_PD_MIDI_CHECK_RANGE_8BIT(v) if (v < 0 || v > 0xff) return;
-#define Z_PD_MIDI_WRAP_PORT(channel) (channel >> 4)
-#define Z_PD_MIDI_WRAP_CHANNEL(channel) (channel & 0x0f)
+#define CPD_PD_MIDI_CHECK_CHANNEL(channel) if (channel < 0 || channel > 16) return;
+#define CPD_PD_MIDI_CHECK_PORT(port) if (port < 0 || port > 0x0fff) return;
+#define CPD_PD_MIDI_CHECK_RANGE_7BIT(v) if (v < 0 || v > 0x7f) return;
+#define CPD_PD_MIDI_CHECK_RANGE_8BIT(v) if (v < 0 || v > 0xff) return;
+#define CPD_PD_MIDI_WRAP_PORT(channel) (channel >> 4)
+#define CPD_PD_MIDI_WRAP_CHANNEL(channel) (channel & 0x0f)
 
 void cpd_midisend_noteon(int channel, int pitch, int velocity)
 {
-    Z_PD_MIDI_CHECK_CHANNEL(channel)
-    Z_PD_MIDI_CHECK_RANGE_7BIT(pitch)
-    Z_PD_MIDI_CHECK_RANGE_8BIT(velocity)
-    inmidi_noteon(Z_PD_MIDI_WRAP_PORT(channel), Z_PD_MIDI_WRAP_CHANNEL(channel), pitch, velocity);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(pitch)
+    CPD_PD_MIDI_CHECK_RANGE_8BIT(velocity)
+    inmidi_noteon(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), pitch, velocity);
 }
 
 void cpd_midisend_controlchange(int channel, int controller, int value)
 {
-    Z_PD_MIDI_CHECK_CHANNEL(channel)
-    Z_PD_MIDI_CHECK_RANGE_7BIT(controller)
-    Z_PD_MIDI_CHECK_RANGE_7BIT(value)
-    inmidi_controlchange(Z_PD_MIDI_WRAP_PORT(channel), Z_PD_MIDI_WRAP_CHANNEL(channel), controller, value);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(controller)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
+    inmidi_controlchange(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), controller, value);
 }
 
 void cpd_midisend_programchange(int channel, int value)
 {
-    Z_PD_MIDI_CHECK_CHANNEL(channel)
-    Z_PD_MIDI_CHECK_RANGE_7BIT(value)
-    inmidi_programchange(Z_PD_MIDI_WRAP_PORT(channel), Z_PD_MIDI_WRAP_CHANNEL(channel), value);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
+    inmidi_programchange(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value);
 }
 
 void cpd_midisend_pitchbend(int channel, int value)
 {
-    Z_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
     if (value < -8192 || value > 8191) return;
-    inmidi_pitchbend(Z_PD_MIDI_WRAP_PORT(channel), Z_PD_MIDI_WRAP_CHANNEL(channel), value + 8192);
+    inmidi_pitchbend(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value + 8192);
 }
 
 void cpd_midisend_aftertouch(int channel, int value)
 {
-    Z_PD_MIDI_CHECK_CHANNEL(channel)
-    Z_PD_MIDI_CHECK_RANGE_7BIT(value)
-    inmidi_aftertouch(Z_PD_MIDI_WRAP_PORT(channel), Z_PD_MIDI_WRAP_CHANNEL(channel), value);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
+    inmidi_aftertouch(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), value);
 }
 
 void cpd_midisend_polyaftertouch(int channel, int pitch, int value)
 {
-    Z_PD_MIDI_CHECK_CHANNEL(channel)
-    Z_PD_MIDI_CHECK_RANGE_7BIT(pitch)
-    Z_PD_MIDI_CHECK_RANGE_7BIT(value)
-    inmidi_polyaftertouch(Z_PD_MIDI_WRAP_PORT(channel), Z_PD_MIDI_WRAP_CHANNEL(channel), pitch, value);
+    CPD_PD_MIDI_CHECK_CHANNEL(channel)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(pitch)
+    CPD_PD_MIDI_CHECK_RANGE_7BIT(value)
+    inmidi_polyaftertouch(CPD_PD_MIDI_WRAP_PORT(channel), CPD_PD_MIDI_WRAP_CHANNEL(channel), pitch, value);
 }
 
 void cpd_midisend_byte(int port, int byte)
 {
-    Z_PD_MIDI_CHECK_PORT(port)
-    Z_PD_MIDI_CHECK_RANGE_8BIT(byte)
+    CPD_PD_MIDI_CHECK_PORT(port)
+    CPD_PD_MIDI_CHECK_RANGE_8BIT(byte)
     inmidi_byte(port, byte);
 }
 
-#undef Z_PD_MIDI_CHECK_CHANNEL
-#undef Z_PD_MIDI_CHECK_PORT
-#undef Z_PD_MIDI_CHECK_RANGE_7BIT
-#undef Z_PD_MIDI_CHECK_RANGE_8BIT
-#undef Z_PD_MIDI_WRAP_PORT
-#undef Z_PD_MIDI_WRAP_CHANNEL
+#undef CPD_PD_MIDI_CHECK_CHANNEL
+#undef CPD_PD_MIDI_CHECK_PORT
+#undef CPD_PD_MIDI_CHECK_RANGE_7BIT
+#undef CPD_PD_MIDI_CHECK_RANGE_8BIT
+#undef CPD_PD_MIDI_WRAP_PORT
+#undef CPD_PD_MIDI_WRAP_CHANNEL
 
 
-#define Z_PD_MIDI_CLIP(x, low, high) ((x > high) ? high : ((x < low) ? low : x))
-#define Z_PD_MIDI_CLIP4BIT(x) Z_PD_MIDI_CLIP(x, 0, 0x0f)
-#define Z_PD_MIDI_CLIP7BIT(x) Z_PD_MIDI_CLIP(x, 0, 0x7f)
-#define Z_PD_MIDI_CLIP8BIT(x) Z_PD_MIDI_CLIP(x, 0, 0xff)
-#define Z_PD_MIDI_CLIP12BIT(x) Z_PD_MIDI_CLIP(x, 0, 0x0fff)
-#define Z_PD_MIDI_CLIP14BIT(x) Z_PD_MIDI_CLIP(x, 0, 0x3fff)
-#define Z_PD_MIDI_CLIPCHANNEL(x) Z_PD_MIDI_CLIP(x, 0, 15)
+#define CPD_PD_MIDI_CLIP(x, low, high) ((x > high) ? high : ((x < low) ? low : x))
+#define CPD_PD_MIDI_CLIP4BIT(x) CPD_PD_MIDI_CLIP(x, 0, 0x0f)
+#define CPD_PD_MIDI_CLIP7BIT(x) CPD_PD_MIDI_CLIP(x, 0, 0x7f)
+#define CPD_PD_MIDI_CLIP8BIT(x) CPD_PD_MIDI_CLIP(x, 0, 0xff)
+#define CPD_PD_MIDI_CLIP12BIT(x) CPD_PD_MIDI_CLIP(x, 0, 0x0fff)
+#define CPD_PD_MIDI_CLIP14BIT(x) CPD_PD_MIDI_CLIP(x, 0, 0x3fff)
+#define CPD_PD_MIDI_CLIPCHANNEL(x) CPD_PD_MIDI_CLIP(x, 0, 15)
 
 void outmidi_noteon(int port, int channel, int pitch, int velo)
 {
     if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_noteon)
     {
-        c_current_instance->cpd_internal_ptr->c_m_noteon(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(pitch), Z_PD_MIDI_CLIP7BIT(velo));
+        c_current_instance->cpd_internal_ptr->c_m_noteon(c_current_instance, CPD_PD_MIDI_CLIP12BIT(port), CPD_PD_MIDI_CLIPCHANNEL(channel), CPD_PD_MIDI_CLIP7BIT(pitch), CPD_PD_MIDI_CLIP7BIT(velo));
     }
 }
 
@@ -1240,7 +1240,7 @@ void outmidi_controlchange(int port, int channel, int ctl, int value)
 {
     if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_controlchange)
     {
-        c_current_instance->cpd_internal_ptr->c_m_controlchange(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(ctl), Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_controlchange(c_current_instance, CPD_PD_MIDI_CLIP12BIT(port), CPD_PD_MIDI_CLIPCHANNEL(channel), CPD_PD_MIDI_CLIP7BIT(ctl), CPD_PD_MIDI_CLIP7BIT(value));
     }
 }
 
@@ -1248,7 +1248,7 @@ void outmidi_programchange(int port, int channel, int value)
 {
     if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_programchange)
     {
-        c_current_instance->cpd_internal_ptr->c_m_programchange(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_programchange(c_current_instance, CPD_PD_MIDI_CLIP12BIT(port), CPD_PD_MIDI_CLIPCHANNEL(channel), CPD_PD_MIDI_CLIP7BIT(value));
     }
 }
 
@@ -1256,7 +1256,7 @@ void outmidi_pitchbend(int port, int channel, int value)
 {
     if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_pitchbend)
     {
-        c_current_instance->cpd_internal_ptr->c_m_pitchbend(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP14BIT(value) - 8192);
+        c_current_instance->cpd_internal_ptr->c_m_pitchbend(c_current_instance, CPD_PD_MIDI_CLIP12BIT(port), CPD_PD_MIDI_CLIPCHANNEL(channel), CPD_PD_MIDI_CLIP14BIT(value) - 8192);
     }
 }
 
@@ -1264,7 +1264,7 @@ void outmidi_aftertouch(int port, int channel, int value)
 {
     if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_aftertouch)
     {
-        c_current_instance->cpd_internal_ptr->c_m_aftertouch(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_aftertouch(c_current_instance, CPD_PD_MIDI_CLIP12BIT(port), CPD_PD_MIDI_CLIPCHANNEL(channel), CPD_PD_MIDI_CLIP7BIT(value));
     }
 }
 
@@ -1272,7 +1272,7 @@ void outmidi_polyaftertouch(int port, int channel, int pitch, int value)
 {
     if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_polyaftertouch)
     {
-        c_current_instance->cpd_internal_ptr->c_m_polyaftertouch(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIPCHANNEL(channel), Z_PD_MIDI_CLIP7BIT(pitch), Z_PD_MIDI_CLIP7BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_polyaftertouch(c_current_instance, CPD_PD_MIDI_CLIP12BIT(port), CPD_PD_MIDI_CLIPCHANNEL(channel), CPD_PD_MIDI_CLIP7BIT(pitch), CPD_PD_MIDI_CLIP7BIT(value));
     }
 }
 
@@ -1280,15 +1280,15 @@ void outmidi_byte(int port, int value)
 {
     if(c_current_instance && c_current_instance->cpd_internal_ptr->c_m_byte)
     {
-        c_current_instance->cpd_internal_ptr->c_m_byte(c_current_instance, Z_PD_MIDI_CLIP12BIT(port), Z_PD_MIDI_CLIP8BIT(value));
+        c_current_instance->cpd_internal_ptr->c_m_byte(c_current_instance, CPD_PD_MIDI_CLIP12BIT(port), CPD_PD_MIDI_CLIP8BIT(value));
     }
 }
 
-#undef Z_PD_MIDI_CLIP
-#undef Z_PD_MIDI_CLIP4BIT
-#undef Z_PD_MIDI_CLIP7BIT
-#undef Z_PD_MIDI_CLIP8BIT
-#undef Z_PD_MIDI_CLIP12BIT
-#undef Z_PD_MIDI_CLIP14BIT
-#undef Z_PD_MIDI_CLIPCHANNEL
+#undef CPD_PD_MIDI_CLIP
+#undef CPD_PD_MIDI_CLIP4BIT
+#undef CPD_PD_MIDI_CLIP7BIT
+#undef CPD_PD_MIDI_CLIP8BIT
+#undef CPD_PD_MIDI_CLIP12BIT
+#undef CPD_PD_MIDI_CLIP14BIT
+#undef CPD_PD_MIDI_CLIPCHANNEL
 
