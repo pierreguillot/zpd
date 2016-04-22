@@ -23,6 +23,10 @@ build_script:
 
 test_script:
     - dir
+    - cd Debug
+    - dir
+    - cd ../Win32
+    - dir
 #    - cmd xpdtest.exe
 
 #---------------------------------#
