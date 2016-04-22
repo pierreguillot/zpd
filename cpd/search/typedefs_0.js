@@ -16,6 +16,8 @@ var searchData=
   ['cpd_5fhook_5fpost',['cpd_hook_post',['../group__post.html#ga162d816e7aa00071a8d01ed3d379ee77',1,'cpd_instance.h']]],
   ['cpd_5fhook_5fprogramchange',['cpd_hook_programchange',['../group__midi.html#ga6b863790eb876b3d79b916fb65815f0e',1,'cpd_instance.h']]],
   ['cpd_5fhook_5fsymbol',['cpd_hook_symbol',['../group__message.html#ga36dbc0888b007610e2a6d9dd2e7d6b88',1,'cpd_instance.h']]],
+  ['cpd_5finternal',['cpd_internal',['../group__instance.html#ga8f35a84ab7163ec09f94b144ad0f7a35',1,'cpd_instance.h']]],
+  ['cpd_5flist',['cpd_list',['../group__list.html#ga29673bb8936b13631aa81b229457e528',1,'cpd_types.h']]],
   ['cpd_5fobject',['cpd_object',['../group__object.html#gaa91611d86bea00499895c3d73f734b69',1,'cpd_object.h']]],
   ['cpd_5fpatch',['cpd_patch',['../group__patch.html#ga638c091e5f6797aba46153ada28a9274',1,'cpd_patch.h']]],
   ['cpd_5fsample',['cpd_sample',['../group__dsp.html#gad2115974a0d2488dc60dc63f1b209f8d',1,'cpd_instance.h']]],

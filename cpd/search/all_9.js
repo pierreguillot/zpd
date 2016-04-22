@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['patch',['patch',['../group__patch.html',1,'']]],
-  ['post',['post',['../group__post.html',1,'']]]
+  ['symbol',['symbol',['../group__symbol.html',1,'']]]
 ];
