@@ -285,5 +285,7 @@ else()
 
 			add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
 			target_link_libraries(xpdtest ws2_32)
+			set_target_properties(xpdtest PROPERTIES OUTPUT_NAME xpdtest)
+			set_target_properties(RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
     endif()
 endif()
