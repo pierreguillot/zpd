@@ -60,13 +60,16 @@ set(XPDSOURCES
 )
 
 #---------------------------------------#
+#        The Thread Sources          #
+#---------------------------------------#
+set(THREADSOURCES
+	${PROJECT_SOURCE_DIR}/thread/src/thd.c
+	${PROJECT_SOURCE_DIR}/thread/src/thd.h
+)
+
+#---------------------------------------#
 #        The Pure Data Sources          #
 #---------------------------------------#
-if(${WIN32})
-	set(PDSOURCES2)
-else()
-	set(PDSOURCES2 ${PROJECT_SOURCE_DIR}/pd/src/d_soundfile.c)
-endif()
 set(PDSOURCES
   ${PROJECT_SOURCE_DIR}/pd/src/d_arithmetic.c
   ${PROJECT_SOURCE_DIR}/pd/src/d_array.c
@@ -81,6 +84,7 @@ set(PDSOURCES
   ${PROJECT_SOURCE_DIR}/pd/src/d_misc.c
   ${PROJECT_SOURCE_DIR}/pd/src/d_osc.c
   ${PROJECT_SOURCE_DIR}/pd/src/d_resample.c
+	${PROJECT_SOURCE_DIR}/pd/src/d_soundfile.c
   ${PROJECT_SOURCE_DIR}/pd/src/d_ugen.c
   ${PROJECT_SOURCE_DIR}/pd/src/g_all_guis.c
   ${PROJECT_SOURCE_DIR}/pd/src/g_all_guis.h
@@ -167,125 +171,74 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 #        The Test Sources    #
 #---------------------------------------#
 
-if(${WIN32})
-	set(TESTSOURCES
-	${PROJECT_SOURCE_DIR}/test/test.cpp
-	${PROJECT_SOURCE_DIR}/test/test.hpp
-	${PROJECT_SOURCE_DIR}/test/ThreadWin32.cpp
-	${PROJECT_SOURCE_DIR}/test/Thread.hpp
-	)
-else()
-	set(TESTSOURCES
-	${PROJECT_SOURCE_DIR}/test/test.cpp
-	${PROJECT_SOURCE_DIR}/test/test.hpp
-	${PROJECT_SOURCE_DIR}/test/ThreadPthread.cpp
-	${PROJECT_SOURCE_DIR}/test/Thread.hpp
-	)
-endif()
+set(TESTSOURCES
+${PROJECT_SOURCE_DIR}/test/test.cpp
+${PROJECT_SOURCE_DIR}/test/test.hpp
+)
 
 source_group(test FILES ${TESTSOURCES})
 source_group(cpd FILES ${CPDSOURCES})
 source_group(xpd FILES ${XPDSOURCES})
-source_group(pd FILES ${PDSOURCES} ${PDSOURCES2})
+source_group(thread FILES ${THREADSOURCES})
+source_group(pd FILES ${PDSOURCES})
 source_group(pdextra FILES ${PDEXTRASOURCES})
+
 include_directories(${PROJECT_SOURCE_DIR}/test)
 include_directories(${PROJECT_SOURCE_DIR}/zpd)
 include_directories(${PROJECT_SOURCE_DIR}/cpd)
 include_directories(${PROJECT_SOURCE_DIR}/pd/src/)
+if(${WIN32})
+include_directories(${PROJECT_SOURCE_DIR}/thread/pthreadwin)
+endif()
 
-#---------------------------------------#
-#         The zPure Data Library        #
-#---------------------------------------#
+
+set(CMAKE_MACOSX_RPATH On)
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
+find_package(Threads REQUIRED)
+add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1)
 
 if(${COVERALLS})
     message(STATUS "Build with coveralls")
     ENABLE_TESTING()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+endif()
 
-    find_library(MATH_LIB m)
-    find_package(Threads REQUIRED)
-    add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1 -DZPD_TEST_VERBOSE=1)
-    add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDSOURCES2} ${PDEXTRASOURCES})
-    target_link_libraries(xpdtest ${MATH_LIB})
-    target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
-    target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
+add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${THREADSOURCES})
+set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
+set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+target_link_libraries(zpdshared ${CMAKE_THREAD_LIBS_INIT})
+
+add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${THREADSOURCES})
+if(${WIN32})
+	set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
 else()
-    message(STATUS "Build without coveralls")
-    if(${APPLE})
-      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
-      set(CMAKE_MACOSX_RPATH On)
-      set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
-      #---------------------------------------#
-      #             Shared Library            #
-      #---------------------------------------#
-      add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2})
-      set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
-      set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
+	set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
+endif()
+set_target_properties(zpdstatic PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+target_link_libraries(zpdstatic ${CMAKE_THREAD_LIBS_INIT})
 
-      #---------------------------------------#
-      #             Static Library            #
-      #---------------------------------------#
-      add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2} )
-      set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
-      set_target_properties(zpdstatic PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
+add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${THREADSOURCES} ${PDEXTRASOURCES})
+set_target_properties(xpdtest PROPERTIES OUTPUT_NAME test)
+set_target_properties(xpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
+target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
+# target_link_libraries(xpdtest ws2_32) WINDOWS
 
-      #---------------------------------------#
-      #                  Test                 #
-      #---------------------------------------#
-      add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDSOURCES2} ${PDEXTRASOURCES})
-
-    elseif(${UNIX})
-      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
-      find_library(MATH_LIB m)
-      find_package(Threads REQUIRED)
-
-      #---------------------------------------#
-      #             Shared Library            #
-      #---------------------------------------#
-      add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2} )
-      target_link_libraries(zpdshared ${MATH_LIB})
-      target_link_libraries(zpdshared ${CMAKE_THREAD_LIBS_INIT})
-      target_link_libraries(zpdshared ${CMAKE_DL_LIBS})
-      set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
-      set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
-
-      #---------------------------------------#
-      #             Static Library            #
-      #---------------------------------------#
-      add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2} )
-      target_link_libraries(zpdstatic ${MATH_LIB})
-      target_link_libraries(zpdstatic ${CMAKE_THREAD_LIBS_INIT})
-      target_link_libraries(zpdstatic ${CMAKE_DL_LIBS})
-      set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
-      set_target_properties(zpdstatic PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE})
-
-      #---------------------------------------#
-      #                  Test                 #
-      #---------------------------------------#
-      add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDSOURCES2} ${PDEXTRASOURCES})
-      target_link_libraries(xpdtest ${MATH_LIB})
-      target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
-      target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
-    elseif(${WIN32})
-      add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DTHREAD_LOCKING=0)
-
-      if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-				add_definitions(-DPD_LONGINTTYPE="long long")
-      endif()
-      add_definitions("/D_CRT_SECURE_NO_WARNINGS /wd4091 /wd4996")
-
-			#add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
-      #target_link_libraries(zpdshared pthread_lib)
-			#set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
-
-			#add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES})
-      #target_link_libraries(zpdstatic pthread_lib)
-			#set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
-
-			add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${PDEXTRASOURCES})
-			target_link_libraries(xpdtest ws2_32)
-			set_target_properties(xpdtest PROPERTIES OUTPUT_NAME xpdtest)
-			set_target_properties(xpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
-    endif()
+if(${APPLE})
+	add_definitions(-DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
+elseif(${UNIX})
+	add_definitions(-DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
+	find_library(MATH_LIB m)
+	add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2} )
+	target_link_libraries(zpdstatic ${MATH_LIB})
+	target_link_libraries(zpdstatic ${CMAKE_DL_LIBS})
+	target_link_libraries(zpdshared ${MATH_LIB})
+	target_link_libraries(zpdshared ${CMAKE_DL_LIBS})
+	target_link_libraries(xpdtest ${MATH_LIB})
+	target_link_libraries(xpdtest ${CMAKE_DL_LIBS})
+elseif(${WIN32})
+	add_definitions("/D_CRT_SECURE_NO_WARNINGS /wd4091 /wd4996")
+	if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+		add_definitions(-DPD_LONGINTTYPE="long long")
+	endif()
 endif()

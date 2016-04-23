@@ -19,55 +19,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-/*
-#ifdef _WIN32
-#include <windows.h>
-static CRITICAL_SECTION cpd_mutex;
-static void cpd_mutex_init()
-{
-    InitializeCriticalSection(&cpd_mutex, NULL);
-}
-
-static void cpd_mutex_destroy()
-{
-    DeleteCriticalSection(&cpd_mutex);
-}
-
-static void cpd_mutex_lock()
-{
-    EnterCriticalSection(&cpd_mutex);
-}
-
-static void cpd_mutex_unlock()
-{
-    LeaveCriticalSection(&cpd_mutex);
-}
-#else
-#include <pthread.h>
-static pthread_mutex_t cpd_mutex;
-
-static void cpd_mutex_init()
-{
-    pthread_mutex_init(&cpd_mutex, NULL);
-}
-
-static void cpd_mutex_destroy()
-{
-    pthread_mutex_destroy(&cpd_mutex);
-}
-
-static void cpd_mutex_lock()
-{
-    pthread_mutex_lock(&cpd_mutex);
-}
-
-static void cpd_mutex_unlock()
-{
-    pthread_mutex_unlock(&cpd_mutex);
-}
-#endif
-*/
-
 extern cpd_instance*      c_current_instance;
 extern t_symbol*          c_sym_pd;
 extern t_symbol*          c_sym_dsp;
