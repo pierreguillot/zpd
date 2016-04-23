@@ -192,9 +192,9 @@ include_directories(${PROJECT_SOURCE_DIR}/thread/pthreadwin)
 endif()
 
 
+find_package(Threads REQUIRED)
 set(CMAKE_MACOSX_RPATH On)
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
-find_package(Threads REQUIRED)
 add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1)
 
 if(${COVERALLS})
@@ -229,7 +229,6 @@ if(${APPLE})
 elseif(${UNIX})
 	add_definitions(-DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
 	find_library(MATH_LIB m)
-	add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${PDSOURCES2} )
 	target_link_libraries(zpdstatic ${MATH_LIB})
 	target_link_libraries(zpdstatic ${CMAKE_DL_LIBS})
 	target_link_libraries(zpdshared ${MATH_LIB})
