@@ -20,10 +20,6 @@
 //! @addtogroup object
 //! @{
 
-//! @brief The opaque type used for an object.
-//! @see cpd_patch_get_first_object and cpd_patch_get_next_object
-typedef struct _text        cpd_object;
-
 //! @brief Gets the name of an object.
 //! @param object The object.
 //! @return The name of the object.

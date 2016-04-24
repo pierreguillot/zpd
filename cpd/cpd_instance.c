@@ -19,6 +19,14 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+#ifdef _WIN32
+#define THD_WINDOWS_NATIVE
+#include <windows.h>
+#else
+#include <pthread.h>
+#endif
+
+
 extern cpd_instance*      c_current_instance;
 extern t_symbol*          c_sym_pd;
 extern t_symbol*          c_sym_dsp;

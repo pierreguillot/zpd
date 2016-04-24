@@ -37,4 +37,35 @@ CPD_EXTERN_STRUCT _text;
 CPD_EXTERN_STRUCT _iemgui;
 CPD_EXTERN_STRUCT _atom;
 
+//! @addtogroup instance
+//! @{
+//! @addtogroup dsp
+//! @{
+//! @brief The type used for samples during digital signal processing.
+typedef float cpd_sample;
+//! @}
+//! @}
+
+//! @addtogroup patch
+//! @{
+//! @brief The opaque type used for a patch.
+//! @see cpd_instance_patch_load and cpd_instance_patch_close
+typedef struct _glist   cpd_patch;
+//! @}
+
+//! @addtogroup object
+//! @{
+//! @brief The opaque type used for an object.
+//! @see cpd_patch_get_first_object and cpd_patch_get_next_object
+typedef struct _text        cpd_object;
+//! @}
+
+//! @addtogroup gui
+//! @{
+//! @brief The opaque type used for a gui.
+//! @see cpd_object_is_gui
+typedef struct _iemgui      cpd_gui;
+//! @}
+
+
 #endif // cpd_def_h

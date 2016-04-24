@@ -72,8 +72,6 @@ CPD_EXTERN cpd_instance* cpd_instance_new(size_t size);
 CPD_EXTERN void cpd_instance_free(cpd_instance* instance);
 
 
-typedef struct _glist       cpd_patch;
-
 //! @brief Loads a new patch.
 //! @param instance The instance.
 //! @param name The name of the patch.
@@ -93,9 +91,6 @@ CPD_EXTERN void cpd_instance_patch_close(cpd_instance* instance, cpd_patch* patc
 
 //! @addtogroup dsp
 //! @{
-
-//! @brief The type used for samples during digital signal processing.
-typedef float cpd_sample;
 
 //! @brief Prepares the digital signal processing for an instance.
 //! @param instance The instance.

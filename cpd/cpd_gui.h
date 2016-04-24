@@ -19,10 +19,6 @@
 //! @addtogroup gui
 //! @{
 
-//! @brief The opaque type used for a gui.
-//! @see cpd_object_is_gui
-typedef struct _iemgui      cpd_gui;
-
 //! @brief The available types of gui object.
 typedef enum
 {

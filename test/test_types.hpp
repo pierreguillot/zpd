@@ -14,6 +14,17 @@
 
 namespace test
 {
+    class performer
+    {
+        performer(const char* name) : m_name(name), m_count(0) {}
+        ~performer() {}
+        
+        
+    private:
+        std::string m_name;
+        size_t      m_count;
+    };
+    
     class tie
     {
     public:

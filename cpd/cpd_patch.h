@@ -20,12 +20,6 @@
 //! @addtogroup patch
 //! @{
 
-typedef struct _text        cpd_object;
-
-//! @brief The opaque type used for a patch.
-//! @see cpd_instance_patch_load and cpd_instance_patch_close
-typedef struct _glist       cpd_patch;
-
 //! @brief Gets the name of a patch.
 //! @param patch The patch.
 //! @return The name of the patch.
