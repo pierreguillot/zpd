@@ -5,10 +5,10 @@ environment:
         PLATFORM: Win32
       - CONFIGURATION: Debug
         PLATFORM: x64
-#      - CONFIGURATION: Release
-#        PLATFORM: Win32
-#      - CONFIGURATION: Release
-#        PLATFORM: x64
+      - CONFIGURATION: Release
+        PLATFORM: Win32
+      - CONFIGURATION: Release
+        PLATFORM: x64
 
 os: Visual Studio 2015
 
@@ -22,9 +22,7 @@ build_script:
     - cmake --build .
 
 test_script:
-    - dir
     - cd Debug
-    - dir
     - test.exe
 
 #---------------------------------#
