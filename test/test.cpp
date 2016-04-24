@@ -122,8 +122,8 @@ void test_patch(dual_instance* ins)
 
 int main(int argc, char** argv)
 {
-#ifndef _WIN32
     dual_instance is;
+#ifndef _WIN32
     thd_thread ta, tb, tc, td, te;
     std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
