@@ -174,6 +174,7 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 set(TESTSOURCES
 ${PROJECT_SOURCE_DIR}/test/test.cpp
 ${PROJECT_SOURCE_DIR}/test/test.hpp
+${PROJECT_SOURCE_DIR}/test/oshelper.hpp
 )
 
 source_group(test FILES ${TESTSOURCES})

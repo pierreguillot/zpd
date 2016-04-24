@@ -10,11 +10,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#ifdef _WIN32 
-#include <direct.h>
-#else
-#include <unistd.h>
-#endif
+#include "oshelper.hpp"
 
 extern "C"
 {
@@ -97,46 +93,6 @@ void test_patch(dual_instance* ins)
     std::cout << "ok\n";
 }
 
-
-static bool set_environment()
-{
-    std::string path;
-    char cwd[1024];
-    environment::searpath_clear();
-#ifdef _WIN32
-    if(_getcwd(cwd, sizeof(cwd)) == NULL)
-#else
-        if(getcwd(cwd, sizeof(cwd)) == NULL)
-#endif
-        {
-            return "";
-        }
-    path = cwd;
-    size_t pos = path.find("zpd");
-    if(pos != std::string::npos)
-    {
-        path.erase(path.begin()+pos+4, path.end());
-        
-#ifdef _WIN32
-        if(path[path.size()-1] == '\\')
-            path.append("test\\");
-        else
-            path.append("\\test\\");
-#else
-        if(path[path.size()-1] == '/')
-            path.append("test/");
-        else
-            path.append("/test/");
-#endif
-        environment::searchpath_add(path);
-        std::cout << " with " << path << "\n";
-        return true;
-    }
-    std::cout << "can't define the environment\n";
-    return false;
-}
-
-
 int main(int argc, char** argv)
 {
     dual_instance is;
@@ -144,13 +100,18 @@ int main(int argc, char** argv)
     thd_thread ta, tb, tc, td, te;
     std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
-    << "." << environment::version_bug();
-    
-    if(!set_environment())
+    << "." << environment::version_bug() << "\n";
+    environment::searpath_clear();
+    oshelper::directory dir = oshelper::directory::current();
+    while(dir && dir.name() != "zpd")
     {
-        return 0;
+        dir = dir.parent();
     }
-
+    if(dir)
+    {
+        dir = dir.fullpath() + oshelper::directory::separator + "test";
+        environment::searchpath_add(dir.fullpath());
+    }
     std::cout << "perform tie, symbol and atom...";
     type_test::test_tie();
     type_test::test_symbol();
