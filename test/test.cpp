@@ -9,6 +9,7 @@
 #include <string>
 #include <string.h>
 #include <stdio.h>
+#include <dirent.h>
 
 extern "C"
 {
@@ -17,34 +18,30 @@ extern "C"
 
 using namespace xpd;
 
-static char* test_get_patch_folder(char* location)
+static std::string get_test_dir()
 {
-    size_t size, i;
-    if(location)
+    std::string path;
+    std::cout << "start looking for test.pd\n";
+    char cwd[1024];
+#ifdef _WIN32
+    if(_getcwd(cwd, sizeof(cwd)) == NULL)
+#else
+    if(getcwd(cwd, sizeof(cwd)) == NULL)
+#endif
     {
-        size = strlen(location);
-        for(i = 0; i < size; ++i)
-        {
-            if(strncmp(location+i, "/build/", 7) == 0)
-            {
-                memset(location+i+7, '\0', size-i);
-                sprintf(location+i+7, "../test/");
-                return location;
-            }
-            if(strncmp(location+i, "/zpd/", 5) == 0)
-            {
-                memset(location+i+5, '\0', size-i);
-                sprintf(location+i+5, "/test/");
-                return location;
-            }
-            if(strncmp(location+i, "/test/", 6) == 0)
-            {
-                memset(location+i+6, '\0', size-i);
-                return location;
-            }
-        }
+        return "";
     }
-    return NULL;
+    path = cwd;
+    std::cout << path << "\n";
+    size_t pos = path.find("zpd");
+    if(pos != std::string::npos)
+    {
+        path.erase(path.begin()+pos+4, path.end());
+        path.append("test");
+        std::cout << path << "\n";
+    }
+    std::cout << "end looking for test.pd\n";
+    return path;
 }
 
 typedef void (*test_method)(void *);
@@ -130,19 +127,7 @@ int main(int argc, char** argv)
     << "." << environment::version_bug() << "\n";
 
     environment::searpath_clear();
-    if(argc && argv)
-    {
-        std::cout << argv[0];
-#ifdef _WIN32
-        return 0;
-#endif
-        environment::searchpath_add(test_get_patch_folder(argv[0]));
-    }
-    else
-    {
-        std::cout << "no current directory";
-        return 0;
-    }
+    environment::searchpath_add(get_test_dir());
     
 
     std::cout << "perform tie, symbol and atom...";

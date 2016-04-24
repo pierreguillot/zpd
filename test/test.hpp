@@ -14,9 +14,7 @@
 
 using namespace xpd;
 
-//
-// Bug with copy of atoms of symbols
-//
+
 
 #ifndef XPD_TEST_HPP
 #define XPD_TEST_HPP
