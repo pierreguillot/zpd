@@ -11,6 +11,10 @@
 #include <stdio.h>
 #include <dirent.h>
 
+#ifndef _WIN32 
+#include <unistd.h>
+#endif
+
 extern "C"
 {
 #include "../thread/src/thd.h"
