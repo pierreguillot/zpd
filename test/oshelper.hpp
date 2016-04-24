@@ -74,7 +74,7 @@ namespace oshelper
 #ifdef _WIN32
             if(_getcwd(cwd, sizeof(cwd)) != NULL)
             {
-                return directory dir(cwd);
+                return directory(cwd);
             }
 #else
             if(getcwd(cwd, sizeof(cwd)) != NULL)

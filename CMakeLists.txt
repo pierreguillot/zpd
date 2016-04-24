@@ -175,6 +175,7 @@ set(TESTSOURCES
 ${PROJECT_SOURCE_DIR}/test/test.cpp
 ${PROJECT_SOURCE_DIR}/test/test.hpp
 ${PROJECT_SOURCE_DIR}/test/oshelper.hpp
+${PROJECT_SOURCE_DIR}/test/test_types.hpp
 )
 
 source_group(test FILES ${TESTSOURCES})

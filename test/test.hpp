@@ -14,61 +14,10 @@
 
 using namespace xpd;
 
-
-
 #ifndef XPD_TEST_HPP
 #define XPD_TEST_HPP
 
 #define XPD_TEST_NLOOP 1
-
-class type_test
-{
-public:
-    
-    static void test_tie()
-    {
-        tie t0;
-        tie t1 = "zaza";
-        tie t2 = std::string("zaza");
-        tie t3 = t2;
-        assert("test_tie 1" && !t0 && t1 && t1 == t2 && t2 == t3);
-        assert("test_tie 2" && !t0 && t1.name() == "zaza" && t2.name() == "zaza" && t3.name() == "zaza");
-        t0 = "zozo";
-        t1 = std::string("blab");
-        t2 = t0;
-        t3 = t3;
-        assert("test_tie " && t0 && t0 == t2 && t1 != t2 && t1 != t0 && t3 == t3);
-        assert("test_tie 4" && t0.name() == "zozo" && t1.name() == "blab" && t2.name() == "zozo" && t3.name() == "zaza");
-    }
-    
-    static void test_symbol()
-    {
-        symbol t0;
-        symbol t1 = "zaza";
-        symbol t2 = std::string("zaza");
-        symbol t3 = t2;
-        assert("test_tie 1" && !t0 && t1 && t1 == t2 && t2 == t3);
-        assert("test_tie 2" && !t0 && t1.name() == "zaza" && t2.name() == "zaza" && t3.name() == "zaza");
-        t0 = "zozo";
-        t1 = std::string("blab");
-        t2 = t0;
-        t3 = t3;
-        assert("test_tie " && t0 && t0 == t2 && t1 != t2 && t1 != t0 && t3 == t3);
-        assert("test_tie 4" && t0.name() == "zozo" && t1.name() == "blab" && t2.name() == "zozo" && t3.name() == "zaza");
-    }
-    
-    static void test_atom()
-    {
-        atom a0;
-        assert("test_atom 1" && a0.type() == atom::null_t);
-        atom a1(1.f);
-        assert("test_atom 2" && a1.type() == atom::float_t && float(a1) == 1.f);
-        atom a2(symbol("zozo"));
-        assert("test_atom 3" && a2.type() == atom::symbol_t && symbol(a2) == symbol("zozo"));
-        
-    }
-    
-};
 
 class instance_test : private instance, public console::history
 {

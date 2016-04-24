@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 #include "oshelper.hpp"
+#include "test_types.hpp"
 
 extern "C"
 {
@@ -112,11 +113,8 @@ int main(int argc, char** argv)
         dir = dir.fullpath() + oshelper::directory::separator + "test";
         environment::searchpath_add(dir.fullpath());
     }
-    std::cout << "perform tie, symbol and atom...";
-    type_test::test_tie();
-    type_test::test_symbol();
-    type_test::test_atom();
-    std::cout << "ok\n";
+    
+    test::types::perform();
 
     thd_thread_detach(&ta, (thd_thread_method)(test_post), &is);
     thd_thread_join(&ta);
