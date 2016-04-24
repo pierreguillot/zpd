@@ -31,7 +31,7 @@ struct _internal
     t_sample*               c_outputs;
     int                     c_ninputs;
     int                     c_noutputs;
-    int                     cpd_samplerate;
+    int                     c_samplerate;
     cpd_hook_post           c_m_normal;
     cpd_hook_post           c_m_log;
     cpd_hook_post           c_m_error;
@@ -54,12 +54,12 @@ cpd_instance* cpd_instance_new(size_t size)
     {
         internal->c_inputs      = NULL;
         internal->c_outputs     = NULL;
-        internal->cpd_samplerate  = 0;
+        internal->c_samplerate  = 0;
         internal->c_ninputs     = 0;
         internal->c_noutputs    = 0;
         
         
-        internal->c_m_normal      = NULL;
+        internal->c_m_normal    = NULL;
         internal->c_m_log       = NULL;
         internal->c_m_error     = NULL;
         internal->c_m_fatal     = NULL;
@@ -103,7 +103,7 @@ static void cpd_instance_set(cpd_instance* instance)
     sys_soundout    = instance->cpd_internal_ptr->c_outputs;
     sys_inchannels  = instance->cpd_internal_ptr->c_ninputs;
     sys_outchannels = instance->cpd_internal_ptr->c_noutputs;
-    sys_dacsr       = instance->cpd_internal_ptr->cpd_samplerate;
+    sys_dacsr       = instance->cpd_internal_ptr->c_samplerate;
     c_current_instance = instance;
 }
 
@@ -151,14 +151,14 @@ void cpd_instance_dsp_prepare(cpd_instance* instance,
                               const int samplerate, const int nsamples)
 {
     cpd_instance_set(instance);
-    if(samplerate != instance->cpd_internal_ptr->cpd_samplerate || nins != instance->cpd_internal_ptr->c_ninputs || nouts != instance->cpd_internal_ptr->c_noutputs)
+    if(samplerate != instance->cpd_internal_ptr->c_samplerate || nins != instance->cpd_internal_ptr->c_ninputs || nouts != instance->cpd_internal_ptr->c_noutputs)
     {
         sys_setchsr(nins, nouts, samplerate);
         instance->cpd_internal_ptr->c_inputs      = sys_soundin;
         instance->cpd_internal_ptr->c_outputs     = sys_soundout;
         instance->cpd_internal_ptr->c_ninputs     = sys_inchannels;
         instance->cpd_internal_ptr->c_noutputs    = sys_outchannels;
-        instance->cpd_internal_ptr->cpd_samplerate  = sys_getsr();
+        instance->cpd_internal_ptr->c_samplerate  = sys_getsr();
     }
     t_atom av;
     av.a_type = A_FLOAT;
@@ -196,7 +196,7 @@ void cpd_instance_dsp_release(cpd_instance* instance)
 
 int cpd_instance_get_samplerate(cpd_instance* instance)
 {
-    return instance->cpd_internal_ptr->cpd_samplerate;
+    return instance->cpd_internal_ptr->c_samplerate;
 }
 
 

@@ -123,12 +123,12 @@ void test_patch(dual_instance* ins)
 int main(int argc, char** argv)
 {
     dual_instance is;
-#ifndef _WIN32
+
     thd_thread ta, tb, tc, td, te;
     std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
     << "." << environment::version_bug() << "\n";
-    
+#ifndef _WIN32
     environment::searpath_clear();
     environment::searchpath_add(test_get_patch_folder(argv[0]));
     
