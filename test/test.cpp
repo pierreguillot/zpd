@@ -23,42 +23,6 @@ extern "C"
 
 using namespace xpd;
 
-static std::string get_test_dir()
-{
-    std::string path;
-    std::cout << "start looking for test.pd\n";
-    char cwd[1024];
-#ifdef _WIN32
-    if(_getcwd(cwd, sizeof(cwd)) == NULL)
-#else
-    if(getcwd(cwd, sizeof(cwd)) == NULL)
-#endif
-    {
-        return "";
-    }
-    path = cwd;
-    std::cout << path << "\n";
-    size_t pos = path.find("zpd");
-    if(pos != std::string::npos)
-    {
-        path.erase(path.begin()+pos+4, path.end());
-        
-#ifdef _WIN32
-        if(path[path.size()-1] == '\\')
-            path.append("test\\");
-        else
-            path.append("\\test\\");
-#else
-        if(path[path.size()-1] == '/')
-            path.append("test/");
-        else
-            path.append("/test/");
-#endif
-        std::cout << path << "\n";
-    }
-    std::cout << "end looking for test.pd\n";
-    return path;
-}
 
 typedef void (*test_method)(void *);
 
@@ -133,6 +97,46 @@ void test_patch(dual_instance* ins)
     std::cout << "ok\n";
 }
 
+
+static bool set_environment()
+{
+    std::string path;
+    char cwd[1024];
+    environment::searpath_clear();
+#ifdef _WIN32
+    if(_getcwd(cwd, sizeof(cwd)) == NULL)
+#else
+        if(getcwd(cwd, sizeof(cwd)) == NULL)
+#endif
+        {
+            return "";
+        }
+    path = cwd;
+    size_t pos = path.find("zpd");
+    if(pos != std::string::npos)
+    {
+        path.erase(path.begin()+pos+4, path.end());
+        
+#ifdef _WIN32
+        if(path[path.size()-1] == '\\')
+            path.append("test\\");
+        else
+            path.append("\\test\\");
+#else
+        if(path[path.size()-1] == '/')
+            path.append("test/");
+        else
+            path.append("/test/");
+#endif
+        environment::searchpath_add(path);
+        std::cout << " with " << path << "\n";
+        return true;
+    }
+    std::cout << "can't define the environment\n";
+    return false;
+}
+
+
 int main(int argc, char** argv)
 {
     dual_instance is;
@@ -140,11 +144,12 @@ int main(int argc, char** argv)
     thd_thread ta, tb, tc, td, te;
     std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
-    << "." << environment::version_bug() << "\n";
-
-    environment::searpath_clear();
-    environment::searchpath_add(get_test_dir());
+    << "." << environment::version_bug();
     
+    if(!set_environment())
+    {
+        return 0;
+    }
 
     std::cout << "perform tie, symbol and atom...";
     type_test::test_tie();
