@@ -134,8 +134,8 @@ int main(int argc, char** argv)
 
     std::cout << "perform tie, symbol and atom...";
     type_test::test_tie();
-#ifndef _WIN32
     type_test::test_symbol();
+#ifndef _WIN32
     type_test::test_atom();
     std::cout << "ok\n";
 
