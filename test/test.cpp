@@ -42,10 +42,17 @@ static std::string get_test_dir()
     if(pos != std::string::npos)
     {
         path.erase(path.begin()+pos+4, path.end());
+        
 #ifdef _WIN32
-        path.append("test\\");
+        if(path[path.size()-1] == '\\')
+            path.append("test\\");
+        else
+            path.append("\\test\\");
 #else
-        path.append("test/");
+        if(path[path.size()-1] == '/')
+            path.append("test/");
+        else
+            path.append("/test/");
 #endif
         std::cout << path << "\n";
     }
