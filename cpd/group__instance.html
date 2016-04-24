@@ -125,10 +125,10 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa8495bd557ba6361da19c886369c0f43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__instance.html#gaa8495bd557ba6361da19c886369c0f43">cpd_instance_free</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance)</td></tr>
 <tr class="memdesc:gaa8495bd557ba6361da19c886369c0f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes an instance.  <a href="#gaa8495bd557ba6361da19c886369c0f43">More...</a><br/></td></tr>
 <tr class="separator:gaa8495bd557ba6361da19c886369c0f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3c0e2bd8ded0a9e8ca31c38f04713296"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__patch.html#ga638c091e5f6797aba46153ada28a9274">cpd_patch</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__instance.html#ga3c0e2bd8ded0a9e8ca31c38f04713296">cpd_instance_patch_load</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, const char *name, const char *path)</td></tr>
+<tr class="memitem:ga3c0e2bd8ded0a9e8ca31c38f04713296"><td class="memItemLeft" align="right" valign="top">cpd_patch *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__instance.html#ga3c0e2bd8ded0a9e8ca31c38f04713296">cpd_instance_patch_load</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, const char *name, const char *path)</td></tr>
 <tr class="memdesc:ga3c0e2bd8ded0a9e8ca31c38f04713296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a new patch.  <a href="#ga3c0e2bd8ded0a9e8ca31c38f04713296">More...</a><br/></td></tr>
 <tr class="separator:ga3c0e2bd8ded0a9e8ca31c38f04713296"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadfcc3990a124f014ca0bc1d848be9fe0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__instance.html#gadfcc3990a124f014ca0bc1d848be9fe0">cpd_instance_patch_close</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, <a class="el" href="group__patch.html#ga638c091e5f6797aba46153ada28a9274">cpd_patch</a> *patch)</td></tr>
+<tr class="memitem:gadfcc3990a124f014ca0bc1d848be9fe0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__instance.html#gadfcc3990a124f014ca0bc1d848be9fe0">cpd_instance_patch_close</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, cpd_patch *patch)</td></tr>
 <tr class="memdesc:gadfcc3990a124f014ca0bc1d848be9fe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a patch.  <a href="#gadfcc3990a124f014ca0bc1d848be9fe0">More...</a><br/></td></tr>
 <tr class="separator:gadfcc3990a124f014ca0bc1d848be9fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -213,7 +213,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__patch.html#ga638c091e5f6797aba46153ada28a9274">cpd_patch</a>* cpd_instance_patch_load </td>
+          <td class="memname">cpd_patch* cpd_instance_patch_load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structcpd__instance.html">cpd_instance</a> *&#160;</td>
           <td class="paramname"><em>instance</em>, </td>
@@ -264,7 +264,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__patch.html#ga638c091e5f6797aba46153ada28a9274">cpd_patch</a> *&#160;</td>
+          <td class="paramtype">cpd_patch *&#160;</td>
           <td class="paramname"><em>patch</em>&#160;</td>
         </tr>
         <tr>

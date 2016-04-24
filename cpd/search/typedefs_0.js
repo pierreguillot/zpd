@@ -1,7 +1,6 @@
 var searchData=
 [
   ['cpd_5fgpointer',['cpd_gpointer',['../group__gpointer.html#gad620bec751729624717462d6a91e8ae3',1,'cpd_types.h']]],
-  ['cpd_5fgui',['cpd_gui',['../group__gui.html#ga891938dd4255c36e01361cc21b05d1ae',1,'cpd_gui.h']]],
   ['cpd_5fhook_5faftertouch',['cpd_hook_aftertouch',['../group__midi.html#gab881b58e1f7304a6f9fb4374023c3911',1,'cpd_instance.h']]],
   ['cpd_5fhook_5fanything',['cpd_hook_anything',['../group__message.html#gaca378bdbcccc92a7baf6cc598c2836ca',1,'cpd_instance.h']]],
   ['cpd_5fhook_5fbang',['cpd_hook_bang',['../group__message.html#ga688d0fa901093bf206cb4e531cf65535',1,'cpd_instance.h']]],
@@ -18,9 +17,6 @@ var searchData=
   ['cpd_5fhook_5fsymbol',['cpd_hook_symbol',['../group__message.html#ga36dbc0888b007610e2a6d9dd2e7d6b88',1,'cpd_instance.h']]],
   ['cpd_5finternal',['cpd_internal',['../group__instance.html#ga8f35a84ab7163ec09f94b144ad0f7a35',1,'cpd_instance.h']]],
   ['cpd_5flist',['cpd_list',['../group__list.html#ga29673bb8936b13631aa81b229457e528',1,'cpd_types.h']]],
-  ['cpd_5fobject',['cpd_object',['../group__object.html#gaa91611d86bea00499895c3d73f734b69',1,'cpd_object.h']]],
-  ['cpd_5fpatch',['cpd_patch',['../group__patch.html#ga638c091e5f6797aba46153ada28a9274',1,'cpd_patch.h']]],
-  ['cpd_5fsample',['cpd_sample',['../group__dsp.html#gad2115974a0d2488dc60dc63f1b209f8d',1,'cpd_instance.h']]],
   ['cpd_5fsymbol',['cpd_symbol',['../group__symbol.html#gaa1225f47ec39569ebdc3b296d4022a7a',1,'cpd_types.h']]],
   ['cpd_5ftie',['cpd_tie',['../group__tie.html#ga193e1a7d3b8d82897182729298fa23c8',1,'cpd_types.h']]]
 ];

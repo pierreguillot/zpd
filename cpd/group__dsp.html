@@ -77,7 +77,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">dsp<div class="ingroups"><a class="el" href="group__instance.html">instance</a></div></div>  </div>
@@ -87,19 +86,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>The dsp part.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gad2115974a0d2488dc60dc63f1b209f8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad2115974a0d2488dc60dc63f1b209f8d"></a>
-typedef float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dsp.html#gad2115974a0d2488dc60dc63f1b209f8d">cpd_sample</a></td></tr>
-<tr class="memdesc:gad2115974a0d2488dc60dc63f1b209f8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type used for samples during digital signal processing. <br/></td></tr>
-<tr class="separator:gad2115974a0d2488dc60dc63f1b209f8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga0f36f234d85e53dd1931b887603f51ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dsp.html#ga0f36f234d85e53dd1931b887603f51ac">cpd_instance_dsp_prepare</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, const int nins, const int nouts, const int samplerate, const int nsamples)</td></tr>
 <tr class="memdesc:ga0f36f234d85e53dd1931b887603f51ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the digital signal processing for an instance.  <a href="#ga0f36f234d85e53dd1931b887603f51ac">More...</a><br/></td></tr>
 <tr class="separator:ga0f36f234d85e53dd1931b887603f51ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa28eec185fd8905681d1531ec5c8da2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dsp.html#gaa28eec185fd8905681d1531ec5c8da2a">cpd_instance_dsp_perform</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, int nsamples, const int nins, const <a class="el" href="group__dsp.html#gad2115974a0d2488dc60dc63f1b209f8d">cpd_sample</a> **inputs, const int nouts, <a class="el" href="group__dsp.html#gad2115974a0d2488dc60dc63f1b209f8d">cpd_sample</a> **outputs)</td></tr>
+<tr class="memitem:gaa28eec185fd8905681d1531ec5c8da2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dsp.html#gaa28eec185fd8905681d1531ec5c8da2a">cpd_instance_dsp_perform</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, int nsamples, const int nins, const cpd_sample **inputs, const int nouts, cpd_sample **outputs)</td></tr>
 <tr class="memdesc:gaa28eec185fd8905681d1531ec5c8da2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the digital signal processing for an instance.  <a href="#gaa28eec185fd8905681d1531ec5c8da2a">More...</a><br/></td></tr>
 <tr class="separator:gaa28eec185fd8905681d1531ec5c8da2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8a6f3ab0dcce2bf4e7c4e8eccede5420"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dsp.html#ga8a6f3ab0dcce2bf4e7c4e8eccede5420">cpd_instance_dsp_release</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance)</td></tr>
@@ -111,6 +103,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The dsp part. </p>
+<p>The type used for samples during digital signal processing.</p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga0f36f234d85e53dd1931b887603f51ac"></a>
 <div class="memitem">
@@ -193,7 +186,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__dsp.html#gad2115974a0d2488dc60dc63f1b209f8d">cpd_sample</a> **&#160;</td>
+          <td class="paramtype">const cpd_sample **&#160;</td>
           <td class="paramname"><em>inputs</em>, </td>
         </tr>
         <tr>
@@ -205,7 +198,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__dsp.html#gad2115974a0d2488dc60dc63f1b209f8d">cpd_sample</a> **&#160;</td>
+          <td class="paramtype">cpd_sample **&#160;</td>
           <td class="paramname"><em>outputs</em>&#160;</td>
         </tr>
         <tr>
