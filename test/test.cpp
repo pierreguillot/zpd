@@ -128,10 +128,10 @@ int main(int argc, char** argv)
     std::cout << "tests xpd version " << environment::version_major()
     << "." << environment::version_minor()
     << "." << environment::version_bug() << "\n";
-#ifndef _WIN32
+
     environment::searpath_clear();
     environment::searchpath_add(test_get_patch_folder(argv[0]));
-    
+#ifndef _WIN32
     std::cout << "perform tie, symbol and atom...";
     {
         type_test::test_tie();
