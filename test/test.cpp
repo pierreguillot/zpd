@@ -132,6 +132,10 @@ int main(int argc, char** argv)
     environment::searpath_clear();
     if(argc && argv)
     {
+        std::cout << argv[0];
+#ifdef _WIN32
+        return 0;
+#endif
         environment::searchpath_add(test_get_patch_folder(argv[0]));
     }
     else
