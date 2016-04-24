@@ -122,6 +122,7 @@ void test_patch(dual_instance* ins)
 
 int main(int argc, char** argv)
 {
+#ifndef _WIN32
     dual_instance is;
     thd_thread ta, tb, tc, td, te;
     std::cout << "tests xpd version " << environment::version_major()
@@ -138,7 +139,7 @@ int main(int argc, char** argv)
         type_test::test_atom();
     }
     std::cout << "ok\n";
-#ifndef _WIN32
+
     thd_thread_detach(&ta, (thd_thread_method)(test_post), &is);
     thd_thread_join(&ta);
     
