@@ -25,7 +25,7 @@ test_script:
     - dir
     - cd Debug
     - dir
-    - test.exe chdr
+    - test.exe %~dp0
 
 #---------------------------------#
 #         notifications           #
