@@ -222,7 +222,6 @@ add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} $
 set_target_properties(xpdtest PROPERTIES OUTPUT_NAME test)
 set_target_properties(xpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
-# target_link_libraries(xpdtest ws2_32) WINDOWS
 
 if(${APPLE})
 	add_definitions(-DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
