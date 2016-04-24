@@ -131,13 +131,12 @@ int main(int argc, char** argv)
 
     environment::searpath_clear();
     environment::searchpath_add(test_get_patch_folder(argv[0]));
-#ifndef _WIN32
+
     std::cout << "perform tie, symbol and atom...";
-    {
-        type_test::test_tie();
-        type_test::test_symbol();
-        type_test::test_atom();
-    }
+    type_test::test_tie();
+#ifndef _WIN32
+    type_test::test_symbol();
+    type_test::test_atom();
     std::cout << "ok\n";
 
     thd_thread_detach(&ta, (thd_thread_method)(test_post), &is);
