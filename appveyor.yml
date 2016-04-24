@@ -25,8 +25,7 @@ test_script:
     - dir
     - cd Debug
     - dir
-    - test.exe
-#    - cmd xpdtest.exe
+    - test.exe chdr
 
 #---------------------------------#
 #         notifications           #

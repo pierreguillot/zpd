@@ -130,12 +130,20 @@ int main(int argc, char** argv)
     << "." << environment::version_bug() << "\n";
 
     environment::searpath_clear();
-    environment::searchpath_add(test_get_patch_folder(argv[0]));
+    if(argc && argv)
+    {
+        environment::searchpath_add(test_get_patch_folder(argv[0]));
+    }
+    else
+    {
+        std::cout << "no current directory";
+        return 0;
+    }
+    
 
     std::cout << "perform tie, symbol and atom...";
     type_test::test_tie();
     type_test::test_symbol();
-#ifndef _WIN32
     type_test::test_atom();
     std::cout << "ok\n";
 
@@ -153,6 +161,6 @@ int main(int argc, char** argv)
     
     thd_thread_detach(&te, (thd_thread_method)(test_patch), &is);
     thd_thread_join(&te);
-#endif
+
     return 0;
 }
