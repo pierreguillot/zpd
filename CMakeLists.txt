@@ -195,7 +195,7 @@ endif()
 find_package(Threads REQUIRED)
 set(CMAKE_MACOSX_RPATH On)
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
-add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1)
+add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DTHREAD_LOCKING=0)
 
 if(${COVERALLS})
     message(STATUS "Build with coveralls")
