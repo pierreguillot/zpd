@@ -138,7 +138,7 @@ int main(int argc, char** argv)
         type_test::test_atom();
     }
     std::cout << "ok\n";
-    
+#ifndef _WIN32
     thd_thread_detach(&ta, (thd_thread_method)(test_post), &is);
     thd_thread_join(&ta);
     
@@ -153,6 +153,6 @@ int main(int argc, char** argv)
     
     thd_thread_detach(&te, (thd_thread_method)(test_patch), &is);
     thd_thread_join(&te);
-    
+#endif
     return 0;
 }
