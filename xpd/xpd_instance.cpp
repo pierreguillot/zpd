@@ -114,11 +114,7 @@ namespace xpd
     
     instance::instance()
     {
-        environment::lock();
-        
-
         m_ptr = internal::allocate(this);
-        environment::unlock();
 #define LCOV_EXCL_START
         if(!m_ptr)
         {
@@ -130,9 +126,7 @@ namespace xpd
     instance::~instance() xpd_noexcept
     {
         release();
-        environment::lock();
         cpd_instance_free(reinterpret_cast<cpd_instance *>(m_ptr));
-        environment::unlock();
     }
     
     
@@ -140,7 +134,6 @@ namespace xpd
     {
         patch p;
         void* ptr = xpd_nullptr;
-        environment::lock();
         if(path.empty())
         {
             ptr = cpd_instance_patch_load(reinterpret_cast<cpd_instance *>(m_ptr), name.c_str(), xpd_nullptr);
@@ -155,15 +148,12 @@ namespace xpd
             int todo;
             p = patch(ptr, size_t(cpd_patch_get_dollarzero(reinterpret_cast<cpd_patch *>(ptr))));
         }
-        environment::unlock();
         return p;
     }
     
     void instance::close(patch& p)
     {
-        environment::lock();
         cpd_instance_patch_close(reinterpret_cast<cpd_instance *>(m_ptr), reinterpret_cast<cpd_patch *>(p.m_ptr));
-        environment::unlock();
     }
     
     
@@ -174,33 +164,25 @@ namespace xpd
     
     void instance::prepare(const int nins, const int nouts, const int samplerate, const int nsamples) xpd_noexcept
     {
-        environment::lock();
         cpd_instance_dsp_prepare(reinterpret_cast<cpd_instance *>(m_ptr), nins, nouts, samplerate, nsamples);
-        environment::unlock();
     }
 
     void instance::perform(int nsamples, const int nins, const sample** inputs, const int nouts, sample** outputs) xpd_noexcept
     {
-        environment::lock();
         cpd_instance_dsp_perform(reinterpret_cast<cpd_instance *>(m_ptr), nsamples, nins, inputs, nouts, outputs);
-        environment::unlock();
     }
     
     void instance::release() xpd_noexcept
     {
-        environment::lock();
         cpd_instance_dsp_release(reinterpret_cast<cpd_instance *>(m_ptr));
-        environment::unlock();
     }
     
     
     
     void instance::send(console::post const& post) const
     {
-        environment::lock();
         cpd_instance_post_send(reinterpret_cast<cpd_instance *>(m_ptr),
                                (cpd_post){static_cast<cpd_postlevel>(post.type), post.text.c_str()});
-        environment::unlock();
     }
     
     void instance::send(tie name, symbol selector, std::vector<atom> const& atoms) const

@@ -17,12 +17,15 @@ namespace xpd
     // ==================================================================================== //
     
     //! @brief The environment manages xpd global variables and methods.
-    //! @details The environment is an unique opaque object used by the instances to ensure
-    //! thread safety. You should never have to deal with it expect for the few public
-    //! methods.
     class environment
     {
     public:
+        //! @brief Initializes the environment.
+        static void initialize() xpd_noexcept;
+        
+        //! @brief Clears the environment.
+        static void  clear() xpd_noexcept;
+        
         //! @brief Gets the major version of Pure Data.
         static unsigned int version_major() xpd_noexcept;
         
@@ -37,26 +40,6 @@ namespace xpd
         
         //! @brief Clears all the search path.
         static void searpath_clear() xpd_noexcept;
-        
-    private:
-        
-        //! @brief The environment contructor.
-        environment() xpd_noexcept;
-        
-        //! @brief The environment destructor.
-        ~environment() xpd_noexcept;
-        
-        //! @brief Gets the singleton of the environment.
-        static environment& get() xpd_noexcept;
-        
-        //! @brief Locks the environment.
-        static void lock() xpd_noexcept;
-        
-        //! @brief Unlocks the environment.
-        static void unlock() xpd_noexcept;
-        
-        mutex        m_mutex;
-        friend class instance;
     };
 }
 

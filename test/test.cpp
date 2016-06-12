@@ -96,6 +96,7 @@ void test_patch(dual_instance* ins)
 
 int main(int argc, char** argv)
 {
+    environment::initialize();
     dual_instance is;
 
     thd_thread ta, tb, tc, td, te;
@@ -131,5 +132,6 @@ int main(int argc, char** argv)
     thd_thread_detach(&te, (thd_thread_method)(test_patch), &is);
     thd_thread_join(&te);
 
+    environment::clear();
     return 0;
 }
