@@ -104,7 +104,7 @@ namespace xpd
         
         static void func_post(instance::internal* instance, cpd_post post)
         {
-            int todo;
+            instance->ref->receive(console::post(console::level(post.level), std::string(post.text)));
         }
     };
     
