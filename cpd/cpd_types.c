@@ -45,33 +45,28 @@ char const* cpd_symbol_get_name(cpd_symbol const* symbol)
 
 
 
-cpd_list* cpd_list_create(size_t size)
+void cpd_list_init(cpd_list *list, size_t size)
 {
-    cpd_list *x   = (cpd_list *)malloc(sizeof(cpd_list));
-    if(x)
+    if(size)
     {
-        if(size)
+        list->vector = (void *)malloc(size * sizeof(t_atom));
+        if(list->vector)
         {
-            x->vector = (void *)malloc(size * sizeof(t_atom));
-            if(x->vector)
-            {
-                x->size = size;
-            }
-            else
-            {
-                x->size = 0;
-            }
+            list->size = size;
         }
         else
         {
-            x->size      = 0;
-            x->vector    = NULL;
+            list->size = 0;
         }
     }
-    return x;
+    else
+    {
+        list->size      = 0;
+        list->vector    = NULL;
+    }
 }
 
-void cpd_list_free(cpd_list *list)
+void cpd_list_clear(cpd_list *list)
 {
     if(list->vector && list->size)
     {
@@ -79,7 +74,6 @@ void cpd_list_free(cpd_list *list)
     }
     list->vector = NULL;
     list->size   = 0;
-    free(list);
 }
 
 size_t cpd_list_get_size(cpd_list const* list)
@@ -150,10 +144,5 @@ void cpd_list_set_gpointer(cpd_list *list, size_t index, cpd_gpointer* pointer)
 }
 #define LCOV_EXCL_STOP
 
-
-t_atom* cpd_list_get_vec(cpd_list const* list)
-{
-    return list->vector;
-}
 
 

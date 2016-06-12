@@ -105,13 +105,13 @@ typedef enum
 } cpd_listtype;
 
 //! @brief Creates an opaque list that can be for messages within cpd.
+//! @param list The pointer to the list.
 //! @param size The size of the list.
-//! @return The pointer to the list.
-CPD_EXTERN cpd_list* cpd_list_create(size_t size);
+CPD_EXTERN void cpd_list_init(cpd_list *list, size_t size);
 
 //! @brief Frees a list.
 //! @param list The pointer to the list.
-CPD_EXTERN void cpd_list_free(cpd_list *list);
+CPD_EXTERN void cpd_list_clear(cpd_list *list);
 
 //! @brief Gets the size of a list.
 //! @param list The pointer to the list.
