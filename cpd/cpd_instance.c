@@ -58,6 +58,7 @@ void cpd_instance_free(cpd_instance* instance)
     {
         c_current_instance = NULL;
     }
+    cpd_unlock();
     cpd_midi_manager_clear(instance);
     cpd_message_manager_clear(instance);
     cpd_dsp_manager_clear(instance);
