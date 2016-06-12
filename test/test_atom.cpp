@@ -59,7 +59,7 @@ TEST_CASE("atom", "[atom]")
     {
         xpd::atom t;
         CHECK(t.type() == xpd::atom::null_t);
-        t = 1.2;
+        t = 1.2f;
         CHECK(t.type() == xpd::atom::float_t);
         CHECK(float(t) == 1.2f);
         CHECK(xpd::symbol(t) == xpd::symbol());
@@ -80,7 +80,7 @@ TEST_CASE("atom", "[atom]")
     {
         xpd::atom t;
         CHECK(t.type() == xpd::atom::null_t);
-        t = xpd::atom(1.2);
+        t = xpd::atom(1.2f);
         CHECK(t.type() == xpd::atom::float_t);
         CHECK(float(t) == 1.2f);
         CHECK(xpd::symbol(t) == xpd::symbol());
