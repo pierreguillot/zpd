@@ -88,12 +88,12 @@ cpd_listtype cpd_list_get_type(cpd_list const* list, size_t index)
     {
         return CPD_FLOAT;
     }
-    if((argv+index)->a_type == A_SYMBOL)
+    else if((argv+index)->a_type == A_SYMBOL)
     {
         return CPD_SYMBOL;
     }
 #define LCOV_EXCL_START
-    if((argv+index)->a_type == A_POINTER)
+    else if((argv+index)->a_type == A_POINTER)
     {
         return CPD_POINTER;
     }
