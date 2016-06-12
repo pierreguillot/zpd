@@ -23,7 +23,7 @@ build_script:
 
 test_script:
     - cd Debug
-    - test.exe
+    - test.exe $APPVEYOR_BUILD_FOLDER\test\patches
 
 #---------------------------------#
 #         notifications           #
