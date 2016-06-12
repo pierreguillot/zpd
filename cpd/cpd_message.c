@@ -235,7 +235,6 @@ void cpd_instance_unbind(cpd_instance* instance, cpd_tie* tie)
 
 void cpd_instance_message_send(cpd_instance* instance, cpd_message event)
 {
-    
     struct cpd_message_manager* manager = instance->c_message;
     if(manager)
     {
