@@ -41,9 +41,10 @@ cpd_instance* cpd_instance_new(size_t size)
     if(instance)
     {
         instance->c_internal = pdinstance_new();
+        cpd_dsp_manager_init(instance->c_dsp);
         cpd_message_manager_init(instance->c_message, 512);
         cpd_midi_manager_init(instance->c_midi, 512);
-        cpd_dsp_manager_init(instance->c_dsp);
+        
         
         int todo_allocate_the_managers;
     }
