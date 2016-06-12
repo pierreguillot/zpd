@@ -13,63 +13,87 @@
 #include "../pd/src/m_pd.h"
 #include "../pd/src/s_stuff.h"
 #include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <ctype.h>
 
+extern cpd_instance* c_current_instance;
 
-void cpd_instance_lock_hook_console(cpd_instance* instance, cpd_hook_console* consolehook)
+struct cpd_post_manager
 {
-    instance->cpd_internal_ptr->c_console = *consolehook;
-}
+    cpd_hook_post   c_hook;
+};
 
 
-void cpd_instance_post_fatal(cpd_instance* instance, char const* message, ...)
+// ==================================================================================== //
+//                                      INTERNAL                                        //
+// ==================================================================================== //
+
+extern void cpd_post_manager_init(struct cpd_post_manager* manager)
 {
-    if(instance->cpd_internal_ptr->c_console.m_fatal)
+    manager = (struct cpd_post_manager *)malloc(sizeof(struct cpd_post_manager));
+    if(manager)
     {
-        char buf[MAXPDSTRING];
-        va_list ap;
-        va_start(ap, message);
-        vsnprintf(buf, MAXPDSTRING-1, message, ap);
-        va_end(ap);
-        instance->cpd_internal_ptr->c_console.m_fatal(instance, buf);
+        manager->c_hook = NULL;
     }
 }
 
-void cpd_instance_post_error(cpd_instance* instance, char const* message, ...)
+extern void cpd_post_manager_clear(struct cpd_post_manager* manager)
 {
-    if(instance->cpd_internal_ptr->c_console.m_error)
+    free(manager);
+}
+
+
+// ==================================================================================== //
+//                                      INTERFACE                                       //
+// ==================================================================================== //
+
+void cpd_instance_post_sethook(cpd_instance* instance, cpd_hook_post posthook)
+{
+    instance->c_post->c_hook = posthook;
+}
+
+void cpd_instance_post_send(cpd_instance* instance, cpd_postlevel level,  char const* message, ...)
+{
+    char buf[MAXPDSTRING];
+    va_list ap;
+    va_start(ap, message);
+    vsnprintf(buf, MAXPDSTRING-1, message, ap);
+    va_end(ap);
+    if(instance->c_post && instance->c_post->c_hook)
     {
-        char buf[MAXPDSTRING];
-        va_list ap;
-        va_start(ap, message);
-        vsnprintf(buf, MAXPDSTRING-1, message, ap);
-        va_end(ap);
-        instance->cpd_internal_ptr->c_console.m_error(instance, buf);
+        instance->c_post->c_hook(instance, (cpd_post){level, message});
     }
 }
 
-void cpd_instance_post_normal(cpd_instance* instance, char const* message, ...)
-{
-    if(instance->cpd_internal_ptr->c_console.m_normal)
-    {
-        char buf[MAXPDSTRING];
-        va_list ap;
-        va_start(ap, message);
-        vsnprintf(buf, MAXPDSTRING-1, message, ap);
-        va_end(ap);
-        instance->cpd_internal_ptr->c_console.m_normal(instance, buf);
-    }
-}
+// ==================================================================================== //
+//                                      PURE DATA                                       //
+// ==================================================================================== //
 
-void cpd_instance_post_log(cpd_instance* instance, char const* message, ...)
+extern void cpd_print(const char* s)
 {
-    if(instance->cpd_internal_ptr->c_console.m_log)
+    int level = 2;
+    cpd_instance* instance = c_current_instance;
+#ifdef DEBUG
+    printf("%s", s);
+#endif
+    if(!instance)
     {
-        char buf[MAXPDSTRING];
-        va_list ap;
-        va_start(ap, message);
-        vsnprintf(buf, MAXPDSTRING-1, message, ap);
-        va_end(ap);
-        instance->cpd_internal_ptr->c_console.m_log(instance, buf);
+        return;
+    }
+    if(strncmp(s, "error:", 6) == 0)
+    {
+        level = 0;
+        s+=5;
+    }
+    else if(strncmp(s, "verbose(", 8) == 0 && isdigit(s[8]))
+    {
+        level = atoi(s+8);
+        s+=12;
+    }
+    if(instance->c_post && instance->c_post->c_hook)
+    {
+        instance->c_post->c_hook(instance, (cpd_post){(cpd_postlevel)level, s});
     }
 }
 

@@ -28,10 +28,12 @@ extern void cpd_unlock();
 extern void cpd_dsp_manager_init(struct cpd_dsp_manager* manager);
 extern void cpd_message_manager_init(struct cpd_message_manager* manager, size_t size);
 extern void cpd_midi_manager_init(struct cpd_midi_manager* manager, size_t size);
+extern void cpd_post_manager_init(struct cpd_post_manager* manager);
 
 extern void cpd_dsp_manager_clear(struct cpd_dsp_manager* manager);
 extern void cpd_message_manager_clear(struct cpd_message_manager* manager);
 extern void cpd_midi_manager_clear(struct cpd_midi_manager* manager);
+extern void cpd_post_manager_clear(struct cpd_post_manager* manager);
 
 cpd_instance* c_current_instance = NULL;
 
@@ -44,9 +46,7 @@ cpd_instance* cpd_instance_new(size_t size)
         cpd_dsp_manager_init(instance->c_dsp);
         cpd_message_manager_init(instance->c_message, 512);
         cpd_midi_manager_init(instance->c_midi, 512);
-        
-        
-        int todo_allocate_the_managers;
+        cpd_post_manager_init(instance->c_post);
     }
     return instance;
 }
@@ -61,6 +61,7 @@ void cpd_instance_free(cpd_instance* instance)
     cpd_midi_manager_clear(instance->c_midi);
     cpd_message_manager_clear(instance->c_message);
     cpd_dsp_manager_clear(instance->c_dsp);
+    cpd_post_manager_clear(instance->c_post);
     free(instance);
 }
 
