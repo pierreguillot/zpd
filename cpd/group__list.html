@@ -106,12 +106,12 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaad41202f0546fbc1d55d74e195848708"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcpd__list.html">cpd_list</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gaad41202f0546fbc1d55d74e195848708">cpd_list_create</a> (size_t size)</td></tr>
-<tr class="memdesc:gaad41202f0546fbc1d55d74e195848708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an opaque list that can be for messages within cpd.  <a href="#gaad41202f0546fbc1d55d74e195848708">More...</a><br/></td></tr>
-<tr class="separator:gaad41202f0546fbc1d55d74e195848708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaaf8a2052bb914c5becb677b5b5335ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gaaaf8a2052bb914c5becb677b5b5335ec">cpd_list_free</a> (<a class="el" href="structcpd__list.html">cpd_list</a> *list)</td></tr>
-<tr class="memdesc:gaaaf8a2052bb914c5becb677b5b5335ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a list.  <a href="#gaaaf8a2052bb914c5becb677b5b5335ec">More...</a><br/></td></tr>
-<tr class="separator:gaaaf8a2052bb914c5becb677b5b5335ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6141ad144f1fa73c41221eca1b24711b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga6141ad144f1fa73c41221eca1b24711b">cpd_list_init</a> (<a class="el" href="structcpd__list.html">cpd_list</a> *list, size_t size)</td></tr>
+<tr class="memdesc:ga6141ad144f1fa73c41221eca1b24711b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an opaque list that can be for messages within cpd.  <a href="#ga6141ad144f1fa73c41221eca1b24711b">More...</a><br/></td></tr>
+<tr class="separator:ga6141ad144f1fa73c41221eca1b24711b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc0b6c7535100d3518cb07b1975ce065"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gacc0b6c7535100d3518cb07b1975ce065">cpd_list_clear</a> (<a class="el" href="structcpd__list.html">cpd_list</a> *list)</td></tr>
+<tr class="memdesc:gacc0b6c7535100d3518cb07b1975ce065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a list.  <a href="#gacc0b6c7535100d3518cb07b1975ce065">More...</a><br/></td></tr>
+<tr class="separator:gacc0b6c7535100d3518cb07b1975ce065"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga568aeb336f1ac53db78374bc53c881c1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga568aeb336f1ac53db78374bc53c881c1">cpd_list_get_size</a> (<a class="el" href="structcpd__list.html">cpd_list</a> const *list)</td></tr>
 <tr class="memdesc:ga568aeb336f1ac53db78374bc53c881c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of a list.  <a href="#ga568aeb336f1ac53db78374bc53c881c1">More...</a><br/></td></tr>
 <tr class="separator:ga568aeb336f1ac53db78374bc53c881c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,16 +169,26 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaad41202f0546fbc1d55d74e195848708"></a>
+<a class="anchor" id="ga6141ad144f1fa73c41221eca1b24711b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structcpd__list.html">cpd_list</a>* cpd_list_create </td>
+          <td class="memname">void cpd_list_init </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> *&#160;</td>
+          <td class="paramname"><em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -186,20 +196,20 @@ Functions</h2></td></tr>
 <p>Creates an opaque list that can be for messages within cpd. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">list</td><td>The pointer to the list. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the list. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The pointer to the list. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaaaf8a2052bb914c5becb677b5b5335ec"></a>
+<a class="anchor" id="gacc0b6c7535100d3518cb07b1975ce065"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void cpd_list_free </td>
+          <td class="memname">void cpd_list_clear </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> *&#160;</td>
           <td class="paramname"><em>list</em></td><td>)</td>
