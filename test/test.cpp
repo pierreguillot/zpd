@@ -16,7 +16,13 @@ int main( int argc, char* const argv[] )
     if(argc && argv && argv[0])
     {
         xpd::environment::initialize();
-        std::cout << argv[0];
+        std::cout << "version "
+        << xpd::environment::version_major()
+        << "." << xpd::environment::version_minor()
+        << "." << xpd::environment::version_bug() << "\n";
+        xpd::environment::searpath_clear();
+        
+        std::cout << argv[0] << "\n";
         int result =  Catch::Session().run(argc, argv);
         xpd::environment::clear();
         return result;
