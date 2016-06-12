@@ -4,13 +4,26 @@
  // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-
+#include "../xpd/xpd.hpp"
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 
+
+
+
 int main( int argc, char* const argv[] )
 {
-    return Catch::Session().run(argc, argv);
+    if(argc && argv && argv[0])
+    {
+        xpd::environment::initialize();
+        std::cout << argv[0];
+        int result =  Catch::Session().run(argc, argv);
+        xpd::environment::clear();
+        return result;
+    }
+    std::cout << "Environment not initialized...";
+    return -1;
+    
 }
 
 

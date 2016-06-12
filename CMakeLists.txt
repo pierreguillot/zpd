@@ -184,8 +184,9 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 set(TESTSOURCES
 ${PROJECT_SOURCE_DIR}/test/test.cpp
 ${PROJECT_SOURCE_DIR}/test/test.hpp
-${PROJECT_SOURCE_DIR}/test/oshelper.hpp
-${PROJECT_SOURCE_DIR}/test/test_types.hpp
+${PROJECT_SOURCE_DIR}/test/test_atom.cpp
+${PROJECT_SOURCE_DIR}/test/test_symbol.cpp
+${PROJECT_SOURCE_DIR}/test/test_tie.cpp
 )
 
 source_group(test FILES ${TESTSOURCES})
