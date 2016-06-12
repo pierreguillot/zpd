@@ -85,7 +85,7 @@ extern void cpd_midi_manager_clear(struct cpd_midi_manager* manager)
 
 void cpd_instance_midi_send(cpd_instance* instance, cpd_midi_event event)
 {
-    struct cpd_midi_manager* manager = c_current_instance ? c_current_instance->c_midi : NULL;
+    struct cpd_midi_manager* manager =instance->c_midi;
     if(manager)
     {
         cpd_mutex_lock(&(manager->c_mutex));
@@ -140,7 +140,7 @@ extern void cpd_midi_manager_perform(struct cpd_midi_manager* manager)
 
 void cpd_instance_midi_sethook(cpd_instance* instance, cpd_midi_hook midihook)
 {
-    struct cpd_midi_manager* manager = c_current_instance ? c_current_instance->c_midi : NULL;
+    struct cpd_midi_manager* manager = instance->c_midi;
     if(manager)
     {
         manager->c_hook = midihook;
