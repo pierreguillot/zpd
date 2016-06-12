@@ -79,55 +79,99 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">post<div class="ingroups"><a class="el" href="group__instance.html">instance</a></div></div>  </div>
+<div class="title">post</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The console post part.  
+<p>The console post part of cpd.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcpd__hook__console.html">cpd_hook_console</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The console methods.  <a href="structcpd__hook__console.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcpd__post.html">cpd_post</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The post.  <a href="structcpd__post.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga162d816e7aa00071a8d01ed3d379ee77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga162d816e7aa00071a8d01ed3d379ee77"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#ga162d816e7aa00071a8d01ed3d379ee77">cpd_hook_post</a> )(struct _instance *instance, const char *s)</td></tr>
-<tr class="memdesc:ga162d816e7aa00071a8d01ed3d379ee77"><td class="mdescLeft">&#160;</td><td class="mdescRight">The method prototype to posts from the console. <br/></td></tr>
-<tr class="separator:ga162d816e7aa00071a8d01ed3d379ee77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf2006e73ceeb7141d75c2d8e48be2049"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#gaf2006e73ceeb7141d75c2d8e48be2049">cpd_hook_post</a> )(<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, <a class="el" href="structcpd__post.html">cpd_post</a>)</td></tr>
+<tr class="memdesc:gaf2006e73ceeb7141d75c2d8e48be2049"><td class="mdescLeft">&#160;</td><td class="mdescRight">The post function prototype.  <a href="#gaf2006e73ceeb7141d75c2d8e48be2049">More...</a><br/></td></tr>
+<tr class="separator:gaf2006e73ceeb7141d75c2d8e48be2049"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga41eb4ee14235538c20ea33bd86d2976b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#ga41eb4ee14235538c20ea33bd86d2976b">cpd_postlevel</a> { <a class="el" href="group__post.html#gga41eb4ee14235538c20ea33bd86d2976baa42aa3f378018832176d22c6129a4e3a">cpd_post_fatal</a> = 0, 
+<a class="el" href="group__post.html#gga41eb4ee14235538c20ea33bd86d2976bae5f8728fd376dbd939da7a252351ee5c">cpd_post_error</a> = 1, 
+<a class="el" href="group__post.html#gga41eb4ee14235538c20ea33bd86d2976ba9e02b97ff52f2032cec4c2d95c862836">cpd_post_normal</a> = 2, 
+<a class="el" href="group__post.html#gga41eb4ee14235538c20ea33bd86d2976ba4830ec21eb6ad6bdbae9a70dc6eb2b25">cpd_post_log</a> = 3
+ }</td></tr>
+<tr class="separator:ga41eb4ee14235538c20ea33bd86d2976b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga38f4e9622eed993f7e1bd52c7aa9a387"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#ga38f4e9622eed993f7e1bd52c7aa9a387">cpd_instance_set_hook_console</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, <a class="el" href="structcpd__hook__console.html">cpd_hook_console</a> *consolehook)</td></tr>
-<tr class="memdesc:ga38f4e9622eed993f7e1bd52c7aa9a387"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the print methods of an instance.  <a href="#ga38f4e9622eed993f7e1bd52c7aa9a387">More...</a><br/></td></tr>
-<tr class="separator:ga38f4e9622eed993f7e1bd52c7aa9a387"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga492a9a09d975e4cf8d9a69b3179b1a95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#ga492a9a09d975e4cf8d9a69b3179b1a95">cpd_instance_post_normal</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, char const *message,...)</td></tr>
-<tr class="memdesc:ga492a9a09d975e4cf8d9a69b3179b1a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a normal post to the current instance.  <a href="#ga492a9a09d975e4cf8d9a69b3179b1a95">More...</a><br/></td></tr>
-<tr class="separator:ga492a9a09d975e4cf8d9a69b3179b1a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3cfae4abf04017030bf028cf72452339"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#ga3cfae4abf04017030bf028cf72452339">cpd_instance_post_log</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, char const *message,...)</td></tr>
-<tr class="memdesc:ga3cfae4abf04017030bf028cf72452339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a log post to the current instance.  <a href="#ga3cfae4abf04017030bf028cf72452339">More...</a><br/></td></tr>
-<tr class="separator:ga3cfae4abf04017030bf028cf72452339"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0a3900c0d369088f9cc205f24834216a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#ga0a3900c0d369088f9cc205f24834216a">cpd_instance_post_error</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, char const *message,...)</td></tr>
-<tr class="memdesc:ga0a3900c0d369088f9cc205f24834216a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an error to the current instance.  <a href="#ga0a3900c0d369088f9cc205f24834216a">More...</a><br/></td></tr>
-<tr class="separator:ga0a3900c0d369088f9cc205f24834216a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2bb83a31b6a96fa322d1fbc96634277d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#ga2bb83a31b6a96fa322d1fbc96634277d">cpd_instance_post_fatal</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, char const *message,...)</td></tr>
-<tr class="memdesc:ga2bb83a31b6a96fa322d1fbc96634277d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a fatal error to the current instance.  <a href="#ga2bb83a31b6a96fa322d1fbc96634277d">More...</a><br/></td></tr>
-<tr class="separator:ga2bb83a31b6a96fa322d1fbc96634277d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga03d99e27419e4910ed86ed220a953c22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#ga03d99e27419e4910ed86ed220a953c22">cpd_instance_post_sethook</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, <a class="el" href="group__post.html#gaf2006e73ceeb7141d75c2d8e48be2049">cpd_hook_post</a> posthook)</td></tr>
+<tr class="memdesc:ga03d99e27419e4910ed86ed220a953c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the post function of an instance.  <a href="#ga03d99e27419e4910ed86ed220a953c22">More...</a><br/></td></tr>
+<tr class="separator:ga03d99e27419e4910ed86ed220a953c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0822fa9eaf164599615d3dff9dfa55f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__post.html#gac0822fa9eaf164599615d3dff9dfa55f">cpd_instance_post_send</a> (<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, <a class="el" href="structcpd__post.html">cpd_post</a> post)</td></tr>
+<tr class="memdesc:gac0822fa9eaf164599615d3dff9dfa55f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a normal post to the current instance.  <a href="#gac0822fa9eaf164599615d3dff9dfa55f">More...</a><br/></td></tr>
+<tr class="separator:gac0822fa9eaf164599615d3dff9dfa55f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The console post part. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga38f4e9622eed993f7e1bd52c7aa9a387"></a>
+<p>The console post part of cpd. </p>
+<p>This part manages the console posts. </p>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gaf2006e73ceeb7141d75c2d8e48be2049"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void cpd_instance_set_hook_console </td>
+          <td class="memname">typedef void(* cpd_hook_post)(<a class="el" href="structcpd__instance.html">cpd_instance</a> *instance, <a class="el" href="structcpd__post.html">cpd_post</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The post function prototype. </p>
+<p>The function is used to receive all posts from the console. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga41eb4ee14235538c20ea33bd86d2976b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__post.html#ga41eb4ee14235538c20ea33bd86d2976b">cpd_postlevel</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga41eb4ee14235538c20ea33bd86d2976baa42aa3f378018832176d22c6129a4e3a"></a>cpd_post_fatal</em>&#160;</td><td class="fielddoc">
+<p>The fatal error posts. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41eb4ee14235538c20ea33bd86d2976bae5f8728fd376dbd939da7a252351ee5c"></a>cpd_post_error</em>&#160;</td><td class="fielddoc">
+<p>The error posts. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41eb4ee14235538c20ea33bd86d2976ba9e02b97ff52f2032cec4c2d95c862836"></a>cpd_post_normal</em>&#160;</td><td class="fielddoc">
+<p>The normal posts. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41eb4ee14235538c20ea33bd86d2976ba4830ec21eb6ad6bdbae9a70dc6eb2b25"></a>cpd_post_log</em>&#160;</td><td class="fielddoc">
+<p>The log posts. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga03d99e27419e4910ed86ed220a953c22"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cpd_instance_post_sethook </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structcpd__instance.html">cpd_instance</a> *&#160;</td>
           <td class="paramname"><em>instance</em>, </td>
@@ -135,8 +179,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structcpd__hook__console.html">cpd_hook_console</a> *&#160;</td>
-          <td class="paramname"><em>consolehook</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__post.html#gaf2006e73ceeb7141d75c2d8e48be2049">cpd_hook_post</a>&#160;</td>
+          <td class="paramname"><em>posthook</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -146,23 +190,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the print methods of an instance. </p>
+<p>Sets the post function of an instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">instance</td><td>The instance. </td></tr>
-    <tr><td class="paramname">consolehook</td><td>The set of post methods. </td></tr>
+    <tr><td class="paramname">posthook</td><td>The post function. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga492a9a09d975e4cf8d9a69b3179b1a95"></a>
+<a class="anchor" id="gac0822fa9eaf164599615d3dff9dfa55f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void cpd_instance_post_normal </td>
+          <td class="memname">void cpd_instance_post_send </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structcpd__instance.html">cpd_instance</a> *&#160;</td>
           <td class="paramname"><em>instance</em>, </td>
@@ -170,14 +214,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char const *&#160;</td>
-          <td class="paramname"><em>message</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__post.html">cpd_post</a>&#160;</td>
+          <td class="paramname"><em>post</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -191,130 +229,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">instance</td><td>The instance. </td></tr>
-    <tr><td class="paramname">message</td><td>The message in the printf format. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3cfae4abf04017030bf028cf72452339"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void cpd_instance_post_log </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structcpd__instance.html">cpd_instance</a> *&#160;</td>
-          <td class="paramname"><em>instance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char const *&#160;</td>
-          <td class="paramname"><em>message</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sends a log post to the current instance. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">instance</td><td>The instance. </td></tr>
-    <tr><td class="paramname">message</td><td>The message in the printf format. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0a3900c0d369088f9cc205f24834216a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void cpd_instance_post_error </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structcpd__instance.html">cpd_instance</a> *&#160;</td>
-          <td class="paramname"><em>instance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char const *&#160;</td>
-          <td class="paramname"><em>message</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sends an error to the current instance. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">instance</td><td>The instance. </td></tr>
-    <tr><td class="paramname">message</td><td>The message in the printf format. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2bb83a31b6a96fa322d1fbc96634277d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void cpd_instance_post_fatal </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structcpd__instance.html">cpd_instance</a> *&#160;</td>
-          <td class="paramname"><em>instance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char const *&#160;</td>
-          <td class="paramname"><em>message</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sends a fatal error to the current instance. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">instance</td><td>The instance. </td></tr>
-    <tr><td class="paramname">message</td><td>The message in the printf format. </td></tr>
+    <tr><td class="paramname">post</td><td>The post message. </td></tr>
   </table>
   </dd>
 </dl>

@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['patch',['patch',['../classxpd_1_1patch.html#ac3e1ecd05d6922e93181c04463773249',1,'xpd::patch::patch() noexcept'],['../classxpd_1_1patch.html#ab4ff7e28a72e78264d85c45b55b46ccc',1,'xpd::patch::patch(patch const &amp;other) noexcept']]],
-  ['path',['path',['../classxpd_1_1patch.html#a9b67b266207227062c7a2961ef85293a',1,'xpd::patch']]],
-  ['perform',['perform',['../classxpd_1_1instance.html#a8634207ed52547292b93dec43c7fc8b5',1,'xpd::instance']]],
-  ['pitch',['pitch',['../classxpd_1_1midi_1_1event.html#a0ece96cec09b785f32e82f322ce2a398',1,'xpd::midi::event']]],
-  ['prepare',['prepare',['../classxpd_1_1instance.html#ad1d7b5892898142b5729d47529a4e46e',1,'xpd::instance']]],
-  ['program',['program',['../classxpd_1_1midi_1_1event.html#a24871d446a872bd53e2a5b7a4835df2e',1,'xpd::midi::event']]]
+  ['object',['object',['../classxpd_1_1object.html#a42f519022aae3776da62af59a919ccf0',1,'xpd::object::object() noexcept'],['../classxpd_1_1object.html#a443db259e1e3140078bbee056d8ab4c8',1,'xpd::object::object(object const &amp;other) noexcept']]],
+  ['objects',['objects',['../classxpd_1_1patch.html#add8dd8b1d18cc77287404df09bdd9717',1,'xpd::patch']]],
+  ['operator_20bool',['operator bool',['../classxpd_1_1object.html#a7990d8e87d9eab2383f94c88c23a6488',1,'xpd::object::operator bool()'],['../classxpd_1_1patch.html#a7990d8e87d9eab2383f94c88c23a6488',1,'xpd::patch::operator bool()'],['../classxpd_1_1symbol.html#a7990d8e87d9eab2383f94c88c23a6488',1,'xpd::symbol::operator bool()'],['../classxpd_1_1tie.html#a7990d8e87d9eab2383f94c88c23a6488',1,'xpd::tie::operator bool()']]],
+  ['operator_20float',['operator float',['../classxpd_1_1atom.html#a75584a19f6a93906039ce3b815fc42aa',1,'xpd::atom']]],
+  ['operator_20symbol',['operator symbol',['../classxpd_1_1atom.html#a9e07f0e0e8bcba6934bb73b3fbaf134f',1,'xpd::atom']]],
+  ['operator_21_3d',['operator!=',['../classxpd_1_1symbol.html#a510c4d37b60a57ccf40b1c7b7147e541',1,'xpd::symbol::operator!=()'],['../classxpd_1_1tie.html#a4201c3d2288e4382d3fbb8a9b96d0086',1,'xpd::tie::operator!=()']]],
+  ['operator_3d',['operator=',['../classxpd_1_1atom.html#ae474b4f1f1b438add6ef22c8262b2822',1,'xpd::atom::operator=(float value) noexcept'],['../classxpd_1_1atom.html#a48a96eb6d52b80596f6be1512697cc31',1,'xpd::atom::operator=(symbol const &amp;sym) noexcept'],['../classxpd_1_1atom.html#a03fc2e4a0826bb7d9d096900851094c0',1,'xpd::atom::operator=(atom const &amp;other)'],['../classxpd_1_1object.html#a12b102faa34a1aee06a865abb99d04c3',1,'xpd::object::operator=()'],['../classxpd_1_1patch.html#adc207bb4392ff08fde396eb2b0239a93',1,'xpd::patch::operator=()'],['../classxpd_1_1symbol.html#a5e4591e3fd556620aee3e78f71b6629b',1,'xpd::symbol::operator=(symbol const &amp;other) noexcept'],['../classxpd_1_1symbol.html#a5d7976d1043a86cf090a7c2f47b87e0f',1,'xpd::symbol::operator=(std::string const &amp;name)'],['../classxpd_1_1symbol.html#a2576d64fec05075a11033482619432db',1,'xpd::symbol::operator=(char const *name)'],['../classxpd_1_1tie.html#a48c2360d2d1a658607f6a6989a0e4d63',1,'xpd::tie::operator=(tie const &amp;other) noexcept'],['../classxpd_1_1tie.html#a7da7fa858eb9dbcc92f9a4591e50e07f',1,'xpd::tie::operator=(std::string const &amp;name)'],['../classxpd_1_1tie.html#a7fcc4a0c9d9d9d7d0b4005b334b303ca',1,'xpd::tie::operator=(char const *name)']]],
+  ['operator_3d_3d',['operator==',['../classxpd_1_1symbol.html#a8ea841552d6dcebe2b8b038c31035dcf',1,'xpd::symbol::operator==()'],['../classxpd_1_1tie.html#a7803ddedba0adfaccfe08cdab55d61ab',1,'xpd::tie::operator==()']]]
 ];

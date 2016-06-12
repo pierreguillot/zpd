@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['get_5fnumber_5fof_5fposts',['get_number_of_posts',['../classxpd_1_1console_1_1history.html#afa770b5237c7aa51859cb78ce062966b',1,'xpd::console::history']]],
-  ['get_5fnumber_5fof_5fposts_5fto_5flevel',['get_number_of_posts_to_level',['../classxpd_1_1console_1_1history.html#a156454ea0775560f86b7423e030250ad',1,'xpd::console::history']]],
-  ['get_5fpost',['get_post',['../classxpd_1_1console_1_1history.html#aceaa60488b521c482752b6a04ea541d0',1,'xpd::console::history']]],
-  ['get_5fpost_5fto_5flevel',['get_post_to_level',['../classxpd_1_1console_1_1history.html#a236cb4750e23baa116556f296499729c',1,'xpd::console::history']]],
-  ['gui',['gui',['../classxpd_1_1gui.html',1,'xpd']]]
+  ['fatal',['fatal',['../classxpd_1_1console.html#afde8e18a788ccc92fc61cab298bca7e3a8ce9ca6f2c2ee2f80260f4ae4158e45f',1,'xpd::console']]],
+  ['float_5fs',['float_s',['../classxpd_1_1symbol.html#ad78d71bc9a9bca2fa8f3d4f25e7c2ab3',1,'xpd::symbol']]],
+  ['float_5ft',['float_t',['../classxpd_1_1atom.html#adee610a3c7375031538811d29f6a4124a575e1d6c87512f7938132e3d59b823db',1,'xpd::atom']]]
 ];

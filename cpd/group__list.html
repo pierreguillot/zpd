@@ -77,7 +77,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -88,12 +88,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>The list type.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga29673bb8936b13631aa81b229457e528"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29673bb8936b13631aa81b229457e528"></a>
-typedef struct _list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a></td></tr>
-<tr class="memdesc:ga29673bb8936b13631aa81b229457e528"><td class="mdescLeft">&#160;</td><td class="mdescRight">The opaque list used for messages. <br/></td></tr>
-<tr class="separator:ga29673bb8936b13631aa81b229457e528"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcpd__list.html">cpd_list</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The opaque list used for messages.  <a href="structcpd__list.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -107,34 +106,34 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaad41202f0546fbc1d55d74e195848708"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gaad41202f0546fbc1d55d74e195848708">cpd_list_create</a> (size_t size)</td></tr>
+<tr class="memitem:gaad41202f0546fbc1d55d74e195848708"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcpd__list.html">cpd_list</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gaad41202f0546fbc1d55d74e195848708">cpd_list_create</a> (size_t size)</td></tr>
 <tr class="memdesc:gaad41202f0546fbc1d55d74e195848708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an opaque list that can be for messages within cpd.  <a href="#gaad41202f0546fbc1d55d74e195848708">More...</a><br/></td></tr>
 <tr class="separator:gaad41202f0546fbc1d55d74e195848708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaaf8a2052bb914c5becb677b5b5335ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gaaaf8a2052bb914c5becb677b5b5335ec">cpd_list_free</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *list)</td></tr>
+<tr class="memitem:gaaaf8a2052bb914c5becb677b5b5335ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gaaaf8a2052bb914c5becb677b5b5335ec">cpd_list_free</a> (<a class="el" href="structcpd__list.html">cpd_list</a> *list)</td></tr>
 <tr class="memdesc:gaaaf8a2052bb914c5becb677b5b5335ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a list.  <a href="#gaaaf8a2052bb914c5becb677b5b5335ec">More...</a><br/></td></tr>
 <tr class="separator:gaaaf8a2052bb914c5becb677b5b5335ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga568aeb336f1ac53db78374bc53c881c1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga568aeb336f1ac53db78374bc53c881c1">cpd_list_get_size</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *list)</td></tr>
+<tr class="memitem:ga568aeb336f1ac53db78374bc53c881c1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga568aeb336f1ac53db78374bc53c881c1">cpd_list_get_size</a> (<a class="el" href="structcpd__list.html">cpd_list</a> const *list)</td></tr>
 <tr class="memdesc:ga568aeb336f1ac53db78374bc53c881c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of a list.  <a href="#ga568aeb336f1ac53db78374bc53c881c1">More...</a><br/></td></tr>
 <tr class="separator:ga568aeb336f1ac53db78374bc53c881c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43c2baed1101fa35df7e49c27d6a3771"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__list.html#gadd5f8af8a46f7d089420a4f5cd25d758">cpd_listtype</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga43c2baed1101fa35df7e49c27d6a3771">cpd_list_get_type</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *list, size_t index)</td></tr>
+<tr class="memitem:ga43c2baed1101fa35df7e49c27d6a3771"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__list.html#gadd5f8af8a46f7d089420a4f5cd25d758">cpd_listtype</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga43c2baed1101fa35df7e49c27d6a3771">cpd_list_get_type</a> (<a class="el" href="structcpd__list.html">cpd_list</a> const *list, size_t index)</td></tr>
 <tr class="memdesc:ga43c2baed1101fa35df7e49c27d6a3771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the type of a data in the list.  <a href="#ga43c2baed1101fa35df7e49c27d6a3771">More...</a><br/></td></tr>
 <tr class="separator:ga43c2baed1101fa35df7e49c27d6a3771"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac14f0e261bf1777b648a3bd33524f760"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gac14f0e261bf1777b648a3bd33524f760">cpd_list_get_float</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *list, size_t index)</td></tr>
+<tr class="memitem:gac14f0e261bf1777b648a3bd33524f760"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gac14f0e261bf1777b648a3bd33524f760">cpd_list_get_float</a> (<a class="el" href="structcpd__list.html">cpd_list</a> const *list, size_t index)</td></tr>
 <tr class="memdesc:gac14f0e261bf1777b648a3bd33524f760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the float value of a data of the list.  <a href="#gac14f0e261bf1777b648a3bd33524f760">More...</a><br/></td></tr>
 <tr class="separator:gac14f0e261bf1777b648a3bd33524f760"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea4519a0e1c1878a77b64f06a8d3d9b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__symbol.html#gaa1225f47ec39569ebdc3b296d4022a7a">cpd_symbol</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gaea4519a0e1c1878a77b64f06a8d3d9b3">cpd_list_get_symbol</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *list, size_t index)</td></tr>
+<tr class="memitem:gaea4519a0e1c1878a77b64f06a8d3d9b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__symbol.html#gaa1225f47ec39569ebdc3b296d4022a7a">cpd_symbol</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#gaea4519a0e1c1878a77b64f06a8d3d9b3">cpd_list_get_symbol</a> (<a class="el" href="structcpd__list.html">cpd_list</a> const *list, size_t index)</td></tr>
 <tr class="memdesc:gaea4519a0e1c1878a77b64f06a8d3d9b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the symbol of a data of the list.  <a href="#gaea4519a0e1c1878a77b64f06a8d3d9b3">More...</a><br/></td></tr>
 <tr class="separator:gaea4519a0e1c1878a77b64f06a8d3d9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6cc43eee987e4adeccb40d6992be5529"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gpointer.html#gad620bec751729624717462d6a91e8ae3">cpd_gpointer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga6cc43eee987e4adeccb40d6992be5529">cpd_list_get_gpointer</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *list, size_t index)</td></tr>
+<tr class="memitem:ga6cc43eee987e4adeccb40d6992be5529"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gpointer.html#gad620bec751729624717462d6a91e8ae3">cpd_gpointer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga6cc43eee987e4adeccb40d6992be5529">cpd_list_get_gpointer</a> (<a class="el" href="structcpd__list.html">cpd_list</a> const *list, size_t index)</td></tr>
 <tr class="memdesc:ga6cc43eee987e4adeccb40d6992be5529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the gpointer of a data of the list.  <a href="#ga6cc43eee987e4adeccb40d6992be5529">More...</a><br/></td></tr>
 <tr class="separator:ga6cc43eee987e4adeccb40d6992be5529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga536642bf718e217edfa1d344fc25d803"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga536642bf718e217edfa1d344fc25d803">cpd_list_set_float</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *list, size_t index, float value)</td></tr>
+<tr class="memitem:ga536642bf718e217edfa1d344fc25d803"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga536642bf718e217edfa1d344fc25d803">cpd_list_set_float</a> (<a class="el" href="structcpd__list.html">cpd_list</a> *list, size_t index, float value)</td></tr>
 <tr class="memdesc:ga536642bf718e217edfa1d344fc25d803"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the float value of a data of the list.  <a href="#ga536642bf718e217edfa1d344fc25d803">More...</a><br/></td></tr>
 <tr class="separator:ga536642bf718e217edfa1d344fc25d803"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47005a1f0c10be1159ce6e394b064e30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga47005a1f0c10be1159ce6e394b064e30">cpd_list_set_symbol</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *list, size_t index, <a class="el" href="group__symbol.html#gaa1225f47ec39569ebdc3b296d4022a7a">cpd_symbol</a> *symbol)</td></tr>
+<tr class="memitem:ga47005a1f0c10be1159ce6e394b064e30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga47005a1f0c10be1159ce6e394b064e30">cpd_list_set_symbol</a> (<a class="el" href="structcpd__list.html">cpd_list</a> *list, size_t index, <a class="el" href="group__symbol.html#gaa1225f47ec39569ebdc3b296d4022a7a">cpd_symbol</a> *symbol)</td></tr>
 <tr class="memdesc:ga47005a1f0c10be1159ce6e394b064e30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the symbol of a data of the list.  <a href="#ga47005a1f0c10be1159ce6e394b064e30">More...</a><br/></td></tr>
 <tr class="separator:ga47005a1f0c10be1159ce6e394b064e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga00985592be0ccbaabbdc08069e6e004b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga00985592be0ccbaabbdc08069e6e004b">cpd_list_set_gpointer</a> (<a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *list, size_t index, <a class="el" href="group__gpointer.html#gad620bec751729624717462d6a91e8ae3">cpd_gpointer</a> *pointer)</td></tr>
+<tr class="memitem:ga00985592be0ccbaabbdc08069e6e004b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list.html#ga00985592be0ccbaabbdc08069e6e004b">cpd_list_set_gpointer</a> (<a class="el" href="structcpd__list.html">cpd_list</a> *list, size_t index, <a class="el" href="group__gpointer.html#gad620bec751729624717462d6a91e8ae3">cpd_gpointer</a> *pointer)</td></tr>
 <tr class="memdesc:ga00985592be0ccbaabbdc08069e6e004b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the gpointer of a data of the list.  <a href="#ga00985592be0ccbaabbdc08069e6e004b">More...</a><br/></td></tr>
 <tr class="separator:ga00985592be0ccbaabbdc08069e6e004b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -175,7 +174,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a>* cpd_list_create </td>
+          <td class="memname"><a class="el" href="structcpd__list.html">cpd_list</a>* cpd_list_create </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>size</em></td><td>)</td>
@@ -202,7 +201,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void cpd_list_free </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> *&#160;</td>
           <td class="paramname"><em>list</em></td><td>)</td>
           <td></td>
         </tr>
@@ -226,7 +225,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">size_t cpd_list_get_size </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> const *&#160;</td>
           <td class="paramname"><em>list</em></td><td>)</td>
           <td></td>
         </tr>
@@ -251,7 +250,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__list.html#gadd5f8af8a46f7d089420a4f5cd25d758">cpd_listtype</a> cpd_list_get_type </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> const *&#160;</td>
           <td class="paramname"><em>list</em>, </td>
         </tr>
         <tr>
@@ -287,7 +286,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float cpd_list_get_float </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> const *&#160;</td>
           <td class="paramname"><em>list</em>, </td>
         </tr>
         <tr>
@@ -323,7 +322,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__symbol.html#gaa1225f47ec39569ebdc3b296d4022a7a">cpd_symbol</a>* cpd_list_get_symbol </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> const *&#160;</td>
           <td class="paramname"><em>list</em>, </td>
         </tr>
         <tr>
@@ -359,7 +358,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__gpointer.html#gad620bec751729624717462d6a91e8ae3">cpd_gpointer</a>* cpd_list_get_gpointer </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> const *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> const *&#160;</td>
           <td class="paramname"><em>list</em>, </td>
         </tr>
         <tr>
@@ -395,7 +394,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void cpd_list_set_float </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> *&#160;</td>
           <td class="paramname"><em>list</em>, </td>
         </tr>
         <tr>
@@ -437,7 +436,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void cpd_list_set_symbol </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> *&#160;</td>
           <td class="paramname"><em>list</em>, </td>
         </tr>
         <tr>
@@ -479,7 +478,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void cpd_list_set_gpointer </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__list.html#ga29673bb8936b13631aa81b229457e528">cpd_list</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structcpd__list.html">cpd_list</a> *&#160;</td>
           <td class="paramname"><em>list</em>, </td>
         </tr>
         <tr>

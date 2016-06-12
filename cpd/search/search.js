@@ -10,7 +10,7 @@ var indexSectionsWithContent =
   0: "cdegilmopst",
   1: "c",
   2: "c",
-  3: "m",
+  3: "dt",
   4: "c",
   5: "c",
   6: "c",

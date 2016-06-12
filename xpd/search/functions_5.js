@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['height',['height',['../classxpd_1_1object.html#a4ae0e67e0ccc68e4a0b424a6580594b8',1,'xpd::object::height()'],['../classxpd_1_1patch.html#a4ae0e67e0ccc68e4a0b424a6580594b8',1,'xpd::patch::height()']]],
-  ['history',['history',['../classxpd_1_1console_1_1history.html#a294e5d4c8844c2a49786b780d3cdb9b0',1,'xpd::console::history']]]
+  ['get_5fnumber_5fof_5fposts',['get_number_of_posts',['../classxpd_1_1console_1_1history.html#afa770b5237c7aa51859cb78ce062966b',1,'xpd::console::history']]],
+  ['get_5fnumber_5fof_5fposts_5fto_5flevel',['get_number_of_posts_to_level',['../classxpd_1_1console_1_1history.html#a156454ea0775560f86b7423e030250ad',1,'xpd::console::history']]],
+  ['get_5fpost',['get_post',['../classxpd_1_1console_1_1history.html#aceaa60488b521c482752b6a04ea541d0',1,'xpd::console::history']]],
+  ['get_5fpost_5fto_5flevel',['get_post_to_level',['../classxpd_1_1console_1_1history.html#a236cb4750e23baa116556f296499729c',1,'xpd::console::history']]]
 ];

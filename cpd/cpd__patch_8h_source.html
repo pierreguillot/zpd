@@ -98,36 +98,43 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;CPD_EXTERN <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="group__patch.html#gafbf0d4f1c035ee589374acde6bb7a41f">cpd_patch_get_name</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;CPD_EXTERN <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="group__patch.html#gae76d4ab781e86087e4dc01b757996af3">cpd_patch_get_path</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga2283e90a3c1e3c8d776aff842ba9a38e">cpd_patch_get_dollarzero</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga2458df2bb22945da68ed56813c39ab58">cpd_patch_get_x</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga8e7c9a49e4afd64b9feb308a9cb8b3db">cpd_patch_get_y</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga87b86eb7bfef890e3bdc2161b1c97c4c">cpd_patch_get_width</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga64b257df96b746a93258cb6a81fa2395">cpd_patch_get_height</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;CPD_EXTERN cpd_object* <a class="code" href="group__patch.html#ga7519cce91d5cdaf1a7a0072cb1c794a1">cpd_patch_get_first_object</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;CPD_EXTERN cpd_object* <a class="code" href="group__patch.html#gad13583db371de5a1f823bb010380dbff">cpd_patch_get_next_object</a>(cpd_patch <span class="keyword">const</span>* patch, cpd_object <span class="keyword">const</span>* previous);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif // cpd_patch_h</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;CPD_EXTERN cpd_patch* <a class="code" href="group__patch.html#ga3c0e2bd8ded0a9e8ca31c38f04713296">cpd_instance_patch_load</a>(<a class="code" href="structcpd__instance.html">cpd_instance</a>* instance, <span class="keyword">const</span> <span class="keywordtype">char</span>* name, <span class="keyword">const</span> <span class="keywordtype">char</span>* path);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;CPD_EXTERN <span class="keywordtype">void</span> <a class="code" href="group__patch.html#gadfcc3990a124f014ca0bc1d848be9fe0">cpd_instance_patch_close</a>(<a class="code" href="structcpd__instance.html">cpd_instance</a>* instance, cpd_patch* patch);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;CPD_EXTERN <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="group__patch.html#gafbf0d4f1c035ee589374acde6bb7a41f">cpd_patch_get_name</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;CPD_EXTERN <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="group__patch.html#gae76d4ab781e86087e4dc01b757996af3">cpd_patch_get_path</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga2283e90a3c1e3c8d776aff842ba9a38e">cpd_patch_get_dollarzero</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga2458df2bb22945da68ed56813c39ab58">cpd_patch_get_x</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga8e7c9a49e4afd64b9feb308a9cb8b3db">cpd_patch_get_y</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga87b86eb7bfef890e3bdc2161b1c97c4c">cpd_patch_get_width</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;CPD_EXTERN <span class="keywordtype">int</span> <a class="code" href="group__patch.html#ga64b257df96b746a93258cb6a81fa2395">cpd_patch_get_height</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;CPD_EXTERN cpd_object* <a class="code" href="group__patch.html#ga7519cce91d5cdaf1a7a0072cb1c794a1">cpd_patch_get_first_object</a>(cpd_patch <span class="keyword">const</span>* patch);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;CPD_EXTERN cpd_object* <a class="code" href="group__patch.html#gad13583db371de5a1f823bb010380dbff">cpd_patch_get_next_object</a>(cpd_patch <span class="keyword">const</span>* patch, cpd_object <span class="keyword">const</span>* previous);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#endif // cpd_patch_h</span></div>
+<div class="ttc" id="structcpd__instance_html"><div class="ttname"><a href="structcpd__instance.html">cpd_instance</a></div><div class="ttdoc">The instance is the main interface to communicate within the cpd environment. </div><div class="ttdef"><b>Definition:</b> cpd_instance.h:32</div></div>
 <div class="ttc" id="group__patch_html_gafbf0d4f1c035ee589374acde6bb7a41f"><div class="ttname"><a href="group__patch.html#gafbf0d4f1c035ee589374acde6bb7a41f">cpd_patch_get_name</a></div><div class="ttdeci">const char * cpd_patch_get_name(cpd_patch const *patch)</div><div class="ttdoc">Gets the name of a patch. </div></div>
 <div class="ttc" id="group__patch_html_ga64b257df96b746a93258cb6a81fa2395"><div class="ttname"><a href="group__patch.html#ga64b257df96b746a93258cb6a81fa2395">cpd_patch_get_height</a></div><div class="ttdeci">int cpd_patch_get_height(cpd_patch const *patch)</div><div class="ttdoc">Gets the height of a patch. </div></div>
 <div class="ttc" id="group__patch_html_ga87b86eb7bfef890e3bdc2161b1c97c4c"><div class="ttname"><a href="group__patch.html#ga87b86eb7bfef890e3bdc2161b1c97c4c">cpd_patch_get_width</a></div><div class="ttdeci">int cpd_patch_get_width(cpd_patch const *patch)</div><div class="ttdoc">Gets the width of a patch. </div></div>
+<div class="ttc" id="group__patch_html_gadfcc3990a124f014ca0bc1d848be9fe0"><div class="ttname"><a href="group__patch.html#gadfcc3990a124f014ca0bc1d848be9fe0">cpd_instance_patch_close</a></div><div class="ttdeci">void cpd_instance_patch_close(cpd_instance *instance, cpd_patch *patch)</div><div class="ttdoc">Closes a patch. </div></div>
 <div class="ttc" id="group__patch_html_ga7519cce91d5cdaf1a7a0072cb1c794a1"><div class="ttname"><a href="group__patch.html#ga7519cce91d5cdaf1a7a0072cb1c794a1">cpd_patch_get_first_object</a></div><div class="ttdeci">cpd_object * cpd_patch_get_first_object(cpd_patch const *patch)</div><div class="ttdoc">Gets the first object of a patch. </div></div>
 <div class="ttc" id="group__patch_html_ga2458df2bb22945da68ed56813c39ab58"><div class="ttname"><a href="group__patch.html#ga2458df2bb22945da68ed56813c39ab58">cpd_patch_get_x</a></div><div class="ttdeci">int cpd_patch_get_x(cpd_patch const *patch)</div><div class="ttdoc">Gets the x margin of a patch. </div></div>
 <div class="ttc" id="group__patch_html_gae76d4ab781e86087e4dc01b757996af3"><div class="ttname"><a href="group__patch.html#gae76d4ab781e86087e4dc01b757996af3">cpd_patch_get_path</a></div><div class="ttdeci">const char * cpd_patch_get_path(cpd_patch const *patch)</div><div class="ttdoc">Gets the path of a patch. </div></div>
 <div class="ttc" id="group__patch_html_ga8e7c9a49e4afd64b9feb308a9cb8b3db"><div class="ttname"><a href="group__patch.html#ga8e7c9a49e4afd64b9feb308a9cb8b3db">cpd_patch_get_y</a></div><div class="ttdeci">int cpd_patch_get_y(cpd_patch const *patch)</div><div class="ttdoc">Gets the x margin of a patch. </div></div>
 <div class="ttc" id="group__patch_html_gad13583db371de5a1f823bb010380dbff"><div class="ttname"><a href="group__patch.html#gad13583db371de5a1f823bb010380dbff">cpd_patch_get_next_object</a></div><div class="ttdeci">cpd_object * cpd_patch_get_next_object(cpd_patch const *patch, cpd_object const *previous)</div><div class="ttdoc">Gets the next object of a patch. </div></div>
+<div class="ttc" id="group__patch_html_ga3c0e2bd8ded0a9e8ca31c38f04713296"><div class="ttname"><a href="group__patch.html#ga3c0e2bd8ded0a9e8ca31c38f04713296">cpd_instance_patch_load</a></div><div class="ttdeci">cpd_patch * cpd_instance_patch_load(cpd_instance *instance, const char *name, const char *path)</div><div class="ttdoc">Loads a new patch. </div></div>
 <div class="ttc" id="group__patch_html_ga2283e90a3c1e3c8d776aff842ba9a38e"><div class="ttname"><a href="group__patch.html#ga2283e90a3c1e3c8d776aff842ba9a38e">cpd_patch_get_dollarzero</a></div><div class="ttdeci">int cpd_patch_get_dollarzero(cpd_patch const *patch)</div><div class="ttdoc">Gets the dollar zero of a patch. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

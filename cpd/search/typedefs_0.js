@@ -1,22 +1,12 @@
 var searchData=
 [
   ['cpd_5fgpointer',['cpd_gpointer',['../group__gpointer.html#gad620bec751729624717462d6a91e8ae3',1,'cpd_types.h']]],
-  ['cpd_5fhook_5faftertouch',['cpd_hook_aftertouch',['../group__midi.html#gab881b58e1f7304a6f9fb4374023c3911',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fanything',['cpd_hook_anything',['../group__message.html#gaca378bdbcccc92a7baf6cc598c2836ca',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fbang',['cpd_hook_bang',['../group__message.html#ga688d0fa901093bf206cb4e531cf65535',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fbyte',['cpd_hook_byte',['../group__midi.html#gaac5256d14f1f724ebefc43dc7e7cf2ce',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fcontrolchange',['cpd_hook_controlchange',['../group__midi.html#ga12b98255c9f4d0a5545325652c402d70',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5ffloat',['cpd_hook_float',['../group__message.html#gab9bb4ad26d558c72ee9d06be008caf74',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fgpointer',['cpd_hook_gpointer',['../group__message.html#gaf76a1e4f884e8f3d5edddb02f32e5457',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5flist',['cpd_hook_list',['../group__message.html#ga52e4006c2c91e222b76d77cdd82762f1',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fnoteon',['cpd_hook_noteon',['../group__midi.html#ga2fbece07f84765dde3af44e58c599ed4',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fpitchbend',['cpd_hook_pitchbend',['../group__midi.html#gafe6567686458db04c478c545e9424133',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fpolyaftertouch',['cpd_hook_polyaftertouch',['../group__midi.html#gaeb9caec119624dc3e1f8b6c28a99cfa5',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fpost',['cpd_hook_post',['../group__post.html#ga162d816e7aa00071a8d01ed3d379ee77',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fprogramchange',['cpd_hook_programchange',['../group__midi.html#ga6b863790eb876b3d79b916fb65815f0e',1,'cpd_instance.h']]],
-  ['cpd_5fhook_5fsymbol',['cpd_hook_symbol',['../group__message.html#ga36dbc0888b007610e2a6d9dd2e7d6b88',1,'cpd_instance.h']]],
-  ['cpd_5finternal',['cpd_internal',['../group__instance.html#ga8f35a84ab7163ec09f94b144ad0f7a35',1,'cpd_instance.h']]],
-  ['cpd_5flist',['cpd_list',['../group__list.html#ga29673bb8936b13631aa81b229457e528',1,'cpd_types.h']]],
+  ['cpd_5fhook_5fpost',['cpd_hook_post',['../group__post.html#gaf2006e73ceeb7141d75c2d8e48be2049',1,'cpd_post.h']]],
+  ['cpd_5fmessage_5fhook',['cpd_message_hook',['../group__message.html#gaee9cadce75268d08858815929e872d3a',1,'cpd_message.h']]],
+  ['cpd_5fmidi_5fdata',['cpd_midi_data',['../group__midi.html#ga946754433c03472de895209c66f1ad61',1,'cpd_midi.h']]],
+  ['cpd_5fmidi_5fhook',['cpd_midi_hook',['../group__midi.html#gab8be43ce0031312405a11047e6b61bcb',1,'cpd_midi.h']]],
+  ['cpd_5fmutex',['cpd_mutex',['../group__mutex.html#gadbbd8cdb5edf79e07e2b688d824c2496',1,'cpd_mutex.h']]],
+  ['cpd_5fsample',['cpd_sample',['../group__dsp.html#gad2115974a0d2488dc60dc63f1b209f8d',1,'cpd_dsp.h']]],
   ['cpd_5fsymbol',['cpd_symbol',['../group__symbol.html#gaa1225f47ec39569ebdc3b296d4022a7a',1,'cpd_types.h']]],
   ['cpd_5ftie',['cpd_tie',['../group__tie.html#ga193e1a7d3b8d82897182729298fa23c8',1,'cpd_types.h']]]
 ];

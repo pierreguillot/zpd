@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['name',['name',['../classxpd_1_1object.html#a37627d5d5bba7f4a8690c71c2ab3cb07',1,'xpd::object::name()'],['../classxpd_1_1patch.html#a37627d5d5bba7f4a8690c71c2ab3cb07',1,'xpd::patch::name()'],['../classxpd_1_1symbol.html#a37627d5d5bba7f4a8690c71c2ab3cb07',1,'xpd::symbol::name()'],['../classxpd_1_1tie.html#a37627d5d5bba7f4a8690c71c2ab3cb07',1,'xpd::tie::name()']]]
+  ['load',['load',['../classxpd_1_1instance.html#af35e1a2603b22daef2ffc78d9e08fc86',1,'xpd::instance']]]
 ];

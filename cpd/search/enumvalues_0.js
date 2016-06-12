@@ -10,7 +10,18 @@ var searchData=
   ['cpd_5fgui_5fsliderv',['CPD_GUI_SLIDERV',['../group__gui.html#gga3917296db267c2f9f582467a3a4eaf11a4d0e5727f55e52a16f9f9e41106359e1',1,'cpd_gui.h']]],
   ['cpd_5fgui_5ftoggle',['CPD_GUI_TOGGLE',['../group__gui.html#gga3917296db267c2f9f582467a3a4eaf11a8700df4328be31ccc948787b8c89bf19',1,'cpd_gui.h']]],
   ['cpd_5fgui_5fvumeter',['CPD_GUI_VUMETER',['../group__gui.html#gga3917296db267c2f9f582467a3a4eaf11a09b2fca8d0913fe21abce38d4db98c6a',1,'cpd_gui.h']]],
+  ['cpd_5fmidi_5fatouch',['CPD_MIDI_ATOUCH',['../group__midi.html#gga676847bc3018960bbaccb9e34f779402aba94fc48a0c75afedb177519c3d43f21',1,'cpd_midi.h']]],
+  ['cpd_5fmidi_5fbend',['CPD_MIDI_BEND',['../group__midi.html#gga676847bc3018960bbaccb9e34f779402a756c3dfa68b5c3f6dffcae1d49b59b0c',1,'cpd_midi.h']]],
+  ['cpd_5fmidi_5fbyte',['CPD_MIDI_BYTE',['../group__midi.html#gga676847bc3018960bbaccb9e34f779402a007bffecfddd9da2022e026c169212c5',1,'cpd_midi.h']]],
+  ['cpd_5fmidi_5fctrl',['CPD_MIDI_CTRL',['../group__midi.html#gga676847bc3018960bbaccb9e34f779402a704a85fdefdc00b29a939d9648d02a02',1,'cpd_midi.h']]],
+  ['cpd_5fmidi_5fnote',['CPD_MIDI_NOTE',['../group__midi.html#gga676847bc3018960bbaccb9e34f779402ae95f74b0fa01707da7b00aa265146a8d',1,'cpd_midi.h']]],
+  ['cpd_5fmidi_5fpatouch',['CPD_MIDI_PATOUCH',['../group__midi.html#gga676847bc3018960bbaccb9e34f779402aa6380e520c2a3866ded0e47491e14cc5',1,'cpd_midi.h']]],
+  ['cpd_5fmidi_5fpgrm',['CPD_MIDI_PGRM',['../group__midi.html#gga676847bc3018960bbaccb9e34f779402a658ccd4311d185867e0d8f18950c10c7',1,'cpd_midi.h']]],
   ['cpd_5fnull',['CPD_NULL',['../group__list.html#ggadd5f8af8a46f7d089420a4f5cd25d758a410742c0d5a308c99fa18dceea71c0ce',1,'cpd_types.h']]],
   ['cpd_5fpointer',['CPD_POINTER',['../group__list.html#ggadd5f8af8a46f7d089420a4f5cd25d758a9fb624ca2984af50a929c4843cd059ad',1,'cpd_types.h']]],
+  ['cpd_5fpost_5ferror',['cpd_post_error',['../group__post.html#gga41eb4ee14235538c20ea33bd86d2976bae5f8728fd376dbd939da7a252351ee5c',1,'cpd_post.h']]],
+  ['cpd_5fpost_5ffatal',['cpd_post_fatal',['../group__post.html#gga41eb4ee14235538c20ea33bd86d2976baa42aa3f378018832176d22c6129a4e3a',1,'cpd_post.h']]],
+  ['cpd_5fpost_5flog',['cpd_post_log',['../group__post.html#gga41eb4ee14235538c20ea33bd86d2976ba4830ec21eb6ad6bdbae9a70dc6eb2b25',1,'cpd_post.h']]],
+  ['cpd_5fpost_5fnormal',['cpd_post_normal',['../group__post.html#gga41eb4ee14235538c20ea33bd86d2976ba9e02b97ff52f2032cec4c2d95c862836',1,'cpd_post.h']]],
   ['cpd_5fsymbol',['CPD_SYMBOL',['../group__list.html#ggadd5f8af8a46f7d089420a4f5cd25d758ae9a57490ca4bfbef693058328e8767c0',1,'cpd_types.h']]]
 ];
