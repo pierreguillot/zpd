@@ -82,7 +82,7 @@ namespace xpd
     void console::history::clear() xpd_noexcept
     {
         m_counters[0] = m_counters[1] = m_counters[2] = m_counters[3] = 0ul;
-        return m_posts.clear();
+        m_posts.clear();
     }
     
     void console::history::add(post const& mess) xpd_noexcept
