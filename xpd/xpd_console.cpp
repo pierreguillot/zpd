@@ -49,8 +49,7 @@ namespace xpd
         {
             if(m_posts[i].type == lvl)
             {
-                ++c;
-                if(c == index+1)
+                if(c++ == index)
                 {
                     return m_posts[static_cast<size_t>(i)];
                 }
