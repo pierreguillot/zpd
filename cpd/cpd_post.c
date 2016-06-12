@@ -13,7 +13,6 @@
 #include "../pd/src/m_pd.h"
 #include "../pd/src/s_stuff.h"
 #include <stdlib.h>
-#include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -53,16 +52,11 @@ void cpd_instance_post_sethook(cpd_instance* instance, cpd_hook_post posthook)
     instance->c_post->c_hook = posthook;
 }
 
-void cpd_instance_post_send(cpd_instance* instance, cpd_postlevel level,  char const* message, ...)
+void cpd_instance_post_send(cpd_instance* instance, cpd_post post)
 {
-    char buf[MAXPDSTRING];
-    va_list ap;
-    va_start(ap, message);
-    vsnprintf(buf, MAXPDSTRING-1, message, ap);
-    va_end(ap);
     if(instance->c_post && instance->c_post->c_hook)
     {
-        instance->c_post->c_hook(instance, (cpd_post){level, message});
+        instance->c_post->c_hook(instance, post);
     }
 }
 

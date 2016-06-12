@@ -11,6 +11,10 @@
 #ifndef cpd_h
 #define cpd_h
 
+#include "cpd_dsp.h"
+#include "cpd_midi.h"
+#include "cpd_message.h"
+#include "cpd_post.h"
 #include "cpd_gui.h"
 
 #endif // cpd_h

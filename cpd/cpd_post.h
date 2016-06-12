@@ -48,8 +48,8 @@ CPD_EXTERN void cpd_instance_post_sethook(cpd_instance* instance, cpd_hook_post 
 
 //! @brief Sends a normal post to the current instance.
 //! @param instance The instance.
-//! @param message The message in the printf format.
-CPD_EXTERN void cpd_instance_post_send(cpd_instance* instance, cpd_postlevel level,  char const* message, ...);
+//! @param post     The post message.
+CPD_EXTERN void cpd_instance_post_send(cpd_instance* instance, cpd_post post);
 
 //! @}
 

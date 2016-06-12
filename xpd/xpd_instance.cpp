@@ -32,7 +32,6 @@ namespace xpd
     public:        
         cpd_instance object;
         instance*  ref;
-        cpd_hook_console console;
         
         static internal* allocate(instance* _ref)
         {
@@ -40,12 +39,7 @@ namespace xpd
             if(ptr)
             {
                 ptr->ref = _ref;
-                ptr->console.m_log   = (cpd_hook_post)instance::internal::m_log_hook;
-                ptr->console.m_normal= (cpd_hook_post)instance::internal::m_normal_hook;
-                ptr->console.m_error = (cpd_hook_post)instance::internal::m_error_hook;
-                ptr->console.m_fatal = (cpd_hook_post)instance::internal::m_fatal_hook;
-                
-                cpd_instance_set_hook_console(reinterpret_cast<cpd_instance*>(ptr), &ptr->console);
+                cpd_instance_post_sethook(reinterpret_cast<cpd_instance*>(ptr), (cpd_hook_post)func_post);
                 cpd_instance_midi_sethook(reinterpret_cast<cpd_instance*>(ptr), (cpd_midi_hook)func_midi);
                 
             }
@@ -106,6 +100,11 @@ namespace xpd
                 }
             }
             instance->ref->receive(smuggler::createtie(tie), smuggler::createsymbol(s), vec);
+        }
+        
+        static void func_post(instance::internal* instance, cpd_post post)
+        {
+            int todo;
         }
     };
     
@@ -199,22 +198,8 @@ namespace xpd
     void instance::send(console::post const& post) const
     {
         environment::lock();
-        if(post.type == console::error)
-        {
-            cpd_instance_post_error(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
-        }
-        else if(post.type == console::fatal)
-        {
-            cpd_instance_post_fatal(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
-        }
-        else if(post.type == console::normal)
-        {
-            cpd_instance_post_normal(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
-        }
-        else
-        {
-            cpd_instance_post_log(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
-        }
+        cpd_instance_post_send(reinterpret_cast<cpd_instance *>(m_ptr),
+                               (cpd_post){static_cast<cpd_postlevel>(post.type), post.text.c_str()});
         environment::unlock();
     }
     
