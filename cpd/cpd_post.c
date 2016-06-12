@@ -28,18 +28,18 @@ struct cpd_post_manager
 //                                      INTERNAL                                        //
 // ==================================================================================== //
 
-extern void cpd_post_manager_init(struct cpd_post_manager* manager)
+extern void cpd_post_manager_init(cpd_instance* instance)
 {
-    manager = (struct cpd_post_manager *)malloc(sizeof(struct cpd_post_manager));
-    if(manager)
+    instance->c_post = (struct cpd_post_manager *)malloc(sizeof(struct cpd_post_manager));
+    if(instance->c_post)
     {
-        manager->c_hook = NULL;
+        instance->c_post->c_hook = NULL;
     }
 }
 
-extern void cpd_post_manager_clear(struct cpd_post_manager* manager)
+extern void cpd_post_manager_clear(cpd_instance* instance)
 {
-    free(manager);
+    free(instance->c_post);
 }
 
 

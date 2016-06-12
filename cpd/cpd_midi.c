@@ -64,31 +64,31 @@ static char cpd_midi_manager_alloc(struct cpd_midi_manager* manager, size_t news
 //                                      INTERNAL                                        //
 // ==================================================================================== //
 
-extern void cpd_midi_manager_init(struct cpd_midi_manager* manager, size_t size)
+extern void cpd_midi_manager_init(cpd_instance* instance, size_t size)
 {
-    manager = (struct cpd_midi_manager *)malloc(sizeof(struct cpd_midi_manager));
-    if(manager)
+    instance->c_midi = (struct cpd_midi_manager *)malloc(sizeof(struct cpd_midi_manager));
+    if(instance->c_midi)
     {
-        manager->c_hook     = NULL;
-        manager->c_buffer   = NULL;
-        manager->c_size     = 0;
-        manager->c_pos      = 0;
-        cpd_midi_manager_alloc(manager, size);
-        cpd_mutex_init(&(manager->c_mutex));
+        instance->c_midi->c_hook     = NULL;
+        instance->c_midi->c_buffer   = NULL;
+        instance->c_midi->c_size     = 0;
+        instance->c_midi->c_pos      = 0;
+        cpd_midi_manager_alloc(instance->c_midi, size);
+        cpd_mutex_init(&(instance->c_midi->c_mutex));
     }
 }
 
-extern void cpd_midi_manager_clear(struct cpd_midi_manager* manager)
+extern void cpd_midi_manager_clear(cpd_instance* instance)
 {
-    if(manager->c_buffer && manager->c_size)
+    if(instance->c_midi->c_buffer && instance->c_midi->c_size)
     {
-        free(manager->c_buffer);
+        free(instance->c_midi->c_buffer);
     }
-    manager->c_buffer = NULL;
-    manager->c_size = 0;
-    manager->c_pos  = 0;
-    cpd_mutex_destroy(&(manager->c_mutex));
-    free(manager);
+    instance->c_midi->c_buffer = NULL;
+    instance->c_midi->c_size = 0;
+    instance->c_midi->c_pos  = 0;
+    cpd_mutex_destroy(&(instance->c_midi->c_mutex));
+    free(instance->c_midi);
 }
 
 extern void cpd_midi_manager_perform(struct cpd_midi_manager* manager)

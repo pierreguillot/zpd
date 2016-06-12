@@ -37,7 +37,7 @@ struct cpd_dsp_manager
 //                                      INTERNAL                                        //
 // ==================================================================================== //
 
-extern void cpd_dsp_manager_init(struct cpd_dsp_manager* manager)
+extern void cpd_dsp_manager_init(cpd_instance* instance)
 {
     static int initialized = 0;
     if(!initialized)
@@ -46,25 +46,25 @@ extern void cpd_dsp_manager_init(struct cpd_dsp_manager* manager)
         c_sym_pd  = gensym("pd");
         initialized = 1;
     }
-    manager = (struct cpd_dsp_manager *)malloc(sizeof(struct cpd_dsp_manager));
-    if(manager)
+    instance->c_dsp = (struct cpd_dsp_manager *)malloc(sizeof(struct cpd_dsp_manager));
+    if(instance->c_dsp)
     {
-        manager->c_inputs       = NULL;
-        manager->c_outputs      = NULL;
-        manager->c_samplerate   = 0;
-        manager->c_ninputs      = 0;
-        manager->c_noutputs     = 0;
+        instance->c_dsp->c_inputs       = NULL;
+        instance->c_dsp->c_outputs      = NULL;
+        instance->c_dsp->c_samplerate   = 0;
+        instance->c_dsp->c_ninputs      = 0;
+        instance->c_dsp->c_noutputs     = 0;
     }
 }
 
-extern void cpd_dsp_manager_clear(struct cpd_dsp_manager* manager)
+extern void cpd_dsp_manager_clear(cpd_instance* instance)
 {
-    manager->c_inputs       = NULL;
-    manager->c_outputs      = NULL;
-    manager->c_samplerate   = 0;
-    manager->c_ninputs      = 0;
-    manager->c_noutputs     = 0;
-    free(manager);
+    instance->c_dsp->c_inputs       = NULL;
+    instance->c_dsp->c_outputs      = NULL;
+    instance->c_dsp->c_samplerate   = 0;
+    instance->c_dsp->c_ninputs      = 0;
+    instance->c_dsp->c_noutputs     = 0;
+    free(instance->c_dsp);
 }
 
 
