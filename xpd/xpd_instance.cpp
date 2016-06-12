@@ -181,20 +181,43 @@ namespace xpd
     
     void instance::send(console::post const& post) const
     {
-        cpd_instance_post_send(reinterpret_cast<cpd_instance *>(m_ptr),
-                               (cpd_post){static_cast<cpd_postlevel>(post.type), post.text.c_str()});
+        cpd_post cpost;
+        cpost.level = static_cast<cpd_postlevel>(post.type);
+        cpost.text  = post.text.c_str();
+        cpd_instance_post_send(reinterpret_cast<cpd_instance *>(m_ptr), cpost);
     }
     
     void instance::send(tie name, symbol selector, std::vector<atom> const& atoms) const
     {
-        int for_the_moment;
-        cpd_instance_message_send(reinterpret_cast<cpd_instance *>(m_ptr), (cpd_message){smuggler::gettie(name), smuggler::getsymbol(selector), (cpd_list){0, NULL}});
+        cpd_message cmess;
+        cmess.tie       = smuggler::gettie(name);
+        cmess.selector  = smuggler::getsymbol(selector);
+        cpd_list_init(&cmess.list, atoms.size());
+        if(cmess.list.size == atoms.size())
+        {
+            for(size_t i = 0; i  < cmess.list.size; ++i)
+            {
+                if(atoms[i].type() == atom::float_t)
+                {
+                    cpd_list_set_float(&cmess.list, i, float(atoms[i]));
+                }
+                else if(atoms[i].type() == atom::symbol_t)
+                {
+                    cpd_list_set_symbol(&cmess.list, i, smuggler::getsymbol(symbol(atoms[i])));
+                }
+            }
+            cpd_instance_message_send(reinterpret_cast<cpd_instance *>(m_ptr), cmess);
+        }
     }
     
     void instance::send(midi::event const& event) const
     {
-        cpd_instance_midi_send(reinterpret_cast<cpd_instance *>(m_ptr),
-                               (cpd_midi_event){cpd_midi_type(event.type()), event.data1(), event.data2(), event.data3()});
+        cpd_midi_event cevent;
+        cevent.type     = static_cast<cpd_midi_type>(event.type());
+        cevent.data1    =  event.data1();
+        cevent.data2    =  event.data2();
+        cevent.data3    =  event.data3();
+        cpd_instance_midi_send(reinterpret_cast<cpd_instance *>(m_ptr), cevent);
     }
     
     void instance::bind(tie name)
