@@ -13,7 +13,7 @@
 
 int main( int argc, char* const argv[] )
 {
-    if(argc && argv && argv[0])
+    if(argc && argv)
     {
         xpd::environment::initialize();
         std::cout << "version "
