@@ -117,6 +117,7 @@ int main(int argc, char** argv)
     
     test::types::perform();
 
+    /*
     thd_thread_detach(&ta, (thd_thread_method)(test_post), &is);
     thd_thread_join(&ta);
     
@@ -132,6 +133,7 @@ int main(int argc, char** argv)
     thd_thread_detach(&te, (thd_thread_method)(test_patch), &is);
     thd_thread_join(&te);
 
+     */
     environment::clear();
     return 0;
 }
