@@ -37,29 +37,11 @@ struct cpd_message_manager
     cpd_receiver*       c_receivers;
 };
 
-static t_class *cpd_receiver_class;
-
-static void receiver_anything(cpd_receiver *x, t_symbol *s, int argc, t_atom *argv)
-{
-    if(x->c_hook)
-    {
-        x->c_hook(x->c_owner, (cpd_message){x->c_sym, s, (cpd_list){(size_t)argc, (void *)argv}});
-    }
-}
-
-static void receiver_free(cpd_receiver *x)
-{
-    pd_unbind((t_pd *)x, x->c_sym);
-}
 
 
-
-
-
-
-
-
-
+// ==================================================================================== //
+//                                      ALLOCATION                                      //
+// ==================================================================================== //
 
 static char cpd_message_manager_alloc(struct cpd_message_manager* manager, size_t newsize)
 {
@@ -90,6 +72,25 @@ static char cpd_message_manager_alloc(struct cpd_message_manager* manager, size_
     return 0;
 }
 
+// ==================================================================================== //
+//                                      INTERNAL                                        //
+// ==================================================================================== //
+
+static t_class *cpd_receiver_class;
+
+static void receiver_anything(cpd_receiver *x, t_symbol *s, int argc, t_atom *argv)
+{
+    if(x->c_hook)
+    {
+        x->c_hook(x->c_owner, (cpd_message){x->c_sym, s, (cpd_list){(size_t)argc, (void *)argv}});
+    }
+}
+
+static void receiver_free(cpd_receiver *x)
+{
+    pd_unbind((t_pd *)x, x->c_sym);
+}
+
 extern void cpd_message_manager_init(struct cpd_message_manager* manager, size_t size)
 {
     static t_class* c = NULL;
@@ -106,13 +107,17 @@ extern void cpd_message_manager_init(struct cpd_message_manager* manager, size_t
         cpd_receiver_class = c;
     }
     
-    manager->c_hook     = NULL;
-    manager->c_buffer   = NULL;
-    manager->c_size     = 0;
-    manager->c_pos      = 0;
-    manager->c_receivers= NULL;
-    cpd_message_manager_alloc(manager, size);
-    cpd_mutex_init(&(manager->c_mutex));
+    manager = (struct cpd_message_manager *)malloc(sizeof(struct cpd_message_manager));
+    if(manager)
+    {
+        manager->c_hook     = NULL;
+        manager->c_buffer   = NULL;
+        manager->c_size     = 0;
+        manager->c_pos      = 0;
+        manager->c_receivers= NULL;
+        cpd_message_manager_alloc(manager, size);
+        cpd_mutex_init(&(manager->c_mutex));
+    }
 }
 
 extern void cpd_message_manager_clear(struct cpd_message_manager* manager)
@@ -132,26 +137,7 @@ extern void cpd_message_manager_clear(struct cpd_message_manager* manager)
     manager->c_size = 0;
     manager->c_pos  = 0;
     cpd_mutex_destroy(&(manager->c_mutex));
-}
-
-
-
-
-
-
-void cpd_instance_message_send(cpd_instance* instance, cpd_message event)
-{
-    
-    struct cpd_message_manager* manager = instance->c_message;
-    if(manager)
-    {
-        cpd_mutex_lock(&(manager->c_mutex));
-        if(cpd_message_manager_alloc(manager, manager->c_pos+1))
-        {
-            manager->c_buffer[manager->c_pos++] = event;
-        }
-        cpd_mutex_unlock(&(manager->c_mutex));
-    }
+    free(manager);
 }
 
 extern void cpd_message_manager_perform(struct cpd_message_manager* manager)
@@ -171,6 +157,11 @@ extern void cpd_message_manager_perform(struct cpd_message_manager* manager)
     cpd_mutex_unlock(&(manager->c_mutex));
 }
 
+
+
+// ==================================================================================== //
+//                                      INTERFACE                                       //
+// ==================================================================================== //
 
 static cpd_receiver* cpd_message_manager_getreceiver(struct cpd_message_manager* manager, cpd_tie const* tie)
 {
@@ -241,6 +232,22 @@ void cpd_instance_unbind(cpd_instance* instance, cpd_tie* tie)
     }
     
 }
+
+void cpd_instance_message_send(cpd_instance* instance, cpd_message event)
+{
+    
+    struct cpd_message_manager* manager = instance->c_message;
+    if(manager)
+    {
+        cpd_mutex_lock(&(manager->c_mutex));
+        if(cpd_message_manager_alloc(manager, manager->c_pos+1))
+        {
+            manager->c_buffer[manager->c_pos++] = event;
+        }
+        cpd_mutex_unlock(&(manager->c_mutex));
+    }
+}
+
 
 
 

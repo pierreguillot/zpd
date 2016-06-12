@@ -13,6 +13,7 @@
 #include "../pd/src/m_pd.h"
 #include "../pd/src/s_stuff.h"
 #include <string.h>
+#include <stdlib.h>
 
 static t_symbol* c_sym_dsp;
 static t_symbol* c_sym_pd;
@@ -32,6 +33,10 @@ struct cpd_dsp_manager
 };
 
 
+// ==================================================================================== //
+//                                      INTERNAL                                        //
+// ==================================================================================== //
+
 extern void cpd_dsp_manager_init(struct cpd_dsp_manager* manager)
 {
     static int initialized = 0;
@@ -41,11 +46,15 @@ extern void cpd_dsp_manager_init(struct cpd_dsp_manager* manager)
         c_sym_pd  = gensym("pd");
         initialized = 1;
     }
-    manager->c_inputs       = NULL;
-    manager->c_outputs      = NULL;
-    manager->c_samplerate   = 0;
-    manager->c_ninputs      = 0;
-    manager->c_noutputs     = 0;
+    manager = (struct cpd_dsp_manager *)malloc(sizeof(struct cpd_dsp_manager));
+    if(manager)
+    {
+        manager->c_inputs       = NULL;
+        manager->c_outputs      = NULL;
+        manager->c_samplerate   = 0;
+        manager->c_ninputs      = 0;
+        manager->c_noutputs     = 0;
+    }
 }
 
 extern void cpd_dsp_manager_clear(struct cpd_dsp_manager* manager)
@@ -55,7 +64,13 @@ extern void cpd_dsp_manager_clear(struct cpd_dsp_manager* manager)
     manager->c_samplerate   = 0;
     manager->c_ninputs      = 0;
     manager->c_noutputs     = 0;
+    free(manager);
 }
+
+
+// ==================================================================================== //
+//                                      INTERFACE                                       //
+// ==================================================================================== //
 
 void cpd_instance_dsp_prepare(cpd_instance* instance, const int nins, const int nouts, const int samplerate, const int nsamples)
 {

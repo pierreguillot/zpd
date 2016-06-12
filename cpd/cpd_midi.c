@@ -27,6 +27,10 @@ struct cpd_midi_manager
     cpd_mutex       c_mutex;
 };
 
+// ==================================================================================== //
+//                                      ALLOCATION                                      //
+// ==================================================================================== //
+
 static char cpd_midi_manager_alloc(struct cpd_midi_manager* manager, size_t newsize)
 {
     cpd_midi_event* temp;
@@ -56,14 +60,22 @@ static char cpd_midi_manager_alloc(struct cpd_midi_manager* manager, size_t news
     return 0;
 }
 
+// ==================================================================================== //
+//                                      INTERNAL                                        //
+// ==================================================================================== //
+
 extern void cpd_midi_manager_init(struct cpd_midi_manager* manager, size_t size)
 {
-    manager->c_hook     = NULL;
-    manager->c_buffer   = NULL;
-    manager->c_size     = 0;
-    manager->c_pos      = 0;
-    cpd_midi_manager_alloc(manager, size);
-    cpd_mutex_init(&(manager->c_mutex));
+    manager = (struct cpd_midi_manager *)malloc(sizeof(struct cpd_midi_manager));
+    if(manager)
+    {
+        manager->c_hook     = NULL;
+        manager->c_buffer   = NULL;
+        manager->c_size     = 0;
+        manager->c_pos      = 0;
+        cpd_midi_manager_alloc(manager, size);
+        cpd_mutex_init(&(manager->c_mutex));
+    }
 }
 
 extern void cpd_midi_manager_clear(struct cpd_midi_manager* manager)
@@ -76,25 +88,7 @@ extern void cpd_midi_manager_clear(struct cpd_midi_manager* manager)
     manager->c_size = 0;
     manager->c_pos  = 0;
     cpd_mutex_destroy(&(manager->c_mutex));
-}
-
-
-
-
-
-
-void cpd_instance_midi_send(cpd_instance* instance, cpd_midi_event event)
-{
-    struct cpd_midi_manager* manager =instance->c_midi;
-    if(manager)
-    {
-        cpd_mutex_lock(&(manager->c_mutex));
-        if(cpd_midi_manager_alloc(manager, manager->c_pos+1))
-        {
-            manager->c_buffer[manager->c_pos++] = event;
-        }
-        cpd_mutex_unlock(&(manager->c_mutex));
-    }
+    free(manager);
 }
 
 extern void cpd_midi_manager_perform(struct cpd_midi_manager* manager)
@@ -138,6 +132,12 @@ extern void cpd_midi_manager_perform(struct cpd_midi_manager* manager)
     cpd_mutex_unlock(&(manager->c_mutex));
 }
 
+
+
+// ==================================================================================== //
+//                                      INTERFACE                                       //
+// ==================================================================================== //
+
 void cpd_instance_midi_sethook(cpd_instance* instance, cpd_midi_hook midihook)
 {
     struct cpd_midi_manager* manager = instance->c_midi;
@@ -147,8 +147,24 @@ void cpd_instance_midi_sethook(cpd_instance* instance, cpd_midi_hook midihook)
     }
 }
 
+void cpd_instance_midi_send(cpd_instance* instance, cpd_midi_event event)
+{
+    struct cpd_midi_manager* manager =instance->c_midi;
+    if(manager)
+    {
+        cpd_mutex_lock(&(manager->c_mutex));
+        if(cpd_midi_manager_alloc(manager, manager->c_pos+1))
+        {
+            manager->c_buffer[manager->c_pos++] = event;
+        }
+        cpd_mutex_unlock(&(manager->c_mutex));
+    }
+}
 
 
+// ==================================================================================== //
+//                                      PURE DATA                                       //
+// ==================================================================================== //
 
 void outmidi_noteon(int port, int channel, int pitch, int velocity)
 {

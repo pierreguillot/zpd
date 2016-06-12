@@ -96,9 +96,7 @@ extern void cpd_unlock()
 
 static t_sample*          c_sample_ins    = NULL;
 static t_sample*          c_sample_outs   = NULL;
-static t_pdinstance*      c_first_instance  = NULL;
-
-
+static t_pdinstance*      c_first_instance = NULL;
 cpd_symbol*        c_sym_bng           = NULL;
 cpd_symbol*        c_sym_hsl           = NULL;
 cpd_symbol*        c_sym_vsl           = NULL;
@@ -110,9 +108,12 @@ cpd_symbol*        c_sym_vu            = NULL;
 cpd_symbol*        c_sym_cnv           = NULL;
 cpd_symbol*        c_sym_empty         = NULL;
 
-static void cpd_print(const char* s);
-
+extern void cpd_print(const char* s);
 extern cpd_instance* c_current_instance;
+
+// ==================================================================================== //
+//                                      INTERFACE                                       //
+// ==================================================================================== //
 
 void cpd_init()
 {
@@ -233,44 +234,5 @@ void cpd_searchpath_add(const char* path)
 
 
 
-
-static void cpd_print(const char* s)
-{
-    int level = 2;
-#ifdef DEBUG
-    printf("%s", s);
-#endif
-    if(!c_current_instance)
-    {
-        return;
-    }
-    if(strncmp(s, "error:", 6) == 0)
-    {
-        level = 0;
-        s+=5;
-    }
-    else if(strncmp(s, "verbose(", 8) == 0 && isdigit(s[8]))
-    {
-        level = atoi(s+8);
-        s+=12;
-    }
-    
-    if(level == 0)
-    {
-        cpd_instance_post_fatal(c_current_instance, s);
-    }
-    else if(level == 1)
-    {
-        cpd_instance_post_error(c_current_instance, s);
-    }
-    else if(level == 2)
-    {
-        cpd_instance_post_normal(c_current_instance, s);
-    }
-    else
-    {
-        cpd_instance_post_log(c_current_instance, s);
-    }
-}
 
 
