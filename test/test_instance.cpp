@@ -7,7 +7,7 @@
 #include <iostream>
 #include "test.hpp"
 
-class tester : private xpd::instance
+class instance_tester : private xpd::instance
 {
     
 };
@@ -16,12 +16,12 @@ TEST_CASE("instance", "[instance]")
 {
     SECTION("Constructor")
     {
-        tester inst;
+        instance_tester inst;
     }
     
     SECTION("Constructor Multi")
     {
-        tester inst[10];
+        instance_tester inst[10];
     }
 }
 
