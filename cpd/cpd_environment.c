@@ -17,6 +17,13 @@
 #include "../pd/src/m_imp.h"
 #include <assert.h>
 #include <signal.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+// ==================================================================================== //
+//                                      GENERAL                                         //
+// ==================================================================================== //
 
 EXTERN void pd_init(void);
 
@@ -48,13 +55,50 @@ int sys_mididevnametonumber(int output, const char *name) { return 0; }
 void sys_mididevnumbertoname(int output, int devno, char *name, int namesize) {}
 #define LCOV_EXCL_STOP
 
-static t_sample*          cpd_sample_ins    = NULL;
-static t_sample*          cpd_sample_outs   = NULL;
+
+
+
+
+
+
+
+// ==================================================================================== //
+//                                   IMPLEMENTATION                                     //
+// ==================================================================================== //
+
+#ifdef _WIN32
+#include <windows.h>
+static CRITICAL_SECTION  c_mutex;
+#else
+#include <pthread.h>
+static pthread_mutex_t c_mutex;
+#endif
+
+extern void cpd_lock()
+{
+#ifdef _WIN32
+    EnterCriticalSection(&c_mutex);
+#else
+    pthread_mutex_lock(&c_mutex);
+#endif
+}
+
+extern void cpd_unlock()
+{
+#ifdef _WIN32
+    LeaveCriticalSection(&c_mutex);
+#else
+    pthread_mutex_unlock(&c_mutex);
+#endif
+}
+
+
+
+static t_sample*          c_sample_ins    = NULL;
+static t_sample*          c_sample_outs   = NULL;
 static t_pdinstance*      c_first_instance  = NULL;
 
-cpd_instance*      c_current_instance  = NULL;
-t_symbol*          c_sym_pd            = NULL;
-t_symbol*          c_sym_dsp           = NULL;
+
 cpd_symbol*        c_sym_bng           = NULL;
 cpd_symbol*        c_sym_hsl           = NULL;
 cpd_symbol*        c_sym_vsl           = NULL;
@@ -66,8 +110,9 @@ cpd_symbol*        c_sym_vu            = NULL;
 cpd_symbol*        c_sym_cnv           = NULL;
 cpd_symbol*        c_sym_empty         = NULL;
 
-extern void cpd_print(const char* s);
-extern void receiver_setup(void);
+static void cpd_print(const char* s);
+
+extern cpd_instance* c_current_instance;
 
 void cpd_init()
 {
@@ -77,6 +122,11 @@ void cpd_init()
     assert("Pure Data is already initialized." && !initialized);
     if(!initialized)
     {
+#ifdef _WIN32
+        InitializeCriticalSection(&c_mutex);
+#else
+        pthread_mutex_init(&c_mutex, NULL);
+#endif
         signal(SIGFPE, SIG_IGN);
         sys_printhook = NULL;
         sys_soundin = NULL;
@@ -100,15 +150,14 @@ void cpd_init()
         sys_set_audio_settings(1, &devices, 1, &ioputs, 1, &devices, 1, &ioputs, 44100, -1, 1, DEFDACBLKSIZE);
         sched_set_using_audio(SCHED_AUDIO_CALLBACK);
         sys_reopen_audio();
-        cpd_sample_ins      = sys_soundin;
-        cpd_sample_outs     = sys_soundout;
+        
+        c_sample_ins      = sys_soundin;
+        c_sample_outs     = sys_soundout;
         c_first_instance    = pd_this;
         sys_soundin         = NULL;
         sys_soundout        = NULL;
         c_current_instance  = NULL;
-     
-        c_sym_pd            = gensym("pd");
-        c_sym_dsp           = gensym("dsp");
+        
         c_sym_bng           = gensym("bng");
         c_sym_hsl           = gensym("hsl");
         c_sym_vsl           = gensym("vsl");
@@ -129,7 +178,6 @@ void cpd_init()
         pique_setup();
         sigmund_tilde_setup();
         stdout_setup();
-        receiver_setup();
         
         sys_printhook = (t_printhook)(cpd_print);
         initialized = 1;
@@ -138,18 +186,23 @@ void cpd_init()
 
 void cpd_clear()
 {
-    if(cpd_sample_ins)
+    if(c_sample_ins)
     {
-        freebytes(cpd_sample_ins, (sys_inchannels ? sys_inchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
+        freebytes(c_sample_ins, (sys_inchannels ? sys_inchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
     }
-    if(cpd_sample_outs)
+    if(c_sample_outs)
     {
-        freebytes(cpd_sample_outs, (sys_outchannels ? sys_outchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
+        freebytes(c_sample_outs, (sys_outchannels ? sys_outchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
     }
     if(c_first_instance)
     {
         pdinstance_free(c_first_instance);
     }
+#ifdef _WIN32
+    DeleteCriticalSection(&c_mutex);
+#else
+    pthread_mutex_destroy(&c_mutex);
+#endif
 }
 
 unsigned int cpd_version_getmajor()
@@ -176,6 +229,48 @@ void cpd_searchpath_clear()
 void cpd_searchpath_add(const char* path)
 {
     sys_searchpath = namelist_append(sys_searchpath, path, 0);
+}
+
+
+
+
+static void cpd_print(const char* s)
+{
+    int level = 2;
+#ifdef DEBUG
+    printf("%s", s);
+#endif
+    if(!c_current_instance)
+    {
+        return;
+    }
+    if(strncmp(s, "error:", 6) == 0)
+    {
+        level = 0;
+        s+=5;
+    }
+    else if(strncmp(s, "verbose(", 8) == 0 && isdigit(s[8]))
+    {
+        level = atoi(s+8);
+        s+=12;
+    }
+    
+    if(level == 0)
+    {
+        cpd_instance_post_fatal(c_current_instance, s);
+    }
+    else if(level == 1)
+    {
+        cpd_instance_post_error(c_current_instance, s);
+    }
+    else if(level == 2)
+    {
+        cpd_instance_post_normal(c_current_instance, s);
+    }
+    else
+    {
+        cpd_instance_post_log(c_current_instance, s);
+    }
 }
 
 

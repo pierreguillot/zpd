@@ -15,6 +15,16 @@ set(CPDSOURCES
 ${PROJECT_SOURCE_DIR}/cpd/cpd_def.h
 ${PROJECT_SOURCE_DIR}/cpd/cpd_types.c
 ${PROJECT_SOURCE_DIR}/cpd/cpd_types.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_mutex.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_mutex.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_midi.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_midi.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_message.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_message.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_post.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_post.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_dsp.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_dsp.h
 ${PROJECT_SOURCE_DIR}/cpd/cpd_environment.c
 ${PROJECT_SOURCE_DIR}/cpd/cpd_environment.h
 ${PROJECT_SOURCE_DIR}/cpd/cpd_instance.c

@@ -89,7 +89,11 @@ CPD_EXTERN char const* cpd_symbol_get_name(cpd_symbol const* symbol);
 //! @{
 
 //! @brief The opaque list used for messages.
-typedef struct _list        cpd_list;
+typedef struct cpd_list
+{
+    size_t  size;
+    void*   vector;
+} cpd_list;
 
 //! @brief The type of messages in a list.
 typedef enum

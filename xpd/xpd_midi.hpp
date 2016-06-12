@@ -37,16 +37,16 @@ namespace xpd
             };
             
             //! @brief The event raw constructor.
-            inline xpd_constexpr event(type_t t, int v1, int v2, int v3) xpd_noexcept :
-            m_type(t), m_val1(v1), m_val2(v2), m_val3(v3) {}
+            inline xpd_constexpr event(type_t t, int data1, int data2, int data3) xpd_noexcept :
+            m_type(t), m_val1(data1), m_val2(data2), m_val3(data3) {}
             
             //! @brief The note event constructor.
             static inline xpd_constexpr event note(int channel, int pitch, int velocity) xpd_noexcept
             {return event(note_t, channel, pitch, velocity);}
             
             //! @brief The control change event constructor.
-            static inline xpd_constexpr event control_change(int channel, int controler, int value) xpd_noexcept
-            {return event(control_change_t, channel, controler, value);}
+            static inline xpd_constexpr event control_change(int channel, int controller, int value) xpd_noexcept
+            {return event(control_change_t, channel, controller, value);}
             
             //! @brief The program change event constructor.
             static inline xpd_constexpr event program_change(int channel, int program) xpd_noexcept
@@ -69,31 +69,40 @@ namespace xpd
             {return event(byte_t, 0, 0, value);}
             
             //! @brief Gets the type of the event.
-           inline xpd_constexpr type_t type() const xpd_noexcept {return m_type;}
+            inline xpd_constexpr type_t type() const xpd_noexcept {return m_type;}
+           
+            //! @brief Gets the first data.
+            inline xpd_constexpr int data1() const xpd_noexcept {return m_val1;}
+            
+            //! @brief Gets the second data.
+            inline xpd_constexpr int data2() const xpd_noexcept {return m_val2;}
+            
+            //! @brief Gets the third data.
+            inline xpd_constexpr int data3() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the channel value.
-           inline xpd_constexpr int channel() const xpd_noexcept {return m_val1;}
+            inline xpd_constexpr int channel() const xpd_noexcept {return m_val1;}
             
             //! @brief Gets the pitch value.
-           inline xpd_constexpr int pitch() const xpd_noexcept {return m_val2;}
+            inline xpd_constexpr int pitch() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the velocity value.
-           inline xpd_constexpr int velocity() const xpd_noexcept {return m_val3;}
+            inline xpd_constexpr int velocity() const xpd_noexcept {return m_val3;}
             
-            //! @brief Gets the controler.
-           inline xpd_constexpr int controler() const xpd_noexcept {return m_val2;}
+            //! @brief Gets the controller.
+            inline xpd_constexpr int controller() const xpd_noexcept {return m_val2;}
             
-            //! @brief Gets the controler, after touch or poly after touch value.
-           inline xpd_constexpr int value() const xpd_noexcept {return m_val3;}
+            //! @brief Gets the controller, after touch or poly after touch value.
+            inline xpd_constexpr int value() const xpd_noexcept {return m_val3;}
             
             //! @brief Gets the program value.
-           inline xpd_constexpr int program() const xpd_noexcept {return m_val2;}
+            inline xpd_constexpr int program() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the bend value.
-           inline xpd_constexpr int bend() const xpd_noexcept {return m_val2;}
+            inline xpd_constexpr int bend() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the after touch value.
-           inline xpd_constexpr int after_touch() const xpd_noexcept {return m_val3;}
+            inline xpd_constexpr int after_touch() const xpd_noexcept {return m_val3;}
             
         private:
             type_t m_type;

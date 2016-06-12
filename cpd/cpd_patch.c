@@ -10,8 +10,54 @@
 
 #include "cpd_patch.h"
 #include "../pd/src/m_pd.h"
+#include "../pd/src/m_imp.h"
+#include "../pd/src/s_stuff.h"
 #include "../pd/src/g_canvas.h"
 #include "../pd/src/g_all_guis.h"
+
+extern void cpd_instance_lock(cpd_instance* instance);
+extern void cpd_instance_unlock(cpd_instance* instance);
+
+cpd_patch* cpd_instance_patch_load(cpd_instance* instance, const char* name, const char* path)
+{
+    int i;
+    char* rpath;
+    t_canvas* cnv = NULL;
+    cpd_instance_lock(instance);
+    if(name && path)
+    {
+        cnv = (t_canvas *)glob_evalfile(NULL, gensym(name), gensym(path));
+        if(cnv)
+        {
+            cpd_instance_unlock(instance);
+            return cnv;
+        }
+    }
+    else if(name)
+    {
+        
+        i = 0;
+        while((rpath = namelist_get(sys_searchpath, i)) != NULL)
+        {
+            cnv = (t_canvas *)glob_evalfile(NULL, gensym(name), gensym(rpath));
+            if(cnv)
+            {
+                cpd_instance_unlock(instance);
+                return cnv;
+            }
+            i++;
+        }
+    }
+    cpd_instance_unlock(instance);
+    return NULL;
+}
+
+void cpd_instance_patch_close(cpd_instance* instance, cpd_patch* patch)
+{
+    cpd_instance_lock(instance);
+    canvas_free(patch);
+    cpd_instance_unlock(instance);
+}
 
 const char* cpd_patch_get_name(cpd_patch const* patch)
 {

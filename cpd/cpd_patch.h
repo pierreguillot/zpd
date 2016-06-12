@@ -20,6 +20,18 @@
 //! @addtogroup patch
 //! @{
 
+//! @brief Loads a new patch.
+//! @param instance The instance.
+//! @param name The name of the patch.
+//! @param path The path of the patch of NULL if the patch is in the searchpath.
+//! @return The pointer to the patch or NULL if the patch has not been allocated.
+CPD_EXTERN cpd_patch* cpd_instance_patch_load(cpd_instance* instance, const char* name, const char* path);
+
+//! @brief Closes a patch.
+//! @param instance The instance.
+//! @param patch The patch.
+CPD_EXTERN void cpd_instance_patch_close(cpd_instance* instance, cpd_patch* patch);
+
 //! @brief Gets the name of a patch.
 //! @param patch The patch.
 //! @return The name of the patch.

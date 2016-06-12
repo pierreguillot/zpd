@@ -13,11 +13,6 @@
 #include "../pd/src/m_pd.h"
 #include <stdlib.h>
 
-struct _list
-{
-    size_t l_n;
-    t_atom *l_vec;
-};
 
 cpd_tie* cpd_tie_create(const char* name)
 {
@@ -57,20 +52,20 @@ cpd_list* cpd_list_create(size_t size)
     {
         if(size)
         {
-            x->l_vec = (t_atom *)malloc(size * sizeof(t_atom));
-            if(x->l_vec)
+            x->vector = (void *)malloc(size * sizeof(t_atom));
+            if(x->vector)
             {
-                x->l_n = size;
+                x->size = size;
             }
             else
             {
-                x->l_n = 0;
+                x->size = 0;
             }
         }
         else
         {
-            x->l_n      = 0;
-            x->l_vec    = NULL;
+            x->size      = 0;
+            x->vector    = NULL;
         }
     }
     return x;
@@ -78,32 +73,33 @@ cpd_list* cpd_list_create(size_t size)
 
 void cpd_list_free(cpd_list *list)
 {
-    if(list->l_vec && list->l_n)
+    if(list->vector && list->size)
     {
-        free(list->l_vec);
+        free(list->vector);
     }
-    list->l_vec = NULL;
-    list->l_n   = 0;
+    list->vector = NULL;
+    list->size   = 0;
     free(list);
 }
 
 size_t cpd_list_get_size(cpd_list const* list)
 {
-    return list->l_n;
+    return list->size;
 }
 
 cpd_listtype cpd_list_get_type(cpd_list const* list, size_t index)
 {
-    if((list->l_vec+index)->a_type == A_FLOAT)
+    t_atom const* argv = (t_atom const*)list->vector;
+    if((argv+index)->a_type == A_FLOAT)
     {
         return CPD_FLOAT;
     }
-    if((list->l_vec+index)->a_type == A_SYMBOL)
+    if((argv+index)->a_type == A_SYMBOL)
     {
         return CPD_SYMBOL;
     }
 #define LCOV_EXCL_START
-    if((list->l_vec+index)->a_type == A_POINTER)
+    if((argv+index)->a_type == A_POINTER)
     {
         return CPD_POINTER;
     }
@@ -113,45 +109,51 @@ cpd_listtype cpd_list_get_type(cpd_list const* list, size_t index)
 
 float cpd_list_get_float(cpd_list const* list, size_t index)
 {
-    return (list->l_vec+index)->a_w.w_float;
+    t_atom const* argv = (t_atom const*)list->vector;
+    return (argv+index)->a_w.w_float;
 }
 
 cpd_symbol* cpd_list_get_symbol(cpd_list const* list, size_t index)
 {
-    return (list->l_vec+index)->a_w.w_symbol;
+    t_atom const* argv = (t_atom const*)list->vector;
+    return (argv+index)->a_w.w_symbol;
 }
 
 #define LCOV_EXCL_START
 cpd_gpointer* cpd_list_get_gpointer(cpd_list const* list, size_t index)
 {
-    return (list->l_vec+index)->a_w.w_gpointer;
+    t_atom const* argv = (t_atom const*)list->vector;
+    return (argv+index)->a_w.w_gpointer;
 }
 #define LCOV_EXCL_STOP
 
 void cpd_list_set_float(cpd_list *list, size_t index, float value)
 {
-    (list->l_vec+index)->a_type = A_FLOAT;
-    (list->l_vec+index)->a_w.w_float = value;
+    t_atom* argv = (t_atom *)list->vector;
+    (argv+index)->a_type = A_FLOAT;
+    (argv+index)->a_w.w_float = value;
 }
 
 void cpd_list_set_symbol(cpd_list *list, size_t index, cpd_symbol* symbol)
 {
-    (list->l_vec+index)->a_type = A_SYMBOL;
-    (list->l_vec+index)->a_w.w_symbol = symbol;
+    t_atom* argv = (t_atom *)list->vector;
+    (argv+index)->a_type = A_SYMBOL;
+    (argv+index)->a_w.w_symbol = symbol;
 }
 
 #define LCOV_EXCL_START
 void cpd_list_set_gpointer(cpd_list *list, size_t index, cpd_gpointer* pointer)
 {
-    (list->l_vec+index)->a_type = A_POINTER;
-    (list->l_vec+index)->a_w.w_gpointer = pointer;
+    t_atom* argv = (t_atom *)list->vector;
+    (argv+index)->a_type = A_POINTER;
+    (argv+index)->a_w.w_gpointer = pointer;
 }
 #define LCOV_EXCL_STOP
 
 
 t_atom* cpd_list_get_vec(cpd_list const* list)
 {
-    return list->l_vec;
+    return list->vector;
 }
 
 

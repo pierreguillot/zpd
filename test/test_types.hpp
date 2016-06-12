@@ -14,15 +14,26 @@
 
 namespace test
 {
-    class performer
+    class tester
     {
-        performer(const char* name) : m_name(name), m_count(0) {}
-        ~performer() {}
+        tester(const char* name) : m_name(name), m_count(0), m_errors(0) {}
+        virtual ~tester() {}
         
+        virtual void perform() = 0;
+        
+        void check_true(const char* mess, bool status)
+        {
+            m_count++;
+            if(!status)
+            {
+                m_errors = m_errors << m_count;
+            }
+        }
         
     private:
         std::string m_name;
         size_t      m_count;
+        size_t      m_errors;
     };
     
     class tie

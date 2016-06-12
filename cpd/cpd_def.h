@@ -37,15 +37,6 @@ CPD_EXTERN_STRUCT _text;
 CPD_EXTERN_STRUCT _iemgui;
 CPD_EXTERN_STRUCT _atom;
 
-//! @addtogroup instance
-//! @{
-//! @addtogroup dsp
-//! @{
-//! @brief The type used for samples during digital signal processing.
-typedef float cpd_sample;
-//! @}
-//! @}
-
 //! @addtogroup patch
 //! @{
 //! @brief The opaque type used for a patch.
