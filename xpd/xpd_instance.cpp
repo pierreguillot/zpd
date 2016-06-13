@@ -13,6 +13,7 @@ extern "C"
 #include "../cpd/cpd_midi.h"
 #include "../cpd/cpd_message.h"
 }
+#include <iostream>
 
 namespace xpd
 {
@@ -85,21 +86,21 @@ namespace xpd
         }
         
         
-        static void func_message(instance::internal* instance, cpd_tie* tie, cpd_symbol* s, cpd_list const* list)
+        static void func_message(instance::internal* instance, cpd_message message)
         {
-            std::vector<atom> vec(cpd_list_get_size(list));
+            std::vector<atom> vec(message.list.size);
             for(size_t i = 0; i < vec.size(); ++i)
             {
-                if(cpd_list_get_type(list, i) == CPD_FLOAT)
+                if(cpd_list_get_type(&message.list, i) == CPD_FLOAT)
                 {
-                    vec[i] = cpd_list_get_float(list, i);
+                    vec[i] = cpd_list_get_float(&message.list, i);
                 }
-                else if(cpd_list_get_type(list, i) == CPD_SYMBOL)
+                else if(cpd_list_get_type(&message.list, i) == CPD_SYMBOL)
                 {
-                    vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
+                    vec[i] = smuggler::createsymbol(cpd_list_get_symbol(&message.list, i));
                 }
             }
-            instance->ref->receive(smuggler::createtie(tie), smuggler::createsymbol(s), vec);
+            instance->ref->receive(smuggler::createtie(message.tie), smuggler::createsymbol(message.selector), vec);
         }
         
         static void func_post(instance::internal* instance, cpd_post post)
