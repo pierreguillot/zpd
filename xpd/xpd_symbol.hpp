@@ -24,11 +24,6 @@ namespace xpd
     class symbol
     {
     public:
-        static const symbol _s;         //!< @brief The predefined empty symbol.
-        static const symbol bang_s;     //!< @brief The predefined bang symbol.
-        static const symbol float_s;    //!< @brief The predefined float symbol.
-        static const symbol symbol_s;   //!< @brief The predefined symbol symbol.
-        static const symbol list_s;     //!< @brief The predefined list symbol.
         
         //! @brief The std::string constructor.
         //! @details The method should never throw exceptions except if the insertion failed.
