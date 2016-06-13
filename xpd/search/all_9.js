@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['initialize',['initialize',['../classxpd_1_1environment.html#a6eda1972d3666c52a02fc0f6d9707801',1,'xpd::environment']]],
-  ['instance',['instance',['../classxpd_1_1instance.html#ad4931a504a0385d67dee9a66bd891be3',1,'xpd::instance']]],
-  ['instance',['instance',['../classxpd_1_1instance.html',1,'xpd']]]
+  ['level',['level',['../classxpd_1_1console.html#afde8e18a788ccc92fc61cab298bca7e3',1,'xpd::console']]],
+  ['load',['load',['../classxpd_1_1instance.html#af35e1a2603b22daef2ffc78d9e08fc86',1,'xpd::instance']]],
+  ['log',['log',['../classxpd_1_1console.html#afde8e18a788ccc92fc61cab298bca7e3aaac8d4ee23e2d305f0b0a575cda066f3',1,'xpd::console']]]
 ];
