@@ -14,10 +14,12 @@ extern "C"
 #define XPD_TEST_NLOOP  16
 #define XPD_TEST_NTHD   4
 
+static xpd::mutex gmutex;
+
 class instance_tester : private xpd::instance
 {
 public:
-    instance_tester() : m_counter(0ul)
+    instance_tester() : m_npost(0ul), m_nmess(0ul)
     {
         ;
     }
@@ -82,18 +84,20 @@ public:
     
     static void test(instance_tester* inst)
     {
-        inst->m_counter = 0ul;
+        gmutex.lock();
         for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
         {
             inst->perform(inst->m_blksize, 0, NULL, 0, NULL);
         }
+        gmutex.unlock();
     }
     
 private:
     xpd::patch m_patch;
     xpd::tie   m_tfrom;
     xpd::tie   m_tto;
-    size_t     m_counter;
+    size_t     m_npost;
+    size_t     m_nmess;
     size_t     m_blksize;
 };
 
@@ -134,8 +138,8 @@ TEST_CASE("instance", "[instance]")
         
         for(size_t i = 0; i < XPD_TEST_NTHD; ++i)
         {
-            thd_thread_join(thd+i);
-            //CHECK(inst[i].counter() == XPD_TEST_NLOOP);
+            //thd_thread_join(thd+i);
+            CHECK(inst[i].counter() == XPD_TEST_NLOOP);
         }
     }
 }
