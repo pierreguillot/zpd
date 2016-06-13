@@ -117,7 +117,7 @@ TEST_CASE("instance", "[instance]")
             CHECK(inst[i].counter() == XPD_TEST_NLOOP);
         }
     }
-    
+
     SECTION("message")
     {
         std::vector<xpd::atom> vec;
@@ -138,8 +138,6 @@ TEST_CASE("instance", "[instance]")
             //CHECK(inst[i].counter() == XPD_TEST_NLOOP);
         }
     }
-    
-    
 }
 
 #undef XPD_TEST_NLOOP
