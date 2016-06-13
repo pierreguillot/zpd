@@ -68,9 +68,9 @@ extern void cpd_print(const char* s)
 {
     int level = 2;
     cpd_instance* instance = c_current_instance;
-//#ifdef DEBUG
+#ifdef DEBUG
     printf("%s", s);
-//#endif
+#endif
     if(!instance)
     {
         return;
