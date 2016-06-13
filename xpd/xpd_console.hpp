@@ -52,6 +52,7 @@ namespace xpd
         public:
             //! @brief the constructor.
             //! @details Preallocte space for posts
+            //! @todo later figure out if we should late the user specify the space.
             history();
             
             //! @brief Gets the number of posts of a specified level.

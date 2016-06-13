@@ -1,0 +1,15 @@
+#N canvas 714 303 283 279 10;
+#X obj 13 79 metro 5.8049;
+#X obj 13 35 loadbang;
+#X obj 13 57 f 1;
+#X obj 127 79 r \$0-fromxpd;
+#X obj 13 191 s \$0-toxpd;
+#X obj 101 170 print mess;
+#X obj 13 137 list;
+#X connect 0 0 6 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 3 0 5 0;
+#X connect 3 0 6 1;
+#X connect 6 0 4 0;
+#X coords 0 279 1 278 400 150 0;

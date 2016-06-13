@@ -123,13 +123,17 @@ void cpd_init()
     assert("Pure Data is already initialized." && !initialized);
     if(!initialized)
     {
+        sys_soundin         = NULL;
+        sys_soundout        = NULL;
+        c_current_instance  = NULL;
+        sys_printhook = (t_printhook)(cpd_print);
+        
 #ifdef _WIN32
         InitializeCriticalSection(&c_mutex);
 #else
         pthread_mutex_init(&c_mutex, NULL);
 #endif
         signal(SIGFPE, SIG_IGN);
-        sys_printhook = NULL;
         sys_soundin = NULL;
         sys_soundout = NULL;
         sys_schedblocksize = DEFDACBLKSIZE;
@@ -155,9 +159,6 @@ void cpd_init()
         c_sample_ins      = sys_soundin;
         c_sample_outs     = sys_soundout;
         c_first_instance    = pd_this;
-        sys_soundin         = NULL;
-        sys_soundout        = NULL;
-        c_current_instance  = NULL;
         
         c_sym_bng           = gensym("bng");
         c_sym_hsl           = gensym("hsl");
@@ -179,8 +180,7 @@ void cpd_init()
         pique_setup();
         sigmund_tilde_setup();
         stdout_setup();
-        
-        sys_printhook = (t_printhook)(cpd_print);
+
         initialized = 1;
     }
 }
