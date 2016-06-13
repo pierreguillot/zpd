@@ -80,9 +80,14 @@ static t_class *cpd_receiver_class;
 
 static void receiver_anything(cpd_receiver *x, t_symbol *s, int argc, t_atom *argv)
 {
+    cpd_message mess;
     if(x->c_hook)
     {
-        x->c_hook(x->c_owner, (cpd_message){x->c_sym, s, (cpd_list){(size_t)argc, (void *)argv}});
+        mess.tie            = x->c_sym;
+        mess.selector       = s;
+        mess.list.size      = (size_t)argc;
+        mess.list.vector    = argv;
+        x->c_hook(x->c_owner, mess);
     }
 }
 
@@ -150,7 +155,7 @@ extern void cpd_message_manager_perform(struct cpd_message_manager* manager)
     {
         if(buffer[i].tie->s_thing)
         {
-            pd_typedmess((t_pd *)(buffer[i].tie->s_thing), buffer[i].selector, 0, NULL);
+            pd_typedmess((t_pd *)(buffer[i].tie->s_thing), buffer[i].selector, buffer[i].list.size, (t_atom *)buffer[i].list.vector);
         }
     }
     manager->c_pos = 0;
