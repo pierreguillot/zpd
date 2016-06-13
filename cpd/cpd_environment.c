@@ -11,6 +11,7 @@
 #include "cpd_environment.h"
 #include "cpd_types.h"
 #include "cpd_instance.h"
+#include "cpd_mutex.h"
 
 #include "../pd/src/m_pd.h"
 #include "../pd/src/s_stuff.h"
@@ -66,30 +67,16 @@ void sys_mididevnumbertoname(int output, int devno, char *name, int namesize) {}
 //                                   IMPLEMENTATION                                     //
 // ==================================================================================== //
 
-#ifdef _WIN32
-#include <windows.h>
-static CRITICAL_SECTION  c_mutex;
-#else
-#include <pthread.h>
-static pthread_mutex_t c_mutex;
-#endif
+static cpd_mutex c_mutex;
 
 extern void cpd_lock()
 {
-#ifdef _WIN32
-    EnterCriticalSection(&c_mutex);
-#else
-    pthread_mutex_lock(&c_mutex);
-#endif
+    cpd_mutex_lock(&c_mutex);
 }
 
 extern void cpd_unlock()
 {
-#ifdef _WIN32
-    LeaveCriticalSection(&c_mutex);
-#else
-    pthread_mutex_unlock(&c_mutex);
-#endif
+    cpd_mutex_unlock(&c_mutex);
 }
 
 
@@ -123,16 +110,11 @@ void cpd_init()
     assert("Pure Data is already initialized." && !initialized);
     if(!initialized)
     {
+        cpd_mutex_init(&c_mutex);
         sys_soundin         = NULL;
         sys_soundout        = NULL;
         c_current_instance  = NULL;
         sys_printhook = (t_printhook)(cpd_print);
-        
-#ifdef _WIN32
-        InitializeCriticalSection(&c_mutex);
-#else
-        pthread_mutex_init(&c_mutex, NULL);
-#endif
         signal(SIGFPE, SIG_IGN);
         sys_soundin = NULL;
         sys_soundout = NULL;
@@ -148,8 +130,9 @@ void cpd_init()
         sys_nmidiin = 0;
         sys_nmidiout = 0;
         sys_init_fdpoll();
-        sys_startgui(NULL);
         pd_init();
+        sys_startgui(NULL);
+        
         sys_set_audio_api(API_DUMMY);
         sys_searchpath = NULL;
         sys_set_audio_settings(1, &devices, 1, &ioputs, 1, &devices, 1, &ioputs, 44100, -1, 1, DEFDACBLKSIZE);
@@ -199,11 +182,7 @@ void cpd_clear()
     {
         pdinstance_free(c_first_instance);
     }
-#ifdef _WIN32
-    DeleteCriticalSection(&c_mutex);
-#else
-    pthread_mutex_destroy(&c_mutex);
-#endif
+    cpd_mutex_destroy(&c_mutex);
 }
 
 unsigned int cpd_version_getmajor()
