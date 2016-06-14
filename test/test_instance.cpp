@@ -43,7 +43,13 @@ public:
         m_vector_expected.push_back(xpd::symbol("zozo"));
         xpd::instance::send(m_tie_from, m_sym_list, m_vector_expected);
         
-        m_counter_midi[0] = m_counter_midi[1] = m_counter_midi[2] = m_counter_midi[3] = m_counter_midi[4] = m_counter_midi[5] = 0;
+        // Midi part
+        m_counter_midi_note = 0;
+        m_counter_midi_ctrl = 0;
+        m_counter_midi_pgrm = 0;
+        m_counter_midi_bend = 0;
+        m_counter_midi_tuch = 0;
+        m_counter_midi_poly = 0;
         m_patch_midi = xpd::instance::load("test_midi.pd", "");
         xpd::instance::send(xpd::midi::event::note(1, 127, 127));
         xpd::instance::send(xpd::midi::event::control_change(1, 2, 127));
@@ -74,9 +80,9 @@ public:
         }
     }
     
-    inline bool state_post() const xpd_noexcept
+    inline size_t get_npost() const xpd_noexcept
     {
-        return m_counter_post == XPD_TEST_NLOOP;
+        return m_counter_post;
     }
     
     // ==================================================================================== //
@@ -94,9 +100,9 @@ public:
         }
     }
     
-    inline bool state_message() const xpd_noexcept
+    inline size_t get_nmessage() const xpd_noexcept
     {
-        return m_counter_message == XPD_TEST_NLOOP;
+        return m_counter_message;
     }
     
     // ==================================================================================== //
@@ -105,46 +111,82 @@ public:
     
     void receive(xpd::midi::event const& event) xpd_final
     {
-        if(event.type() == xpd::midi::event::note_t
-           && event.channel() == 1 && event.pitch() == 127 && event.velocity() == 127)
+        if(event.type() == xpd::midi::event::note_t)
         {
-            ++m_counter_midi[0];
+            if(event.channel() == 1 && event.pitch() == 127 && event.velocity() == 127)
+                ++m_counter_midi_note;
+            else
+                std::cout << "wrong note_t\n";
         }
-        if(event.type() == xpd::midi::event::control_change_t
-           && event.channel() == 1 && event.controller() == 2 && event.value() == 127)
+        else if(event.type() == xpd::midi::event::control_change_t)
         {
-            ++m_counter_midi[1];
+            if(event.channel() == 1 && event.controller() == 2 && event.value() == 127)
+                ++m_counter_midi_ctrl;
+            else
+                std::cout << "wrong control_change_t\n";
         }
-        if(event.type() == xpd::midi::event::program_change_t
-           && event.channel() == 1 && event.program() == 3)
+        else if(event.type() == xpd::midi::event::program_change_t)
         {
-            ++m_counter_midi[2];
+            if(event.channel() == 1 && event.program() == 3)
+                ++m_counter_midi_pgrm;
+            else
+                std::cout << "wrong program_change_t\n";
         }
-        if(event.type() == xpd::midi::event::pitch_bend_t
-           && event.channel() == 1 && event.pitch() == 4)
+        else if(event.type() == xpd::midi::event::pitch_bend_t)
         {
-            ++m_counter_midi[3];
+            if(event.channel() == 1 && event.pitch() == 4)
+                ++m_counter_midi_bend;
+            else
+                std::cout << "wrong pitch_bend_t\n";
         }
-        if(event.type() == xpd::midi::event::after_touch_t
-           && event.channel() == 1 && event.value() == 5)
+        else if(event.type() == xpd::midi::event::after_touch_t)
         {
-            ++m_counter_midi[4];
+            if(event.channel() == 1 && event.value() == 5)
+                ++m_counter_midi_tuch;
+            else
+                std::cout << "wrong after_touch_t\n";
         }
-        if(event.type() == xpd::midi::event::poly_after_touch_t
-           && event.channel() == 1 && event.pitch() == 127 && event.value() == 5)
+        else if(event.type() == xpd::midi::event::poly_after_touch_t)
         {
-            ++m_counter_midi[5];
+            if(event.channel() == 1 && event.pitch() == 127 && event.value() == 6)
+                ++m_counter_midi_poly;
+            else
+                std::cout << "wrong poly_after_touch_t\n";
+        }
+        else
+        {
+            std::cout << "wrong type\n";
         }
     }
     
-    inline bool state_midi() const xpd_noexcept
+    inline size_t get_nmidi_note() const xpd_noexcept
     {
-        return (m_counter_midi[0] == XPD_TEST_NLOOP)
-        && (m_counter_midi[1] == XPD_TEST_NLOOP)
-        && (m_counter_midi[2] == XPD_TEST_NLOOP)
-        && (m_counter_midi[3] == XPD_TEST_NLOOP)
-        && (m_counter_midi[4] == XPD_TEST_NLOOP)
-        && (m_counter_midi[5] == XPD_TEST_NLOOP);
+        return m_counter_midi_note;
+    }
+    
+    inline size_t get_nmidi_ctrl() const xpd_noexcept
+    {
+        return m_counter_midi_ctrl;
+    }
+    
+    inline size_t get_nmidi_pgrm() const xpd_noexcept
+    {
+        return m_counter_midi_pgrm;
+    }
+    
+    inline size_t get_nmidi_bend() const xpd_noexcept
+    {
+        return m_counter_midi_bend;
+    }
+    
+    inline size_t get_nmidi_tuch() const xpd_noexcept
+    {
+        return m_counter_midi_tuch;
+    }
+    
+    inline size_t get_nmidi_poly() const xpd_noexcept
+    {
+        return m_counter_midi_poly;
     }
     
     // ==================================================================================== //
@@ -170,8 +212,13 @@ private:
     size_t      m_counter_message;
     xpd::patch  m_patch_message;
     std::vector<xpd::atom> m_vector_expected;
-    
-    size_t      m_counter_midi[6];
+
+    size_t      m_counter_midi_note;
+    size_t      m_counter_midi_ctrl;
+    size_t      m_counter_midi_pgrm;
+    size_t      m_counter_midi_bend;
+    size_t      m_counter_midi_tuch;
+    size_t      m_counter_midi_poly;
     xpd::patch  m_patch_midi;
 };
 
@@ -190,9 +237,14 @@ TEST_CASE("instance", "[instance post]")
         for(size_t i = 0; i < XPD_TEST_NTHD; ++i)
         {
             thd_thread_join(thd+i);
-            CHECK(inst[i].state_post());
-            CHECK(inst[i].state_message());
-            //CHECK(inst[i].state_midi());
+            CHECK(inst[i].get_npost() == XPD_TEST_NLOOP);
+            CHECK(inst[i].get_nmessage() == XPD_TEST_NLOOP);
+            CHECK(inst[i].get_nmidi_note() == XPD_TEST_NLOOP);
+            CHECK(inst[i].get_nmidi_ctrl() == XPD_TEST_NLOOP);
+            CHECK(inst[i].get_nmidi_pgrm() == XPD_TEST_NLOOP);
+            CHECK(inst[i].get_nmidi_bend() == XPD_TEST_NLOOP);
+            CHECK(inst[i].get_nmidi_tuch() == XPD_TEST_NLOOP);
+            CHECK(inst[i].get_nmidi_poly() == XPD_TEST_NLOOP);
         }
     }
 }

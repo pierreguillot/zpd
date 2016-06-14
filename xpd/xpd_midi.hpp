@@ -78,7 +78,7 @@ namespace xpd
             inline xpd_constexpr int data2() const xpd_noexcept {return m_val2;}
             
             //! @brief Gets the third data.
-            inline xpd_constexpr int data3() const xpd_noexcept {return m_val2;}
+            inline xpd_constexpr int data3() const xpd_noexcept {return m_val3;}
             
             //! @brief Gets the channel value.
             inline xpd_constexpr int channel() const xpd_noexcept {return m_val1;}
