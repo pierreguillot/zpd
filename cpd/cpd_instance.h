@@ -15,7 +15,6 @@
 
 //! @defgroup instance instance
 //! @brief The instance of cpd.
-//! @todo manage lock free & lock
 
 //! @addtogroup instance
 //! @{

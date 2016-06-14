@@ -1,19 +1,22 @@
-# zpd
+# zpd  ![speedy](https://cloud.githubusercontent.com/assets/1409918/16032082/c9f14682-3202-11e6-98a9-645fb0b41304.png)  
 An embeddable Pure Data engine.
 
 [![Build Status](https://travis-ci.org/pierreguillot/zpd.svg?branch=master)](https://travis-ci.org/pierreguillot/zpd)  
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/pierreguillot/zpd?branch=master&svg=true)](https://ci.appveyor.com/project/pierreguillot/zpd/branch/master)  
-[![Coverage Status](https://coveralls.io/repos/github/pierreguillot/zpd/badge.svg?branch=master)](https://coveralls.io/github/pierreguillot/zpd?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/pierreguillot/zpd/badge.svg?branch=master)](https://coveralls.io/github/pierreguillot/zpd?branch=master)  
+[![Documentation](https://img.shields.io/badge/docs-doxygen-blue.svg)](https://pierreguillot.github.io/zpd/)
 
-cmake:  
-```
-mkdir build && cd build  
-cmake ..  
-cmake --build .  
-cd ../  
-./build/xpdtest pwd    
-```
+### Features
+- Support for multi instances.
+- Thread-safe and lock-free.
+- C and C++ interfaces.
 
-doc:
-https://pierreguillot.github.io/zpd/cpd/index.html
-https://pierreguillot.github.io/zpd/xpd/index.html
+#### Compilation
+- cd build
+- cmake ..
+- cmake --build .
+
+**Author**: Pierre Guillot  
+**Organizations**: Université Paris 8 | CICM | Labex Arts H2H   
+**Website**: https://github.com/pierreguillot/zpd   
+**License**: see LICENSE
