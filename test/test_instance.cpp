@@ -6,6 +6,8 @@
 
 #include <iostream>
 #include <cstdio>
+#include <cstdlib>
+#include <ctime>
 #include "test.hpp"
 extern "C"
 {
@@ -72,6 +74,12 @@ public:
             m_outs[i] = new xpd::sample[XPD_TEST_BLKSIZE];
         }
         xpd::instance::prepare(XPD_TEST_NINS, XPD_TEST_NOUTS, 44100, XPD_TEST_BLKSIZE);
+        m_patch_dsp = xpd::instance::load("test_dsp.pd", "");
+        std::srand(std::time(NULL));
+        for(int i = 0; i < XPD_TEST_BLKSIZE; i++)
+        {
+            m_ins[0][i] = xpd::sample(std::rand() % 20000 - 10000) / 10000.f;
+        }
     }
 
     ~instance_tester()
@@ -79,6 +87,7 @@ public:
         xpd::instance::close(m_patch_post);
         xpd::instance::close(m_patch_message);
         xpd::instance::close(m_patch_midi);
+        xpd::instance::close(m_patch_dsp);
         xpd::instance::unbind(m_tie_to);
         
         for(int i = 0; i < XPD_TEST_NINS; i++)
@@ -131,7 +140,7 @@ public:
     }
     
     // ==================================================================================== //
-    //                                      POST                                            //
+    //                                      MIDI                                            //
     // ==================================================================================== //
     
     void receive(xpd::midi::event const& event) xpd_final
@@ -215,6 +224,33 @@ public:
     }
     
     // ==================================================================================== //
+    //                                      DSP                                            //
+    // ==================================================================================== //
+    
+    inline bool check_out1() const xpd_noexcept
+    {
+        for(int i = 0; i < XPD_TEST_BLKSIZE; ++i)
+        {
+            if(m_outs[0][i] != i)
+                return false;
+        }
+        return true;
+    }
+    
+    inline bool check_out2() const xpd_noexcept
+    {
+        for(int i = 0; i < XPD_TEST_BLKSIZE; ++i)
+        {
+            if(m_outs[1][i] != m_ins[0][i])
+            {
+                std::cout << "[" << i <<"]" << m_outs[1][i] << " & " << m_ins[0][i] << "\n";
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    // ==================================================================================== //
     //                                      PERFORM                                            //
     // ==================================================================================== //
     
@@ -222,7 +258,7 @@ public:
     {
         for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
         {
-            inst->perform(XPD_TEST_BLKSIZE, XPD_TEST_NINS, (const xpd::sample**)inst->m_outs, XPD_TEST_NOUTS, inst->m_outs);
+            inst->perform(XPD_TEST_BLKSIZE, XPD_TEST_NINS, (const xpd::sample**)inst->m_ins, XPD_TEST_NOUTS, inst->m_outs);
         }
     }
     
@@ -246,8 +282,9 @@ private:
     size_t      m_counter_midi_poly;
     xpd::patch  m_patch_midi;
     
-    xpd::sample** m_ins;
-    xpd::sample** m_outs;
+    xpd::sample**   m_ins;
+    xpd::sample**   m_outs;
+    xpd::patch      m_patch_dsp;
 };
 
 TEST_CASE("instance", "[instance post]")
@@ -273,6 +310,8 @@ TEST_CASE("instance", "[instance post]")
             CHECK(inst[i].get_nmidi_bend() == XPD_TEST_NLOOP);
             CHECK(inst[i].get_nmidi_tuch() == XPD_TEST_NLOOP);
             CHECK(inst[i].get_nmidi_poly() == XPD_TEST_NLOOP);
+            CHECK(inst[i].check_out1());
+            CHECK(inst[i].check_out2());
         }
     }
 }
