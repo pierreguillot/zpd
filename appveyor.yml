@@ -20,9 +20,7 @@ build_script:
     - cd build
     - cmake .. -G "Visual Studio 14 2015"
     - cmake --build .
-    - cd lib
     - dir /s /b /o:gn
-    - cd ..
 
 test_script:
     - cd Debug
