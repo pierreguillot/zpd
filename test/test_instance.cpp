@@ -19,6 +19,7 @@ extern "C"
 #define XPD_TEST_BLKSIZE    256
 #define XPD_TEST_NINS       2
 #define XPD_TEST_NOUTS      2
+#define XPD_TEST_SR         44100
 
 class instance_tester : private xpd::instance
 {
@@ -73,7 +74,7 @@ public:
         {
             m_outs[i] = new xpd::sample[XPD_TEST_BLKSIZE];
         }
-        xpd::instance::prepare(XPD_TEST_NINS, XPD_TEST_NOUTS, 44100, XPD_TEST_BLKSIZE);
+        xpd::instance::prepare(XPD_TEST_NINS, XPD_TEST_NOUTS, XPD_TEST_SR, XPD_TEST_BLKSIZE);
         m_patch_dsp = xpd::instance::load("test_dsp.pd", "");
         std::srand(std::time(NULL));
         for(int i = 0; i < XPD_TEST_BLKSIZE; i++)
@@ -226,6 +227,10 @@ public:
     // ==================================================================================== //
     //                                      DSP                                            //
     // ==================================================================================== //
+    inline int get_samplerate() const xpd_noexcept
+    {
+        return xpd::instance::samplerate();
+    }
     
     inline bool check_out1() const xpd_noexcept
     {
@@ -302,6 +307,7 @@ TEST_CASE("instance", "[instance post]")
         for(size_t i = 0; i < XPD_TEST_NTHD; ++i)
         {
             thd_thread_join(thd+i);
+            CHECK(inst[i].get_samplerate() == XPD_TEST_SR);
             CHECK(inst[i].get_npost() == XPD_TEST_NLOOP);
             CHECK(inst[i].get_nmessage() == XPD_TEST_NLOOP);
             CHECK(inst[i].get_nmidi_note() == XPD_TEST_NLOOP);
