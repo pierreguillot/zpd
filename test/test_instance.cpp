@@ -43,6 +43,15 @@ public:
         m_vector_expected.push_back(xpd::symbol("zozo"));
         xpd::instance::send(m_tie_from, m_sym_list, m_vector_expected);
         
+        m_counter_midi[0] = m_counter_midi[1] = m_counter_midi[2] = m_counter_midi[3] = m_counter_midi[4] = m_counter_midi[5] = 0;
+        m_patch_midi = xpd::instance::load("test_midi.pd", "");
+        xpd::instance::send(xpd::midi::event::note(1, 127, 127));
+        xpd::instance::send(xpd::midi::event::control_change(1, 2, 127));
+        xpd::instance::send(xpd::midi::event::program_change(1, 3));
+        xpd::instance::send(xpd::midi::event::pitch_bend(1, 4));
+        xpd::instance::send(xpd::midi::event::after_touch(1, 5));
+        xpd::instance::send(xpd::midi::event::poly_after_touch(1, 127, 6));
+        
         xpd::instance::prepare(2, 2, 44100, XPD_TEST_BLKSIZE);
     }
 
@@ -71,7 +80,7 @@ public:
     }
     
     // ==================================================================================== //
-    //                                      POST                                            //
+    //                                      MESSAGE                                         //
     // ==================================================================================== //
     
     void receive(xpd::tie name, xpd::symbol selector, std::vector<xpd::atom> const& atoms) xpd_final
@@ -89,6 +98,58 @@ public:
     {
         return m_counter_message == XPD_TEST_NLOOP;
     }
+    
+    // ==================================================================================== //
+    //                                      POST                                            //
+    // ==================================================================================== //
+    
+    void receive(xpd::midi::event const& event) xpd_final
+    {
+        if(event.type() == xpd::midi::event::note_t
+           && event.channel() == 1 && event.pitch() == 127 && event.velocity() == 127)
+        {
+            ++m_counter_midi[0];
+        }
+        if(event.type() == xpd::midi::event::control_change_t
+           && event.channel() == 1 && event.controller() == 2 && event.value() == 127)
+        {
+            ++m_counter_midi[1];
+        }
+        if(event.type() == xpd::midi::event::program_change_t
+           && event.channel() == 1 && event.program() == 3)
+        {
+            ++m_counter_midi[2];
+        }
+        if(event.type() == xpd::midi::event::pitch_bend_t
+           && event.channel() == 1 && event.pitch() == 4)
+        {
+            ++m_counter_midi[3];
+        }
+        if(event.type() == xpd::midi::event::after_touch_t
+           && event.channel() == 1 && event.value() == 5)
+        {
+            ++m_counter_midi[4];
+        }
+        if(event.type() == xpd::midi::event::poly_after_touch_t
+           && event.channel() == 1 && event.pitch() == 127 && event.value() == 5)
+        {
+            ++m_counter_midi[5];
+        }
+    }
+    
+    inline bool state_midi() const xpd_noexcept
+    {
+        return (m_counter_midi[0] == XPD_TEST_NLOOP)
+        && (m_counter_midi[1] == XPD_TEST_NLOOP)
+        && (m_counter_midi[2] == XPD_TEST_NLOOP)
+        && (m_counter_midi[3] == XPD_TEST_NLOOP)
+        && (m_counter_midi[4] == XPD_TEST_NLOOP)
+        && (m_counter_midi[5] == XPD_TEST_NLOOP);
+    }
+    
+    // ==================================================================================== //
+    //                                      PERFORM                                            //
+    // ==================================================================================== //
     
     static void test(instance_tester* inst)
     {
@@ -110,7 +171,7 @@ private:
     xpd::patch  m_patch_message;
     std::vector<xpd::atom> m_vector_expected;
     
-    size_t      m_counter_midi;
+    size_t      m_counter_midi[6];
     xpd::patch  m_patch_midi;
 };
 
@@ -131,6 +192,7 @@ TEST_CASE("instance", "[instance post]")
             thd_thread_join(thd+i);
             CHECK(inst[i].state_post());
             CHECK(inst[i].state_message());
+            //CHECK(inst[i].state_midi());
         }
     }
 }
