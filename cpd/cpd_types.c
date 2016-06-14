@@ -76,11 +76,6 @@ void cpd_list_clear(cpd_list *list)
     list->size   = 0;
 }
 
-size_t cpd_list_get_size(cpd_list const* list)
-{
-    return list->size;
-}
-
 cpd_listtype cpd_list_get_type(cpd_list const* list, size_t index)
 {
     t_atom const* argv = (t_atom const*)list->vector;

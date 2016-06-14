@@ -113,11 +113,6 @@ CPD_EXTERN void cpd_list_init(cpd_list *list, size_t size);
 //! @param list The pointer to the list.
 CPD_EXTERN void cpd_list_clear(cpd_list *list);
 
-//! @brief Gets the size of a list.
-//! @param list The pointer to the list.
-//! @return The size of the list.
-CPD_EXTERN size_t cpd_list_get_size(cpd_list const* list);
-
 //! @brief Gets the type of a data in the list.
 //! @param list The pointer to the list.
 //! @param index The index of the data.
