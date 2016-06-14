@@ -148,7 +148,7 @@ extern void cpd_message_manager_clear(cpd_instance* instance)
 extern void cpd_message_manager_perform(struct cpd_message_manager* manager)
 {
     size_t i;
-    cpd_message const* buffer;
+    cpd_message* buffer;
     cpd_mutex_lock(&(manager->c_mutex));
     buffer = manager->c_buffer;
     for(i = 0; i < manager->c_pos; ++i)
@@ -156,6 +156,10 @@ extern void cpd_message_manager_perform(struct cpd_message_manager* manager)
         if(buffer[i].tie->s_thing)
         {
             pd_typedmess((t_pd *)(buffer[i].tie->s_thing), buffer[i].selector, buffer[i].list.size, (t_atom *)buffer[i].list.vector);
+            if(buffer[i].list.size && buffer[i].list.vector)
+            {
+                cpd_list_clear(&buffer[i].list);
+            }
         }
     }
     manager->c_pos = 0;
