@@ -7,6 +7,7 @@ project(zpd)
 option(COVERALLS "Build with coveralls" OFF)
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.4)
 set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
+set(CMAKE_MACOSX_RPATH On)
 #set(CMAKE_BUILD_TYPE Release)
 
 #---------------------------------------#
@@ -221,8 +222,6 @@ foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
 endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
 find_package(Threads REQUIRED)
-set(CMAKE_MACOSX_RPATH On)
-set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
 add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DTHREAD_LOCKING=0)
 
 if(${COVERALLS})
