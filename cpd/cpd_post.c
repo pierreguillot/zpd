@@ -67,6 +67,8 @@ void cpd_instance_post_send(cpd_instance* instance, cpd_post post)
 extern void cpd_print(const char* s)
 {
     int level = 2;
+    size_t len;
+    char temp[MAXPDSTRING];
     cpd_instance* instance = c_current_instance;
 #ifdef DEBUG
     printf("%s", s);
@@ -85,10 +87,21 @@ extern void cpd_print(const char* s)
         level = atoi(s+8);
         s+=12;
     }
-    if(instance->c_post && instance->c_post->c_hook)
+    len = strlen(s);
+    while(len && (s[len-1] == '\0' || s[len-1] == '\n'))
     {
-        instance->c_post->c_hook(instance, (cpd_post){(cpd_postlevel)level, s});
+        len--;
     }
+    if(len)
+    {
+        memset(temp, '\0', MAXPDSTRING);
+        strncpy(temp, s, len);
+        if(instance->c_post && instance->c_post->c_hook)
+        {
+            instance->c_post->c_hook(instance, (cpd_post){(cpd_postlevel)level, temp});
+        }
+    }
+    
 }
 
 
