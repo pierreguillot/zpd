@@ -31,9 +31,8 @@ namespace xpd
     struct instance::internal
     {
     public:        
-        cpd_instance object;
-        instance*  ref;
-        
+        cpd_instance      object;
+        instance*         ref;
         static internal* allocate(instance* _ref)
         {
             internal* ptr = (internal *)cpd_instance_new(sizeof(internal));
@@ -42,7 +41,6 @@ namespace xpd
                 ptr->ref = _ref;
                 cpd_instance_post_sethook(reinterpret_cast<cpd_instance*>(ptr), (cpd_hook_post)func_post);
                 cpd_instance_midi_sethook(reinterpret_cast<cpd_instance*>(ptr), (cpd_midi_hook)func_midi);
-                
             }
             return ptr;
         }
@@ -56,27 +54,6 @@ namespace xpd
         {
             cpd_instance_unbind(reinterpret_cast<cpd_instance *>(instance), tie);
         }
-        
-        static void m_normal_hook(instance::internal* instance, const char *s)
-        {
-            instance->ref->receive(console::post(console::normal, std::string(s)));
-        }
-        
-        static void m_log_hook(instance::internal* instance, const char *s)
-        {
-            instance->ref->receive(console::post(console::log, std::string(s)));
-        }
-        
-        static void m_error_hook(instance::internal* instance, const char *s)
-        {
-            instance->ref->receive(console::post(console::error, std::string(s)));
-        }
-        
-        static void m_fatal_hook(instance::internal* instance, const char *s)
-        {
-            instance->ref->receive(console::post(console::fatal, std::string(s)));
-        }
-        
 
         
         
