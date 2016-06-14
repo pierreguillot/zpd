@@ -188,7 +188,7 @@ ${PROJECT_SOURCE_DIR}/test/test_atom.cpp
 ${PROJECT_SOURCE_DIR}/test/test_symbol.cpp
 ${PROJECT_SOURCE_DIR}/test/test_tie.cpp
 ${PROJECT_SOURCE_DIR}/test/test_console.cpp
-#${PROJECT_SOURCE_DIR}/test/test_instance.cpp
+${PROJECT_SOURCE_DIR}/test/test_instance.cpp
 )
 
 source_group(test FILES ${TESTSOURCES})
