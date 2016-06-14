@@ -85,3 +85,13 @@ script:
   - ./build/test
   - cd lib
   - ls
+
+deploy:
+  provider: releases
+  api_key:
+    secure: M15LaLK5eBXRZtiK3NgxNxTJMdHxhrtjKW3qbjVCUhvR6OiHBlhQaRD2D6be0ZYcr3ZFf4zHIXnSj/ntIGh889eOoovvGG2mWqC5DyMrDg7YtPmXoyYchwZmhv6RC6kScDNNBwVZM9aAoVAZKBrlqlcbXrSWTb1EszYuTC7egWZhDIM6HhShSX2P/jefyKgRDVwUcupdgEgo1FMT6klnUd5XkUOMVzOpaRwP2SEMzt8Sx0EjaqTL7mbL+HbGAXp97fFhzpKxzyfiG4ntjUKI4vGsqlXLQQJbgoxoavab610PxxNk7l8QpEY2/Lz1QwuU8vwn7nejv0oA75Jkc4WBIAJ1rTy1DsyUYaycy2eMG9ci0aUEZmqyTJtBzefgf/KK8gh6GcBzDMdr5Ol9NvyXRj1RV09//7jzg04YX+GY4UVuvhlzk2PXL8PtVj6EKptZw30WeArcLNECJVl884w6r0sTX7Z57xH90oOycvLzrnxCZeuXKw0QNoTb1mcjiPqBtSF42rGs8nlaS4nPvbLmJHkqgiCo8D6stcO6HeAtAz34NbFgYzf7HCLul9CKjweesHP28I1xsNbtBnDGUwRaLKi2g79UzlL/LKLlLjKLaoNFqaJVFj41KJy6U6Gk7PvUM+k+vwnIslpqIhwwvEu15esNFtfRrvR7/LjniBxpIdY=
+  file: zpdlib.zip
+  on:
+    tags: true
+    repo: pierreguillot/zpd
+    branch: master
