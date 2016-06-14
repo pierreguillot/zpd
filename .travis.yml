@@ -83,5 +83,5 @@ script:
   - cmake --build .
   - cd ../
   - ./build/test
-  - cd lib/
+  - cd lib
   - ls
