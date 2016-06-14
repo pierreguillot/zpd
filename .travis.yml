@@ -46,6 +46,9 @@ matrix:
         - doxygen xpddoc
         - cd ../cpd
         - doxygen cpddoc
+        - cd ../../
+        - cp config/doxygen.css doc/doxygen.css
+        - cp config/index.html doc/index.html
         - cd ../doc
         - git add .
         - git commit -m "Automated documentation build for changeset git rev-parse --verify HEAD."
@@ -72,7 +75,7 @@ matrix:
         - cmake ..
         - cmake --build .
         - cd ../
-        - ./build/test 
+        - ./build/test
       env:
         - Libs and Tests
 
