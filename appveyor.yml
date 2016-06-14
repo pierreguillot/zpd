@@ -23,7 +23,7 @@ build_script:
     - dir /s /b /o:gn
 
 test_script:
-    - cd Debug
+    - cd build
     - test.exe
 
 #---------------------------------#
