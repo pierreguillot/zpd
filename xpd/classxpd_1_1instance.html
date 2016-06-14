@@ -112,9 +112,6 @@ Public Member Functions</h2></td></tr>
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#a9f529f7261dfa3352aa3985ad1783626">samplerate</a> () const noexcept</td></tr>
 <tr class="memdesc:a9f529f7261dfa3352aa3985ad1783626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the sample rate of the instance. <br/></td></tr>
 <tr class="separator:a9f529f7261dfa3352aa3985ad1783626"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
 <tr class="memitem:af35e1a2603b22daef2ffc78d9e08fc86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af35e1a2603b22daef2ffc78d9e08fc86"></a>
 <a class="el" href="classxpd_1_1patch.html">patch</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#af35e1a2603b22daef2ffc78d9e08fc86">load</a> (std::string const &amp;name, std::string const &amp;path)</td></tr>
 <tr class="memdesc:af35e1a2603b22daef2ffc78d9e08fc86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a patch. <br/></td></tr>
@@ -142,6 +139,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aae5025c6fea7d441540d48c190d61759"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#aae5025c6fea7d441540d48c190d61759">send</a> (<a class="el" href="classxpd_1_1console_1_1post.html">console::post</a> const &amp;post) const </td></tr>
 <tr class="memdesc:aae5025c6fea7d441540d48c190d61759"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a post to the console.  <a href="#aae5025c6fea7d441540d48c190d61759">More...</a><br/></td></tr>
 <tr class="separator:aae5025c6fea7d441540d48c190d61759"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac62709c0efcbad9b77034627b5c506f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#ac62709c0efcbad9b77034627b5c506f3">bind</a> (<a class="el" href="classxpd_1_1tie.html">tie</a> name)</td></tr>
+<tr class="memdesc:ac62709c0efcbad9b77034627b5c506f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds the instance to a tie.  <a href="#ac62709c0efcbad9b77034627b5c506f3">More...</a><br/></td></tr>
+<tr class="separator:ac62709c0efcbad9b77034627b5c506f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad54f0312fb03a23f422b2f65cd5a9317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#ad54f0312fb03a23f422b2f65cd5a9317">unbind</a> (<a class="el" href="classxpd_1_1tie.html">tie</a> name)</td></tr>
+<tr class="memdesc:ad54f0312fb03a23f422b2f65cd5a9317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unbinds the instance from a tie.  <a href="#ad54f0312fb03a23f422b2f65cd5a9317">More...</a><br/></td></tr>
+<tr class="separator:ad54f0312fb03a23f422b2f65cd5a9317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
 <tr class="memitem:a75c5fbe63fa0d2acf76475ee7b4b516a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#a75c5fbe63fa0d2acf76475ee7b4b516a">receive</a> (<a class="el" href="classxpd_1_1tie.html">tie</a> name, <a class="el" href="classxpd_1_1symbol.html">symbol</a> selector, std::vector&lt; <a class="el" href="classxpd_1_1atom.html">atom</a> &gt; const &amp;atoms)</td></tr>
 <tr class="memdesc:a75c5fbe63fa0d2acf76475ee7b4b516a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a message from a tie.  <a href="#a75c5fbe63fa0d2acf76475ee7b4b516a">More...</a><br/></td></tr>
 <tr class="separator:a75c5fbe63fa0d2acf76475ee7b4b516a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,12 +157,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a916ae4a2bcf82ea7d153100987dfbba6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#a916ae4a2bcf82ea7d153100987dfbba6">receive</a> (<a class="el" href="classxpd_1_1console_1_1post.html">console::post</a> const &amp;post)</td></tr>
 <tr class="memdesc:a916ae4a2bcf82ea7d153100987dfbba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a post from the console.  <a href="#a916ae4a2bcf82ea7d153100987dfbba6">More...</a><br/></td></tr>
 <tr class="separator:a916ae4a2bcf82ea7d153100987dfbba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac62709c0efcbad9b77034627b5c506f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#ac62709c0efcbad9b77034627b5c506f3">bind</a> (<a class="el" href="classxpd_1_1tie.html">tie</a> name)</td></tr>
-<tr class="memdesc:ac62709c0efcbad9b77034627b5c506f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds the instance to a tie.  <a href="#ac62709c0efcbad9b77034627b5c506f3">More...</a><br/></td></tr>
-<tr class="separator:ac62709c0efcbad9b77034627b5c506f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad54f0312fb03a23f422b2f65cd5a9317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxpd_1_1instance.html#ad54f0312fb03a23f422b2f65cd5a9317">unbind</a> (<a class="el" href="classxpd_1_1tie.html">tie</a> name)</td></tr>
-<tr class="memdesc:ad54f0312fb03a23f422b2f65cd5a9317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unbinds the instance from a tie.  <a href="#ad54f0312fb03a23f422b2f65cd5a9317">More...</a><br/></td></tr>
-<tr class="separator:ad54f0312fb03a23f422b2f65cd5a9317"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The instance is the main interface to communicate within the xpd environment. </p>
@@ -246,7 +246,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -309,7 +309,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -331,9 +331,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="anchor" id="aaf776399fab6fb44a5074890852eb531"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void send </td>
@@ -359,11 +356,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td></td><td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sends a message through a tie. </p>
@@ -382,9 +374,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="anchor" id="a0bb960c36f657bcd07bf529e9e2fd8e7"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void send </td>
@@ -394,11 +383,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sends a midi event. </p>
@@ -414,9 +398,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="anchor" id="aae5025c6fea7d441540d48c190d61759"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void send </td>
@@ -426,17 +407,60 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sends a post to the console. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">post</td><td>The console post to send. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac62709c0efcbad9b77034627b5c506f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bind </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxpd_1_1tie.html">tie</a>&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Binds the instance to a tie. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The tie to bind to the instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad54f0312fb03a23f422b2f65cd5a9317"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void unbind </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxpd_1_1tie.html">tie</a>&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unbinds the instance from a tie. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The tie to unbind from the instance. </td></tr>
   </table>
   </dd>
 </dl>
@@ -551,70 +575,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">post</td><td>The console post received. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ac62709c0efcbad9b77034627b5c506f3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bind </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxpd_1_1tie.html">tie</a>&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Binds the instance to a tie. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The tie to bind to the instance. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ad54f0312fb03a23f422b2f65cd5a9317"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void unbind </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxpd_1_1tie.html">tie</a>&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Unbinds the instance from a tie. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The tie to unbind from the instance. </td></tr>
   </table>
   </dd>
 </dl>
