@@ -1,4 +1,5 @@
-# zpd  ![speedy](https://cloud.githubusercontent.com/assets/1409918/16032082/c9f14682-3202-11e6-98a9-645fb0b41304.png)  
+# zPD   
+![speedy](https://cloud.githubusercontent.com/assets/1409918/16032082/c9f14682-3202-11e6-98a9-645fb0b41304.png)  
 An embeddable Pure Data engine.
 
 [![Build Status](https://travis-ci.org/pierreguillot/zpd.svg?branch=master)](https://travis-ci.org/pierreguillot/zpd)  
@@ -6,7 +7,7 @@ An embeddable Pure Data engine.
 [![Coverage Status](https://coveralls.io/repos/github/pierreguillot/zpd/badge.svg?branch=master)](https://coveralls.io/github/pierreguillot/zpd?branch=master)  
 [![Documentation](https://img.shields.io/badge/docs-doxygen-blue.svg)](https://pierreguillot.github.io/zpd/)
 
-### Features
+#### Feature
 - Support for multi instances.
 - Thread-safe and lock-free.
 - C and C++ interfaces.
