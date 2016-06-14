@@ -28,16 +28,29 @@ public:
         m_counter_post = 0;
         m_patch_post = xpd::instance::load("test_post.pd", "");
         sprintf(uid, "%i-xpd: bang", int(m_patch_post.unique_id()));
+        m_post_expected = std::string(uid);
+        
+        // Message part
+        m_counter_message = 0;
+        m_patch_message = xpd::instance::load("test_message.pd", "");
+        sprintf(uid, "%i", int(m_patch_message.unique_id()));
+        m_tie_from = std::string(uid) + std::string("-fromxpd");
+        m_tie_to   = std::string(uid) + std::string("-toxpd");
+        xpd::instance::bind(m_tie_to);
+        m_sym_list = xpd::symbol("list");
+        m_vector_expected.push_back(1.2f);
+        m_vector_expected.push_back(xpd::symbol("zaza"));
+        m_vector_expected.push_back(xpd::symbol("zozo"));
+        xpd::instance::send(m_tie_from, m_sym_list, m_vector_expected);
         
         xpd::instance::prepare(2, 2, 44100, XPD_TEST_BLKSIZE);
     }
 
     ~instance_tester()
     {
-        if(m_patch_post)
-        {
-            xpd::instance::close(m_patch_post);
-        }
+        xpd::instance::close(m_patch_post);
+        xpd::instance::close(m_patch_message);
+        xpd::instance::unbind(m_tie_to);
     }
     
     // ==================================================================================== //
@@ -46,11 +59,10 @@ public:
  
     void receive(xpd::console::post const& post) xpd_final
     {
-        if(post.type == xpd::console::normal && post.text == m_post_message)
+        if(post.type == xpd::console::normal && post.text == m_post_expected)
         {
             ++m_counter_post;
         }
-        std::cout << post.type << " |" << post.text <<"|\n";
     }
     
     inline bool state_post() const xpd_noexcept
@@ -62,9 +74,20 @@ public:
     //                                      POST                                            //
     // ==================================================================================== //
     
-    void send(std::vector<xpd::atom> const& vec)
+    void receive(xpd::tie name, xpd::symbol selector, std::vector<xpd::atom> const& atoms) xpd_final
     {
-        xpd::instance::send(m_tfrom, xpd::symbol("list"), vec);
+        if(name == m_tie_to && selector == m_sym_list && atoms.size() == 3
+           && float(atoms[0]) == float(m_vector_expected[0])
+           && xpd::symbol(atoms[1]) == xpd::symbol(m_vector_expected[1])
+           && xpd::symbol(atoms[2]) == xpd::symbol(m_vector_expected[2]))
+        {
+            ++m_counter_message;
+        }
+    }
+    
+    inline bool state_message() const xpd_noexcept
+    {
+        return m_counter_message == XPD_TEST_NLOOP;
     }
     
     static void test(instance_tester* inst)
@@ -76,12 +99,19 @@ public:
     }
     
 private:
-    xpd::tie   m_tfrom;
-    xpd::tie   m_tto;
-    
-    std::string m_post_message;
+    std::string m_post_expected;
     size_t      m_counter_post;
     xpd::patch  m_patch_post;
+    
+    xpd::tie    m_tie_from;
+    xpd::tie    m_tie_to;
+    xpd::symbol m_sym_list;
+    size_t      m_counter_message;
+    xpd::patch  m_patch_message;
+    std::vector<xpd::atom> m_vector_expected;
+    
+    size_t      m_counter_midi;
+    xpd::patch  m_patch_midi;
 };
 
 TEST_CASE("instance", "[instance post]")
@@ -94,14 +124,13 @@ TEST_CASE("instance", "[instance post]")
         thd_thread_detach(thd+i, (thd_thread_method)(&instance_tester::test), inst+i);
     }
     
-    SECTION("post")
+    SECTION("states")
     {
-        
-        
         for(size_t i = 0; i < XPD_TEST_NTHD; ++i)
         {
             thd_thread_join(thd+i);
             CHECK(inst[i].state_post());
+            CHECK(inst[i].state_message());
         }
     }
 }

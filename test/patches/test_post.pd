@@ -1,9 +1,9 @@
-#N canvas 549 252 160 128 10;
-#X obj 14 63 metro 5.8049;
-#X obj 14 19 loadbang;
-#X obj 14 41 f 1;
-#X obj 14 85 print \$0-xpd;
+#N canvas 549 252 151 117 10;
+#X obj 14 60 metro 5.8049;
+#X obj 14 16 loadbang;
+#X obj 14 38 f 1;
+#X obj 14 83 print \$0-xpd;
 #X connect 0 0 3 0;
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
-#X coords 0 128 1 127 400 150 0;
+#X coords 0 117 1 116 400 150 0;
