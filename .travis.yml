@@ -46,10 +46,7 @@ matrix:
         - doxygen xpddoc
         - cd ../cpd
         - doxygen cpddoc
-        - cd ../../
-        - ls
-        - chmod 0600 config/doxygen.css
-        - chmod 0600 config/index.html
+        - cd ../
         - cp config/doxygen.css doc/doxygen.css
         - cp config/index.html doc/index.html
         - cd ../doc
