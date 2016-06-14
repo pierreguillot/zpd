@@ -42,8 +42,6 @@ namespace xpd
         //! @brief Gets the sample rate of the instance.
         int samplerate() const xpd_noexcept;
         
-    protected:
-        
         //! @brief Loads a patch.
         patch load(std::string const& name, std::string const& path);
         
@@ -83,6 +81,15 @@ namespace xpd
         //! @param post The console post to send.
         void send(console::post const& post) const;
         
+        //! @brief Binds the instance to a tie.
+        //! @param name The tie to bind to the instance.
+        void bind(tie name);
+        
+        //! @brief Unbinds the instance from a tie.
+        //! @param name The tie to unbind from the instance.
+        void unbind(tie name);
+        
+    protected:
 #define LCOV_EXCL_START
         //! @brief Receives a message from a tie.
         //! @param name The tie that received the vector of atoms.
@@ -98,14 +105,6 @@ namespace xpd
         //! @param post The console post received.
         virtual void receive(console::post const& post) {};
 #define LCOV_EXCL_STOP
-        
-        //! @brief Binds the instance to a tie.
-        //! @param name The tie to bind to the instance.
-        void bind(tie name);
-        
-        //! @brief Unbinds the instance from a tie.
-        //! @param name The tie to unbind from the instance.
-        void unbind(tie name);
         
     private:
         instance(instance const& other) xpd_delete_f;
