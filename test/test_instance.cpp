@@ -15,6 +15,8 @@ extern "C"
 #define XPD_TEST_NLOOP      16
 #define XPD_TEST_NTHD       4
 #define XPD_TEST_BLKSIZE    256
+#define XPD_TEST_NINS       2
+#define XPD_TEST_NOUTS      2
 
 class instance_tester : private xpd::instance
 {
@@ -58,14 +60,37 @@ public:
         xpd::instance::send(xpd::midi::event::after_touch(1, 5));
         xpd::instance::send(xpd::midi::event::poly_after_touch(1, 127, 6));
         
-        xpd::instance::prepare(2, 2, 44100, XPD_TEST_BLKSIZE);
+        // Dsp part
+        m_ins   = new xpd::sample*[XPD_TEST_NINS];
+        m_outs  = new xpd::sample*[XPD_TEST_NOUTS];
+        for(int i = 0; i < XPD_TEST_NINS; i++)
+        {
+            m_ins[i] = new xpd::sample[XPD_TEST_BLKSIZE];
+        }
+        for(int i = 0; i < XPD_TEST_NOUTS; i++)
+        {
+            m_outs[i] = new xpd::sample[XPD_TEST_BLKSIZE];
+        }
+        xpd::instance::prepare(XPD_TEST_NINS, XPD_TEST_NOUTS, 44100, XPD_TEST_BLKSIZE);
     }
 
     ~instance_tester()
     {
         xpd::instance::close(m_patch_post);
         xpd::instance::close(m_patch_message);
+        xpd::instance::close(m_patch_midi);
         xpd::instance::unbind(m_tie_to);
+        
+        for(int i = 0; i < XPD_TEST_NINS; i++)
+        {
+            delete [] m_ins[i];
+        }
+        for(int i = 0; i < XPD_TEST_NOUTS; i++)
+        {
+            delete [] m_outs[i];
+        }
+        delete [] m_ins;
+        delete [] m_outs;
     }
     
     // ==================================================================================== //
@@ -197,7 +222,7 @@ public:
     {
         for(size_t i = 0; i < XPD_TEST_NLOOP; i++)
         {
-            inst->perform(XPD_TEST_BLKSIZE, 0, NULL, 0, NULL);
+            inst->perform(XPD_TEST_BLKSIZE, XPD_TEST_NINS, (const xpd::sample**)inst->m_outs, XPD_TEST_NOUTS, inst->m_outs);
         }
     }
     
@@ -220,6 +245,9 @@ private:
     size_t      m_counter_midi_tuch;
     size_t      m_counter_midi_poly;
     xpd::patch  m_patch_midi;
+    
+    xpd::sample** m_ins;
+    xpd::sample** m_outs;
 };
 
 TEST_CASE("instance", "[instance post]")
