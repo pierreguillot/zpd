@@ -21,3 +21,4 @@ git add .
 git commit -m "Automated documentation build."
 git push origin gh-pages
 cd ..
+cd ..
