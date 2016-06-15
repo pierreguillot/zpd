@@ -10,7 +10,6 @@ cd doc
 git rm -rf .
 cd ..
 doxygen xpddoc
-cd ..
 doxygen cpddoc
 cp doxygen.css doc/doxygen.css
 cp index.html doc/index.html
