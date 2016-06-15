@@ -101,6 +101,8 @@ after_success:
   - cp xpd zpd/xpd
   - cp README.md zpd/readme.txt
   - cp LICENSE zpd/license.txt
+  - cd zpd
+  - ls
   - zip -r zpd_$TRAVIS_OS_NAME_$ZPD_ARCH_$TRAVIS_TAG.zip zpd
 
 deploy:
