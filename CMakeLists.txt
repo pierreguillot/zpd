@@ -5,11 +5,6 @@ cmake_minimum_required(VERSION 2.6)
 #---------------------------------------#
 project(zpd)
 option(COVERALLS "Build with coveralls" OFF)
-#set(CMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4.sdk/) # Not available on travis
-set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
-set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
-set(CMAKE_MACOSX_RPATH ON)
-#set(CMAKE_BUILD_TYPE Release)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build/)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/)
@@ -230,6 +225,12 @@ if(${COVERALLS})
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
 endif()
+
+#set(CMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4.sdk/) # Not available on travis
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
+set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
+set(CMAKE_MACOSX_RPATH ON)
+#set(CMAKE_BUILD_TYPE Release)
 
 add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${THREADSOURCES})
 add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${THREADSOURCES})
