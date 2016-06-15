@@ -60,31 +60,48 @@ matrix:
     - os: linux
       compiler: gcc
       env:
-        - Libs and Tests
+        - ZPD_ARCH=64bit
+
+    - os: linux
+      compiler: gcc
+      env:
+        - ZPD_ARCH=32bit
 
     - os: linux
       compiler: clang
       env:
-        - Libs and Tests
+        - ZPD_ARCH=64bit
+
+    - os: linux
+      compiler: clang
+      env:
+        - ZPD_ARCH=32bit
 
     - os: osx
       compiler: gcc
       env:
-        - Libs and Tests
+        - ZPD_ARCH=i386_x86_64
 
     - os: osx
       compiler: clang
       env:
-        - Libs and Tests
+        - ZPD_ARCH=i386_x86_64
 
 script:
   - mkdir build && cd build
   - cmake ..
-  - cmake --build .
+  - cmake --build . -DARCH=$ZPD_ARCH
   - cd ../
   - ./build/test
-  - cd lib
-  - ls
+
+after_success:
+  - mkdir zpd
+  - cp lib zpd/lib
+  - cp cpd zpd/cpd
+  - cp xpd zpd/xpd
+  - cp README.md zpd/readme.txt
+  - cp LICENSE zpd/license.txt
+  - zip -r zpd_$TRAVIS_OS_NAME_$ZPD_ARCH_$TRAVIS_TAG.zip zpd
 
 deploy:
   provider: releases

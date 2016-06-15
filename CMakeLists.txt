@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 2.6)
 #---------------------------------------#
 project(zpd)
 option(COVERALLS "Build with coveralls" OFF)
+option(ARCH "Build for configuration")
 #set(CMAKE_BUILD_TYPE Release)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build/)
@@ -239,6 +240,9 @@ add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} $
 if(${APPLE})
 	add_definitions(-DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
 elseif(${UNIX})
+  if(${ARCH} STREQUAL "32bit")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+  endif()
 	add_definitions(-DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
 	find_library(MATH_LIB m)
 	target_link_libraries(zpdstatic ${MATH_LIB})
