@@ -89,8 +89,8 @@ matrix:
 
 script:
   - mkdir build && cd build
-  - cmake ..
-  - cmake --build . -DARCH=$ZPD_ARCH
+  - cmake .. -DARCH=$ZPD_ARCH
+  - cmake --build .
   - cd ../
   - ./build/test
 
