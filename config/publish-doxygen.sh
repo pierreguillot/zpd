@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [ $TRAVIS_BRANCH == 'master' ]; then
+if [ $TRAVIS_BRANCH == 'master'] && [ $Documentation = 'on' ]
+then
 cd config
 rm -rf doc
 mkdir -p doc
