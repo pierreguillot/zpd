@@ -3,6 +3,7 @@
 #if [ $TRAVIS_BRANCH = 'master' ] && [ $ZPD_DOC = 'on' ]
 if [ $ZPD_DOC = 'on' ]
 then
+sudo apt-get install --yes doxygen graphviz
 cd config
 chmod 0600 travisci_rsa
 cp travisci_rsa ~/.ssh/id_rsa

@@ -19,7 +19,6 @@ matrix:
       before_script:
         - openssl aes-256-cbc -K $encrypted_e84e7849f94f_key -iv $encrypted_e84e7849f94f_iv -in config/travisci_rsa.enc -out config/travisci_rsa -d
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
-        - sudo apt-get install --yes doxygen graphviz
       env:
         - ZPD_ARCH=64bit
         - ZPD_DOC=on
