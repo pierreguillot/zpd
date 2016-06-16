@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "Publish release..."
 mkdir zpd
 cp -R lib zpd/lib
 cp -R cpd zpd/cpd
@@ -10,3 +11,4 @@ cd zpd
 ls
 echo zpd_$TRAVIS_OS_NAME_$ZPD_ARCH_$TRAVIS_TAG
 zip -r zpd_$TRAVIS_OS_NAME_$ZPD_ARCH_$TRAVIS_TAG.zip zpd
+echo "Done"
