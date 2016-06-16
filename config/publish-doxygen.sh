@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [ $TRAVIS_BRANCH = 'master' ] && [ $ZPD_DOC = 'on' ]
+#if [ $TRAVIS_BRANCH = 'master' ] && [ $ZPD_DOC = 'on' ]
+if [ $ZPD_DOC = 'on' ]
 then
 cd config
 chmod 0600 travisci_rsa
