@@ -1,8 +1,10 @@
 #!/bin/bash
 
-if [ $TRAVIS_BRANCH == 'master'] && [ $Documentation = 'on' ]
+if [ $TRAVIS_BRANCH = 'master' ] && [ $ZPD_DOC = 'on' ]
 then
 cd config
+chmod 0600 travisci_rsa
+cp travisci_rsa ~/.ssh/id_rsa
 rm -rf doc
 mkdir -p doc
 git clone -b gh-pages git@github.com:pierreguillot/zpd.git --single-branch doc
