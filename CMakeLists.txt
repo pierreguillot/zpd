@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 2.6)
 #         The zPure Data Project        #
 #---------------------------------------#
 project(zpd)
-option(COVERALLS "Build with coveralls" OFF)
-option(ARCH "Build for configuration")
+option(COVERALLS "Build with coveralls")
+option(ARCH "Build for architecture")
 #set(CMAKE_BUILD_TYPE Release)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build/)
@@ -221,7 +221,7 @@ endif()
 find_package(Threads REQUIRED)
 add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DTHREAD_LOCKING=0)
 
-if(${COVERALLS})
+if(${COVERALLS} STREQUAL "on")
     message(STATUS "Build with coveralls")
     ENABLE_TESTING()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
