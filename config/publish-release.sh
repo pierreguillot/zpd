@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir zpd
-cp lib zpd/lib
+cp -R lib zpd/lib
 cp -R cpd zpd/cpd
 cp -R xpd zpd/xpd
 cp README.md zpd/readme.txt
