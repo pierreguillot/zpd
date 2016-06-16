@@ -1,5 +1,6 @@
 #!/bin/bash
 
+if [ $TRAVIS_BRANCH == 'master' ]; then
 cd config
 rm -rf doc
 mkdir -p doc
@@ -23,3 +24,4 @@ git commit -m "Automated documentation build."
 git push origin gh-pages
 cd ..
 cd ..
+fi
