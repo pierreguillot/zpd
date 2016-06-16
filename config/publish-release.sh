@@ -1,5 +1,6 @@
 #!/bin/bash
 
+ls
 mkdir zpd
 cp -R lib zpd/lib
 cp -R cpd zpd/cpd
