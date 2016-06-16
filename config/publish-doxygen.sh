@@ -17,6 +17,8 @@ cp index.html doc/index.html
 
 cd doc
 git add .
+git config --global user.name "pierreguillot"
+git config --global user.email guillotpierre6@gmail.com
 git commit -m "Automated documentation build."
 git push origin gh-pages
 cd ..
