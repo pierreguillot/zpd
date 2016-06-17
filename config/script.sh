@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir build && cd build
-if [ $TRAVIS_OS_NAME = 'linux' ] && [ $COMPILER = 'gcc' ]
+if [ -z "$COVERALLS" ]
 then
 cmake -DCOVERALLS=On -DCMAKE_BUILD_TYPE=Debug ..
 else

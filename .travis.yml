@@ -21,11 +21,14 @@ matrix:
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
     - os: linux
       compiler: clang
+      env:
+        - COVERALLS
+        - DOXYGEN
     - os: osx
       compiler: gcc
     - os: osx
       compiler: clang
-      
+
 script:
   - ./config/script.sh
 
