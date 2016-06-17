@@ -3,12 +3,10 @@ environment:
    matrix:
       - CONFIGURATION: Debug
         PLATFORM: Win32
+        ZIP: zpd_win_32
       - CONFIGURATION: Debug
         PLATFORM: x64
-      - CONFIGURATION: Release
-        PLATFORM: Win32
-      - CONFIGURATION: Release
-        PLATFORM: x64
+        ZIP: zpd_win_64
 
 os: Visual Studio 2015
 
@@ -24,6 +22,21 @@ build_script:
 test_script:
     - cd ../build
     - test.exe
+
+  after_build:
+    - cd ..\
+    - mkdir zpd
+    - xcopy /E %APPVEYOR_BUILD_FOLDER%\lib\* %APPVEYOR_BUILD_FOLDER%\zpd\lib\*
+    - xcopy /E %APPVEYOR_BUILD_FOLDER%\cpd\* %APPVEYOR_BUILD_FOLDER%\zpd\cpd\*
+    - xcopy /E %APPVEYOR_BUILD_FOLDER%\xpd\* %APPVEYOR_BUILD_FOLDER%\zpd\xpd\*
+    - copy %APPVEYOR_BUILD_FOLDER%\README.md %APPVEYOR_BUILD_FOLDER%\zpd\readme.txt
+    - copy %APPVEYOR_BUILD_FOLDER%\LICENSE.txt %APPVEYOR_BUILD_FOLDER%\zpd\license.txt
+    - 7z a %ZIP%.zip %APPVEYOR_BUILD_FOLDER%\zpd\
+
+
+artifacts:
+  - path: '*.zip'
+
 
 #---------------------------------#
 #         notifications           #
