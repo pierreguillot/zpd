@@ -19,12 +19,8 @@ build_script:
     - cmake .. -G "Visual Studio 14 2015"
     - cmake --build .
 
-test_script:
-    - cd ../build
-    - test.exe
-
 after_build:
-    - cd ..\
+    - cd %APPVEYOR_BUILD_FOLDER%
     - mkdir zpd
     - xcopy /E %APPVEYOR_BUILD_FOLDER%\lib\* %APPVEYOR_BUILD_FOLDER%\zpd\lib\*
     - xcopy /E %APPVEYOR_BUILD_FOLDER%\cpd\* %APPVEYOR_BUILD_FOLDER%\zpd\cpd\*
@@ -32,6 +28,10 @@ after_build:
     - copy %APPVEYOR_BUILD_FOLDER%\README.md %APPVEYOR_BUILD_FOLDER%\zpd\readme.txt
     - copy %APPVEYOR_BUILD_FOLDER%\LICENSE.txt %APPVEYOR_BUILD_FOLDER%\zpd\license.txt
     - 7z a %ZIP%.zip %APPVEYOR_BUILD_FOLDER%\zpd\
+
+test_script:
+    - cd %APPVEYOR_BUILD_FOLDER%\build
+    - test.exe
 
 artifacts:
   - path: '*.zip'
