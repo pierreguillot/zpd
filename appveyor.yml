@@ -27,6 +27,8 @@ after_build:
     - xcopy /E %APPVEYOR_BUILD_FOLDER%\xpd\* %APPVEYOR_BUILD_FOLDER%\zpd\xpd\*
     - copy %APPVEYOR_BUILD_FOLDER%\README.md %APPVEYOR_BUILD_FOLDER%\zpd\readme.txt
     - copy %APPVEYOR_BUILD_FOLDER%\LICENSE.txt %APPVEYOR_BUILD_FOLDER%\zpd\license.txt
+    - del /F /S /Q /A %APPVEYOR_BUILD_FOLDER%\zpd\lib\*.exp
+    - del /F /S /Q /A %APPVEYOR_BUILD_FOLDER%\zpd\lib\test.lib
     - 7z a %ZIP%.zip %APPVEYOR_BUILD_FOLDER%\zpd\
 
 test_script:
