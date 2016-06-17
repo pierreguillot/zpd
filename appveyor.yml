@@ -23,7 +23,7 @@ test_script:
     - cd ../build
     - test.exe
 
-  after_build:
+after_build:
     - cd ..\
     - mkdir zpd
     - xcopy /E %APPVEYOR_BUILD_FOLDER%\lib\* %APPVEYOR_BUILD_FOLDER%\zpd\lib\*
@@ -32,7 +32,6 @@ test_script:
     - copy %APPVEYOR_BUILD_FOLDER%\README.md %APPVEYOR_BUILD_FOLDER%\zpd\readme.txt
     - copy %APPVEYOR_BUILD_FOLDER%\LICENSE.txt %APPVEYOR_BUILD_FOLDER%\zpd\license.txt
     - 7z a %ZIP%.zip %APPVEYOR_BUILD_FOLDER%\zpd\
-
 
 artifacts:
   - path: '*.zip'
