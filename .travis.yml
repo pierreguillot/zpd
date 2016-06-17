@@ -19,58 +19,15 @@ matrix:
       before_script:
         - openssl aes-256-cbc -K $encrypted_e84e7849f94f_key -iv $encrypted_e84e7849f94f_iv -in config/travisci_rsa.enc -out config/travisci_rsa -d
         - pip install --user git+git://github.com/eddyxu/cpp-coveralls.git
-      env:
-        - ZPD_ARCH=64bit
-        - ZPD_DOC=on
-        - ZPD_COV=on
-        - ZPD_BUILD=Debug
-
-    - os: linux
-      compiler: gcc
-      env:
-        - ZPD_ARCH=32bit
-        - ZPD_DOC=off
-        - ZPD_COV=off
-        - ZPD_BUILD=Debug
-
     - os: linux
       compiler: clang
-      env:
-        - ZPD_ARCH=64bit
-        - ZPD_DOC=off
-        - ZPD_COV=off
-        - ZPD_BUILD=Debug
-
-    - os: linux
-      compiler: clang
-      env:
-        - ZPD_ARCH=32bit
-        - ZPD_DOC=off
-        - ZPD_COV=off
-        - ZPD_BUILD=Debug
-
     - os: osx
       compiler: gcc
-      env:
-        - ZPD_ARCH=i386_x86_64
-        - ZPD_DOC=off
-        - ZPD_COV=off
-        - ZPD_BUILD=Debug
-
     - os: osx
       compiler: clang
-      env:
-        - ZPD_ARCH=i386_x86_64
-        - ZPD_DOC=off
-        - ZPD_COV=off
-        - ZPD_BUILD=Debug
-
+      
 script:
-  - mkdir build && cd build
-  - cmake -DARCH=$ZPD_ARCH -DCOVERALLS=$ZPD_COV -DCMAKE_BUILD_TYPE=$ZPD_BUILD ..
-  - cmake --build .
-  - cd ../
-  - ./build/test
+  - ./config/script.sh
 
 after_success:
   - ./config/publish-coveralls.sh
@@ -81,7 +38,7 @@ deploy:
   provider: releases
   api_key:
     secure: M15LaLK5eBXRZtiK3NgxNxTJMdHxhrtjKW3qbjVCUhvR6OiHBlhQaRD2D6be0ZYcr3ZFf4zHIXnSj/ntIGh889eOoovvGG2mWqC5DyMrDg7YtPmXoyYchwZmhv6RC6kScDNNBwVZM9aAoVAZKBrlqlcbXrSWTb1EszYuTC7egWZhDIM6HhShSX2P/jefyKgRDVwUcupdgEgo1FMT6klnUd5XkUOMVzOpaRwP2SEMzt8Sx0EjaqTL7mbL+HbGAXp97fFhzpKxzyfiG4ntjUKI4vGsqlXLQQJbgoxoavab610PxxNk7l8QpEY2/Lz1QwuU8vwn7nejv0oA75Jkc4WBIAJ1rTy1DsyUYaycy2eMG9ci0aUEZmqyTJtBzefgf/KK8gh6GcBzDMdr5Ol9NvyXRj1RV09//7jzg04YX+GY4UVuvhlzk2PXL8PtVj6EKptZw30WeArcLNECJVl884w6r0sTX7Z57xH90oOycvLzrnxCZeuXKw0QNoTb1mcjiPqBtSF42rGs8nlaS4nPvbLmJHkqgiCo8D6stcO6HeAtAz34NbFgYzf7HCLul9CKjweesHP28I1xsNbtBnDGUwRaLKi2g79UzlL/LKLlLjKLaoNFqaJVFj41KJy6U6Gk7PvUM+k+vwnIslpqIhwwvEu15esNFtfRrvR7/LjniBxpIdY=
-  file: zpd_${TRAVIS_OS_NAME}_${ZPD_ARCH}_${TRAVIS_TAG}.zip
+  file: zpd_${TRAVIS_OS_NAME}_${TRAVIS_TAG}.zip
   on:
     tags: true
     repo: pierreguillot/zpd

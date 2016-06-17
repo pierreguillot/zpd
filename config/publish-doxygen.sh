@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#if [ $TRAVIS_BRANCH = 'master' ] && [ $ZPD_DOC = 'on' ]
-if [ $ZPD_DOC = 'on' ]
+if [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_OS_NAME = 'linux' ] && [ $COMPILER = 'gcc' ]
 then
 sudo apt-get install --yes doxygen graphviz
 cd config
