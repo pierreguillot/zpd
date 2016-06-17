@@ -3,12 +3,10 @@ environment:
    matrix:
       - CONFIGURATION: Debug
         PLATFORM: Win32
+        ZIP: zpd_win_32
       - CONFIGURATION: Debug
         PLATFORM: x64
-      - CONFIGURATION: Release
-        PLATFORM: Win32
-      - CONFIGURATION: Release
-        PLATFORM: x64
+        ZIP: zpd_win_64
 
 os: Visual Studio 2015
 
@@ -21,9 +19,35 @@ build_script:
     - cmake .. -G "Visual Studio 14 2015"
     - cmake --build .
 
+after_build:
+    - cd %APPVEYOR_BUILD_FOLDER%
+    - mkdir zpd
+    - xcopy /E %APPVEYOR_BUILD_FOLDER%\lib\* %APPVEYOR_BUILD_FOLDER%\zpd\lib\*
+    - xcopy /E %APPVEYOR_BUILD_FOLDER%\cpd\* %APPVEYOR_BUILD_FOLDER%\zpd\cpd\*
+    - xcopy /E %APPVEYOR_BUILD_FOLDER%\xpd\* %APPVEYOR_BUILD_FOLDER%\zpd\xpd\*
+    - copy %APPVEYOR_BUILD_FOLDER%\README.md %APPVEYOR_BUILD_FOLDER%\zpd\readme.txt
+    - copy %APPVEYOR_BUILD_FOLDER%\LICENSE.txt %APPVEYOR_BUILD_FOLDER%\zpd\license.txt
+    - del /F /S /Q /A %APPVEYOR_BUILD_FOLDER%\zpd\lib\*.exp
+    - del /F /S /Q /A %APPVEYOR_BUILD_FOLDER%\zpd\lib\test.lib
+    - 7z a %ZIP%.zip %APPVEYOR_BUILD_FOLDER%\zpd\
+
 test_script:
-    - cd Debug
+    - cd %APPVEYOR_BUILD_FOLDER%\build
     - test.exe
+
+artifacts:
+  - path: '*.zip'
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: iE/hKkl+fIBulDvgwV9AMMrmGuyIyVCrCp7Nb0AXVMglxUds7pg450AV61gmVcUE
+  artifact: /.*\.zip/
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: true
 
 #---------------------------------#
 #         notifications           #

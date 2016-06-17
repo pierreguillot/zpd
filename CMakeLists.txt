@@ -1,11 +1,21 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.6)
 
 #---------------------------------------#
 #         The zPure Data Project        #
 #---------------------------------------#
 project(zpd)
-option(COVERALLS "Build with coveralls" OFF)
+option(COVERALLS "Build with coveralls")
 #set(CMAKE_BUILD_TYPE Release)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build/)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/)
+foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${PROJECT_SOURCE_DIR}/build/)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${PROJECT_SOURCE_DIR}/lib/)
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${PROJECT_SOURCE_DIR}/lib/)
+endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
 #---------------------------------------#
 #         The zpd Sources        #
@@ -15,6 +25,16 @@ set(CPDSOURCES
 ${PROJECT_SOURCE_DIR}/cpd/cpd_def.h
 ${PROJECT_SOURCE_DIR}/cpd/cpd_types.c
 ${PROJECT_SOURCE_DIR}/cpd/cpd_types.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_mutex.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_mutex.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_midi.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_midi.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_message.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_message.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_post.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_post.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_dsp.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_dsp.h
 ${PROJECT_SOURCE_DIR}/cpd/cpd_environment.c
 ${PROJECT_SOURCE_DIR}/cpd/cpd_environment.h
 ${PROJECT_SOURCE_DIR}/cpd/cpd_instance.c
@@ -174,8 +194,12 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 set(TESTSOURCES
 ${PROJECT_SOURCE_DIR}/test/test.cpp
 ${PROJECT_SOURCE_DIR}/test/test.hpp
-${PROJECT_SOURCE_DIR}/test/oshelper.hpp
-${PROJECT_SOURCE_DIR}/test/test_types.hpp
+${PROJECT_SOURCE_DIR}/test/test_atom.cpp
+${PROJECT_SOURCE_DIR}/test/test_symbol.cpp
+${PROJECT_SOURCE_DIR}/test/test_tie.cpp
+${PROJECT_SOURCE_DIR}/test/test_console.cpp
+${PROJECT_SOURCE_DIR}/test/test_instance.cpp
+${PROJECT_SOURCE_DIR}/test/test_patch.cpp
 )
 
 source_group(test FILES ${TESTSOURCES})
@@ -193,18 +217,20 @@ if(${WIN32})
 include_directories(${PROJECT_SOURCE_DIR}/thread/pthreadwin)
 endif()
 
-
 find_package(Threads REQUIRED)
-set(CMAKE_MACOSX_RPATH On)
-set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
 add_definitions(-DPD=1 -DUSEAPI_DUMMY=1 -DPD_INTERNAL=1 -DTHREAD_LOCKING=0)
 
-if(${COVERALLS})
+if(${COVERALLS} STREQUAL "On")
     message(STATUS "Build with coveralls")
     ENABLE_TESTING()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
 endif()
+
+#set(CMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4.sdk/) # Not available on travis
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.4)
+set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
+set(CMAKE_MACOSX_RPATH ON)
 
 add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${THREADSOURCES})
 add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${THREADSOURCES})
@@ -231,18 +257,14 @@ elseif(${WIN32})
 	endif()
 endif()
 
-set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
-set_target_properties(zpdshared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 target_link_libraries(zpdshared ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(zpdstatic ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})
 
+set_target_properties(zpdshared PROPERTIES OUTPUT_NAME zpd)
+set_target_properties(xpdtest PROPERTIES OUTPUT_NAME test)
 if(${WIN32})
 	set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpdlib)
 else()
 	set_target_properties(zpdstatic PROPERTIES OUTPUT_NAME zpd)
 endif()
-set_target_properties(zpdstatic PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
-target_link_libraries(zpdstatic ${CMAKE_THREAD_LIBS_INIT})
-
-set_target_properties(xpdtest PROPERTIES OUTPUT_NAME test)
-set_target_properties(xpdtest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
-target_link_libraries(xpdtest ${CMAKE_THREAD_LIBS_INIT})

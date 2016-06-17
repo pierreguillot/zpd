@@ -1,5 +1,5 @@
 /*
- // Copyright (c) 2015 Pierre Guillot.
+ // Copyright (c) 2015-2016 Pierre Guillot.
  // For information on usage and redistribution, and for a DISCLAIMER OF ALL
  // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
  */
@@ -49,8 +49,7 @@ namespace xpd
         {
             if(m_posts[i].type == lvl)
             {
-                ++c;
-                if(c == index+1)
+                if(c++ == index)
                 {
                     return m_posts[static_cast<size_t>(i)];
                 }
@@ -82,7 +81,7 @@ namespace xpd
     void console::history::clear() xpd_noexcept
     {
         m_counters[0] = m_counters[1] = m_counters[2] = m_counters[3] = 0ul;
-        return m_posts.clear();
+        m_posts.clear();
     }
     
     void console::history::add(post const& mess) xpd_noexcept

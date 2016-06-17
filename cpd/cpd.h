@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -11,6 +11,10 @@
 #ifndef cpd_h
 #define cpd_h
 
+#include "cpd_dsp.h"
+#include "cpd_midi.h"
+#include "cpd_message.h"
+#include "cpd_post.h"
 #include "cpd_gui.h"
 
 #endif // cpd_h

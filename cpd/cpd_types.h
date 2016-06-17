@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -89,7 +89,11 @@ CPD_EXTERN char const* cpd_symbol_get_name(cpd_symbol const* symbol);
 //! @{
 
 //! @brief The opaque list used for messages.
-typedef struct _list        cpd_list;
+typedef struct cpd_list
+{
+    size_t  size;
+    void*   vector;
+} cpd_list;
 
 //! @brief The type of messages in a list.
 typedef enum
@@ -101,18 +105,13 @@ typedef enum
 } cpd_listtype;
 
 //! @brief Creates an opaque list that can be for messages within cpd.
+//! @param list The pointer to the list.
 //! @param size The size of the list.
-//! @return The pointer to the list.
-CPD_EXTERN cpd_list* cpd_list_create(size_t size);
+CPD_EXTERN void cpd_list_init(cpd_list *list, size_t size);
 
 //! @brief Frees a list.
 //! @param list The pointer to the list.
-CPD_EXTERN void cpd_list_free(cpd_list *list);
-
-//! @brief Gets the size of a list.
-//! @param list The pointer to the list.
-//! @return The size of the list.
-CPD_EXTERN size_t cpd_list_get_size(cpd_list const* list);
+CPD_EXTERN void cpd_list_clear(cpd_list *list);
 
 //! @brief Gets the type of a data in the list.
 //! @param list The pointer to the list.

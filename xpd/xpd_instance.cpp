@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -10,7 +10,10 @@
 extern "C"
 {
 #include "../cpd/cpd.h"
+#include "../cpd/cpd_midi.h"
+#include "../cpd/cpd_message.h"
 }
+#include <iostream>
 
 namespace xpd
 {
@@ -28,168 +31,58 @@ namespace xpd
     struct instance::internal
     {
     public:        
-        cpd_instance object;
-        instance*  ref;
-        cpd_hook_console console;
-        cpd_hook_midi midi;
-        cpd_hook_message message;
-        
+        cpd_instance      object;
+        instance*         ref;
         static internal* allocate(instance* _ref)
         {
             internal* ptr = (internal *)cpd_instance_new(sizeof(internal));
             if(ptr)
             {
                 ptr->ref = _ref;
-                ptr->console.m_log   = (cpd_hook_post)instance::internal::m_log_hook;
-                ptr->console.m_normal= (cpd_hook_post)instance::internal::m_normal_hook;
-                ptr->console.m_error = (cpd_hook_post)instance::internal::m_error_hook;
-                ptr->console.m_fatal = (cpd_hook_post)instance::internal::m_fatal_hook;
-                
-                ptr->midi.m_noteon           = (cpd_hook_noteon)instance::internal::m_noteon;
-                ptr->midi.m_controlchange    = (cpd_hook_controlchange)instance::internal::m_controlchange;
-                ptr->midi.m_programchange    = (cpd_hook_programchange)instance::internal::m_programchange;
-                ptr->midi.m_pitchbend        = (cpd_hook_pitchbend)instance::internal::m_pitchbend;
-                ptr->midi.m_aftertouch       = (cpd_hook_aftertouch)instance::internal::m_aftertouch;
-                ptr->midi.m_polyaftertouch   = (cpd_hook_polyaftertouch)instance::internal::m_polyaftertouch;
-                ptr->midi.m_byte             = (cpd_hook_byte)instance::internal::m_byte;
-                
-                ptr->message.m_bang          = (cpd_hook_bang)instance::internal::m_bang;
-                ptr->message.m_float         = (cpd_hook_float)instance::internal::m_float;
-                ptr->message.m_symbol        = (cpd_hook_symbol)instance::internal::m_symbol;
-                ptr->message.m_gpointer      = (cpd_hook_gpointer)instance::internal::m_gpointer;
-                ptr->message.m_list          = (cpd_hook_list)instance::internal::m_list;
-                ptr->message.m_anything      = (cpd_hook_anything)instance::internal::m_anything;
-                
-                cpd_instance_set_hook_console(reinterpret_cast<cpd_instance*>(ptr), &ptr->console);
-                cpd_instance_set_hook_midi(reinterpret_cast<cpd_instance*>(ptr), &ptr->midi);
-                
+                cpd_instance_post_sethook(reinterpret_cast<cpd_instance*>(ptr), (cpd_hook_post)func_post);
+                cpd_instance_midi_sethook(reinterpret_cast<cpd_instance*>(ptr), (cpd_midi_hook)func_midi);
             }
             return ptr;
         }
         
         static void m_bind(instance::internal* instance, cpd_tie* tie)
         {
-            cpd_instance_bind(reinterpret_cast<cpd_instance *>(instance), tie, &instance->message);
+            cpd_instance_bind(reinterpret_cast<cpd_instance *>(instance), tie, (cpd_message_hook)func_message);
         }
         
         static void m_unbind(instance::internal* instance, cpd_tie* tie)
         {
             cpd_instance_unbind(reinterpret_cast<cpd_instance *>(instance), tie);
         }
-        
-        static void m_normal_hook(instance::internal* instance, const char *s)
-        {
-            instance->ref->receive(console::post(console::normal, std::string(s)));
-        }
-        
-        static void m_log_hook(instance::internal* instance, const char *s)
-        {
-            instance->ref->receive(console::post(console::log, std::string(s)));
-        }
-        
-        static void m_error_hook(instance::internal* instance, const char *s)
-        {
-            instance->ref->receive(console::post(console::error, std::string(s)));
-        }
-        
-        static void m_fatal_hook(instance::internal* instance, const char *s)
-        {
-            instance->ref->receive(console::post(console::fatal, std::string(s)));
-        }
-        
 
         
         
-        static void m_noteon(instance::internal* instance, int port, int channel, int pitch, int velocity)
+        static void func_midi(instance::internal* instance, cpd_midi_event event)
         {
-            instance->ref->receive(midi::event::note(channel, pitch, velocity));
-        }
-        
-        static void m_controlchange(instance::internal* instance, int port, int channel, int control, int value)
-        {
-            instance->ref->receive(midi::event::control_change(channel, control, value));
-        }
-        
-        static void m_programchange(instance::internal* instance, int port, int channel, int value)
-        {
-            instance->ref->receive(midi::event::program_change(channel, value));
-        }
-        
-        static void m_pitchbend(instance::internal* instance, int port, int channel, int value)
-        {
-            instance->ref->receive(midi::event::pitch_bend(channel, value));
-        }
-        
-        static void m_aftertouch(instance::internal* instance, int port, int channel, int value)
-        {
-            instance->ref->receive(midi::event::after_touch(channel, value));
-        }
-        
-        static void m_polyaftertouch(instance::internal* instance, int port, int channel, int pitch, int value)
-        {
-            instance->ref->receive(midi::event::poly_after_touch(channel, pitch, value));
-        }
-        
-        static void m_byte(instance::internal* instance, int port, int value)
-        {
-            instance->ref->receive(midi::event::byte(value));
+            instance->ref->receive(midi::event(midi::event::type_t(event.type), event.data1, event.data2, event.data3));
         }
         
         
-        
-        
-        static void m_bang(instance::internal* instance, cpd_tie* tie)
+        static void func_message(instance::internal* instance, cpd_message message)
         {
-            instance->ref->receive(smuggler::createtie(tie), symbol::bang_s, std::vector<atom>());
-        }
-        
-        static void m_float(instance::internal* instance, cpd_tie* tie, float f)
-        {
-            instance->ref->receive(smuggler::createtie(tie), symbol::float_s, std::vector<atom>(1, f));
-        }
-        
-        static void m_symbol(instance::internal* instance, cpd_tie* tie, cpd_symbol* s)
-        {
-            instance->ref->receive(smuggler::createtie(tie), symbol::symbol_s, std::vector<atom>(1, smuggler::createsymbol(s)));
-        }
-        
-        static void m_gpointer(instance::internal* instance, cpd_tie* tie, cpd_gpointer const* g)
-        {
-            ;
-        }
-        
-        static void m_list(instance::internal* instance, cpd_tie* tie, cpd_list const* list)
-        {
-            std::vector<atom> vec(cpd_list_get_size(list));
+            std::vector<atom> vec(message.list.size);
             for(size_t i = 0; i < vec.size(); ++i)
             {
-                if(cpd_list_get_type(list, i) == CPD_FLOAT)
+                if(cpd_list_get_type(&message.list, i) == CPD_FLOAT)
                 {
-                    vec[i] = cpd_list_get_float(list, i);
+                    vec[i] = cpd_list_get_float(&message.list, i);
                 }
-                else if(cpd_list_get_type(list, i) == CPD_SYMBOL)
+                else if(cpd_list_get_type(&message.list, i) == CPD_SYMBOL)
                 {
-                    vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
+                    vec[i] = smuggler::createsymbol(cpd_list_get_symbol(&message.list, i));
                 }
             }
-            instance->ref->receive(smuggler::createtie(tie), symbol::list_s, vec);
+            instance->ref->receive(smuggler::createtie(message.tie), smuggler::createsymbol(message.selector), vec);
         }
         
-        static void m_anything(instance::internal* instance, cpd_tie* tie, cpd_symbol* s, cpd_list const* list)
+        static void func_post(instance::internal* instance, cpd_post post)
         {
-            std::vector<atom> vec(cpd_list_get_size(list));
-            for(size_t i = 0; i < vec.size(); ++i)
-            {
-                if(cpd_list_get_type(list, i) == CPD_FLOAT)
-                {
-                    vec[i] = cpd_list_get_float(list, i);
-                }
-                else if(cpd_list_get_type(list, i) == CPD_SYMBOL)
-                {
-                    vec[i] = smuggler::createsymbol(cpd_list_get_symbol(list, i));
-                }
-            }
-            instance->ref->receive(smuggler::createtie(tie), smuggler::createsymbol(s), vec);
+            instance->ref->receive(console::post(console::level(post.level), std::string(post.text)));
         }
     };
     
@@ -199,11 +92,7 @@ namespace xpd
     
     instance::instance()
     {
-        environment::lock();
-        
-
         m_ptr = internal::allocate(this);
-        environment::unlock();
 #define LCOV_EXCL_START
         if(!m_ptr)
         {
@@ -215,9 +104,7 @@ namespace xpd
     instance::~instance() xpd_noexcept
     {
         release();
-        environment::lock();
         cpd_instance_free(reinterpret_cast<cpd_instance *>(m_ptr));
-        environment::unlock();
     }
     
     
@@ -225,7 +112,6 @@ namespace xpd
     {
         patch p;
         void* ptr = xpd_nullptr;
-        environment::lock();
         if(path.empty())
         {
             ptr = cpd_instance_patch_load(reinterpret_cast<cpd_instance *>(m_ptr), name.c_str(), xpd_nullptr);
@@ -240,15 +126,12 @@ namespace xpd
             int todo;
             p = patch(ptr, size_t(cpd_patch_get_dollarzero(reinterpret_cast<cpd_patch *>(ptr))));
         }
-        environment::unlock();
         return p;
     }
     
     void instance::close(patch& p)
     {
-        environment::lock();
         cpd_instance_patch_close(reinterpret_cast<cpd_instance *>(m_ptr), reinterpret_cast<cpd_patch *>(p.m_ptr));
-        environment::unlock();
     }
     
     
@@ -259,133 +142,60 @@ namespace xpd
     
     void instance::prepare(const int nins, const int nouts, const int samplerate, const int nsamples) xpd_noexcept
     {
-        environment::lock();
         cpd_instance_dsp_prepare(reinterpret_cast<cpd_instance *>(m_ptr), nins, nouts, samplerate, nsamples);
-        environment::unlock();
     }
 
     void instance::perform(int nsamples, const int nins, const sample** inputs, const int nouts, sample** outputs) xpd_noexcept
     {
-        environment::lock();
         cpd_instance_dsp_perform(reinterpret_cast<cpd_instance *>(m_ptr), nsamples, nins, inputs, nouts, outputs);
-        environment::unlock();
     }
     
     void instance::release() xpd_noexcept
     {
-        environment::lock();
         cpd_instance_dsp_release(reinterpret_cast<cpd_instance *>(m_ptr));
-        environment::unlock();
     }
     
     
     
     void instance::send(console::post const& post) const
     {
-        environment::lock();
-        if(post.type == console::error)
-        {
-            cpd_instance_post_error(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
-        }
-        else if(post.type == console::fatal)
-        {
-            cpd_instance_post_fatal(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
-        }
-        else if(post.type == console::normal)
-        {
-            cpd_instance_post_normal(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
-        }
-        else
-        {
-            cpd_instance_post_log(reinterpret_cast<cpd_instance *>(m_ptr), post.text.c_str());
-        }
-        environment::unlock();
+        cpd_post cpost;
+        cpost.level = static_cast<cpd_postlevel>(post.type);
+        cpost.text  = post.text.c_str();
+        cpd_instance_post_send(reinterpret_cast<cpd_instance *>(m_ptr), cpost);
     }
     
     void instance::send(tie name, symbol selector, std::vector<atom> const& atoms) const
     {
-        environment::lock();
-        if(selector == symbol::bang_s)
+        cpd_message cmess;
+        cmess.tie       = smuggler::gettie(name);
+        cmess.selector  = smuggler::getsymbol(selector);
+        cpd_list_init(&cmess.list, atoms.size());
+        if(cmess.list.size == atoms.size())
         {
-            cpd_instance_send_bang(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name));
-        }
-        else if(selector == symbol::float_s)
-        {
-            cpd_instance_send_float(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name), atoms[0]);
-        }
-        else if(selector == symbol::symbol_s)
-        {
-            cpd_instance_send_symbol(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name), smuggler::getsymbol(atoms[0]));
-        }
-        else if(selector == symbol::list_s)
-        {
-            cpd_list* list = cpd_list_create(atoms.size());
-            for(size_t i = 0; i < atoms.size(); ++i)
+            for(size_t i = 0; i  < cmess.list.size; ++i)
             {
                 if(atoms[i].type() == atom::float_t)
                 {
-                    cpd_list_set_float(list, i, float(atoms[i]));
+                    cpd_list_set_float(&cmess.list, i, float(atoms[i]));
                 }
                 else if(atoms[i].type() == atom::symbol_t)
                 {
-                    cpd_list_set_symbol(list, i, smuggler::getsymbol(atoms[i]));
+                    cpd_list_set_symbol(&cmess.list, i, smuggler::getsymbol(symbol(atoms[i])));
                 }
             }
-            cpd_instance_send_list(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name), list);
-            cpd_list_free(list);
+            cpd_instance_message_send(reinterpret_cast<cpd_instance *>(m_ptr), cmess);
         }
-        else
-        {
-            cpd_list* list = cpd_list_create(atoms.size());
-            for(size_t i = 0; i < atoms.size(); ++i)
-            {
-                if(atoms[i].type() == atom::float_t)
-                {
-                    cpd_list_set_float(list, i, float(atoms[i]));
-                }
-                else if(atoms[i].type() == atom::symbol_t)
-                {
-                    cpd_list_set_symbol(list, i, smuggler::getsymbol(atoms[i]));
-                }
-            }
-            cpd_instance_send_anything(reinterpret_cast<cpd_instance *>(m_ptr), smuggler::gettie(name), smuggler::getsymbol(selector), list);
-            cpd_list_free(list);
-        }
-        environment::unlock();
     }
     
     void instance::send(midi::event const& event) const
     {
-        environment::lock();
-        if(event.type() == midi::event::note_t)
-        {
-            cpd_instance_midi_noteon(reinterpret_cast<cpd_instance *>(m_ptr), event.channel(), event.pitch(), event.velocity());
-        }
-        else if(event.type() == midi::event::control_change_t)
-        {
-            cpd_instance_midi_controlchange(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.controler(), event.value());
-        }
-        else if(event.type() == midi::event::program_change_t)
-        {
-            cpd_instance_midi_programchange(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.program());
-        }
-        else if(event.type() == midi::event::pitch_bend_t)
-        {
-            cpd_instance_midi_pitchbend(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.bend());
-        }
-        else if(event.type() == midi::event::after_touch_t)
-        {
-            cpd_instance_midi_aftertouch(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.value());
-        }
-        else if(event.type() == midi::event::poly_after_touch_t)
-        {
-            cpd_instance_midi_polyaftertouch(reinterpret_cast<cpd_instance *>(m_ptr),event.channel(), event.pitch(), event.value());
-        }
-        else
-        {
-            cpd_instance_midi_byte(reinterpret_cast<cpd_instance *>(m_ptr), 0, event.value());
-        }
-        environment::unlock();
+        cpd_midi_event cevent;
+        cevent.type     = static_cast<cpd_midi_type>(event.type());
+        cevent.data1    =  event.data1();
+        cevent.data2    =  event.data2();
+        cevent.data3    =  event.data3();
+        cpd_instance_midi_send(reinterpret_cast<cpd_instance *>(m_ptr), cevent);
     }
     
     void instance::bind(tie name)

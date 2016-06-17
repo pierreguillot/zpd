@@ -47,4 +47,4 @@ install_manifest.txt
 doc
 */Debug
 */Release
-
+build/

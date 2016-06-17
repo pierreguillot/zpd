@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -31,9 +31,9 @@ namespace xpd
             panel               = 8  //!< @brief The gui is a panel.
         };
         
-        inline xpd_constexpr gui() xpd_noexcept : object() {}
+        inline gui() xpd_noexcept : object() {}
         
-        inline xpd_constexpr gui(gui const& other) xpd_noexcept : object(other) {}
+        inline gui(gui const& other) xpd_noexcept : object(other) {}
         
         gui(object const& other);
         

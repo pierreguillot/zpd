@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -18,12 +18,6 @@ namespace xpd
     // ==================================================================================== //
     //                                      SYMBOL                                          //
     // ==================================================================================== //
-    
-    symbol const symbol::bang_s   = symbol("bang");
-    symbol const symbol::float_s  = symbol("float");
-    symbol const symbol::symbol_s = symbol("symbol");
-    symbol const symbol::list_s   = symbol("list");
-    symbol const symbol::_s       = symbol("");
     
     symbol::symbol(std::string const& name) : ptr(cpd_symbol_create(name.c_str()))
     {

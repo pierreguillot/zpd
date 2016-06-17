@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -36,15 +36,6 @@ CPD_EXTERN_STRUCT _glist;
 CPD_EXTERN_STRUCT _text;
 CPD_EXTERN_STRUCT _iemgui;
 CPD_EXTERN_STRUCT _atom;
-
-//! @addtogroup instance
-//! @{
-//! @addtogroup dsp
-//! @{
-//! @brief The type used for samples during digital signal processing.
-typedef float cpd_sample;
-//! @}
-//! @}
 
 //! @addtogroup patch
 //! @{

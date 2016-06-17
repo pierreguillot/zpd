@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -13,11 +13,6 @@
 #include "../pd/src/m_pd.h"
 #include <stdlib.h>
 
-struct _list
-{
-    size_t l_n;
-    t_atom *l_vec;
-};
 
 cpd_tie* cpd_tie_create(const char* name)
 {
@@ -50,60 +45,50 @@ char const* cpd_symbol_get_name(cpd_symbol const* symbol)
 
 
 
-cpd_list* cpd_list_create(size_t size)
+void cpd_list_init(cpd_list *list, size_t size)
 {
-    cpd_list *x   = (cpd_list *)malloc(sizeof(cpd_list));
-    if(x)
+    if(size)
     {
-        if(size)
+        list->vector = (void *)malloc(size * sizeof(t_atom));
+        if(list->vector)
         {
-            x->l_vec = (t_atom *)malloc(size * sizeof(t_atom));
-            if(x->l_vec)
-            {
-                x->l_n = size;
-            }
-            else
-            {
-                x->l_n = 0;
-            }
+            list->size = size;
         }
         else
         {
-            x->l_n      = 0;
-            x->l_vec    = NULL;
+            list->size = 0;
         }
     }
-    return x;
-}
-
-void cpd_list_free(cpd_list *list)
-{
-    if(list->l_vec && list->l_n)
+    else
     {
-        free(list->l_vec);
+        list->size      = 0;
+        list->vector    = NULL;
     }
-    list->l_vec = NULL;
-    list->l_n   = 0;
-    free(list);
 }
 
-size_t cpd_list_get_size(cpd_list const* list)
+void cpd_list_clear(cpd_list *list)
 {
-    return list->l_n;
+    if(list->vector && list->size)
+    {
+        free(list->vector);
+    }
+    list->vector = NULL;
+    list->size   = 0;
 }
 
 cpd_listtype cpd_list_get_type(cpd_list const* list, size_t index)
 {
-    if((list->l_vec+index)->a_type == A_FLOAT)
+    t_atom const* argv = (t_atom const*)list->vector;
+    if((argv+index)->a_type == A_FLOAT)
     {
         return CPD_FLOAT;
     }
-    if((list->l_vec+index)->a_type == A_SYMBOL)
+    else if((argv+index)->a_type == A_SYMBOL)
     {
         return CPD_SYMBOL;
     }
 #define LCOV_EXCL_START
-    if((list->l_vec+index)->a_type == A_POINTER)
+    else if((argv+index)->a_type == A_POINTER)
     {
         return CPD_POINTER;
     }
@@ -113,45 +98,46 @@ cpd_listtype cpd_list_get_type(cpd_list const* list, size_t index)
 
 float cpd_list_get_float(cpd_list const* list, size_t index)
 {
-    return (list->l_vec+index)->a_w.w_float;
+    t_atom const* argv = (t_atom const*)list->vector;
+    return (argv+index)->a_w.w_float;
 }
 
 cpd_symbol* cpd_list_get_symbol(cpd_list const* list, size_t index)
 {
-    return (list->l_vec+index)->a_w.w_symbol;
+    t_atom const* argv = (t_atom const*)list->vector;
+    return (argv+index)->a_w.w_symbol;
 }
 
 #define LCOV_EXCL_START
 cpd_gpointer* cpd_list_get_gpointer(cpd_list const* list, size_t index)
 {
-    return (list->l_vec+index)->a_w.w_gpointer;
+    t_atom const* argv = (t_atom const*)list->vector;
+    return (argv+index)->a_w.w_gpointer;
 }
 #define LCOV_EXCL_STOP
 
 void cpd_list_set_float(cpd_list *list, size_t index, float value)
 {
-    (list->l_vec+index)->a_type = A_FLOAT;
-    (list->l_vec+index)->a_w.w_float = value;
+    t_atom* argv = (t_atom *)list->vector;
+    (argv+index)->a_type = A_FLOAT;
+    (argv+index)->a_w.w_float = value;
 }
 
 void cpd_list_set_symbol(cpd_list *list, size_t index, cpd_symbol* symbol)
 {
-    (list->l_vec+index)->a_type = A_SYMBOL;
-    (list->l_vec+index)->a_w.w_symbol = symbol;
+    t_atom* argv = (t_atom *)list->vector;
+    (argv+index)->a_type = A_SYMBOL;
+    (argv+index)->a_w.w_symbol = symbol;
 }
 
 #define LCOV_EXCL_START
 void cpd_list_set_gpointer(cpd_list *list, size_t index, cpd_gpointer* pointer)
 {
-    (list->l_vec+index)->a_type = A_POINTER;
-    (list->l_vec+index)->a_w.w_gpointer = pointer;
+    t_atom* argv = (t_atom *)list->vector;
+    (argv+index)->a_type = A_POINTER;
+    (argv+index)->a_w.w_gpointer = pointer;
 }
 #define LCOV_EXCL_STOP
 
-
-t_atom* cpd_list_get_vec(cpd_list const* list)
-{
-    return list->l_vec;
-}
 
 

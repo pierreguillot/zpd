@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -52,6 +52,7 @@ namespace xpd
         public:
             //! @brief the constructor.
             //! @details Preallocte space for posts
+            //! @todo later figure out if we should let the user specify the space.
             history();
             
             //! @brief Gets the number of posts of a specified level.

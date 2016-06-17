@@ -1,5 +1,5 @@
 /*
-// Copyright (c) 2015 Pierre Guillot.
+// Copyright (c) 2015-2016 Pierre Guillot.
 // For information on usage and redistribution, and for a DISCLAIMER OF ALL
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
@@ -11,12 +11,20 @@
 #include "cpd_environment.h"
 #include "cpd_types.h"
 #include "cpd_instance.h"
+#include "cpd_mutex.h"
 
 #include "../pd/src/m_pd.h"
 #include "../pd/src/s_stuff.h"
 #include "../pd/src/m_imp.h"
 #include <assert.h>
 #include <signal.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+// ==================================================================================== //
+//                                      GENERAL                                         //
+// ==================================================================================== //
 
 EXTERN void pd_init(void);
 
@@ -48,13 +56,34 @@ int sys_mididevnametonumber(int output, const char *name) { return 0; }
 void sys_mididevnumbertoname(int output, int devno, char *name, int namesize) {}
 #define LCOV_EXCL_STOP
 
-static t_sample*          cpd_sample_ins    = NULL;
-static t_sample*          cpd_sample_outs   = NULL;
-static t_pdinstance*      c_first_instance  = NULL;
 
-cpd_instance*      c_current_instance  = NULL;
-t_symbol*          c_sym_pd            = NULL;
-t_symbol*          c_sym_dsp           = NULL;
+
+
+
+
+
+
+// ==================================================================================== //
+//                                   IMPLEMENTATION                                     //
+// ==================================================================================== //
+
+static cpd_mutex c_mutex;
+
+extern void cpd_lock()
+{
+    cpd_mutex_lock(&c_mutex);
+}
+
+extern void cpd_unlock()
+{
+    cpd_mutex_unlock(&c_mutex);
+}
+
+
+
+static t_sample*          c_sample_ins    = NULL;
+static t_sample*          c_sample_outs   = NULL;
+static t_pdinstance*      c_first_instance = NULL;
 cpd_symbol*        c_sym_bng           = NULL;
 cpd_symbol*        c_sym_hsl           = NULL;
 cpd_symbol*        c_sym_vsl           = NULL;
@@ -67,7 +96,11 @@ cpd_symbol*        c_sym_cnv           = NULL;
 cpd_symbol*        c_sym_empty         = NULL;
 
 extern void cpd_print(const char* s);
-extern void receiver_setup(void);
+extern cpd_instance* c_current_instance;
+
+// ==================================================================================== //
+//                                      INTERFACE                                       //
+// ==================================================================================== //
 
 void cpd_init()
 {
@@ -77,8 +110,12 @@ void cpd_init()
     assert("Pure Data is already initialized." && !initialized);
     if(!initialized)
     {
+        cpd_mutex_init(&c_mutex);
+        sys_soundin         = NULL;
+        sys_soundout        = NULL;
+        c_current_instance  = NULL;
+        sys_printhook = (t_printhook)(cpd_print);
         signal(SIGFPE, SIG_IGN);
-        sys_printhook = NULL;
         sys_soundin = NULL;
         sys_soundout = NULL;
         sys_schedblocksize = DEFDACBLKSIZE;
@@ -93,22 +130,19 @@ void cpd_init()
         sys_nmidiin = 0;
         sys_nmidiout = 0;
         sys_init_fdpoll();
-        sys_startgui(NULL);
         pd_init();
+        sys_startgui(NULL);
+        
         sys_set_audio_api(API_DUMMY);
         sys_searchpath = NULL;
         sys_set_audio_settings(1, &devices, 1, &ioputs, 1, &devices, 1, &ioputs, 44100, -1, 1, DEFDACBLKSIZE);
         sched_set_using_audio(SCHED_AUDIO_CALLBACK);
         sys_reopen_audio();
-        cpd_sample_ins      = sys_soundin;
-        cpd_sample_outs     = sys_soundout;
+        
+        c_sample_ins      = sys_soundin;
+        c_sample_outs     = sys_soundout;
         c_first_instance    = pd_this;
-        sys_soundin         = NULL;
-        sys_soundout        = NULL;
-        c_current_instance  = NULL;
-     
-        c_sym_pd            = gensym("pd");
-        c_sym_dsp           = gensym("dsp");
+        
         c_sym_bng           = gensym("bng");
         c_sym_hsl           = gensym("hsl");
         c_sym_vsl           = gensym("vsl");
@@ -129,27 +163,26 @@ void cpd_init()
         pique_setup();
         sigmund_tilde_setup();
         stdout_setup();
-        receiver_setup();
-        
-        sys_printhook = (t_printhook)(cpd_print);
+
         initialized = 1;
     }
 }
 
 void cpd_clear()
 {
-    if(cpd_sample_ins)
+    if(c_sample_ins)
     {
-        freebytes(cpd_sample_ins, (sys_inchannels ? sys_inchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
+        freebytes(c_sample_ins, (sys_inchannels ? sys_inchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
     }
-    if(cpd_sample_outs)
+    if(c_sample_outs)
     {
-        freebytes(cpd_sample_outs, (sys_outchannels ? sys_outchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
+        freebytes(c_sample_outs, (sys_outchannels ? sys_outchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
     }
     if(c_first_instance)
     {
         pdinstance_free(c_first_instance);
     }
+    cpd_mutex_destroy(&c_mutex);
 }
 
 unsigned int cpd_version_getmajor()
@@ -177,5 +210,8 @@ void cpd_searchpath_add(const char* path)
 {
     sys_searchpath = namelist_append(sys_searchpath, path, 0);
 }
+
+
+
 
 
