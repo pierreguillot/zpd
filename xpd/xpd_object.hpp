@@ -32,7 +32,7 @@ namespace xpd
         
         //! @brief Checks the validity of the object.
         //! @return true if the object if valid, otherwise false.
-        inline xpd_constexpr operator bool() const xpd_noexcept {return (m_patch != xpd_nullptr) && (m_ptr != xpd_nullptr);}
+        inline operator bool() const xpd_noexcept {return (m_patch != xpd_nullptr) && (m_ptr != xpd_nullptr);}
         
         //! @brief Gets the name of the object.
         std::string name() const;
