@@ -33,12 +33,9 @@ namespace xpd
         //! @brief The copy operator.
         inline patch& operator=(patch const& other) xpd_noexcept {m_ptr = other.m_ptr; m_unique_id = other.m_unique_id; return *this;}
         
-        //! @brief The destructor.
-        inline ~patch() xpd_noexcept {};
-        
         //! @brief Checks the validity of the patch.
         //! @return true if the patch if valid, otherwise false.
-        inline operator bool() const xpd_noexcept {return (m_ptr != xpd_nullptr);}
+        inline xpd_constexpr operator bool() const xpd_noexcept {return (m_ptr != xpd_nullptr);}
         
         //! @brief Gets the file's name.
         std::string name() const;
