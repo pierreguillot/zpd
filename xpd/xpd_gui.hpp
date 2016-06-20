@@ -46,11 +46,11 @@ namespace xpd
         
         type_t type() const xpd_noexcept;
         
-        symbol receive_tie() const xpd_noexcept;
+        tie receive_tie() const xpd_noexcept;
         
-        symbol send_tie() const xpd_noexcept;
+        tie send_tie() const xpd_noexcept;
         
-        symbol label() const xpd_noexcept;
+        std::string label() const;
         
         int label_x() const xpd_noexcept;
         

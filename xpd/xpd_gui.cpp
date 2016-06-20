@@ -37,19 +37,19 @@ namespace xpd
         return type_t(cpd_gui_get_type(reinterpret_cast<cpd_gui const*>(m_ptr)));
     }
     
-    symbol gui::receive_tie() const xpd_noexcept
+    tie gui::receive_tie() const xpd_noexcept
     {
-        return symbol(cpd_tie_get_name(cpd_gui_get_receive_tie(reinterpret_cast<cpd_gui const*>(m_ptr))));
+        return tie(cpd_tie_get_name(cpd_gui_get_receive_tie(reinterpret_cast<cpd_gui const*>(m_ptr))));
     }
     
-    symbol gui::send_tie() const xpd_noexcept
+    tie gui::send_tie() const xpd_noexcept
     {
-        return symbol(cpd_tie_get_name(cpd_gui_get_send_tie(reinterpret_cast<cpd_gui const*>(m_ptr))));
+        return tie(cpd_tie_get_name(cpd_gui_get_send_tie(reinterpret_cast<cpd_gui const*>(m_ptr))));
     }
     
-    symbol gui::label() const xpd_noexcept
+    std::string gui::label() const
     {
-        return symbol(cpd_symbol_get_name(cpd_gui_get_label(reinterpret_cast<cpd_gui const*>(m_ptr))));
+        return std::string(cpd_symbol_get_name(cpd_gui_get_label(reinterpret_cast<cpd_gui const*>(m_ptr))));
     }
     
     int gui::label_x() const xpd_noexcept
