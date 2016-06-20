@@ -132,6 +132,7 @@ namespace xpd
     void instance::close(patch& p)
     {
         cpd_instance_patch_close(reinterpret_cast<cpd_instance *>(m_ptr), reinterpret_cast<cpd_patch *>(p.m_ptr));
+        p = patch();
     }
     
     
