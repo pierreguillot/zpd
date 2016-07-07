@@ -4,12 +4,12 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef XPD_HPP
-#define XPD_HPP
+#ifndef XPD_INCLUDE_HPP
+#define XPD_INCLUDE_HPP
 
 //! @brief The c++ interface of of zpd.
 namespace xpd {}
 
 #include "xpd_gui.hpp"
 
-#endif // XPD_HPP
+#endif // XPD_INCLUDE_HPP

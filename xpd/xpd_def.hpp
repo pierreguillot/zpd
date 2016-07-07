@@ -4,8 +4,8 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef XPD_DEF_HPP
-#define XPD_DEF_HPP
+#ifndef XPD_DEF_INCLUDE_HPP
+#define XPD_DEF_INCLUDE_HPP
 
 #if (__cplusplus <= 199711L)
 #define _XPD_CPP11_NOSUPPORT_
@@ -39,4 +39,4 @@ namespace xpd
 }
 
 
-#endif // XPD_DEF_HPP
+#endif // XPD_DEF_INCLUDE_HPP

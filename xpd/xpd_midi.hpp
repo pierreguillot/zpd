@@ -4,8 +4,8 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef XPD_MIDI_HPP
-#define XPD_MIDI_HPP
+#ifndef XPD_MIDI_INCLUDE_HPP
+#define XPD_MIDI_INCLUDE_HPP
 
 #include "xpd_def.hpp"
 
@@ -114,4 +114,4 @@ namespace xpd
     };
 }
 
-#endif // XPD_MIDI_HPP
+#endif // XPD_MIDI_INCLUDE_HPP

@@ -4,8 +4,8 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef XPD_CONSOLE_HPP
-#define XPD_CONSOLE_HPP
+#ifndef XPD_CONSOLE_INCLUDE_HPP
+#define XPD_CONSOLE_INCLUDE_HPP
 
 #include "xpd_def.hpp"
 #include <string>
@@ -98,4 +98,4 @@ namespace xpd
     };
 }
 
-#endif //XPD_CONSOLE_HPP
+#endif //XPD_CONSOLE_INCLUDE_HPP

@@ -4,8 +4,8 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef XPD_ATOM_HPP
-#define XPD_ATOM_HPP
+#ifndef XPD_ATOM_INCLUDE_HPP
+#define XPD_ATOM_INCLUDE_HPP
 
 #include "xpd_symbol.hpp"
 
@@ -91,4 +91,4 @@ namespace xpd
 }
 
 
-#endif // XPD_ATOM_HPP
+#endif // XPD_ATOM_INCLUDE_HPP

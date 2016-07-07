@@ -4,8 +4,8 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef XPD_INSTANCE_HPP
-#define XPD_INSTANCE_HPP
+#ifndef XPD_INSTANCE_INCLUDE_HPP
+#define XPD_INSTANCE_INCLUDE_HPP
 
 #include "xpd_tie.hpp"
 #include "xpd_symbol.hpp"
@@ -115,4 +115,4 @@ namespace xpd
 
 }
 
-#endif // XPD_INSTANCE_HPP
+#endif // XPD_INSTANCE_INCLUDE_HPP

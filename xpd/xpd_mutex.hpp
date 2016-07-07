@@ -4,8 +4,8 @@
 // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef XPD_MUTEX_HPP
-#define XPD_MUTEX_HPP
+#ifndef XPD_MUTEX_INCLUDE_HPP
+#define XPD_MUTEX_INCLUDE_HPP
 
 #include "xpd_def.hpp"
 
@@ -50,4 +50,4 @@ namespace xpd
 #endif
 }
 
-#endif // XPD_MUTEX_HPP
+#endif // XPD_MUTEX_INCLUDE_HPP
