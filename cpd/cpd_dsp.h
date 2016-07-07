@@ -8,8 +8,8 @@
 // directly copied. None of the authors of Pure Data and libPD is responsible for these
 // experiments but you must be aware of their unintended contribution.
 
-#ifndef cpd_dsp_h
-#define cpd_dsp_h
+#ifndef cpd_dsp_include_h
+#define cpd_dsp_include_h
 
 #include "cpd_instance.h"
 
@@ -52,4 +52,4 @@ CPD_EXTERN int cpd_instance_get_samplerate(cpd_instance* instance);
 //! @}
 
 
-#endif // cpd_dsp_h
+#endif // cpd_dsp_include_h

@@ -8,8 +8,8 @@
 // directly copied. None of the authors of Pure Data and libPD is responsible for these
 // experiments but you must be aware of their unintended contribution.
 
-#ifndef cpd_gui_h
-#define cpd_gui_h
+#ifndef cpd_gui_include_h
+#define cpd_gui_include_h
 
 #include "cpd_object.h"
 
@@ -89,4 +89,4 @@ CPD_EXTERN int cpd_gui_get_label_y(cpd_gui const* gui, cpd_patch const* patch);
 //! @}
 
 
-#endif // cpd_gui_h
+#endif // cpd_gui_include_h

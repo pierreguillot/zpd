@@ -8,8 +8,8 @@
 // directly copied. None of the authors of Pure Data and libPD is responsible for these
 // experiments but you must be aware of their unintended contribution.
 
-#ifndef cpd_environment_h
-#define cpd_environment_h
+#ifndef cpd_environment_include_h
+#define cpd_environment_include_h
 
 #include "cpd_types.h"
 
@@ -59,4 +59,4 @@ CPD_EXTERN void cpd_searchpath_add(const char* path);
 //! @}
 
 
-#endif // cpd_environment_h
+#endif // cpd_environment_include_h

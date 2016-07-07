@@ -8,8 +8,8 @@
 // directly copied. None of the authors of Pure Data and libPD is responsible for these
 // experiments but you must be aware of their unintended contribution.
 
-#ifndef cpd_object_h
-#define cpd_object_h
+#ifndef cpd_object_include_h
+#define cpd_object_include_h
 
 #include "cpd_patch.h"
 
@@ -62,4 +62,4 @@ CPD_EXTERN char cpd_object_is_gui(cpd_object const* object);
 
 //! @}
 
-#endif // cpd_object_h
+#endif // cpd_object_include_h
