@@ -123,7 +123,7 @@ namespace xpd
         
         if(ptr)
         {
-            int todo;
+            int todo_get_doolar_zero_ts;
             p = patch(ptr, size_t(cpd_patch_get_dollarzero(reinterpret_cast<cpd_patch *>(ptr))));
         }
         return p;
