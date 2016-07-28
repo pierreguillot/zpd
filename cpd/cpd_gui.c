@@ -180,6 +180,10 @@ float cpd_gui_get_value(cpd_gui const* gui)
     {
         return ((t_vdial *)gui)->x_on;
     }
+    else if(name == c_sym_bng)
+    {
+        return ((t_bng *)gui)->x_flashed;
+    }
     return 0.f;
 }
 
