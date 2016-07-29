@@ -52,6 +52,9 @@ namespace xpd
         //! @brief Gets the height of the object.
         int height() const xpd_noexcept;
         
+        //! @brief Gets if the object is a GUI object.
+        bool is_gui() const xpd_noexcept;
+        
     protected:
         
         inline xpd_constexpr object(void const* patch, void* ptr) xpd_noexcept : m_patch(patch), m_ptr(ptr) {}

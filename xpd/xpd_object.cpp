@@ -56,6 +56,11 @@ namespace xpd
     {
         return cpd_object_get_height(reinterpret_cast<cpd_object const *>(m_ptr), reinterpret_cast<cpd_patch const*>(m_patch));
     }
+    
+    bool object::is_gui() const xpd_noexcept
+    {
+        return static_cast<bool>(cpd_object_is_gui(reinterpret_cast<cpd_object const*>(m_ptr)));
+    }
 }
 
 
