@@ -8,17 +8,17 @@
 #include <cassert>
 #include <cmath>
 
-namespace jpd
+namespace xpd
 {
-    xpd::symbol processor::get_symbol_float()
+    symbol processor::get_symbol_float()
     {
-        static xpd::symbol x_sym("float");
+        static symbol x_sym("float");
         return x_sym;
     }
     
-    xpd::symbol processor::get_symbol_list()
+    symbol processor::get_symbol_list()
     {
-        static xpd::symbol x_sym("list");
+        static symbol x_sym("list");
         return x_sym;
     }
     
@@ -38,7 +38,7 @@ namespace jpd
         if(static_cast<bool>(m_patch))
         {
             close(m_patch);
-            m_playhead_tie = xpd::tie();
+            m_playhead_tie = tie();
         }
     }
     
@@ -46,9 +46,9 @@ namespace jpd
     //                                      INSTANCE                                    //
     // ================================================================================ //
     
-    void processor::receive(xpd::tie name, xpd::symbol selector, std::vector<xpd::atom> const& atoms)
+    void processor::receive(tie name, symbol selector, std::vector<atom> const& atoms)
     {
-        if(!atoms.empty() && selector == get_symbol_float() && atoms[0].type() == xpd::atom::float_t)
+        if(!atoms.empty() && selector == get_symbol_float() && atoms[0].type() == atom::float_t)
         {
             for(size_t i = 0; i < m_parameters.size(); ++i)
             {
@@ -61,9 +61,9 @@ namespace jpd
         }
     }
     
-    void processor::receive(xpd::console::post const& post)
+    void processor::receive(console::post const& post)
     {
-        xpd::console::history::add(std::move(post));
+        console::history::add(std::move(post));
     }
     
     // ================================================================================ //
@@ -72,30 +72,30 @@ namespace jpd
     
     void processor::load_patch(const std::string &name, const std::string &path)
     {
-        xpd::processor::release();
+        processor::release();
         if(static_cast<bool>(m_patch))
         {
             close(m_patch);
         }
-        m_patch = xpd::processor::load(name, path);
+        m_patch = processor::load(name, path);
         if(static_cast<bool>(m_patch))
         {
-            m_playhead_tie = xpd::tie(std::to_string(m_patch.unique_id()) + "-playhead");
+            m_playhead_tie = tie(std::to_string(m_patch.unique_id()) + "-playhead");
         }
         else
         {
-            send(xpd::console::post(xpd::console::error, std::string("processor can't find the patch : ") + name));
+            send(console::post(console::error, std::string("processor can't find the patch : ") + name));
         }
     }
     
     
     void processor::close_patch()
     {
-        xpd::processor::release();
+        processor::release();
         if(static_cast<bool>(m_patch))
         {
             close(m_patch);
-            m_playhead_tie = xpd::tie();
+            m_playhead_tie = tie();
         }
     }
     

@@ -4,20 +4,24 @@
  // WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 */
 
-#ifndef JPD_INSTANCE_INCLUDE_HPP
-#define JPD_INSTANCE_INCLUDE_HPP
+#ifndef XPD_PROCESSOR_INCLUDE_HPP
+#define XPD_PROCESSOR_INCLUDE_HPP
 
 #include <set>
 #include <vector>
-#include "../zpd/xpd/xpd.hpp"
+#include "xpd_instance.hpp"
+#include "xpd_console.hpp"
+#include "xpd_patch.hpp"
 
-namespace jpd
+namespace xpd
 {
     // ==================================================================================== //
     //                                      JPD PROCESSOR                                   //
     // ==================================================================================== //
     
-    //! @brief A class that manages a single patch with parameters and presets.
+    //! @brief The class is an enhanced intance with a console::history.
+    //! @deatils The processor manages a single patch with parameters and presets.
+    //! @todo See if we manage several patches.
     class processor : public xpd::instance, public xpd::console::history
     {
     public:
@@ -145,11 +149,11 @@ namespace jpd
         
     private:
         
-        static xpd::symbol get_symbol_float();
-        static xpd::symbol get_symbol_list();
+        static symbol get_symbol_float();
+        static symbol get_symbol_list();
         
-        xpd::patch              m_patch;
-        xpd::tie                m_playhead_tie;
+        patch                   m_patch;
+        tie                     m_playhead_tie;
         std::vector<xpd::atom>  m_playhead_list;
         std::vector<parameter>  m_parameters;
         std::set<listener*>     m_listeners;
@@ -157,4 +161,4 @@ namespace jpd
 }
 
 
-#endif // JPD_INSTANCE_INCLUDE_HPP
+#endif // XPD_PROCESSOR_INCLUDE_HPP
