@@ -11,5 +11,6 @@
 namespace xpd {}
 
 #include "xpd_gui.hpp"
+#include "xpd_processor.hpp"
 
 #endif // XPD_INCLUDE_HPP
