@@ -56,6 +56,16 @@ CPD_EXTERN void cpd_searchpath_clear();
 CPD_EXTERN void cpd_searchpath_add(const char* path);
 
 
+//! @brief Gets the current font name of Pure Data.
+CPD_EXTERN const char* cpd_get_font_name();
+
+//! @brief Gets the current font weight of Pure Data.
+CPD_EXTERN const char* cpd_get_font_weight();
+
+//! @brief Gets the current font size of Pure Data.
+CPD_EXTERN unsigned int cpd_get_font_size();
+
+
 //! @}
 
 

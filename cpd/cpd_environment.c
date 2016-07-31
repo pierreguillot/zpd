@@ -211,6 +211,20 @@ void cpd_searchpath_add(const char* path)
     sys_searchpath = namelist_append(sys_searchpath, path, 0);
 }
 
+const char* cpd_get_font_name()
+{
+    return (const char*)sys_font;
+}
+
+const char* cpd_get_font_weight()
+{
+    return (const char*)sys_fontweight;
+}
+
+unsigned int cpd_get_font_size()
+{
+    return (unsigned int)sys_defaultfont;
+}
 
 
 

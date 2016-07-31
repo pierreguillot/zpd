@@ -40,6 +40,15 @@ namespace xpd
         
         //! @brief Clears all the search path.
         static void searpath_clear() xpd_noexcept;
+        
+        //! @brief Gets the current font name of Pure Data.
+        static std::string font_name();
+        
+        //! @brief Gets the current font weight of Pure Data.
+        static std::string font_weight();
+        
+        //! @brief GGets the current font size of Pure Data.
+        static unsigned int font_size();
     };
 }
 

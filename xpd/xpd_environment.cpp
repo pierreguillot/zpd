@@ -52,5 +52,20 @@ namespace xpd
     {
         cpd_searchpath_clear();
     }
+    
+    std::string environment::font_name()
+    {
+        return std::string(cpd_get_font_name());
+    }
+    
+    std::string environment::font_weight()
+    {
+        return std::string(cpd_get_font_weight());
+    }
+    
+    unsigned int environment::font_size()
+    {
+        return cpd_get_font_size();
+    }
 }
 
