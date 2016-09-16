@@ -129,6 +129,7 @@ void cpd_init()
         sys_hipriority = 0;
         sys_nmidiin = 0;
         sys_nmidiout = 0;
+        sys_defaultfont = 10;
         sys_init_fdpoll();
         pd_init();
         sys_startgui(NULL);
