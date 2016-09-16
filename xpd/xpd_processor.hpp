@@ -67,7 +67,7 @@ namespace xpd
         virtual void close_patch();
         
         //! @brief Returns the current patch.
-        inline xpd::patch const get_patch() const noexcept {return m_patch;}
+        inline xpd::patch const get_patch() const xpd_noexcept {return m_patch;}
         
         // ================================================================================ //
         //                                      PARAMETERS                                  //
