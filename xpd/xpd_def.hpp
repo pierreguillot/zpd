@@ -17,14 +17,16 @@
 #define xpd_constexpr
 #define xpd_override
 #define xpd_final
-#define xpd_delete_f
+#define xpd_delete
+#define xpd_default {}
 #else
 #define xpd_noexcept noexcept
 #define xpd_nullptr nullptr
 #define xpd_constexpr constexpr
 #define xpd_override override
 #define xpd_final final
-#define xpd_delete_f = delete
+#define xpd_delete = delete
+#define xpd_default = default
 #endif
 
 namespace xpd

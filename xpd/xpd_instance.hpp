@@ -107,8 +107,8 @@ namespace xpd
 #define LCOV_EXCL_STOP
         
     private:
-        instance(instance const& other) xpd_delete_f;
-        instance& operator=(instance const& other) xpd_delete_f;
+        instance(instance const& other) xpd_delete;
+        instance& operator=(instance const& other) xpd_delete;
         struct internal;
         internal* m_ptr;
     };
