@@ -46,11 +46,11 @@ namespace xpd
         //! @param name The tie that received the vector of atoms.
         //! @param selector The selector.
         //! @param atoms The vector of atoms.
-        void receive(xpd::tie name, xpd::symbol selector, std::vector<xpd::atom> const& atoms) override;
+        void receive(xpd::tie name, xpd::symbol selector, std::vector<xpd::atom> const& atoms) xpd_override;
         
         //! @brief Receives a post from the console.
         //! @param post The console post received.
-        void receive(xpd::console::post const& post) override;
+        void receive(xpd::console::post const& post) xpd_override;
         
         // ================================================================================ //
         //                                      PATCH                                       //
@@ -134,7 +134,7 @@ namespace xpd
         class listener
         {
         public:
-            virtual ~listener() = default;
+            virtual ~listener() xpd_default;
             
             //! @brief Receives the notification that the patch changed.
             //! @details You must override the method.
