@@ -153,7 +153,7 @@ namespace xpd
     
     void instance::release() xpd_noexcept
     {
-        cpd_instance_dsp_release(reinterpret_cast<cpd_instance *>(m_ptr));
+        ;
     }
     
     
@@ -208,6 +208,17 @@ namespace xpd
     {
         reinterpret_cast<internal *>(m_ptr)->m_unbind(reinterpret_cast<internal *>(m_ptr), smuggler::gettie(name));
     }
+    
+    void instance::searchpath_add(std::string const& path) xpd_noexcept
+    {
+        cpd_instance_searchpath_add(reinterpret_cast<cpd_instance *>(m_ptr), path.c_str());
+    }
+    
+    void instance::searchpath_clear() xpd_noexcept
+    {
+        cpd_instance_searchpath_clear(reinterpret_cast<cpd_instance *>(m_ptr));
+    }
+    
 }
 
 

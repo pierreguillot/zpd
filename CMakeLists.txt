@@ -18,76 +18,6 @@ foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
 endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
 #---------------------------------------#
-#         The zpd Sources        #
-#---------------------------------------#
-
-set(CPDSOURCES
-${PROJECT_SOURCE_DIR}/cpd/cpd_def.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_types.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_types.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_mutex.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_mutex.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_midi.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_midi.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_message.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_message.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_post.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_post.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_dsp.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_dsp.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_environment.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_environment.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_instance.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_instance.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_patch.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_patch.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_object.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_object.h
-${PROJECT_SOURCE_DIR}/cpd/cpd_gui.c
-${PROJECT_SOURCE_DIR}/cpd/cpd_gui.h
-${PROJECT_SOURCE_DIR}/cpd/cpd.h
-)
-
-#---------------------------------------#
-#         The xpd Sources        #
-#---------------------------------------#
-
-set(XPDSOURCES
-	${PROJECT_SOURCE_DIR}/xpd/xpd_def.hpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_mutex.hpp
-  ${PROJECT_SOURCE_DIR}/xpd/xpd_mutex.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_tie.hpp
-  ${PROJECT_SOURCE_DIR}/xpd/xpd_tie.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_symbol.hpp
-  ${PROJECT_SOURCE_DIR}/xpd/xpd_symbol.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_atom.hpp
-  ${PROJECT_SOURCE_DIR}/xpd/xpd_atom.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_midi.hpp
-  ${PROJECT_SOURCE_DIR}/xpd/xpd_midi.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_console.hpp
-  ${PROJECT_SOURCE_DIR}/xpd/xpd_console.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_environment.hpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_environment.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_instance.hpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_instance.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_patch.hpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_patch.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_object.hpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_object.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_gui.hpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd_gui.cpp
-	${PROJECT_SOURCE_DIR}/xpd/xpd.hpp
-)
-
-#---------------------------------------#
-#        The Thread Sources          #
-#---------------------------------------#
-set(THREADSOURCES
-	${PROJECT_SOURCE_DIR}/thread/src/thd.c
-	${PROJECT_SOURCE_DIR}/thread/src/thd.h
-)
-
-#---------------------------------------#
 #        The Pure Data Sources          #
 #---------------------------------------#
 set(PDSOURCES
@@ -188,6 +118,76 @@ ${PROJECT_SOURCE_DIR}/pd/extra/stdout/stdout.c
 )
 
 #---------------------------------------#
+#         The zpd Sources        #
+#---------------------------------------#
+
+set(CPDSOURCES
+${PROJECT_SOURCE_DIR}/cpd/cpd_def.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_types.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_types.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_mutex.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_mutex.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_midi.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_midi.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_message.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_message.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_post.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_post.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_dsp.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_dsp.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_environment.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_environment.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_instance.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_instance.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_patch.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_patch.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_object.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_object.h
+${PROJECT_SOURCE_DIR}/cpd/cpd_gui.c
+${PROJECT_SOURCE_DIR}/cpd/cpd_gui.h
+${PROJECT_SOURCE_DIR}/cpd/cpd.h
+)
+
+#---------------------------------------#
+#         The xpd Sources        #
+#---------------------------------------#
+
+set(XPDSOURCES
+	${PROJECT_SOURCE_DIR}/xpd/xpd_def.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_mutex.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_mutex.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_tie.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_tie.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_symbol.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_symbol.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_atom.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_atom.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_midi.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_midi.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_console.hpp
+  ${PROJECT_SOURCE_DIR}/xpd/xpd_console.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_environment.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_environment.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_instance.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_instance.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_patch.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_patch.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_object.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_object.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_gui.hpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd_gui.cpp
+	${PROJECT_SOURCE_DIR}/xpd/xpd.hpp
+)
+
+#---------------------------------------#
+#        The Thread Sources          #
+#---------------------------------------#
+set(THREADSOURCES
+	${PROJECT_SOURCE_DIR}/thread/src/thd.c
+	${PROJECT_SOURCE_DIR}/thread/src/thd.h
+)
+
+#---------------------------------------#
 #        The Test Sources    #
 #---------------------------------------#
 
@@ -228,7 +228,7 @@ if(${COVERALLS} STREQUAL "On")
 endif()
 
 #set(CMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4.sdk/) # Not available on travis
-set(CMAKE_OSX_DEPLOYMENT_TARGET 10.4)
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7)
 set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
 set(CMAKE_MACOSX_RPATH ON)
 
@@ -236,6 +236,7 @@ add_library(zpdshared SHARED ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${THRE
 add_library(zpdstatic STATIC ${PDSOURCES} ${PDEXTRASOURCES} ${CPDSOURCES} ${THREADSOURCES})
 add_executable(xpdtest ${TESTSOURCES} ${XPDSOURCES} ${CPDSOURCES} ${PDSOURCES} ${THREADSOURCES} ${PDEXTRASOURCES})
 
+add_definitions(-DPDINSTANCE=1)
 if(${APPLE})
 	add_definitions(-DHAVE_UNISTD_H=1 -DHAVE_ALLOCA_H=1 -DHAVE_LIBDL=1)
 elseif(${UNIX})

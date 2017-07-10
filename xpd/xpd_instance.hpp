@@ -89,6 +89,12 @@ namespace xpd
         //! @param name The tie to unbind from the instance.
         void unbind(tie name);
         
+        //! @brief Adds a path the instance's search path.
+        void searchpath_add(std::string const& path) xpd_noexcept;
+        
+        //! @brief Clears all the instance's search path.
+        void searchpath_clear() xpd_noexcept;
+        
     protected:
 #define LCOV_EXCL_START
         //! @brief Receives a message from a tie.

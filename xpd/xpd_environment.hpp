@@ -35,12 +35,6 @@ namespace xpd
         //! @brief Gets the bug version of Pure Data.
         static unsigned int version_bug() xpd_noexcept;
         
-        //! @brief Adds a path the search path.
-        static void searchpath_add(std::string const& path) xpd_noexcept;
-        
-        //! @brief Clears all the search path.
-        static void searpath_clear() xpd_noexcept;
-        
         //! @brief Gets the current font name of Pure Data.
         static std::string font_name();
         

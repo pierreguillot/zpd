@@ -43,15 +43,6 @@ namespace xpd
         return cpd_version_getbug();
     }
     
-    void environment::searchpath_add(std::string const& path) xpd_noexcept
-    {
-        cpd_searchpath_add(path.c_str());
-    }
-    
-    void environment::searpath_clear() xpd_noexcept
-    {
-        cpd_searchpath_clear();
-    }
     
     std::string environment::font_name()
     {

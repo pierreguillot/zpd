@@ -43,19 +43,6 @@ CPD_EXTERN unsigned int cpd_version_getbug();
 
 
 
-
-//! @brief Clears the search path of Pure Data.
-//! @details Clears the search path for all the environment. The path will be used when you
-//! try to open a patch, to load an abstraction or an external.
-CPD_EXTERN void cpd_searchpath_clear();
-
-//! @brief Adds a path to the search path of Pure Data.
-//! @details Adds a path to the search path for all the environment. The path will be used
-//! when you try to open a patch, to load an abstraction or an external.
-//! @param path The path to add.
-CPD_EXTERN void cpd_searchpath_add(const char* path);
-
-
 //! @brief Gets the current font name of Pure Data.
 CPD_EXTERN const char* cpd_get_font_name();
 

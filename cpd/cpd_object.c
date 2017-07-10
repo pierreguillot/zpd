@@ -31,7 +31,7 @@ static char cpd_object_is_patchable(cpd_object const* object)
     return object->te_g.g_pd->c_patchable;
 }
 
-static struct _widgetbehavior* cpd_object_get_widget(cpd_object const* object)
+static struct _widgetbehavior const* cpd_object_get_widget(cpd_object const* object)
 {
     return object->te_g.g_pd->c_wb;
 }

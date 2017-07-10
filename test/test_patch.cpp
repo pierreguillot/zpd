@@ -5,6 +5,7 @@
 */
 
 #include "test.hpp"
+#include "directory.hpp"
 
 class pacth_tester : public xpd::instance
 {
@@ -114,10 +115,20 @@ static void test_gui_int(xpd::patch p, xpd::object o)
     }
 }
 
-
 TEST_CASE("patch", "[patch]")
 {
     pacth_tester inst;
+    
+    oshelper::directory dir = oshelper::directory::current();
+    while(dir && dir.name() != "zpd")
+    {
+        dir = dir.parent();
+    }
+    if(dir && dir.name() == "zpd")
+    {
+        dir = dir.fullpath() + oshelper::directory::separator + "test" + oshelper::directory::separator + "patches";
+        inst.searchpath_add(dir.fullpath());
+    }
     
     SECTION("Informations")
     {

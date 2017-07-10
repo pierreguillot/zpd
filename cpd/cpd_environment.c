@@ -59,10 +59,6 @@ void sys_mididevnumbertoname(int output, int devno, char *name, int namesize) {}
 
 
 
-
-
-
-
 // ==================================================================================== //
 //                                   IMPLEMENTATION                                     //
 // ==================================================================================== //
@@ -79,11 +75,6 @@ extern void cpd_unlock()
     cpd_mutex_unlock(&c_mutex);
 }
 
-
-
-static t_sample*          c_sample_ins    = NULL;
-static t_sample*          c_sample_outs   = NULL;
-static t_pdinstance*      c_first_instance = NULL;
 cpd_symbol*        c_sym_bng           = NULL;
 cpd_symbol*        c_sym_hsl           = NULL;
 cpd_symbol*        c_sym_vsl           = NULL;
@@ -98,6 +89,33 @@ cpd_symbol*        c_sym_empty         = NULL;
 extern void cpd_print(const char* s);
 extern cpd_instance* c_current_instance;
 
+static int defaultfontshit[] = {
+    9, 5, 10, 11, 7, 13, 14, 8, 16, 17, 10, 20, 22, 13, 25, 39, 23, 45,
+    17, 10, 20, 23, 14, 26, 27, 16, 31, 34, 20, 40, 43, 26, 50, 78, 47, 90};
+#define NDEFAULTFONT (sizeof(defaultfontshit)/sizeof(*defaultfontshit))
+#include <unistd.h>
+static void sys_fakefromgui(void)
+{
+    /* fake the GUI's message giving cwd and font sizes in case
+     we aren't starting the gui. */
+    t_atom zz[NDEFAULTFONT+2];
+    int i;
+    char buf[MAXPDSTRING];
+#ifdef _WIN32
+    if (GetCurrentDirectory(MAXPDSTRING, buf) == 0)
+        strcpy(buf, ".");
+#else
+    if (!getcwd(buf, MAXPDSTRING))
+        strcpy(buf, ".");
+    
+#endif
+    SETSYMBOL(zz, gensym(buf));
+    for (i = 0; i < (int)NDEFAULTFONT; i++)
+        SETFLOAT(zz+i+1, defaultfontshit[i]);
+    SETFLOAT(zz+NDEFAULTFONT+1,0);
+    glob_initfromgui(0, 0, 2+NDEFAULTFONT, zz);
+}
+
 // ==================================================================================== //
 //                                      INTERFACE                                       //
 // ==================================================================================== //
@@ -111,38 +129,37 @@ void cpd_init()
     if(!initialized)
     {
         cpd_mutex_init(&c_mutex);
-        sys_soundin         = NULL;
-        sys_soundout        = NULL;
         c_current_instance  = NULL;
         sys_printhook = (t_printhook)(cpd_print);
         signal(SIGFPE, SIG_IGN);
-        sys_soundin = NULL;
-        sys_soundout = NULL;
-        sys_schedblocksize = DEFDACBLKSIZE;
         sys_externalschedlib = 0;
         sys_printtostderr = 0;
         sys_usestdpath = 0;
-        sys_debuglevel = 1;
-        sys_verbose = 4;
+        sys_debuglevel = 0;
+        sys_verbose = 0;
         sys_noloadbang = 0;
-        sys_nogui = 1;
         sys_hipriority = 0;
         sys_nmidiin = 0;
         sys_nmidiout = 0;
         sys_defaultfont = 10;
-        sys_init_fdpoll();
-        pd_init();
-        sys_startgui(NULL);
         
+        pd_init();
+        STUFF->st_soundin = NULL;
+        STUFF->st_soundout = NULL;
+        STUFF->st_schedblocksize = DEFDACBLKSIZE;
+        STUFF->st_searchpath = NULL;
+        sys_init_fdpoll();
+        /*
+        if(sys_startgui(NULL))
+        {
+            printf("gui startup failed\n");
+        }
+         */
+        sys_fakefromgui();
         sys_set_audio_api(API_DUMMY);
-        sys_searchpath = NULL;
         sys_set_audio_settings(1, &devices, 1, &ioputs, 1, &devices, 1, &ioputs, 44100, -1, 1, DEFDACBLKSIZE);
         sched_set_using_audio(SCHED_AUDIO_CALLBACK);
         sys_reopen_audio();
-        
-        c_sample_ins      = sys_soundin;
-        c_sample_outs     = sys_soundout;
-        c_first_instance    = pd_this;
         
         c_sym_bng           = gensym("bng");
         c_sym_hsl           = gensym("hsl");
@@ -165,24 +182,14 @@ void cpd_init()
         sigmund_tilde_setup();
         stdout_setup();
 
+        sys_debuglevel = 1;
+        sys_verbose = 4;
         initialized = 1;
     }
 }
 
 void cpd_clear()
 {
-    if(c_sample_ins)
-    {
-        freebytes(c_sample_ins, (sys_inchannels ? sys_inchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
-    }
-    if(c_sample_outs)
-    {
-        freebytes(c_sample_outs, (sys_outchannels ? sys_outchannels : 2) * (DEFDACBLKSIZE * sizeof(t_sample)));
-    }
-    if(c_first_instance)
-    {
-        pdinstance_free(c_first_instance);
-    }
     cpd_mutex_destroy(&c_mutex);
 }
 
@@ -199,17 +206,6 @@ unsigned int cpd_version_getminor()
 unsigned int cpd_version_getbug()
 {
     return PD_BUGFIX_VERSION;
-}
-
-void cpd_searchpath_clear()
-{
-    namelist_free(sys_searchpath);
-    sys_searchpath = NULL;
-}
-
-void cpd_searchpath_add(const char* path)
-{
-    sys_searchpath = namelist_append(sys_searchpath, path, 0);
 }
 
 const char* cpd_get_font_name()

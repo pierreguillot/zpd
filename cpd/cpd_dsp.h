@@ -40,10 +40,6 @@ CPD_EXTERN void cpd_instance_dsp_prepare(cpd_instance* instance, const int nins,
 //! @param outputs The output samples matrix.
 CPD_EXTERN void cpd_instance_dsp_perform(cpd_instance* instance, int nsamples, const int nins, const cpd_sample** inputs, const int nouts, cpd_sample** outputs);
 
-//! @brief Releases the digital signal processing for an instance.
-//! @param instance The instance.
-CPD_EXTERN void cpd_instance_dsp_release(cpd_instance* instance);
-
 //! @brief Gets the sample rate of an instance.
 //! @param instance The instance.
 //! @return The current sample rate of the instance.

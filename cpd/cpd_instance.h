@@ -31,7 +31,6 @@ CPD_EXTERN_STRUCT cpd_post_manager;
 typedef struct cpd_instance
 {
     struct _pdinstance*         c_internal;
-    struct cpd_dsp_manager*     c_dsp;
     struct cpd_message_manager* c_message;
     struct cpd_midi_manager*    c_midi;
     struct cpd_post_manager*    c_post;
@@ -77,6 +76,17 @@ CPD_EXTERN cpd_instance* cpd_instance_new(size_t size);
 //! @param instance The pointer to the instance.
 CPD_EXTERN void cpd_instance_free(cpd_instance* instance);
 
+
+//! @brief Clears the search path of a specific instance.
+//! @details Clears the search path for a specific instance. The path will be used when you
+//! try to open a patch, to load an abstraction or an external.
+CPD_EXTERN void cpd_instance_searchpath_clear(cpd_instance* instance);
+
+//! @brief Adds a path to the search path of a specific instance.
+//! @details Adds a path to the search path a specific instance. The path will be used
+//! when you try to open a patch, to load an abstraction or an external.
+//! @param path The path to add.
+CPD_EXTERN void cpd_instance_searchpath_add(cpd_instance* instance, const char* path);
 
 //! @}
 

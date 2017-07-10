@@ -37,7 +37,7 @@ cpd_patch* cpd_instance_patch_load(cpd_instance* instance, const char* name, con
     {
         
         i = 0;
-        while((rpath = namelist_get(sys_searchpath, i)) != NULL)
+        while((rpath = namelist_get(STUFF->st_searchpath, i)) != NULL)
         {
             cnv = (t_canvas *)glob_evalfile(NULL, gensym(name), gensym(rpath));
             if(cnv)

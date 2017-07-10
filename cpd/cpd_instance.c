@@ -43,10 +43,10 @@ cpd_instance* cpd_instance_new(size_t size)
     if(instance)
     {
         instance->c_internal = pdinstance_new();
-        cpd_dsp_manager_init(instance);
         cpd_message_manager_init(instance, 512);
         cpd_midi_manager_init(instance, 512);
         cpd_post_manager_init(instance);
+        cpd_instance_searchpath_clear(instance);
     }
     return instance;
 }
@@ -61,9 +61,23 @@ void cpd_instance_free(cpd_instance* instance)
     cpd_unlock();
     cpd_midi_manager_clear(instance);
     cpd_message_manager_clear(instance);
-    cpd_dsp_manager_clear(instance);
     cpd_post_manager_clear(instance);
     free(instance);
+}
+
+void cpd_instance_searchpath_clear(cpd_instance* instance)
+{
+    cpd_lock();
+    namelist_free(STUFF->st_searchpath);
+    STUFF->st_searchpath = NULL;
+    cpd_unlock();
+}
+
+void cpd_instance_searchpath_add(cpd_instance* instance, const char* path)
+{
+    cpd_lock();
+    STUFF->st_searchpath = namelist_append(STUFF->st_searchpath, path, 0);
+    cpd_unlock();
 }
 
 extern void cpd_instance_lock(cpd_instance* instance)
