@@ -131,7 +131,8 @@ public:
  
     void receive(xpd::console::post const& post) xpd_final
     {
-        std::cout << "receive: |"<<post.text << "| |" << m_post_expected << "|\n";
+        //std::cout << post.text << "\n";
+        //std::cout << "receive: |"<<post.text << "| expected: |" << m_post_expected << "|\n";
         if(post.type == xpd::console::normal && post.text == m_post_expected)
         {
             ++m_counter_post;
@@ -331,9 +332,10 @@ TEST_CASE("instance", "[instance post]")
         for(size_t i = 0; i < XPD_TEST_NTHD; ++i)
         {
             thd_thread_join(thd+i);
+            
             CHECK(inst[i].get_samplerate() == XPD_TEST_SR);
             CHECK(inst[i].get_npost() == XPD_TEST_NLOOP);
-            /*
+            
             CHECK(inst[i].get_nmessage() == XPD_TEST_NLOOP);
             CHECK(inst[i].get_nmidi_note() == XPD_TEST_NLOOP);
             CHECK(inst[i].get_nmidi_ctrl() == XPD_TEST_NLOOP);
@@ -343,7 +345,6 @@ TEST_CASE("instance", "[instance post]")
             CHECK(inst[i].get_nmidi_poly() == XPD_TEST_NLOOP);
             CHECK(inst[i].check_out1());
             CHECK(inst[i].check_out2());
-             */
         }
     }
 }
