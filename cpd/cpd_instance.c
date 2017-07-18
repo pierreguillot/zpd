@@ -39,6 +39,8 @@ cpd_instance* c_current_instance = NULL;
 
 cpd_instance* cpd_instance_new(size_t size)
 {
+    int devices = 0;
+    int ioputs  = 2;
     cpd_instance* instance = (cpd_instance *)malloc(size);
     if(instance)
     {
@@ -47,6 +49,11 @@ cpd_instance* cpd_instance_new(size_t size)
         cpd_midi_manager_init(instance, 512);
         cpd_post_manager_init(instance);
         cpd_instance_searchpath_clear(instance);
+        
+        sys_set_audio_api(API_DUMMY);
+        sys_set_audio_settings(1, &devices, 1, &ioputs, 1, &devices, 1, &ioputs, 44100, -1, 1, DEFDACBLKSIZE);
+        sched_set_using_audio(SCHED_AUDIO_CALLBACK);
+        sys_reopen_audio();
     }
     return instance;
 }

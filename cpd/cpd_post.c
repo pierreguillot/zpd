@@ -70,13 +70,11 @@ extern void cpd_print(const char* s)
     size_t len;
     char temp[MAXPDSTRING];
     cpd_instance* instance = c_current_instance;
-    printf("\nreceive... %s\n", s);
 #ifdef DEBUG
-    printf("%s", s);
+    printf("DEBUG : %s", s);
 #endif
     if(!instance)
     {
-        printf("\nnope\n", s);
         return;
     }
     if(strncmp(s, "error:", 6) == 0)

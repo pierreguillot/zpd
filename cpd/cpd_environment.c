@@ -122,8 +122,6 @@ static void sys_fakefromgui(void)
 
 void cpd_init()
 {
-    int devices = 0;
-    int ioputs  = 2;
     static char initialized = 0;
     assert("Pure Data is already initialized." && !initialized);
     if(!initialized)
@@ -155,11 +153,7 @@ void cpd_init()
             printf("gui startup failed\n");
         }
          */
-        sys_fakefromgui();
-        sys_set_audio_api(API_DUMMY);
-        sys_set_audio_settings(1, &devices, 1, &ioputs, 1, &devices, 1, &ioputs, 44100, -1, 1, DEFDACBLKSIZE);
-        sched_set_using_audio(SCHED_AUDIO_CALLBACK);
-        sys_reopen_audio();
+        //sys_fakefromgui();
         
         c_sym_bng           = gensym("bng");
         c_sym_hsl           = gensym("hsl");
