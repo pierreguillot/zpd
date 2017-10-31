@@ -89,32 +89,7 @@ cpd_symbol*        c_sym_empty         = NULL;
 extern void cpd_print(const char* s);
 extern cpd_instance* c_current_instance;
 
-static int defaultfontshit[] = {
-    9, 5, 10, 11, 7, 13, 14, 8, 16, 17, 10, 20, 22, 13, 25, 39, 23, 45,
-    17, 10, 20, 23, 14, 26, 27, 16, 31, 34, 20, 40, 43, 26, 50, 78, 47, 90};
-#define NDEFAULTFONT (sizeof(defaultfontshit)/sizeof(*defaultfontshit))
 #include <unistd.h>
-static void sys_fakefromgui(void)
-{
-    /* fake the GUI's message giving cwd and font sizes in case
-     we aren't starting the gui. */
-    t_atom zz[NDEFAULTFONT+2];
-    int i;
-    char buf[MAXPDSTRING];
-#ifdef _WIN32
-    if (GetCurrentDirectory(MAXPDSTRING, buf) == 0)
-        strcpy(buf, ".");
-#else
-    if (!getcwd(buf, MAXPDSTRING))
-        strcpy(buf, ".");
-    
-#endif
-    SETSYMBOL(zz, gensym(buf));
-    for (i = 0; i < (int)NDEFAULTFONT; i++)
-        SETFLOAT(zz+i+1, defaultfontshit[i]);
-    SETFLOAT(zz+NDEFAULTFONT+1,0);
-    glob_initfromgui(0, 0, 2+NDEFAULTFONT, zz);
-}
 
 // ==================================================================================== //
 //                                      INTERFACE                                       //
@@ -124,6 +99,8 @@ void cpd_init()
 {
     static char initialized = 0;
     assert("Pure Data is already initialized." && !initialized);
+    assert(PDINSTANCE && "PDINSTANCE must be initialized");
+    assert(PDTHREADS && "PDINSTANCE must be initialized");
     if(!initialized)
     {
         cpd_mutex_init(&c_mutex);
@@ -147,13 +124,6 @@ void cpd_init()
         STUFF->st_schedblocksize = DEFDACBLKSIZE;
         STUFF->st_searchpath = NULL;
         sys_init_fdpoll();
-        /*
-        if(sys_startgui(NULL))
-        {
-            printf("gui startup failed\n");
-        }
-         */
-        //sys_fakefromgui();
         
         c_sym_bng           = gensym("bng");
         c_sym_hsl           = gensym("hsl");
